@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superset + SQL Server — Documentación</title>
+<style>
+  :root {
+    --sidebar-w: 260px;
+    --accent: #818cf8;
+    --accent-light: rgba(129,140,248,.1);
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #334155;
+    --code-bg: #0f172a;
+    --code-text: #cdd6f4;
+    --bg: #0f172a;
+    --bg-surface: #1e293b;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+  }
+  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+
+  /* Sidebar */
+  nav {
+    width: var(--sidebar-w);
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    padding: 24px 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .nav-logo h1 { font-size: 15px; font-weight: 700; color: var(--accent); }
+  .nav-logo p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .nav-section { padding: 4px 20px; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 16px; margin-bottom: 4px; }
+  nav a {
+    display: block;
+    padding: 7px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+  }
+  nav a:hover { color: var(--accent); background: var(--accent-light); }
+  nav a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-light); font-weight: 600; }
+  nav::-webkit-scrollbar { width: 6px; }
+  nav::-webkit-scrollbar-track { background: transparent; }
+  nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Main */
+  main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 48px 64px;
+    max-width: 1400px;
+    margin-right: auto;
+    margin-left: calc(var(--sidebar-w) + max(0px, (100vw - var(--sidebar-w) - 1400px) / 2));
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin-bottom: 48px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .hero p { font-size: 15px; opacity: .85; max-width: 560px; line-height: 1.6; }
+  .badges { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,.2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; }
+
+  /* Architecture */
+  .arch-box {
+    background: var(--code-bg);
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--code-text);
+    line-height: 1.8;
+    margin: 16px 0 24px;
+  }
+  .arch-box .c-purple { color: #cba6f7; }
+  .arch-box .c-green { color: #a6e3a1; }
+  .arch-box .c-yellow { color: #f9e2af; }
+  .arch-box .c-blue { color: #89b4fa; }
+  .arch-box .c-arrow { color: #6c7086; }
+
+  /* Sections */
+  section { margin-bottom: 56px; scroll-margin-top: 32px; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--text); padding-bottom: 12px; border-bottom: 2px solid var(--border); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+  h2 .step-num { background: var(--accent); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  h3 { font-size: 15px; font-weight: 700; color: var(--text); margin: 24px 0 10px; }
+
+  /* Code blocks */
+  .code-block {
+    background: var(--code-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 12px 0 20px;
+    border: 1px solid #1e293b;
+  }
+  .code-header {
+    background: #020617;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #1e293b;
+  }
+  .code-header span { font-size: 11px; color: #6c7086; font-family: monospace; }
+  .copy-btn {
+    background: #1e293b;
+    border: none;
+    color: #cdd6f4;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .copy-btn:hover { background: #334155; }
+  .copy-btn.copied { background: var(--success); color: #fff; }
+  pre {
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--code-text);
+    font-family: 'Courier New', Consolas, monospace;
+  }
+
+  /* Callouts */
+  .callout {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .callout.info { background: rgba(59,130,246,.1); border-left: 4px solid #3b82f6; }
+  .callout.warning { background: rgba(251,191,36,.1); border-left: 4px solid var(--warning); }
+  .callout.success { background: rgba(52,211,153,.1); border-left: 4px solid var(--success); }
+  .callout.danger { background: rgba(248,113,113,.1); border-left: 4px solid var(--danger); }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 12px 0 20px; }
+  th { background: var(--bg-surface); padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,.03); }
+  td code, th code { background: rgba(129,140,248,.1); padding: 2px 6px; border-radius: 4px; font-size: 12px; font-family: monospace; color: var(--accent); }
+
+  /* Inline code */
+  p code, li code { background: rgba(129,140,248,.1); padding: 2px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; color: var(--accent); }
+
+  p { font-size: 14.5px; line-height: 1.7; color: var(--muted); margin-bottom: 12px; }
+  ul, ol { padding-left: 20px; margin-bottom: 12px; }
+  li { font-size: 14px; line-height: 1.8; color: var(--muted); }
+
+  /* Migration table */
+  .migration-table td:first-child { color: var(--muted); }
+  .migration-table td:last-child { font-weight: 600; color: var(--accent); }
+
+  /* Collapsible SQL details */
+  details {
+    margin: 16px 0 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  details summary {
+    background: var(--bg-surface);
+    padding: 12px 18px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background .15s;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before { content: "▶"; font-size: 10px; transition: transform .2s; }
+  details[open] summary::before { transform: rotate(90deg); }
+  details { scroll-margin-top: 32px; }
+  details summary:hover { background: rgba(129,140,248,.08); }
+  details .code-block { margin: 0; border: none; border-radius: 0; }
+
+  /* Step accordions */
+  .step-accordion {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .step-accordion > summary {
+    background: var(--bg-surface);
+    padding: 16px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+    transition: background .15s;
+    border-bottom: none;
+  }
+  .step-accordion > summary::-webkit-details-marker { display: none; }
+  .step-accordion > summary::before { display: none; }
+  .step-accordion > summary::after { content: "▾"; margin-left: auto; color: var(--muted); font-size: 18px; transition: transform .2s; }
+  .step-accordion[open] > summary { border-bottom: 2px solid var(--border); }
+  .step-accordion[open] > summary::after { transform: rotate(-180deg); }
+  .step-accordion > summary:hover { background: rgba(129,140,248,.05); }
+  .step-accordion-body { padding: 24px 28px; }
+  section { margin-bottom: 12px; scroll-margin-top: 32px; }
+
+  /* Pasos numerados — color destacado */
+  .step-accordion.numbered { border-color: rgba(129,140,248,.35); }
+  .step-accordion.numbered > summary { background: rgba(129,140,248,.08); color: var(--accent); }
+  .step-accordion.numbered[open] > summary { border-bottom-color: rgba(129,140,248,.35); }
+  .step-accordion.numbered > summary:hover { background: rgba(129,140,248,.14); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    main { margin-left: 0; margin-right: 0; padding: 24px 20px; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <h1>Superset Docs</h1>
+    <p>SQL Server + Docker</p>
+  </div>
+  <div class="nav-section">Introducción</div>
+  <a href="#arquitectura" class="active">Arquitectura</a>
+  <a href="#requisitos">Requisitos</a>
+  <div class="nav-section">Instalación</div>
+  <a href="#paso1">1. Carpeta y archivos de config</a>
+  <a href="#paso3">2. Levantar servicios</a>
+  <a href="#paso4">3. Crear admin</a>
+  <a href="#paso5">4. SQL Server Docker</a>
+  <a href="#paso6">5. Linked Server</a>
+  <a href="#paso7">6. Job de actualización</a>
+  <a href="#job-sql">    Comando SQL del Job</a>
+  <a href="#paso8">7. Conectar Superset</a>
+  <a href="#paso9">8. Crear Dataset</a>
+  <div class="nav-section">Mantenimiento</div>
+  <a href="#columnas">Agregar/quitar columnas</a>
+  <a href="#historial">Historial del Job</a>
+  <a href="#comandos">Comandos útiles</a>
+  <div class="nav-section">Roadmap</div>
+  <a href="#azure">Migración a Azure</a>
+  <div class="nav-section">Referencia</div>
+  <a href="diccionario.html" style="color:var(--accent);font-weight:600">Diccionario de datos →</a>
+  <div class="nav-section">Requerimientos</div>
+  <a href="requerimientos.html" class="sub" style="color:#f472b6;font-weight:600">Índice →</a>
+  <a href="requerimientos_ameco.html" class="sub" style="color:#f472b6">↳ Ameco</a>
+  <a href="requerimientos_centinela.html" class="sub" style="color:#f472b6">↳ Centinela</a>
+</nav>
+
+<main>
+
+  <div class="hero">
+    <h1>Superset + SQL Server</h1>
+    <p>Guía completa para instalar Apache Superset con SQL Server en Docker, con actualización automática de datos cada hora y consultas instantáneas.</p>
+    <div class="badges">
+      <span class="badge">Apache Superset</span>
+      <span class="badge">SQL Server 2019</span>
+      <span class="badge">Docker</span>
+      <span class="badge">Redis Cache</span>
+      <span class="badge">Windows</span>
+    </div>
+  </div>
+
+  <!-- ARQUITECTURA -->
+  <section id="arquitectura">
+    <details class="step-accordion">
+    <summary>Arquitectura</summary>
+    <div class="step-accordion-body">
+      <p>Superset y SQL Server corren en la misma red Docker, eliminando la latencia de red y logrando consultas casi instantáneas.</p>
+      <div class="arch-box">
+        <span class="c-purple">SQL Server productivo</span> <span class="c-yellow">(54.244.218.18)</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-arrow">↑ Linked Server (AMECO_DEV)</span><br>
+        <span class="c-green">SQL Server Docker</span> <span class="c-yellow">(sqlserver:1433)</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-arrow">→ Job cada 1 hora: TRUNCATE + INSERT</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-arrow">→ Tabla: AmecoHubIntegracion.dbo.AmecoDashboards</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-arrow">↑ misma red Docker (instantáneo)</span><br>
+        <span class="c-blue">Apache Superset</span> <span class="c-yellow">(localhost:8088)</span>
+      </div>
+      <div class="callout success">
+        <span class="callout-icon">⚡</span>
+        <div>Con Superset y SQL Server en la misma red Docker, las consultas pasan de ~5 segundos a casi instantáneas.</div>
+      </div>
+    </div>
+    </details>
+  </section>
+
+  <!-- REQUISITOS -->
+  <section id="requisitos">
+    <details class="step-accordion">
+    <summary>Requisitos</summary>
+    <div class="step-accordion-body">
+      <ul>
+        <li><a href="https://www.docker.com/products/docker-desktop/" target="_blank">Docker Desktop</a> instalado y corriendo (ícono verde)</li>
+        <li>SQL Server Management Studio (SSMS)</li>
+        <li>Acceso al servidor SQL productivo</li>
+      </ul>
+    </div>
+    </details>
+  </section>
+
+  <!-- PASO 1+2 -->
+  <section id="paso1">
+    <details class="step-accordion numbered">
+    <summary><span class="step-num">1</span> Crear carpeta y archivos de configuración</summary>
+    <div class="step-accordion-body">
+      <h3>Crear la carpeta del proyecto</h3>
+      <div class="code-block">
+        <div class="code-header"><span>bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>mkdir C:\superset
+cd C:\superset</pre>
+      </div>
+
+    <h3>superset_config.py</h3>
+    <div class="code-block">
+      <div class="code-header"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>SECRET_KEY = "MiClaveSecretaSuperSegura2024xyz"
+
+FEATURE_FLAGS = {
+    "ENABLE_TEMPLATE_PROCESSING": True,  # Habilita Jinja en queries
+    "EMBEDDED_SUPERSET": True,
+}
+
+HTTP_HEADERS = {"X-Frame-Options": "ALLOWALL"}
+TALISMAN_ENABLED = False
+WTF_CSRF_ENABLED = False
+OVERRIDE_HTTP_HEADERS = {"X-Frame-Options": "ALLOWALL"}
+
+# BABEL_DEFAULT_LOCALE = "es"  # Descomentar para español
+
+# Cache (1 hora, sincronizado con el job)
+CACHE_CONFIG = {
+    'CACHE_TYPE': 'RedisCache',
+    'CACHE_DEFAULT_TIMEOUT': 3600,
+    'CACHE_KEY_PREFIX': 'superset_',
+    'CACHE_REDIS_URL': 'redis://redis:6379/0'
+}
+
+DATA_CACHE_CONFIG = {
+    'CACHE_TYPE': 'RedisCache',
+    'CACHE_DEFAULT_TIMEOUT': 3600,
+    'CACHE_KEY_PREFIX': 'superset_data_',
+    'CACHE_REDIS_URL': 'redis://redis:6379/0'
+}</pre>
+    </div>
+
+    <h3>Dockerfile</h3>
+    <div class="code-block">
+      <div class="code-header"><span>dockerfile</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>FROM apache/superset:latest
+
+USER root
+RUN apt-get update && apt-get install -y python3-pip && \
+    pip install pymssql && \
+    cp -r /usr/local/lib/python3.10/site-packages/pymssql /app/.venv/lib/python3.10/site-packages/ && \
+    cp -r /usr/local/lib/python3.10/site-packages/pymssql.libs /app/.venv/lib/python3.10/site-packages/ && \
+    cp -r /usr/local/lib/python3.10/site-packages/pymssql-2.3.13.dist-info /app/.venv/lib/python3.10/site-packages/
+USER superset</pre>
+    </div>
+
+    <h3>docker-compose.yml</h3>
+    <div class="code-block">
+      <div class="code-header"><span>yaml</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>version: "3.8"
+
+services:
+  redis:
+    image: redis:7
+    restart: unless-stopped
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: superset
+      POSTGRES_PASSWORD: superset
+      POSTGRES_DB: superset
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: unless-stopped
+    ports:
+      - "1434:1433"
+    environment:
+      SA_PASSWORD: "AmecoSQL2024!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_AGENT_ENABLED: "true"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  superset:
+    build: .
+    image: superset-local
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://superset:superset@db/superset
+      REDIS_URL: redis://redis:6379/0
+      SUPERSET_SECRET_KEY: MiClaveSecretaSuperSegura2024xyz
+    volumes:
+      - ./superset_config.py:/app/pythonpath/superset_config.py
+    depends_on:
+      - redis
+      - db
+      - sqlserver
+
+volumes:
+  db_data:
+  sqlserver_data:</pre>
+    </div>
+    </div></details>
+  </section>
+
+  <!-- PASO 3 -->
+  <section id="paso3">
+    <details class="step-accordion numbered">
+    <summary><span class="step-num">2</span> Construir y levantar los servicios</summary>
+    <div class="step-accordion-body">
+    <div class="code-block">
+      <div class="code-header"><span>bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>cd C:\superset
+docker compose up -d --build</pre>
+    </div>
+    <p>Esperar unos minutos a que descargue todo y construya la imagen.</p>
+    <div class="callout warning">
+      <span class="callout-icon">⚠️</span>
+      <div>Si reconstruís la imagen con <code>--build</code>, debés volver a ejecutar los comandos del Paso 4.</div>
+    </div>
+    </div></details>
+  </section>
+
+  <!-- PASO 4 -->
+  <section id="paso4">
+    <details class="step-accordion numbered">
+    <summary><span class="step-num">3</span> Crear la base de datos y el usuario admin</summary>
+    <div class="step-accordion-body">
+    <p>Ejecutar los 3 comandos uno por uno, esperando a que cada uno termine:</p>
+    <div class="code-block">
+      <div class="code-header"><span>bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>docker compose exec superset superset db upgrade</pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span>bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>docker compose exec superset superset fab create-admin \
+  --username admin \
+  --firstname Admin \
+  --lastname Admin \
+  --email admin@admin.com \
+  --password admin</pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span>bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>docker compose exec superset superset init</pre>
+    </div>
+    <div class="callout success">
+      <span class="callout-icon">✅</span>
+      <div>Una vez completado, Superset estará disponible en <strong>http://localhost:8088</strong> con usuario <code>admin</code> y contraseña <code>admin</code>.</div>
+    </div>
+    </div></details>
+  </section>
+
+  <!-- PASO 5 -->
+  <section id="paso5">
+    <details class="step-accordion numbered">
+    <summary><span class="step-num">4</span> Configurar SQL Server Docker</summary>
+    <div class="step-accordion-body">
+    <p>Conectarse desde SSMS a <code>localhost,1434</code> con usuario <code>sa</code> y password <code>AmecoSQL2024!</code></p>
+    <div class="code-block">
+      <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>-- Crear la base de datos
+CREATE DATABASE AmecoHubIntegracion;
+
+-- Habilitar consultas distribuidas
+EXEC sp_configure 'show advanced options', 1;
+RECONFIGURE;
+EXEC sp_configure 'Ad Hoc Distributed Queries', 1;
+RECONFIGURE;</pre>
+    </div>
+    </div></details>
+  </section>
+
+  <!-- PASO 6 -->
+  <section id="paso6">
+    <details class="step-accordion numbered">
+    <summary><span class="step-num">5</span> Crear Linked Server al servidor productivo</summary>
+    <div class="step-accordion-body">
+    <p>Desde SSMS conectado a <code>localhost,1434</code>:</p>
+    <div class="code-block">
+      <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>EXEC sp_addlinkedserver
+    @server = 'AMECO_DEV',
+    @srvproduct = '',
+    @provider = 'SQLNCLI',
+    @datasrc = '54.244.218.18'
+
+EXEC sp_addlinkedsrvlogin
+    @rmtsrvname = 'AMECO_DEV',
+    @useself = 'FALSE',
+    @rmtuser = 'sa',
+    @rmtpassword = 'TuPasswordAqui'</pre>
+    </div>
+    <p>Verificar que funciona:</p>
+    <div class="code-block">
+      <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>SELECT * FROM OPENQUERY(AMECO_DEV, 'SELECT @@SERVERNAME')</pre>
+    </div>
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <div>Si devuelve el nombre del servidor productivo, el Linked Server está funcionando correctamente.</div>
+    </div>
+    </div></details>
+  </section>
+
+  <!-- PASO 7 -->
+  <section id="paso7">
+    <details class="step-accordion numbered">
+    <summary><span class="step-num">6</span> Crear el Job de actualización (cada 1 hora)</summary>
+    <div class="step-accordion-body">
+    <p>En SSMS conectado a <code>localhost,1434</code>, expandir <strong>Agente SQL Server → Jobs → Nuevo Job</strong>:</p>
+    <table>
+      <tr><th>Campo</th><th>Valor</th></tr>
+      <tr><td>Nombre</td><td><code>Actualizar AmecoDashboards</code></td></tr>
+      <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
+      <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
+      <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
+      <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
+      <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
+    </table>
+    <details id="job-sql">
+      <summary>Ver comando SQL completo del Job (crear tabla + insertar datos)</summary>
+      <div class="code-block">
+        <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>USE AmecoHubIntegracion;
+GO
+
+-- =============================================
+-- PASO 1: Crear la tabla si no existe
+-- Solo se ejecuta la primera vez
+-- =============================================
+IF OBJECT_ID('AmecoHubIntegracion.dbo.AmecoDashboards') IS NULL
+BEGIN
+    SELECT TOP 0 *
+    INTO AmecoHubIntegracion.dbo.AmecoDashboards
+    FROM (
+        SELECT
+            ot.id                               AS OrdenTrabajoId,
+            ot.fechaInicio                      AS OrdenTrabajoFechaInicio,
+            ot.planId                           AS OrdenTrabajoPlanId,
+            emp.nombre                          AS OrdenTrabajoEmpresa,
+            estot.id                            AS EstadoOrdenTrabajoId,
+            estot.nombre                        AS EstadoOrdenTrabajo,
+            ope.id                              AS OperacionId,
+            ope.descripcion                     AS OperacionDescripcion,
+            ope.duracionMinSTD                  AS OperacionTiempoEstandar,
+            ope.duracionReal                    AS OperacionTiempoDuracionReal,
+            ISNULL(ope.tiempoPerdidoMin, 0)     AS OperacionTiempoPerdido,
+            ope.fechaFin                        AS OperacionFechaFin,
+            ope.fechaResolucion                 AS OperacionFechaResolucion,
+            ope.detalleSolucion                 AS OperacionSolucionComentario,
+            ope.cumpleSTD                       AS OperacionTiempoEstandarCumplido,
+            ope.requiereMateriales              AS OperacionRequiereMateriales,
+            ope.ubicacion                       AS OperacionUbicacion,
+            ope.recursos                        AS OperacionRecursos,
+            ope.movilizacion                    AS OperacionMovilizacion,
+            ope.secuencia                       AS OperacionSecuencia,
+            ope.dependencia                     AS OperacionDependencia,
+            ope.orden                           AS OperacionOrden,
+            ope.plazo                           AS OperacionPlazo,
+            ope.trabajo                         AS OperacionTrabajo,
+            ope.precio1                         AS OperacionPrecio1,
+            ope.precio2                         AS OperacionPrecio2,
+            ope.latitud                         AS OperacionLatitud,
+            ope.longitud                        AS OperacionLongitud,
+            ope.direccion                       AS OperacionDireccion,
+            ope.duracionTraslado                AS OperacionTiempoTraslado,
+            ope.elementoLinea                   AS OperacionElementoLinea,
+            ope.elementoCodigo                  AS OperacionElementoCodigo,
+            ope.elementoDescripcion             AS OperacionElementoDescripcion,
+            ope.requiereAprobacion              AS OperacionRequiereAprobacion,
+            ope.evidenciaFlag                   AS OperacionEvidenciaFlag,
+            ope.secuenciadorFlag                AS OperacionSecuenciadorFlag,
+            ope.procesoOperacionId              AS OperacionProcesoId,
+            ope.operacionPadreId                AS OperacionPadreId,
+            ope.fechaAgendada                   AS OperacionFechaAgendada,
+            ope.fechaProgramada                 AS OperacionFechaProgramada,
+            ope.fechaAsignacion                 AS OperacionFechaAsignacion,
+            ope.fechaLiberacion                 AS OperacionFechaLiberacion,
+            ope.fechaDesasignacion              AS OperacionFechaDesasignacion,
+            ope.fechaDetenidoInicio             AS OperacionFechaDetenidoInicio,
+            ope.fechaDetenidoFin                AS OperacionFechaDetenidoFin,
+            ISNULL(operesol.fechainicioTareaReal, ISNULL(ope.fechaInicioTareaReal, ope.fechaInicio)) AS OperacionFechaInicio,
+            tipotarea.id                        AS TipoTareaId,
+            tipotarea.nombre                    AS TipoTarea,
+            subtipotar.id                       AS SubTipoTareaId,
+            subtipotar.nombre                   AS SubTipoTarea,
+            n3.id                               AS Nivel3Id,
+            n3.nombre                           AS Nivel3,
+            n4.id                               AS Nivel4Id,
+            n4.nombre                           AS Nivel4,
+            neg.nombre                          AS OrdenTrabajoNegocio,
+            tipoOperacion.id                    AS TipoOperacionId,
+            tipoOperacion.nombre                AS TipoOperacion,
+            espec.id                            AS EspecialidadId,
+            espec.nombre                        AS Especialidad,
+            estadoOperacion.id                  AS EstadoOperacionId,
+            estadoOperacion.nombre              AS EstadoOperacion,
+            motivoDet.id                        AS MotivoDetencionId,
+            motivoDet.valor                     AS MotivoDetencion,
+            motivoDetTipo.nombre                AS MotivoDetencionTipo,
+            motivoNoEjec.id                     AS MotivoNoEjecucionId,
+            motivoNoEjec.valor                  AS MotivoNoEjecucion,
+            grupo.id                            AS GrupoResolutorOperacionId,
+            grupo.nombre                        AS GrupoResolutorOperacion,
+            pers.nombre                         AS OperacionResolutor,
+            ISNULL(turno.nombre, 'Sin asignar') AS OperacionResolutorTurno,
+            cargo.nombre                        AS OperacionResolutorCargo,
+            sitio.id                            AS SitioOperacionId,
+            sitio.nombre                        AS SitioOperacion,
+            zona.id                             AS ZonaOperacionId,
+            zona.nombre                         AS ZonaOperacion,
+            prioridad.id                        AS PrioridadOperacionId,
+            prioridad.nombre                    AS PrioridadOperacion,
+            operesol.tiempoEspera               AS OperacionResolucionTiempoEspera,
+            operesol.duracionEjecucion          AS OperacionResolucionTiempoEjecucion,
+            operesol.tiempoResolucionBruto      AS OperacionResolucionTiempoBruto,
+            operesol.tiempoTrasladoDeclarado    AS OperacionResolucionTiempoTraslado,
+            operesol.tiemposAdministrativos     AS OperacionResolucionTiemposAdministrativos,
+            operesol.noEjecutada                AS OperacionResolucionNoEjecutada,
+            operesol.otAbortada                 AS OperacionResolucionOrdenTrabajoAbortada,
+            operesol.cumpleEstandares           AS OperacionResolucionCumpleEstandares,
+            operesol.esPreparacionDocumentacion AS OperacionResolucionEsPreparacionDoc,
+            operesol.esObtencionAutorizaciones  AS OperacionResolucionEsObtencionAutorizaciones,
+            operesol.esObtencionPermisosES      AS OperacionResolucionEsObtencionPermisos,
+            operesol.tipoFallaId                AS OperacionResolucionTipoFallaId,
+            operesol.latitud                    AS OperacionResolucionLatitud,
+            operesol.longitud                   AS OperacionResolucionLongitud,
+            operesol.fechaResolucion            AS OperacionResolucionFecha,
+            activo.id                           AS ActivoId,
+            activo.nombre                       AS Activo,
+            activo.codigo                       AS ActivoCodigo,
+            activoElem.id                       AS ActivoElementoId,
+            activoElem.codigo                   AS ActivoElementoCodigo,
+            activoElem.habitacion               AS ActivoElementoHabitacion,
+            activoElem.tipoInstalacion          AS ActivoElementoTipoInstalacion,
+            proceso.id                          AS ProcesoId,
+            proceso.nombre                      AS Proceso,
+            pln.nombre                          AS OrdenTrabajoPlanNombre,
+            solicitante.nombre                  AS OrdenTrabajoSolicitante,
+            responsable.nombre                  AS OrdenTrabajoResponsable,
+            estadoInst.id                       AS EstadoInstalacionId,
+            estadoInst.nombre                   AS EstadoInstalacion,
+            recinto.id                          AS RecintoId,
+            recinto.nombre                      AS Recinto,
+            ot.descripcion                      AS OrdenTrabajoDescripcion,
+            ot.fechaFin                         AS OrdenTrabajoFechaFin,
+            ot.fechaInicioReal                  AS OrdenTrabajoFechaInicioReal,
+            ot.fechaFinReal                     AS OrdenTrabajoFechaFinReal,
+            ot.tiempoResolucionBruto            AS OrdenTrabajoTiempoResolucionBruto,
+            ot.duracion                         AS OrdenTrabajoDuracion,
+            ot.fechaCreacion                    AS OrdenTrabajoFechaCreacion,
+            ot.ubicacion                        AS OrdenTrabajoUbicacion,
+            ot.nochero                          AS OrdenTrabajoNochero,
+            tipoAct.id                          AS TipoActividadId,
+            tipoAct.nombreReal                  AS TipoActividad
+        FROM        AMECO_DEV.Ameco.albi.ordenTrabajo           AS ot
+        INNER JOIN  AMECO_DEV.Ameco.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.nivel3                 AS n3               ON ot.nivel3Id                  = n3.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.nivel4                 AS n4               ON ot.nivel4Id                  = n4.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.estadoOt               AS estot            ON ot.estadoOtId                = estot.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.estadoOperacion        AS estadoOperacion  ON estadoOperacion.id           = ope.estadoOperacionId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.tipoTarea              AS tipotarea        ON tipotarea.id                 = ot.tipoTareaId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.subtipoTarea           AS subtipotar       ON ot.subtipoTareaId            = subtipotar.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.prioridad              AS prioridad        ON prioridad.id                 = ope.prioridadId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS pers             ON resolutor.personaId          = pers.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.motivo                 AS motivoDet        ON motivoDet.id                 = ope.motivoDetencionId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.motivoTipo             AS motivoDetTipo    ON motivoDetTipo.id             = motivoDet.motivoTipoId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.motivo                 AS motivoNoEjec     ON motivoNoEjec.id              = operesol.motivoNoEjecutadaId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.activo                 AS activo           ON activo.id                    = ot.activoId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.activoElementos        AS activoElem       ON activoElem.id                = ope.activoElementosId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.[plan]                 AS pln              ON pln.id                       = ot.planId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.estadoInstalacion      AS estadoInst       ON estadoInst.id                = ot.estadoInstalacionId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.ordenTrabajoAdicionales AS otadic          ON otadic.ordenTrabajoId        = ot.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.tipoActividad           AS tipoAct         ON tipoAct.id                   = otadic.tipoActividadId
+        WHERE 1 = 0
+    ) AS t
+    PRINT 'Tabla creada por primera vez'
+END
+
+-- =============================================
+-- PASO 2: Actualizar los datos
+-- Se ejecuta cada 1 hora sin DROP
+-- =============================================
+TRUNCATE TABLE AmecoHubIntegracion.dbo.AmecoDashboards
+
+INSERT INTO AmecoHubIntegracion.dbo.AmecoDashboards
+SELECT
+    ot.id                               AS OrdenTrabajoId,
+    ot.fechaInicio                      AS OrdenTrabajoFechaInicio,
+    ot.planId                           AS OrdenTrabajoPlanId,
+    emp.nombre                          AS OrdenTrabajoEmpresa,
+    estot.id                            AS EstadoOrdenTrabajoId,
+    estot.nombre                        AS EstadoOrdenTrabajo,
+    ope.id                              AS OperacionId,
+    ope.descripcion                     AS OperacionDescripcion,
+    ope.duracionMinSTD                  AS OperacionTiempoEstandar,
+    ope.duracionReal                    AS OperacionTiempoDuracionReal,
+    ISNULL(ope.tiempoPerdidoMin, 0)     AS OperacionTiempoPerdido,
+    ope.fechaFin                        AS OperacionFechaFin,
+    ope.fechaResolucion                 AS OperacionFechaResolucion,
+    ope.detalleSolucion                 AS OperacionSolucionComentario,
+    ope.cumpleSTD                       AS OperacionTiempoEstandarCumplido,
+    ope.requiereMateriales              AS OperacionRequiereMateriales,
+    ope.ubicacion                       AS OperacionUbicacion,
+    ope.recursos                        AS OperacionRecursos,
+    ope.movilizacion                    AS OperacionMovilizacion,
+    ope.secuencia                       AS OperacionSecuencia,
+    ope.dependencia                     AS OperacionDependencia,
+    ope.orden                           AS OperacionOrden,
+    ope.plazo                           AS OperacionPlazo,
+    ope.trabajo                         AS OperacionTrabajo,
+    ope.precio1                         AS OperacionPrecio1,
+    ope.precio2                         AS OperacionPrecio2,
+    ope.latitud                         AS OperacionLatitud,
+    ope.longitud                        AS OperacionLongitud,
+    ope.direccion                       AS OperacionDireccion,
+    ope.duracionTraslado                AS OperacionTiempoTraslado,
+    ope.elementoLinea                   AS OperacionElementoLinea,
+    ope.elementoCodigo                  AS OperacionElementoCodigo,
+    ope.elementoDescripcion             AS OperacionElementoDescripcion,
+    ope.requiereAprobacion              AS OperacionRequiereAprobacion,
+    ope.evidenciaFlag                   AS OperacionEvidenciaFlag,
+    ope.secuenciadorFlag                AS OperacionSecuenciadorFlag,
+    ope.procesoOperacionId              AS OperacionProcesoId,
+    ope.operacionPadreId                AS OperacionPadreId,
+    ope.fechaAgendada                   AS OperacionFechaAgendada,
+    ope.fechaProgramada                 AS OperacionFechaProgramada,
+    ope.fechaAsignacion                 AS OperacionFechaAsignacion,
+    ope.fechaLiberacion                 AS OperacionFechaLiberacion,
+    ope.fechaDesasignacion              AS OperacionFechaDesasignacion,
+    ope.fechaDetenidoInicio             AS OperacionFechaDetenidoInicio,
+    ope.fechaDetenidoFin                AS OperacionFechaDetenidoFin,
+    ISNULL(operesol.fechainicioTareaReal, ISNULL(ope.fechaInicioTareaReal, ope.fechaInicio)) AS OperacionFechaInicio,
+    tipotarea.id                        AS TipoTareaId,
+    tipotarea.nombre                    AS TipoTarea,
+    subtipotar.id                       AS SubTipoTareaId,
+    subtipotar.nombre                   AS SubTipoTarea,
+    n3.id                               AS Nivel3Id,
+    n3.nombre                           AS Nivel3,
+    n4.id                               AS Nivel4Id,
+    n4.nombre                           AS Nivel4,
+    neg.nombre                          AS OrdenTrabajoNegocio,
+    tipoOperacion.id                    AS TipoOperacionId,
+    tipoOperacion.nombre                AS TipoOperacion,
+    espec.id                            AS EspecialidadId,
+    espec.nombre                        AS Especialidad,
+    estadoOperacion.id                  AS EstadoOperacionId,
+    estadoOperacion.nombre              AS EstadoOperacion,
+    motivoDet.id                        AS MotivoDetencionId,
+    motivoDet.valor                     AS MotivoDetencion,
+    motivoDetTipo.nombre                AS MotivoDetencionTipo,
+    motivoNoEjec.id                     AS MotivoNoEjecucionId,
+    motivoNoEjec.valor                  AS MotivoNoEjecucion,
+    grupo.id                            AS GrupoResolutorOperacionId,
+    grupo.nombre                        AS GrupoResolutorOperacion,
+    pers.nombre                         AS OperacionResolutor,
+    ISNULL(turno.nombre, 'Sin asignar') AS OperacionResolutorTurno,
+    cargo.nombre                        AS OperacionResolutorCargo,
+    sitio.id                            AS SitioOperacionId,
+    sitio.nombre                        AS SitioOperacion,
+    zona.id                             AS ZonaOperacionId,
+    zona.nombre                         AS ZonaOperacion,
+    prioridad.id                        AS PrioridadOperacionId,
+    prioridad.nombre                    AS PrioridadOperacion,
+    operesol.tiempoEspera               AS OperacionResolucionTiempoEspera,
+    operesol.duracionEjecucion          AS OperacionResolucionTiempoEjecucion,
+    operesol.tiempoResolucionBruto      AS OperacionResolucionTiempoBruto,
+    operesol.tiempoTrasladoDeclarado    AS OperacionResolucionTiempoTraslado,
+    operesol.tiemposAdministrativos     AS OperacionResolucionTiemposAdministrativos,
+    operesol.noEjecutada                AS OperacionResolucionNoEjecutada,
+    operesol.otAbortada                 AS OperacionResolucionOrdenTrabajoAbortada,
+    operesol.cumpleEstandares           AS OperacionResolucionCumpleEstandares,
+    operesol.esPreparacionDocumentacion AS OperacionResolucionEsPreparacionDoc,
+    operesol.esObtencionAutorizaciones  AS OperacionResolucionEsObtencionAutorizaciones,
+    operesol.esObtencionPermisosES      AS OperacionResolucionEsObtencionPermisos,
+    operesol.tipoFallaId                AS OperacionResolucionTipoFallaId,
+    operesol.latitud                    AS OperacionResolucionLatitud,
+    operesol.longitud                   AS OperacionResolucionLongitud,
+    operesol.fechaResolucion            AS OperacionResolucionFecha,
+    activo.id                           AS ActivoId,
+    activo.nombre                       AS Activo,
+    activo.codigo                       AS ActivoCodigo,
+    activoElem.id                       AS ActivoElementoId,
+    activoElem.codigo                   AS ActivoElementoCodigo,
+    activoElem.habitacion               AS ActivoElementoHabitacion,
+    activoElem.tipoInstalacion          AS ActivoElementoTipoInstalacion,
+    proceso.id                          AS ProcesoId,
+    proceso.nombre                      AS Proceso,
+    pln.nombre                          AS OrdenTrabajoPlanNombre,
+    solicitante.nombre                  AS OrdenTrabajoSolicitante,
+    responsable.nombre                  AS OrdenTrabajoResponsable,
+    estadoInst.id                       AS EstadoInstalacionId,
+    estadoInst.nombre                   AS EstadoInstalacion,
+    recinto.id                          AS RecintoId,
+    recinto.nombre                      AS Recinto,
+    ot.descripcion                      AS OrdenTrabajoDescripcion,
+    ot.fechaFin                         AS OrdenTrabajoFechaFin,
+    ot.fechaInicioReal                  AS OrdenTrabajoFechaInicioReal,
+    ot.fechaFinReal                     AS OrdenTrabajoFechaFinReal,
+    ot.tiempoResolucionBruto            AS OrdenTrabajoTiempoResolucionBruto,
+    ot.duracion                         AS OrdenTrabajoDuracion,
+    ot.fechaCreacion                    AS OrdenTrabajoFechaCreacion,
+    ot.ubicacion                        AS OrdenTrabajoUbicacion,
+    ot.nochero                          AS OrdenTrabajoNochero,
+    tipoAct.id                          AS TipoActividadId,
+    tipoAct.nombreReal                  AS TipoActividad
+
+FROM        AMECO_DEV.Ameco.albi.ordenTrabajo           AS ot
+INNER JOIN  AMECO_DEV.Ameco.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
+LEFT JOIN   AMECO_DEV.Ameco.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
+LEFT JOIN   AMECO_DEV.Ameco.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId
+LEFT JOIN   AMECO_DEV.Ameco.albi.nivel3                 AS n3               ON ot.nivel3Id                  = n3.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.nivel4                 AS n4               ON ot.nivel4Id                  = n4.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.estadoOt               AS estot            ON ot.estadoOtId                = estot.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.estadoOperacion        AS estadoOperacion  ON estadoOperacion.id           = ope.estadoOperacionId
+LEFT JOIN   AMECO_DEV.Ameco.albi.tipoTarea              AS tipotarea        ON tipotarea.id                 = ot.tipoTareaId
+LEFT JOIN   AMECO_DEV.Ameco.albi.subtipoTarea           AS subtipotar       ON ot.subtipoTareaId            = subtipotar.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.prioridad              AS prioridad        ON prioridad.id                 = ope.prioridadId
+LEFT JOIN   AMECO_DEV.Ameco.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
+LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS pers             ON resolutor.personaId          = pers.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
+LEFT JOIN   AMECO_DEV.Ameco.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
+LEFT JOIN   AMECO_DEV.Ameco.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
+LEFT JOIN   AMECO_DEV.Ameco.albi.motivo                 AS motivoDet        ON motivoDet.id                 = ope.motivoDetencionId
+LEFT JOIN   AMECO_DEV.Ameco.albi.motivoTipo             AS motivoDetTipo    ON motivoDetTipo.id             = motivoDet.motivoTipoId
+LEFT JOIN   AMECO_DEV.Ameco.albi.motivo                 AS motivoNoEjec     ON motivoNoEjec.id              = operesol.motivoNoEjecutadaId
+LEFT JOIN   AMECO_DEV.Ameco.albi.activo                 AS activo           ON activo.id                    = ot.activoId
+LEFT JOIN   AMECO_DEV.Ameco.albi.activoElementos        AS activoElem       ON activoElem.id                = ope.activoElementosId
+LEFT JOIN   AMECO_DEV.Ameco.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
+LEFT JOIN   AMECO_DEV.Ameco.albi.[plan]                 AS pln              ON pln.id                       = ot.planId
+LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
+LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
+LEFT JOIN   AMECO_DEV.Ameco.albi.estadoInstalacion      AS estadoInst       ON estadoInst.id                = ot.estadoInstalacionId
+LEFT JOIN   AMECO_DEV.Ameco.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
+LEFT JOIN   AMECO_DEV.Ameco.albi.ordenTrabajoAdicionales AS otadic          ON otadic.ordenTrabajoId        = ot.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.tipoActividad           AS tipoAct         ON tipoAct.id                   = otadic.tipoActividadId
+
+</pre>
+      </div>
+    </details>
+
+    <p>Ver historial del job:</p>
+    <div class="code-block">
+      <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>SELECT
+    j.name                          AS JobNombre,
+    h.run_date                      AS FechaEjecucion,
+    h.run_time                      AS HoraEjecucion,
+    CASE h.run_status
+        WHEN 0 THEN 'Falló'
+        WHEN 1 THEN 'Exitoso'
+        WHEN 3 THEN 'Cancelado'
+    END                             AS Estado,
+    h.message                       AS MensajeError
+FROM msdb.dbo.sysjobs j
+INNER JOIN msdb.dbo.sysjobhistory h ON j.job_id = h.job_id
+WHERE j.name = 'Actualizar AmecoDashboards'
+ORDER BY h.run_date DESC, h.run_time DESC</pre>
+    </div>
+    <h3>Actualizar vista <code>dbo.v_OrdenesTrabajo</code></h3>
+    <div class="callout warning">
+      <span class="callout-icon">⚠️</span>
+      <div>Cada vez que se agregue una columna al Job, hay que correr el <code>ALTER VIEW</code> para que los datasets de Superset que usan la vista reciban la nueva columna.</div>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span>sql — SSMS localhost,1434</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>ALTER VIEW dbo.v_OrdenesTrabajo AS
+SELECT *
+FROM dbo.AmecoDashboards
+WHERE OperacionPadreId IS NULL</pre>
+    </div>
+    </div></details>
+  </section>
+
+  <!-- PASO 8 -->
+  <section id="paso8">
+    <details class="step-accordion numbered">
+    <summary><span class="step-num">7</span> Conectar Superset al SQL Server Docker</summary>
+    <div class="step-accordion-body">
+    <p>En Superset → <strong>Settings → Database Connections → + Database → Microsoft SQL Server</strong></p>
+    <div class="code-block">
+      <div class="code-header"><span>connection string</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>mssql+pymssql://sa:AmecoSQL2024!@sqlserver:1433/AmecoHubIntegracion</pre>
+    </div>
+    <div class="callout warning">
+      <span class="callout-icon">⚠️</span>
+      <div>Usar <code>sqlserver:1433</code> (nombre del servicio Docker), <strong>NO</strong> <code>localhost:1434</code>. Desde dentro de Docker el puerto interno es 1433.</div>
+    </div>
+    </div></details>
+  </section>
+
+  <!-- PASO 9 -->
+  <section id="paso9">
+    <details class="step-accordion numbered">
+    <summary><span class="step-num">8</span> Crear el Dataset en Superset</summary>
+    <div class="step-accordion-body">
+      <ol>
+        <li>Ir a <strong>Data → Datasets → + Dataset</strong></li>
+        <li>Seleccionar la conexión de SQL Server</li>
+        <li>Seleccionar la tabla <code>AmecoDashboards</code></li>
+        <li>Click en <strong>Add</strong></li>
+      </ol>
+    </div>
+    </details>
+  </section>
+
+  <!-- COLUMNAS -->
+  <section id="columnas">
+    <details class="step-accordion">
+    <summary>Agregar o eliminar columnas</summary>
+    <div class="step-accordion-body">
+      <h3>Checklist — agregar columna nueva</h3>
+      <ol style="margin-bottom:20px">
+        <li>Identificar la tabla fuente en <code>AMECO_DEV</code> y verificar si tiene columna <code>id</code> separada del nombre — si no tiene id, agregar tanto el id como el nombre para que el catálogo funcione correctamente.</li>
+        <li>Agregar el <code>LEFT JOIN</code> y las columnas al <code>SELECT</code> del Job en <code>index.html</code> (en los dos lugares: <em>PASO 1</em> y <em>PASO 2</em>).</li>
+        <li>Ejecutar el <code>ALTER TABLE</code> en SSMS para agregar la columna a la tabla existente (ver abajo).</li>
+        <li>Actualizar el Job en SSMS con el nuevo SQL y ejecutarlo manualmente para poblar los datos.</li>
+        <li>Ejecutar <code>ALTER VIEW dbo.v_OrdenesTrabajo</code> para refrescar los metadatos de la vista.</li>
+        <li>Agregar la columna a <code>cols_meta.js</code> con campo, original, tabla, tipo y grupo.</li>
+        <li>Agregar la entrada al array <code>LOOKUPS</code> en <code>generar_lookup.py</code> y correr <code>generar_lookup.bat</code> para regenerar el catálogo.</li>
+        <li>En Superset → Dataset → <strong>Sync columns from source</strong> para que aparezca en los charts.</li>
+      </ol>
+      <h3>Agregar columna nueva</h3>
+      <div class="code-block">
+        <div class="code-header"><span>sql — SSMS localhost,1434</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>ALTER TABLE AmecoHubIntegracion.dbo.AmecoDashboards
+ADD NuevaColumna VARCHAR(100)</pre>
+      </div>
+      <p>Luego en Superset → Dataset → <strong>Sync columns from source</strong></p>
+      <h3>Eliminar columna o cambio estructural grande</h3>
+      <div class="code-block">
+        <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>DROP TABLE IF EXISTS AmecoHubIntegracion.dbo.AmecoDashboards</pre>
+      </div>
+      <div class="callout danger">
+        <span class="callout-icon">🚨</span>
+        <div>Después de un <code>DROP TABLE</code> hay que ejecutar el job manualmente y reimportar el dataset en Superset, ya que se pierden las referencias.</div>
+      </div>
+    </div>
+    </details>
+  </section>
+
+  <!-- HISTORIAL -->
+  <section id="historial">
+    <details class="step-accordion">
+    <summary>Historial del Job</summary>
+    <div class="step-accordion-body">
+      <p>Desde SSMS en <code>localhost,1434</code>, o desde <strong>Agente SQL Server → Jobs → Ver historial</strong>:</p>
+      <div class="code-block">
+        <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>SELECT TOP 20
+    j.name          AS JobNombre,
+    h.run_date      AS FechaEjecucion,
+    h.run_time      AS HoraEjecucion,
+    CASE h.run_status
+        WHEN 0 THEN 'Falló'
+        WHEN 1 THEN 'Exitoso'
+        WHEN 3 THEN 'Cancelado'
+    END             AS Estado,
+    h.message       AS MensajeError
+FROM msdb.dbo.sysjobs j
+INNER JOIN msdb.dbo.sysjobhistory h ON j.job_id = h.job_id
+WHERE j.name = 'Actualizar AmecoDashboards'
+ORDER BY h.run_date DESC, h.run_time DESC</pre>
+      </div>
+    </div>
+    </details>
+  </section>
+
+  <!-- COMANDOS -->
+  <section id="comandos">
+    <details class="step-accordion">
+    <summary>Comandos útiles</summary>
+    <div class="step-accordion-body">
+      <table>
+        <tr><th>Comando</th><th>Qué hace</th></tr>
+        <tr><td><code>docker compose up -d</code></td><td>Levantar los servicios</td></tr>
+        <tr><td><code>docker compose down</code></td><td>Detener los servicios</td></tr>
+        <tr><td><code>docker compose restart superset</code></td><td>Reiniciar solo Superset</td></tr>
+        <tr><td><code>docker compose logs superset --tail=50</code></td><td>Ver los últimos 50 logs</td></tr>
+        <tr><td><code>docker compose up -d --build</code></td><td>Reconstruir y levantar</td></tr>
+        <tr><td><code>docker compose build --no-cache superset</code></td><td>Reconstruir sin caché</td></tr>
+        <tr><td><code>docker stats</code></td><td>Ver uso de recursos en tiempo real</td></tr>
+        <tr><td><code>docker stats --no-stream</code></td><td>Ver uso de recursos una vez</td></tr>
+      </table>
+    </div>
+    </details>
+  </section>
+
+  <!-- AZURE -->
+  <section id="azure">
+    <details class="step-accordion">
+    <summary>Migración a Azure (pendiente)</summary>
+    <div class="step-accordion-body">
+      <p>Cuando se migre a Azure, los cambios principales serán:</p>
+      <table class="migration-table">
+        <tr><th>Local</th><th>Azure</th></tr>
+        <tr><td>SQL Server Docker</td><td>Azure SQL Database</td></tr>
+        <tr><td>Superset Docker local</td><td>Azure Container Apps</td></tr>
+        <tr><td>Job SQL Agent</td><td>Azure Data Factory</td></tr>
+        <tr><td>localhost:8088</td><td>URL pública de Azure</td></tr>
+        <tr><td>sqlserver:1433</td><td>Azure SQL connection string</td></tr>
+      </table>
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div>La query del dataset, la tabla y la lógica del job son exactamente iguales en Azure. Solo cambian las cadenas de conexión y los servicios de infraestructura.</div>
+      </div>
+    </div>
+    </details>
+  </section>
+
+</main>
+
+<script>
+  // Copy button
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(() => {
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copiar';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // Auto-open details when navigating via hash
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target && target.tagName === 'DETAILS') target.open = true;
+    });
+  });
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 60) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+
+</body>
+</html>

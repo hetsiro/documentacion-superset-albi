@@ -1,0 +1,1359 @@
+{
+  "_meta": {
+    "generado": "2026-03-31T21:24:31",
+    "tabla": "AmecoHubIntegracion.dbo.AmecoDashboards",
+    "total_valores": 310,
+    "catalogos": 19
+  },
+  "catalogos": {
+    "Estado OT": {
+      "idCol": "EstadoOrdenTrabajoId",
+      "valorCol": "EstadoOrdenTrabajo",
+      "valores": [
+        {
+          "id": 1,
+          "valor": "Abierta"
+        },
+        {
+          "id": 5,
+          "valor": "Cancelada"
+        },
+        {
+          "id": 3,
+          "valor": "Cerrada"
+        },
+        {
+          "id": 4,
+          "valor": "Detenida"
+        },
+        {
+          "id": 2,
+          "valor": "Resuelta"
+        }
+      ]
+    },
+    "Tipo Tarea": {
+      "idCol": "TipoTareaId",
+      "valorCol": "TipoTarea",
+      "valores": [
+        {
+          "id": 28,
+          "valor": "Aceites / Lubricantes / Aditivos - Limpieza"
+        },
+        {
+          "id": 20,
+          "valor": "Cubos y ruedas"
+        },
+        {
+          "id": 22,
+          "valor": "Eléctrico"
+        },
+        {
+          "id": 27,
+          "valor": "Elementos de Desgaste (GET)"
+        },
+        {
+          "id": 23,
+          "valor": "Estructura"
+        },
+        {
+          "id": 19,
+          "valor": "Giro Potencia Rodaje/Transmisión"
+        },
+        {
+          "id": 25,
+          "valor": "Hidráulicos"
+        },
+        {
+          "id": 30,
+          "valor": "Inspeccion"
+        },
+        {
+          "id": 24,
+          "valor": "Llantas - Neumáticos"
+        },
+        {
+          "id": 18,
+          "valor": "Motor"
+        },
+        {
+          "id": 26,
+          "valor": "Otros sistemas"
+        },
+        {
+          "id": 33,
+          "valor": "Planificado"
+        },
+        {
+          "id": 29,
+          "valor": "Preventivo"
+        },
+        {
+          "id": 21,
+          "valor": "Undercarriage Tren de rodamiento"
+        }
+      ]
+    },
+    "Sub Tipo Tarea": {
+      "idCol": "SubTipoTareaId",
+      "valorCol": "SubTipoTarea",
+      "valores": [
+        {
+          "id": 33,
+          "valor": "Aceites"
+        },
+        {
+          "id": 34,
+          "valor": "Aditivos"
+        },
+        {
+          "id": 17,
+          "valor": "Alto voltaje"
+        },
+        {
+          "id": 43,
+          "valor": "BL"
+        },
+        {
+          "id": 18,
+          "valor": "Cabina"
+        },
+        {
+          "id": 19,
+          "valor": "Cuerpo"
+        },
+        {
+          "id": 32,
+          "valor": "Elementos de Desgaste (GET)"
+        },
+        {
+          "id": 35,
+          "valor": "Grasa"
+        },
+        {
+          "id": 20,
+          "valor": "Implementos"
+        },
+        {
+          "id": 39,
+          "valor": "Inspeccion"
+        },
+        {
+          "id": 21,
+          "valor": "Llantas - Neumáticos"
+        },
+        {
+          "id": 2,
+          "valor": "Motor básico"
+        },
+        {
+          "id": 23,
+          "valor": "Motores y bombas"
+        },
+        {
+          "id": 42,
+          "valor": "PM"
+        },
+        {
+          "id": 44,
+          "valor": "PRED"
+        },
+        {
+          "id": 38,
+          "valor": "Preventivo"
+        },
+        {
+          "id": 37,
+          "valor": "Refrigerante"
+        },
+        {
+          "id": 12,
+          "valor": "Ruedas"
+        },
+        {
+          "id": 27,
+          "valor": "Sistema contra incendios"
+        },
+        {
+          "id": 3,
+          "valor": "Sistema de Admision"
+        },
+        {
+          "id": 24,
+          "valor": "Sistema de cilindros"
+        },
+        {
+          "id": 4,
+          "valor": "Sistema de Combustible"
+        },
+        {
+          "id": 13,
+          "valor": "Sistema de Direccion"
+        },
+        {
+          "id": 5,
+          "valor": "Sistema de Escape"
+        },
+        {
+          "id": 14,
+          "valor": "Sistema de Frenos"
+        },
+        {
+          "id": 9,
+          "valor": "Sistema de Giro"
+        },
+        {
+          "id": 6,
+          "valor": "Sistema de Lubricacion"
+        },
+        {
+          "id": 29,
+          "valor": "Sistema de lubricacion del equipo"
+        },
+        {
+          "id": 7,
+          "valor": "Sistema de Refrigeracion"
+        },
+        {
+          "id": 22,
+          "valor": "Sistema eléctrico"
+        },
+        {
+          "id": 8,
+          "valor": "Sistema Electrico del Motor"
+        },
+        {
+          "id": 25,
+          "valor": "Sistema hidráulico"
+        },
+        {
+          "id": 31,
+          "valor": "Sistema neumático"
+        },
+        {
+          "id": 10,
+          "valor": "Tren de Potencia/Transmisión"
+        },
+        {
+          "id": 11,
+          "valor": "Tren de Rodaje"
+        },
+        {
+          "id": 16,
+          "valor": "Tren de Rodamiento"
+        }
+      ]
+    },
+    "Nivel 3": {
+      "idCol": "Nivel3Id",
+      "valorCol": "Nivel3",
+      "valores": [
+        {
+          "id": 794,
+          "valor": "Aceite de Diferencial (HD50)"
+        },
+        {
+          "id": 798,
+          "valor": "Aceite de Direccion (HD10)"
+        },
+        {
+          "id": 810,
+          "valor": "Aceite de Motor (10W40)"
+        },
+        {
+          "id": 793,
+          "valor": "Aceite de Motor (15W40)"
+        },
+        {
+          "id": 809,
+          "valor": "Aceite de Motor (5W30)"
+        },
+        {
+          "id": 796,
+          "valor": "Aceite de Transmision (HD30)"
+        },
+        {
+          "id": 795,
+          "valor": "Aceite Hidraulico"
+        },
+        {
+          "id": 792,
+          "valor": "Aceites y Grasas"
+        },
+        {
+          "id": 188,
+          "valor": "Acumulador de Direccion"
+        },
+        {
+          "id": 606,
+          "valor": "Acumulador Sistema Hidraulico"
+        },
+        {
+          "id": 812,
+          "valor": "Ad Blue"
+        },
+        {
+          "id": 789,
+          "valor": "Adapter / Adaptador de Labio (GET)"
+        },
+        {
+          "id": 773,
+          "valor": "Adapter / Adaptador de Puntas (GET)"
+        },
+        {
+          "id": 118,
+          "valor": "Alternador"
+        },
+        {
+          "id": 442,
+          "valor": "ALTERNATOR HIGH VOLTAJE"
+        },
+        {
+          "id": 432,
+          "valor": "Aro de Llanta"
+        },
+        {
+          "id": 721,
+          "valor": "Asiento del Operador"
+        },
+        {
+          "id": 425,
+          "valor": "Aspersores de Agua"
+        },
+        {
+          "id": 905,
+          "valor": "Backlog"
+        },
+        {
+          "id": 391,
+          "valor": "Balancin/ Diper"
+        },
+        {
+          "id": 304,
+          "valor": "Ballstud"
+        },
+        {
+          "id": 359,
+          "valor": "Bancada"
+        },
+        {
+          "id": 319,
+          "valor": "Baranda / Pasamanos"
+        },
+        {
+          "id": 778,
+          "valor": "Barra de Desgaste"
+        },
+        {
+          "id": 791,
+          "valor": "Barra de Perforacion"
+        },
+        {
+          "id": 357,
+          "valor": "Base Portaconos y Tacos"
+        },
+        {
+          "id": 323,
+          "valor": "Bastidor / Chasis / TRACK FRAME"
+        },
+        {
+          "id": 322,
+          "valor": "Bastidor lateral / SIDE FRAME"
+        },
+        {
+          "id": 462,
+          "valor": "Baterias"
+        },
+        {
+          "id": 389,
+          "valor": "Bomba de agua de cisterna / Motobomba"
+        },
+        {
+          "id": 410,
+          "valor": "Bomba de Agua de Sistema de Barrido"
+        },
+        {
+          "id": 53,
+          "valor": "Bomba de combustible / Inyeccion"
+        },
+        {
+          "id": 502,
+          "valor": "Bomba de Freno"
+        },
+        {
+          "id": 496,
+          "valor": "Bomba de Giro"
+        },
+        {
+          "id": 497,
+          "valor": "Bomba de Implementos / Trabajo"
+        },
+        {
+          "id": 594,
+          "valor": "Bomba de Posicionamiento de brazo (Jumbo)"
+        },
+        {
+          "id": 531,
+          "valor": "Bomba de Rotacion"
+        },
+        {
+          "id": 47,
+          "valor": "Bomba de Transferencia de Combustible"
+        },
+        {
+          "id": 498,
+          "valor": "Bomba del Ventilador / FAN"
+        },
+        {
+          "id": 495,
+          "valor": "Bomba Hidraulica"
+        },
+        {
+          "id": 219,
+          "valor": "Bomba Hidraulica Manual de Freno"
+        },
+        {
+          "id": 471,
+          "valor": "Bornes de Baterias"
+        },
+        {
+          "id": 302,
+          "valor": "Botapiedras"
+        },
+        {
+          "id": 351,
+          "valor": "Brazos de Empuje de Bulldozer"
+        },
+        {
+          "id": 781,
+          "valor": "Bronces de Vertedera"
+        },
+        {
+          "id": 396,
+          "valor": "Bujes Cucharon / SHOVEL BACK SHELL"
+        },
+        {
+          "id": 427,
+          "valor": "Bujes de Boom"
+        },
+        {
+          "id": 716,
+          "valor": "Cabina"
+        },
+        {
+          "id": 443,
+          "valor": "Cable de Alto Voltaje"
+        },
+        {
+          "id": 463,
+          "valor": "Cable de fuerza"
+        },
+        {
+          "id": 161,
+          "valor": "Cadena de Tandem"
+        },
+        {
+          "id": 250,
+          "valor": "Cadena de Traslado"
+        },
+        {
+          "id": 387,
+          "valor": "Caja de engranajes Tornamesa"
+        },
+        {
+          "id": 487,
+          "valor": "Caja de fusibles"
+        },
+        {
+          "id": 81,
+          "valor": "Cañeria / Manguera de refrigerante"
+        },
+        {
+          "id": 49,
+          "valor": "Cañerias de Combustible"
+        },
+        {
+          "id": 46,
+          "valor": "Cañerias de Combustible / Motor"
+        },
+        {
+          "id": 208,
+          "valor": "Cañerias de Freno"
+        },
+        {
+          "id": 603,
+          "valor": "Cañerias Hidraulicas"
+        },
+        {
+          "id": 782,
+          "valor": "Cantoneras (GET)"
+        },
+        {
+          "id": 127,
+          "valor": "Cardan"
+        },
+        {
+          "id": 65,
+          "valor": "Catalizador de Gases"
+        },
+        {
+          "id": 536,
+          "valor": "Cilindro de Articulacion / Direccion"
+        },
+        {
+          "id": 553,
+          "valor": "Cilindro de Desplazamiento de Vertedera"
+        },
+        {
+          "id": 534,
+          "valor": "CILINDRO DE IMPLEMENTO"
+        },
+        {
+          "id": 254,
+          "valor": "Cilindro Tensor / Templador de Cadena"
+        },
+        {
+          "id": 736,
+          "valor": "Cinturon de Seguridad"
+        },
+        {
+          "id": 739,
+          "valor": "Circulina / Baliza"
+        },
+        {
+          "id": 187,
+          "valor": "Columna de Direccion"
+        },
+        {
+          "id": 3,
+          "valor": "Compresor de Aire Acondicionado / AAC"
+        },
+        {
+          "id": 412,
+          "valor": "Compuerta de Tolva"
+        },
+        {
+          "id": 729,
+          "valor": "Condensador de Aire Acondicionado / AAC"
+        },
+        {
+          "id": 719,
+          "valor": "Consola"
+        },
+        {
+          "id": 128,
+          "valor": "Control de Transmission"
+        },
+        {
+          "id": 457,
+          "valor": "Control de Traslacion / Controller Propel"
+        },
+        {
+          "id": 620,
+          "valor": "Control Principal de Valvulas / block de Valvulas"
+        },
+        {
+          "id": 392,
+          "valor": "Cucharon / Bucket / SHOVEL BACK SHELL (TAPA)"
+        },
+        {
+          "id": 783,
+          "valor": "Cuchillas (GET)"
+        },
+        {
+          "id": 329,
+          "valor": "Deposito de Agua del Sistema de Perforacion"
+        },
+        {
+          "id": 428,
+          "valor": "Desplazamiento del Circulo / Centrer Shift"
+        },
+        {
+          "id": 155,
+          "valor": "Diferencial"
+        },
+        {
+          "id": 171,
+          "valor": "DIFFERENTIAL STEERING"
+        },
+        {
+          "id": 167,
+          "valor": "DRIVE AXLE"
+        },
+        {
+          "id": 148,
+          "valor": "Enfriador de Aceite de Transmision"
+        },
+        {
+          "id": 83,
+          "valor": "Enfriador de Aceite del Motor"
+        },
+        {
+          "id": 45,
+          "valor": "Enfriador de Combustible"
+        },
+        {
+          "id": 321,
+          "valor": "Escaleras"
+        },
+        {
+          "id": 731,
+          "valor": "Espejos Retrovisores"
+        },
+        {
+          "id": 296,
+          "valor": "Estructura / Cuerpo"
+        },
+        {
+          "id": 727,
+          "valor": "Estructura ROPS"
+        },
+        {
+          "id": 672,
+          "valor": "Extintor"
+        },
+        {
+          "id": 16,
+          "valor": "Faja de Alternador"
+        },
+        {
+          "id": 31,
+          "valor": "Faja de Bomba de Aceite Motor"
+        },
+        {
+          "id": 485,
+          "valor": "Faro de Ruta"
+        },
+        {
+          "id": 469,
+          "valor": "Faros Delanteros"
+        },
+        {
+          "id": 470,
+          "valor": "Faros Posteriores"
+        },
+        {
+          "id": 18,
+          "valor": "Filtro de Aceite de Motor"
+        },
+        {
+          "id": 604,
+          "valor": "Filtro de Aceite Hidraulico"
+        },
+        {
+          "id": 34,
+          "valor": "Filtro de Aire de Motor"
+        },
+        {
+          "id": 44,
+          "valor": "Filtro de Combustible"
+        },
+        {
+          "id": 186,
+          "valor": "Filtro de Direccion"
+        },
+        {
+          "id": 138,
+          "valor": "Filtro de Transmision"
+        },
+        {
+          "id": 493,
+          "valor": "Foco H3"
+        },
+        {
+          "id": 203,
+          "valor": "Freno de Paqueo / Estacionamiento / Servicio"
+        },
+        {
+          "id": 227,
+          "valor": "Freno de Servicio"
+        },
+        {
+          "id": 345,
+          "valor": "Gata /Pata / Soporte"
+        },
+        {
+          "id": 489,
+          "valor": "Generador"
+        },
+        {
+          "id": 813,
+          "valor": "Grasa"
+        },
+        {
+          "id": 318,
+          "valor": "Guardas / Covertores / Protectores"
+        },
+        {
+          "id": 465,
+          "valor": "Harness Electrico - Chasis"
+        },
+        {
+          "id": 104,
+          "valor": "IGNITION SYSTEM"
+        },
+        {
+          "id": 838,
+          "valor": "Implemento (Picoton, Horquilla, Uñas, Martillo Hidraulico)"
+        },
+        {
+          "id": 375,
+          "valor": "Implementos"
+        },
+        {
+          "id": 771,
+          "valor": "Implementos de Corte (GET)"
+        },
+        {
+          "id": 894,
+          "valor": "Inspeccion"
+        },
+        {
+          "id": 897,
+          "valor": "Inspeccion Anual"
+        },
+        {
+          "id": 898,
+          "valor": "Inspeccion de Frenos"
+        },
+        {
+          "id": 895,
+          "valor": "Inspeccion Semanal"
+        },
+        {
+          "id": 684,
+          "valor": "Inyector de Grasa"
+        },
+        {
+          "id": 54,
+          "valor": "Inyectores de Combustible"
+        },
+        {
+          "id": 413,
+          "valor": "Lampon / Hoja Topadora / Dozer"
+        },
+        {
+          "id": 430,
+          "valor": "LLantas"
+        },
+        {
+          "id": 486,
+          "valor": "LLave Master / Master Switch"
+        },
+        {
+          "id": 87,
+          "valor": "Mando de Ventilador"
+        },
+        {
+          "id": 626,
+          "valor": "Manguera de Alta Presion Block de Valvulas"
+        },
+        {
+          "id": 625,
+          "valor": "Manguera de Alta Presion Bomba de Implementos"
+        },
+        {
+          "id": 624,
+          "valor": "Manguera de Alta Presion Boom"
+        },
+        {
+          "id": 621,
+          "valor": "Manguera de Alta Presion Stick"
+        },
+        {
+          "id": 637,
+          "valor": "MANGUERA DE CILINDRO DE STICK / BRAZO"
+        },
+        {
+          "id": 66,
+          "valor": "Manguera de Lubricacion"
+        },
+        {
+          "id": 650,
+          "valor": "Manguera de Motor de Giro"
+        },
+        {
+          "id": 78,
+          "valor": "MANGUERA DE REFRIGERACION (SMCS)"
+        },
+        {
+          "id": 636,
+          "valor": "MANGUERA DE RETORNO CENTRAL"
+        },
+        {
+          "id": 601,
+          "valor": "Mangueras Hidraulicas de Alta Presion"
+        },
+        {
+          "id": 602,
+          "valor": "Mangueras Hidraulicas de Baja Presion"
+        },
+        {
+          "id": 706,
+          "valor": "Mangueras Neumaticas"
+        },
+        {
+          "id": 102,
+          "valor": "Modulo de Control Electronico ECM Motor"
+        },
+        {
+          "id": 817,
+          "valor": "Modulo de Control Electronico ECM Transmision / Chasis"
+        },
+        {
+          "id": 129,
+          "valor": "Modulo de Marcha"
+        },
+        {
+          "id": 100,
+          "valor": "MOTOR DE ARRANQUE ELECTRICO (ARRANCADOR)"
+        },
+        {
+          "id": 509,
+          "valor": "Motor de Circulo de Giro"
+        },
+        {
+          "id": 507,
+          "valor": "Motor de Giro"
+        },
+        {
+          "id": 1,
+          "valor": "Motor Diesel"
+        },
+        {
+          "id": 490,
+          "valor": "Motor Electrico"
+        },
+        {
+          "id": 724,
+          "valor": "Motor Electrico de Aire Acondicionado / AAC"
+        },
+        {
+          "id": 500,
+          "valor": "Motor Hidraulico"
+        },
+        {
+          "id": 483,
+          "valor": "Panel de Control Electrico"
+        },
+        {
+          "id": 202,
+          "valor": "Paquete de Freno"
+        },
+        {
+          "id": 324,
+          "valor": "Parachoque"
+        },
+        {
+          "id": 309,
+          "valor": "Pasarelas"
+        },
+        {
+          "id": 201,
+          "valor": "Pastillas de Freno"
+        },
+        {
+          "id": 774,
+          "valor": "Pin / Seguro de Puntas (GET)"
+        },
+        {
+          "id": 354,
+          "valor": "Pines de Pivote de Base de Tolva"
+        },
+        {
+          "id": 827,
+          "valor": "Pines Inferior de Cilindro de Vuelco / Bucket (PIN B)"
+        },
+        {
+          "id": 4,
+          "valor": "Piñon Motriz (Motor)"
+        },
+        {
+          "id": 777,
+          "valor": "Planchas de Desgaste (GET)"
+        },
+        {
+          "id": 326,
+          "valor": "Plataforma / Tanque"
+        },
+        {
+          "id": 864,
+          "valor": "PM 10,000 KM"
+        },
+        {
+          "id": 854,
+          "valor": "PM 1000 Hr"
+        },
+        {
+          "id": 856,
+          "valor": "PM 2000 Hr"
+        },
+        {
+          "id": 852,
+          "valor": "PM 250 Hr"
+        },
+        {
+          "id": 840,
+          "valor": "PM 400 Hr (X)"
+        },
+        {
+          "id": 36,
+          "valor": "Portafiltro de Aire"
+        },
+        {
+          "id": 39,
+          "valor": "Pre - Cleaner"
+        },
+        {
+          "id": 911,
+          "valor": "Preventivo"
+        },
+        {
+          "id": 775,
+          "valor": "Protector de Labio (GET)"
+        },
+        {
+          "id": 788,
+          "valor": "Protector de Ripper (GET)"
+        },
+        {
+          "id": 728,
+          "valor": "Puerta de Cabina"
+        },
+        {
+          "id": 303,
+          "valor": "Puerta de Capot"
+        },
+        {
+          "id": 839,
+          "valor": "Punta de Ripper / Escarificador / Desgarrador (GET)"
+        },
+        {
+          "id": 772,
+          "valor": "Puntas / Uñas (GET)"
+        },
+        {
+          "id": 89,
+          "valor": "Radiador"
+        },
+        {
+          "id": 815,
+          "valor": "Refrigerante"
+        },
+        {
+          "id": 480,
+          "valor": "Regulador de Voltaje"
+        },
+        {
+          "id": 179,
+          "valor": "Rodaje de Rueda"
+        },
+        {
+          "id": 120,
+          "valor": "Rodaje y Engranaje de Tornamesa (Pala)"
+        },
+        {
+          "id": 180,
+          "valor": "Rueda / Cubo"
+        },
+        {
+          "id": 82,
+          "valor": "Sensor de Nivel de Refrigerante"
+        },
+        {
+          "id": 57,
+          "valor": "Sensor de Presion de Combustible"
+        },
+        {
+          "id": 477,
+          "valor": "Sensor de Transmision"
+        },
+        {
+          "id": 401,
+          "valor": "Shank de Ripper"
+        },
+        {
+          "id": 64,
+          "valor": "Silenciador de Escape"
+        },
+        {
+          "id": 669,
+          "valor": "Sistema Contra Incendio"
+        },
+        {
+          "id": 32,
+          "valor": "Sistema de Admision"
+        },
+        {
+          "id": 97,
+          "valor": "Sistema de Arranque"
+        },
+        {
+          "id": 723,
+          "valor": "Sistema de Calefaccion / Aire Acondicionado / AAC"
+        },
+        {
+          "id": 41,
+          "valor": "Sistema de Combustible"
+        },
+        {
+          "id": 60,
+          "valor": "Sistema de Escape"
+        },
+        {
+          "id": 196,
+          "valor": "Sistema de frenos"
+        },
+        {
+          "id": 119,
+          "valor": "Sistema de Giro"
+        },
+        {
+          "id": 681,
+          "valor": "Sistema de Lubricacion Automatico LINCOLN"
+        },
+        {
+          "id": 468,
+          "valor": "Sistema de Luces"
+        },
+        {
+          "id": 94,
+          "valor": "Sistema de Refrigeracion - Motor"
+        },
+        {
+          "id": 451,
+          "valor": "Sistema Electrico"
+        },
+        {
+          "id": 586,
+          "valor": "Sistema Hidraulico"
+        },
+        {
+          "id": 265,
+          "valor": "Sprocket / Segmentos de Sprocket / TUMBLER"
+        },
+        {
+          "id": 403,
+          "valor": "Stick"
+        },
+        {
+          "id": 467,
+          "valor": "Switch"
+        },
+        {
+          "id": 475,
+          "valor": "Switch Master"
+        },
+        {
+          "id": 199,
+          "valor": "Tambor de Freno"
+        },
+        {
+          "id": 174,
+          "valor": "TANDEM DRIVE SPROCKET"
+        },
+        {
+          "id": 368,
+          "valor": "Tanque de Agua"
+        },
+        {
+          "id": 51,
+          "valor": "Tanque de Combustible"
+        },
+        {
+          "id": 598,
+          "valor": "Tanque Hidraulico"
+        },
+        {
+          "id": 411,
+          "valor": "Tolva"
+        },
+        {
+          "id": 258,
+          "valor": "TRACK ROLLER BEARING"
+        },
+        {
+          "id": 125,
+          "valor": "Transmision (TX)"
+        },
+        {
+          "id": 247,
+          "valor": "Tren de Rodamiento"
+        },
+        {
+          "id": 415,
+          "valor": "Trunnion"
+        },
+        {
+          "id": 62,
+          "valor": "Tubo de Escape"
+        },
+        {
+          "id": 40,
+          "valor": "Turbocompresor"
+        },
+        {
+          "id": 608,
+          "valor": "Valvula Hidraulica"
+        },
+        {
+          "id": 70,
+          "valor": "Varilla de nivel de aceite"
+        },
+        {
+          "id": 715,
+          "valor": "Ventilador de Aire Acondicionado / AAC"
+        },
+        {
+          "id": 394,
+          "valor": "Vertedera"
+        },
+        {
+          "id": 175,
+          "valor": "WHEELS"
+        }
+      ]
+    },
+    "Nivel 4": {
+      "idCol": "Nivel4Id",
+      "valorCol": "Nivel4",
+      "valores": [
+        {
+          "id": 3,
+          "valor": "Aplicar Checklist"
+        },
+        {
+          "id": 5,
+          "valor": "Backlog"
+        },
+        {
+          "id": 12,
+          "valor": "Evaluar"
+        },
+        {
+          "id": 6,
+          "valor": "Mantenimiento Predictivo"
+        },
+        {
+          "id": 4,
+          "valor": "Mantenimiento Preventivo"
+        },
+        {
+          "id": 2,
+          "valor": "Reemplazar"
+        },
+        {
+          "id": 1,
+          "valor": "Reparar"
+        }
+      ]
+    },
+    "Tipo Operación": {
+      "idCol": "TipoOperacionId",
+      "valorCol": "TipoOperacion",
+      "valores": [
+        {
+          "id": 1,
+          "valor": "Básico"
+        }
+      ]
+    },
+    "Especialidad": {
+      "idCol": "EspecialidadId",
+      "valorCol": "Especialidad",
+      "valores": [
+        {
+          "id": 13,
+          "valor": "Sin especificar"
+        }
+      ]
+    },
+    "Estado Operación": {
+      "idCol": "EstadoOperacionId",
+      "valorCol": "EstadoOperacion",
+      "valores": [
+        {
+          "id": 1,
+          "valor": "Abierta"
+        },
+        {
+          "id": 3,
+          "valor": "Asignada"
+        },
+        {
+          "id": 5,
+          "valor": "Cancelada"
+        },
+        {
+          "id": 7,
+          "valor": "Resuelta"
+        }
+      ]
+    },
+    "Motivo Detención": {
+      "idCol": "MotivoDetencionId",
+      "valorCol": "MotivoDetencion",
+      "valores": []
+    },
+    "Motivo No Ejecución": {
+      "idCol": "MotivoNoEjecucionId",
+      "valorCol": "MotivoNoEjecucion",
+      "valores": []
+    },
+    "Grupo Resolutor": {
+      "idCol": "GrupoResolutorTareaId",
+      "valorCol": "GrupoResolutorTarea",
+      "valores": [
+        {
+          "id": 11,
+          "valor": "Confiabilidad"
+        },
+        {
+          "id": 1,
+          "valor": "Mantenedores"
+        },
+        {
+          "id": 4,
+          "valor": "Mantenimiento Turno A"
+        },
+        {
+          "id": 5,
+          "valor": "Mantenimiento Turno B"
+        },
+        {
+          "id": 8,
+          "valor": "Planner Turno A"
+        },
+        {
+          "id": 10,
+          "valor": "Planner Turno B"
+        },
+        {
+          "id": 7,
+          "valor": "Supervisor"
+        },
+        {
+          "id": 14,
+          "valor": "Supervisor A"
+        },
+        {
+          "id": 15,
+          "valor": "Supervisor B"
+        }
+      ]
+    },
+    "Sitio": {
+      "idCol": "SitioTareaId",
+      "valorCol": "SitioTarea",
+      "valores": [
+        {
+          "id": 10,
+          "valor": "Copiapó"
+        },
+        {
+          "id": 7,
+          "valor": "Faena"
+        },
+        {
+          "id": 8,
+          "valor": "Faena"
+        },
+        {
+          "id": 9,
+          "valor": "Faena"
+        },
+        {
+          "id": 12,
+          "valor": "Faena"
+        },
+        {
+          "id": 11,
+          "valor": "Sin especificar"
+        }
+      ]
+    },
+    "Zona": {
+      "idCol": "ZonaTareaId",
+      "valorCol": "ZonaTarea",
+      "valores": [
+        {
+          "id": 3,
+          "valor": "Sin especificar"
+        },
+        {
+          "id": 6,
+          "valor": "Taller Copiapó"
+        },
+        {
+          "id": 4,
+          "valor": "Taller Domo"
+        },
+        {
+          "id": 1,
+          "valor": "Taller Izaje"
+        },
+        {
+          "id": 5,
+          "valor": "Taller Mina"
+        },
+        {
+          "id": 7,
+          "valor": "Terreno"
+        }
+      ]
+    },
+    "Prioridad": {
+      "idCol": "PrioridadTareaId",
+      "valorCol": "PrioridadTarea",
+      "valores": [
+        {
+          "id": 3,
+          "valor": "Machine down"
+        },
+        {
+          "id": 1,
+          "valor": "Normal"
+        },
+        {
+          "id": 2,
+          "valor": "Riesgo de machine down"
+        }
+      ]
+    },
+    "Proceso": {
+      "idCol": "ProcesoId",
+      "valorCol": "Proceso",
+      "valores": [
+        {
+          "id": 16,
+          "valor": "básico"
+        }
+      ]
+    },
+    "Plan": {
+      "idCol": "PlanId2",
+      "valorCol": "PlanNombre",
+      "valores": []
+    },
+    "Estado Instalación": {
+      "idCol": "EstadoInstalacionId",
+      "valorCol": "EstadoInstalacion",
+      "valores": []
+    },
+    "Recinto": {
+      "idCol": "RecintoId",
+      "valorCol": "Recinto",
+      "valores": [
+        {
+          "id": 1,
+          "valor": "Recinto 1"
+        }
+      ]
+    },
+    "Motivo Detención Tipo": {
+      "idCol": "MotivoDetencionId",
+      "valorCol": "MotivoDetencionTipo",
+      "valores": []
+    }
+  }
+}

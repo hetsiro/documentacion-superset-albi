@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diccionario de Datos — AmecoDashboards</title>
+<style>
+  :root {
+    --sidebar-w: 260px;
+    --accent: #818cf8;
+    --accent-light: rgba(129,140,248,.1);
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #334155;
+    --bg: #0f172a;
+    --bg-surface: #1e293b;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+  }
+  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+
+  /* ── Sidebar ── */
+  nav {
+    width: var(--sidebar-w);
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border);
+    position: fixed; top: 0; left: 0; bottom: 0;
+    overflow-y: auto; padding: 24px 0; z-index: 100;
+  }
+  .nav-logo { padding: 0 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .nav-logo h1 { font-size: 15px; font-weight: 700; color: var(--accent); }
+  .nav-logo p  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .nav-section { padding: 4px 20px; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 16px; margin-bottom: 4px; }
+  nav a { display: block; padding: 7px 20px; font-size: 13px; color: var(--muted); text-decoration: none; border-left: 3px solid transparent; transition: all .15s; }
+  nav a:hover  { color: var(--accent); background: var(--accent-light); }
+  nav a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-light); font-weight: 600; }
+  nav a.nav-ext { font-size: 12px; opacity: .8; }
+  nav::-webkit-scrollbar { width: 6px; }
+  nav::-webkit-scrollbar-track { background: transparent; }
+  nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── Main ── */
+  main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 40px 56px;
+    max-width: 1400px;
+    margin-right: auto;
+    margin-left: calc(var(--sidebar-w) + max(0px, (100vw - var(--sidebar-w) - 1400px) / 2));
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #312e81 0%, #4c1d95 100%);
+    border-radius: 12px; padding: 32px 36px; margin-bottom: 32px;
+  }
+  .hero h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .hero p  { font-size: 14px; opacity: .85; line-height: 1.6; }
+  .stats-row { display: flex; gap: 20px; margin-top: 18px; flex-wrap: wrap; }
+  .stat-pill {
+    background: rgba(255,255,255,.15); border-radius: 8px;
+    padding: 8px 16px; text-align: center; min-width: 100px;
+  }
+  .stat-pill .num  { font-size: 22px; font-weight: 700; line-height: 1; }
+  .stat-pill .lbl  { font-size: 11px; opacity: .75; margin-top: 3px; }
+
+  /* ── Toolbar ── */
+  .toolbar {
+    display: flex; gap: 12px; align-items: center;
+    margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .search-wrap { position: relative; flex: 1; min-width: 220px; }
+  .search-wrap input {
+    width: 100%; background: var(--bg-surface); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 9px 14px 9px 36px;
+    font-size: 13px; outline: none; transition: border-color .15s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap .icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; pointer-events: none; }
+  .search-wrap input::placeholder { color: var(--muted); }
+
+  select.filter-sel {
+    background: var(--bg-surface); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 9px 12px;
+    font-size: 13px; outline: none; cursor: pointer; transition: border-color .15s;
+    appearance: none; padding-right: 28px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center;
+  }
+  select.filter-sel:focus { border-color: var(--accent); }
+
+  .result-count { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+  /* ── Table ── */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    background: #162032; padding: 10px 14px; text-align: left;
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .06em;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 5;
+    cursor: pointer; user-select: none; white-space: nowrap;
+  }
+  thead th:hover { color: var(--accent); }
+  thead th .sort-icon { margin-left: 4px; opacity: .4; font-size: 10px; }
+  thead th.sort-asc .sort-icon, thead th.sort-desc .sort-icon { opacity: 1; color: var(--accent); }
+
+  tbody tr { border-bottom: 1px solid rgba(51,65,85,.6); transition: background .1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover td { background: rgba(129,140,248,.05); }
+  td { padding: 10px 14px; vertical-align: middle; }
+
+  /* row number */
+  td.col-num { color: var(--muted); font-size: 11px; width: 40px; text-align: right; padding-right: 8px; }
+
+  /* usos */
+  td.col-usos { font-family: 'Courier New', monospace; font-size: 12px; color: var(--muted); text-align: right; white-space: nowrap; }
+  td.col-usos.usos-high { color: var(--success); }
+  td.col-usos.usos-zero { color: var(--danger); font-weight: 700; }
+
+  /* fila con 0 usos */
+  tr.row-zero-usos td { background: rgba(248,113,133,.07) !important; }
+  tr.row-zero-usos td.col-campo { color: var(--danger); }
+  tr.row-zero-usos:hover td { background: rgba(248,113,133,.14) !important; }
+
+  /* campo en tabla */
+  td.col-campo { font-family: 'Courier New', monospace; font-size: 12.5px; color: #c4b5fd; font-weight: 600; }
+
+  /* campo original */
+  td.col-orig  { font-family: 'Courier New', monospace; font-size: 12px; color: #7dd3fc; }
+
+  /* tabla origen */
+  td.col-tabla { font-size: 12.5px; }
+  .tabla-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; white-space: nowrap;
+  }
+
+  /* tipo */
+  td.col-tipo { white-space: nowrap; }
+  .tipo-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 700; font-family: monospace;
+  }
+  .tipo-int      { background: rgba(96,165,250,.15);  color: #60a5fa; }
+  .tipo-nvarchar { background: rgba(52,211,153,.15);  color: #34d399; }
+  .tipo-datetime { background: rgba(251,191,36,.15);  color: #fbbf24; }
+  .tipo-bit      { background: rgba(192,132,252,.15); color: #c084fc; }
+  .tipo-decimal  { background: rgba(251,113,133,.15); color: #fb7185; }
+
+  /* nota */
+  td.col-nota { font-size: 11.5px; color: #fbbf24; font-style: italic; }
+
+  /* grupo header row */
+  tr.grupo-row td {
+    background: #162032; color: var(--accent); font-size: 11px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    padding: 6px 14px; border-bottom: 1px solid var(--border);
+  }
+  tr.grupo-row.hidden { display: none; }
+
+  /* hidden rows */
+  tr.hidden { display: none; }
+
+  /* no-results */
+  .no-results {
+    text-align: center; padding: 48px 24px;
+    color: var(--muted); font-size: 14px; display: none;
+  }
+
+  /* ── Catalog card ── */
+  .catalog-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .catalog-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .catalog-header-left { flex: 1; min-width: 160px; }
+  .catalog-header-left h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .catalog-header-left p  { font-size: 12px; color: var(--muted); }
+  .catalog-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  .catalog-select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px; padding: 8px 32px 8px 12px;
+    font-size: 13px; outline: none; cursor: pointer;
+    min-width: 220px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center;
+    transition: border-color .15s;
+  }
+  .catalog-select:focus { border-color: var(--accent); }
+
+  .catalog-meta {
+    font-size: 12px; color: var(--muted);
+    background: rgba(129,140,248,.08);
+    border: 1px solid rgba(129,140,248,.2);
+    border-radius: 20px; padding: 4px 12px; white-space: nowrap;
+  }
+  .catalog-meta strong { color: var(--accent); }
+
+  .catalog-body { padding: 0; }
+
+  .catalog-empty {
+    padding: 32px 24px; text-align: center; color: var(--muted); font-size: 13.5px;
+  }
+  .catalog-empty code {
+    background: rgba(129,140,248,.1); color: var(--accent);
+    padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 13px;
+  }
+  .catalog-empty .cmd {
+    display: inline-block; margin-top: 12px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 18px;
+    font-family: 'Courier New', monospace; font-size: 13px; color: #7dd3fc;
+  }
+
+  .catalog-placeholder {
+    padding: 40px 24px; text-align: center; color: var(--muted); font-size: 13px;
+  }
+  .catalog-placeholder .big-icon { font-size: 32px; display: block; margin-bottom: 10px; }
+
+  .catalog-table-wrap { overflow-x: auto; max-height: 340px; overflow-y: auto; }
+  .catalog-table-wrap::-webkit-scrollbar { width: 6px; height: 6px; }
+  .catalog-table-wrap::-webkit-scrollbar-track { background: transparent; }
+  .catalog-table-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  table.cat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.cat-table th {
+    background: #0d1b2a; position: sticky; top: 0; z-index: 2;
+    padding: 9px 16px; text-align: left; font-size: 11px; font-weight: 700;
+    color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+    border-bottom: 1px solid var(--border);
+  }
+  table.cat-table td { padding: 8px 16px; border-bottom: 1px solid rgba(51,65,85,.5); vertical-align: middle; }
+  table.cat-table tr:last-child td { border-bottom: none; }
+  table.cat-table tr:hover td { background: rgba(129,140,248,.05); }
+  table.cat-table td.cat-id {
+    font-family: monospace; font-size: 12px; color: #60a5fa;
+    font-weight: 700; width: 80px;
+  }
+  table.cat-table td.cat-val { color: var(--text); }
+
+  /* catalog link badge in main table */
+  .cat-link {
+    display: inline-block; margin-left: 8px; font-size: 10px; font-weight: 600;
+    background: rgba(129,140,248,.12); color: var(--accent);
+    border: 1px solid rgba(129,140,248,.25);
+    border-radius: 4px; padding: 1px 6px; cursor: pointer;
+    text-decoration: none; vertical-align: middle;
+    transition: background .15s;
+  }
+  .cat-link:hover { background: rgba(129,140,248,.25); }
+
+  /* ── Grupo pills on sidebar ── */
+  nav a.sub { padding-left: 34px; font-size: 12px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    main { margin-left: 0; margin-right: 0; padding: 20px 16px; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ SIDEBAR ══════════════════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <h1>Superset Docs</h1>
+    <p>SQL Server + Docker</p>
+  </div>
+
+  <div class="nav-section">Navegación</div>
+  <a href="index.html" class="nav-ext">← Guía de instalación</a>
+  <a href="diccionario.html" class="active">Diccionario de datos</a>
+  <div class="nav-section">Requerimientos</div>
+  <a href="requerimientos.html" class="sub">Índice</a>
+  <a href="requerimientos_ameco.html" class="sub">↳ Ameco</a>
+  <a href="requerimientos_centinela.html" class="sub">↳ Centinela</a>
+  <a href="#catalog-card" class="sub" style="color:var(--success)">📋 Catálogos de valores</a>
+
+  <div class="nav-section">Grupos</div>
+  <a href="#" data-grupo="Orden de Trabajo" class="sub grupo-link">Orden de Trabajo</a>
+  <a href="#" data-grupo="Operación"         class="sub grupo-link">Operación</a>
+  <a href="#" data-grupo="Operación - Fechas"class="sub grupo-link">Operación — Fechas</a>
+  <a href="#" data-grupo="Resolución"        class="sub grupo-link">Resolución</a>
+  <a href="#" data-grupo="Clasificación"     class="sub grupo-link">Clasificación</a>
+  <a href="#" data-grupo="Estado & Motivos"  class="sub grupo-link">Estado & Motivos</a>
+  <a href="#" data-grupo="Resolutor"         class="sub grupo-link">Resolutor</a>
+  <a href="#" data-grupo="Ubicación"         class="sub grupo-link">Ubicación</a>
+  <a href="#" data-grupo="Activo"            class="sub grupo-link">Activo</a>
+  <a href="#" data-grupo="Proceso & Plan"    class="sub grupo-link">Proceso & Plan</a>
+  <a href="#" data-grupo="OT Personas"       class="sub grupo-link">OT — Personas</a>
+  <a href="#" data-grupo="Instalación"       class="sub grupo-link">Instalación</a>
+
+  <div class="nav-section">Tipos</div>
+  <a href="#" data-tipo="INT"       class="sub tipo-link">INT</a>
+  <a href="#" data-tipo="NVARCHAR"  class="sub tipo-link">NVARCHAR</a>
+  <a href="#" data-tipo="DATETIME"  class="sub tipo-link">DATETIME</a>
+  <a href="#" data-tipo="BIT"       class="sub tipo-link">BIT</a>
+  <a href="#" data-tipo="DECIMAL"   class="sub tipo-link">DECIMAL</a>
+</nav>
+
+<!-- ══════════════════════════════ MAIN ══════════════════════════════ -->
+<main>
+
+  <div class="hero">
+    <h1>Diccionario de Datos</h1>
+    <p>Referencia completa de las columnas de <code style="background:rgba(255,255,255,.15);padding:1px 6px;border-radius:4px;font-size:13px;">AmecoHubIntegracion.dbo.AmecoDashboards</code> — nombre en tabla, campo original, tipo de dato y tabla origen.</p>
+    <div class="stats-row">
+      <div class="stat-pill"><div class="num" id="stat-total">118</div><div class="lbl">Columnas</div></div>
+      <div class="stat-pill"><div class="num">20</div><div class="lbl">Tablas origen</div></div>
+      <div class="stat-pill"><div class="num">12</div><div class="lbl">Grupos</div></div>
+      <div class="stat-pill"><div class="num">5</div><div class="lbl">Tipos de dato</div></div>
+      <div class="stat-pill" id="stat-ots-pill" style="display:none"><div class="num" id="stat-ots">—</div><div class="lbl">OTs totales</div></div>
+      <div class="stat-pill" id="stat-ops-pill" style="display:none"><div class="num" id="stat-ops">—</div><div class="lbl">Operaciones</div></div>
+    </div>
+  </div>
+
+  <!-- ── Catálogos de valores ── -->
+  <div class="catalog-card" id="catalog-card">
+    <div class="catalog-header">
+      <div class="catalog-header-left">
+        <h3>📋 Catálogos de valores</h3>
+        <p>Valores de referencia extraídos de <code style="background:rgba(129,140,248,.1);color:var(--accent);padding:1px 5px;border-radius:3px;font-size:11px">AmecoDashboards</code> en tiempo real</p>
+      </div>
+      <div class="catalog-controls">
+        <select class="catalog-select" id="cat-select">
+          <option value="">— Seleccionar catálogo —</option>
+        </select>
+        <span class="catalog-meta" id="cat-meta" style="display:none">
+          <strong id="cat-count">0</strong> valores
+        </span>
+      </div>
+    </div>
+    <div class="catalog-body" id="cat-body">
+      <div class="catalog-placeholder" id="cat-placeholder">
+        <span class="big-icon">🗂️</span>
+        Seleccioná un catálogo para ver sus valores
+      </div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="icon">🔍</span>
+      <input type="text" id="search" placeholder="Buscar por campo, original, tabla...">
+    </div>
+    <select id="sel-grupo" class="filter-sel">
+      <option value="">Todos los grupos</option>
+      <option>Orden de Trabajo</option>
+      <option>Operación</option>
+      <option>Operación - Fechas</option>
+      <option>Resolución</option>
+      <option>Clasificación</option>
+      <option>Estado & Motivos</option>
+      <option>Resolutor</option>
+      <option>Ubicación</option>
+      <option>Activo</option>
+      <option>Proceso & Plan</option>
+      <option>OT Personas</option>
+      <option>Instalación</option>
+    </select>
+    <select id="sel-tipo" class="filter-sel">
+      <option value="">Todos los tipos</option>
+      <option>INT</option>
+      <option>NVARCHAR</option>
+      <option>DATETIME</option>
+      <option>BIT</option>
+      <option>DECIMAL</option>
+    </select>
+    <span class="result-count" id="result-count"></span>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table id="main-table">
+      <thead>
+        <tr>
+          <th style="width:40px">#</th>
+          <th data-col="campo">Campo en tabla <span class="sort-icon">↕</span></th>
+          <th data-col="original">Campo original <span class="sort-icon">↕</span></th>
+          <th data-col="tabla">Tabla origen <span class="sort-icon">↕</span></th>
+          <th data-col="tipo">Tipo <span class="sort-icon">↕</span></th>
+          <th data-col="grupo">Grupo <span class="sort-icon">↕</span></th>
+          <th>Nota</th>
+          <th data-col="usos" style="text-align:right">Usos <span class="sort-icon">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="no-results" id="no-results">Sin resultados para esa búsqueda.</div>
+  </div>
+
+</main>
+
+<!-- lookup_data.js es generado por generar_lookup.bat y define window.LOOKUP_DATA -->
+<script src="lookup_data.js" onerror="window.LOOKUP_DATA=null"></script>
+<script src="cols_meta.js"></script>
+<script>
+// ── Paleta de colores por tabla origen ──
+const tablaColors = {
+  "ordenTrabajo":          { bg: "rgba(129,140,248,.15)", color: "#818cf8" },
+  "empresa":               { bg: "rgba(52,211,153,.15)",  color: "#34d399" },
+  "estadoOt":              { bg: "rgba(251,113,133,.15)", color: "#fb7185" },
+  "operacion":             { bg: "rgba(125,211,252,.15)", color: "#7dd3fc" },
+  "operacionResolucion":   { bg: "rgba(251,191,36,.15)",  color: "#fbbf24" },
+  "operacionResolucion / operacion": { bg: "rgba(251,191,36,.15)", color: "#fbbf24" },
+  "tipoTarea":             { bg: "rgba(167,139,250,.15)", color: "#a78bfa" },
+  "subtipoTarea":          { bg: "rgba(196,181,253,.15)", color: "#c4b5fd" },
+  "nivel3":                { bg: "rgba(110,231,183,.15)", color: "#6ee7b7" },
+  "nivel4":                { bg: "rgba(52,211,153,.15)",  color: "#34d399" },
+  "negocio":               { bg: "rgba(248,113,133,.15)", color: "#f87171" },
+  "tipoOperacion":         { bg: "rgba(253,186,116,.15)", color: "#fdba74" },
+  "especialidad":          { bg: "rgba(134,239,172,.15)", color: "#86efac" },
+  "estadoOperacion":       { bg: "rgba(251,113,133,.15)", color: "#fb7185" },
+  "motivo":                { bg: "rgba(252,211,77,.15)",  color: "#fcd34d" },
+  "motivoTipo":            { bg: "rgba(252,211,77,.15)",  color: "#fcd34d" },
+  "grupoResolutor":        { bg: "rgba(147,197,253,.15)", color: "#93c5fd" },
+  "persona":               { bg: "rgba(196,181,253,.15)", color: "#c4b5fd" },
+  "turno":                 { bg: "rgba(167,243,208,.15)", color: "#a7f3d0" },
+  "cargoResolutor":        { bg: "rgba(165,180,252,.15)", color: "#a5b4fc" },
+  "sitio":                 { bg: "rgba(103,232,249,.15)", color: "#67e8f9" },
+  "zona":                  { bg: "rgba(94,234,212,.15)",  color: "#5eead4" },
+  "prioridad":             { bg: "rgba(253,186,116,.15)", color: "#fdba74" },
+  "activo":                { bg: "rgba(52,211,153,.15)",  color: "#34d399" },
+  "activoElementos":       { bg: "rgba(110,231,183,.15)", color: "#6ee7b7" },
+  "proceso":               { bg: "rgba(249,168,212,.15)", color: "#f9a8d4" },
+  "plan":                  { bg: "rgba(216,180,254,.15)", color: "#d8b4fe" },
+  "estadoInstalacion":     { bg: "rgba(251,113,133,.15)", color: "#fb7185" },
+  "recinto":               { bg: "rgba(134,239,172,.15)", color: "#86efac" },
+};
+
+// ── Datos de columnas — cargados desde cols_meta.js ──
+const COLS = window.COLS_META; /*[
+  // ── Orden de Trabajo ──
+  { campo:"OrdenTrabajoId",            original:"id",                             tabla:"ordenTrabajo",                         tipo:"INT",          grupo:"Orden de Trabajo", nota:"" },
+  { campo:"OrdenTrabajoFechaInicio",            original:"fechaInicio",            tabla:"ordenTrabajo", tipo:"DATETIME",  grupo:"Orden de Trabajo", nota:"" },
+  { campo:"OrdenTrabajoDescripcion",           original:"descripcion",            tabla:"ordenTrabajo", tipo:"NVARCHAR",  grupo:"Orden de Trabajo", nota:"" },
+  { campo:"OrdenTrabajoFechaFin",              original:"fechaFin",               tabla:"ordenTrabajo", tipo:"DATETIME",  grupo:"Orden de Trabajo", nota:"Fecha planificada de cierre OT" },
+  { campo:"OrdenTrabajoFechaInicioReal",       original:"fechaInicioReal",        tabla:"ordenTrabajo", tipo:"DATETIME",  grupo:"Orden de Trabajo", nota:"" },
+  { campo:"OrdenTrabajoFechaFinReal",          original:"fechaFinReal",           tabla:"ordenTrabajo", tipo:"DATETIME",  grupo:"Orden de Trabajo", nota:"Fecha real de cierre — clave para SLA" },
+  { campo:"OrdenTrabajoTiempoResolucionBruto", original:"tiempoResolucionBruto",  tabla:"ordenTrabajo", tipo:"INT",       grupo:"Orden de Trabajo", nota:"Minutos" },
+  { campo:"OrdenTrabajoDuracion",              original:"duracion",               tabla:"ordenTrabajo", tipo:"INT",       grupo:"Orden de Trabajo", nota:"" },
+  { campo:"OrdenTrabajoFechaCreacion",         original:"fechaCreacion",          tabla:"ordenTrabajo", tipo:"DATETIME",  grupo:"Orden de Trabajo", nota:"" },
+  { campo:"OrdenTrabajoUbicacion",             original:"ubicacion",              tabla:"ordenTrabajo", tipo:"NVARCHAR",  grupo:"Orden de Trabajo", nota:"" },
+  { campo:"OrdenTrabajoNochero",               original:"nochero",                tabla:"ordenTrabajo", tipo:"BIT",       grupo:"Orden de Trabajo", nota:"" },
+  { campo:"OrdenTrabajoPlanId",                 original:"planId",                 tabla:"ordenTrabajo", tipo:"INT",       grupo:"Orden de Trabajo", nota:"" },
+  { campo:"OrdenTrabajoEmpresa",        original:"nombre",                         tabla:"empresa",                              tipo:"NVARCHAR",     grupo:"Orden de Trabajo", nota:"" },
+  { campo:"EstadoOrdenTrabajoId",       original:"id",                             tabla:"estadoOt",                             tipo:"INT",          grupo:"Orden de Trabajo", nota:"" },
+  { campo:"EstadoOrdenTrabajo",         original:"nombre",                         tabla:"estadoOt",                             tipo:"NVARCHAR",     grupo:"Orden de Trabajo", nota:"" },
+  // ── Operación ──
+  { campo:"OperacionId",                original:"id",                             tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionDescripcion",       original:"descripcion",                    tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionTiempoEstandar",    original:"duracionMinSTD",                 tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"Minutos" },
+  { campo:"OperacionTiempoDuracionReal",original:"duracionReal",                   tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"Minutos" },
+  { campo:"OperacionTiempoPerdido",     original:"tiempoPerdidoMin",               tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"ISNULL → 0" },
+  { campo:"OperacionFechaResolucion",   original:"fechaResolucion",                tabla:"operacion",                            tipo:"DATETIME",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionSolucionComentario",original:"detalleSolucion",                tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionTiempoEstandarCumplido", original:"cumpleSTD",                 tabla:"operacion",                            tipo:"BIT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionRequiereMateriales",original:"requiereMateriales",             tabla:"operacion",                            tipo:"BIT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionUbicacion",         original:"ubicacion",                      tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionRecursos",          original:"recursos",                       tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionMovilizacion",      original:"movilizacion",                   tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionSecuencia",         original:"secuencia",                      tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionDependencia",       original:"dependencia",                    tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionOrden",             original:"orden",                          tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionPlazo",             original:"plazo",                          tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionTrabajo",           original:"trabajo",                        tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionPrecio1",           original:"precio1",                        tabla:"operacion",                            tipo:"DECIMAL",      grupo:"Operación",         nota:"DECIMAL(18,2)" },
+  { campo:"OperacionPrecio2",           original:"precio2",                        tabla:"operacion",                            tipo:"DECIMAL",      grupo:"Operación",         nota:"DECIMAL(18,2)" },
+  { campo:"OperacionLatitud",           original:"latitud",                        tabla:"operacion",                            tipo:"DECIMAL",      grupo:"Operación",         nota:"DECIMAL(10,7)" },
+  { campo:"OperacionLongitud",          original:"longitud",                       tabla:"operacion",                            tipo:"DECIMAL",      grupo:"Operación",         nota:"DECIMAL(10,7)" },
+  { campo:"OperacionDireccion",         original:"direccion",                      tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionTiempoTraslado",    original:"duracionTraslado",               tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"Minutos" },
+  { campo:"OperacionElementoLinea",     original:"elementoLinea",                  tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionElementoCodigo",    original:"elementoCodigo",                 tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionElementoDescripcion",original:"elementoDescripcion",           tabla:"operacion",                            tipo:"NVARCHAR",     grupo:"Operación",         nota:"" },
+  { campo:"OperacionRequiereAprobacion",original:"requiereAprobacion",             tabla:"operacion",                            tipo:"BIT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionEvidenciaFlag",     original:"evidenciaFlag",                  tabla:"operacion",                            tipo:"BIT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionSecuenciadorFlag",  original:"secuenciadorFlag",               tabla:"operacion",                            tipo:"BIT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionProcesoId",         original:"procesoOperacionId",             tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionPadreId",           original:"operacionPadreId",               tabla:"operacion",                            tipo:"INT",          grupo:"Operación",         nota:"" },
+  { campo:"OperacionFechaFin",          original:"fechaFin",                       tabla:"operacion",                            tipo:"DATETIME",     grupo:"Operación - Fechas",nota:"" },
+  // ── Operación – Fechas ──
+  { campo:"OperacionFechaAgendada",     original:"fechaAgendada",                  tabla:"operacion",                            tipo:"DATETIME",     grupo:"Operación - Fechas",nota:"" },
+  { campo:"OperacionFechaProgramada",   original:"fechaProgramada",                tabla:"operacion",                            tipo:"DATETIME",     grupo:"Operación - Fechas",nota:"" },
+  { campo:"OperacionFechaAsignacion",   original:"fechaAsignacion",                tabla:"operacion",                            tipo:"DATETIME",     grupo:"Operación - Fechas",nota:"" },
+  { campo:"OperacionFechaLiberacion",   original:"fechaLiberacion",                tabla:"operacion",                            tipo:"DATETIME",     grupo:"Operación - Fechas",nota:"" },
+  { campo:"OperacionFechaDesasignacion",original:"fechaDesasignacion",             tabla:"operacion",                            tipo:"DATETIME",     grupo:"Operación - Fechas",nota:"" },
+  { campo:"OperacionFechaDetenidoInicio",original:"fechaDetenidoInicio",           tabla:"operacion",                            tipo:"DATETIME",     grupo:"Operación - Fechas",nota:"" },
+  { campo:"OperacionFechaDetenidoFin",  original:"fechaDetenidoFin",               tabla:"operacion",                            tipo:"DATETIME",     grupo:"Operación - Fechas",nota:"" },
+  { campo:"OperacionFechaInicio",       original:"fechainicioTareaReal / fechaInicioTareaReal / fechaInicio", tabla:"operacionResolucion / operacion", tipo:"DATETIME", grupo:"Operación - Fechas", nota:"ISNULL en cascada: operesol → ope → ot" },
+  // ── Clasificación ──
+  { campo:"TipoTareaId",               original:"id",                             tabla:"tipoTarea",                            tipo:"INT",          grupo:"Clasificación",     nota:"" },
+  { campo:"TipoTarea",                 original:"nombre",                         tabla:"tipoTarea",                            tipo:"NVARCHAR",     grupo:"Clasificación",     nota:"" },
+  { campo:"SubTipoTareaId",            original:"id",                             tabla:"subtipoTarea",                         tipo:"INT",          grupo:"Clasificación",     nota:"" },
+  { campo:"SubTipoTarea",              original:"nombre",                         tabla:"subtipoTarea",                         tipo:"NVARCHAR",     grupo:"Clasificación",     nota:"" },
+  { campo:"Nivel3Id",                  original:"id",                             tabla:"nivel3",                               tipo:"INT",          grupo:"Clasificación",     nota:"" },
+  { campo:"Nivel3",                    original:"nombre",                         tabla:"nivel3",                               tipo:"NVARCHAR",     grupo:"Clasificación",     nota:"" },
+  { campo:"Nivel4Id",                  original:"id",                             tabla:"nivel4",                               tipo:"INT",          grupo:"Clasificación",     nota:"" },
+  { campo:"Nivel4",                    original:"nombre",                         tabla:"nivel4",                               tipo:"NVARCHAR",     grupo:"Clasificación",     nota:"" },
+  { campo:"OrdenTrabajoNegocio",        original:"nombre",                         tabla:"negocio",                              tipo:"NVARCHAR",     grupo:"Clasificación",     nota:"" },
+  { campo:"TipoOperacionId",           original:"id",                             tabla:"tipoOperacion",                        tipo:"INT",          grupo:"Clasificación",     nota:"" },
+  { campo:"TipoOperacion",             original:"nombre",                         tabla:"tipoOperacion",                        tipo:"NVARCHAR",     grupo:"Clasificación",     nota:"" },
+  { campo:"EspecialidadId",            original:"id",                             tabla:"especialidad",                         tipo:"INT",          grupo:"Clasificación",     nota:"" },
+  { campo:"Especialidad",              original:"nombre",                         tabla:"especialidad",                         tipo:"NVARCHAR",     grupo:"Clasificación",     nota:"" },
+  // ── Estado & Motivos ──
+  { campo:"EstadoOperacionId",         original:"id",                             tabla:"estadoOperacion",                      tipo:"INT",          grupo:"Estado & Motivos",  nota:"" },
+  { campo:"EstadoOperacion",           original:"nombre",                         tabla:"estadoOperacion",                      tipo:"NVARCHAR",     grupo:"Estado & Motivos",  nota:"" },
+  { campo:"MotivoDetencionId",         original:"id",                             tabla:"motivo",                               tipo:"INT",          grupo:"Estado & Motivos",  nota:"" },
+  { campo:"MotivoDetencion",           original:"valor",                          tabla:"motivo",                               tipo:"NVARCHAR",     grupo:"Estado & Motivos",  nota:"" },
+  { campo:"MotivoDetencionTipo",       original:"nombre",                         tabla:"motivoTipo",                           tipo:"NVARCHAR",     grupo:"Estado & Motivos",  nota:"" },
+  { campo:"MotivoNoEjecucionId",       original:"id",                             tabla:"motivo",                               tipo:"INT",          grupo:"Estado & Motivos",  nota:"" },
+  { campo:"MotivoNoEjecucion",         original:"valor",                          tabla:"motivo",                               tipo:"NVARCHAR",     grupo:"Estado & Motivos",  nota:"" },
+  // ── Resolutor ──
+  { campo:"GrupoResolutorOperacionId",  original:"id",                             tabla:"grupoResolutor",                       tipo:"INT",          grupo:"Resolutor",         nota:"" },
+  { campo:"GrupoResolutorOperacion",    original:"nombre",                         tabla:"grupoResolutor",                       tipo:"NVARCHAR",     grupo:"Resolutor",         nota:"" },
+  { campo:"OperacionResolutor",         original:"nombre",                         tabla:"persona",                              tipo:"NVARCHAR",     grupo:"Resolutor",         nota:"" },
+  { campo:"OperacionResolutorTurno",    original:"nombre",                         tabla:"turno",                                tipo:"NVARCHAR",     grupo:"Resolutor",         nota:"ISNULL → 'Sin asignar'" },
+  { campo:"OperacionResolutorCargo",    original:"nombre",                         tabla:"cargoResolutor",                       tipo:"NVARCHAR",     grupo:"Resolutor",         nota:"" },
+  // ── Ubicación ──
+  { campo:"SitioOperacionId",           original:"id",                             tabla:"sitio",                                tipo:"INT",          grupo:"Ubicación",         nota:"" },
+  { campo:"SitioOperacion",             original:"nombre",                         tabla:"sitio",                                tipo:"NVARCHAR",     grupo:"Ubicación",         nota:"" },
+  { campo:"ZonaOperacionId",            original:"id",                             tabla:"zona",                                 tipo:"INT",          grupo:"Ubicación",         nota:"" },
+  { campo:"ZonaOperacion",              original:"nombre",                         tabla:"zona",                                 tipo:"NVARCHAR",     grupo:"Ubicación",         nota:"" },
+  { campo:"PrioridadOperacionId",       original:"id",                             tabla:"prioridad",                            tipo:"INT",          grupo:"Ubicación",         nota:"" },
+  { campo:"PrioridadOperacion",         original:"nombre",                         tabla:"prioridad",                            tipo:"NVARCHAR",     grupo:"Ubicación",         nota:"" },
+  // ── Resolución ──
+  { campo:"OperacionResolucionTiempoEspera",              original:"tiempoEspera",              tabla:"operacionResolucion", tipo:"INT",     grupo:"Resolución", nota:"Minutos" },
+  { campo:"OperacionResolucionTiempoEjecucion",           original:"duracionEjecucion",         tabla:"operacionResolucion", tipo:"INT",     grupo:"Resolución", nota:"Minutos" },
+  { campo:"OperacionResolucionTiempoBruto",               original:"tiempoResolucionBruto",     tabla:"operacionResolucion", tipo:"INT",     grupo:"Resolución", nota:"Minutos" },
+  { campo:"OperacionResolucionTiempoTraslado",            original:"tiempoTrasladoDeclarado",   tabla:"operacionResolucion", tipo:"INT",     grupo:"Resolución", nota:"Minutos" },
+  { campo:"OperacionResolucionTiemposAdministrativos",    original:"tiemposAdministrativos",    tabla:"operacionResolucion", tipo:"INT",     grupo:"Resolución", nota:"Minutos" },
+  { campo:"OperacionResolucionNoEjecutada",               original:"noEjecutada",               tabla:"operacionResolucion", tipo:"BIT",     grupo:"Resolución", nota:"" },
+  { campo:"OperacionResolucionOrdenTrabajoAbortada",      original:"otAbortada",                tabla:"operacionResolucion", tipo:"BIT",     grupo:"Resolución", nota:"" },
+  { campo:"OperacionResolucionCumpleEstandares",          original:"cumpleEstandares",          tabla:"operacionResolucion", tipo:"BIT",     grupo:"Resolución", nota:"" },
+  { campo:"OperacionResolucionEsPreparacionDoc",          original:"esPreparacionDocumentacion",tabla:"operacionResolucion", tipo:"BIT",     grupo:"Resolución", nota:"" },
+  { campo:"OperacionResolucionEsObtencionAutorizaciones", original:"esObtencionAutorizaciones", tabla:"operacionResolucion", tipo:"BIT",     grupo:"Resolución", nota:"" },
+  { campo:"OperacionResolucionEsObtencionPermisos",       original:"esObtencionPermisosES",     tabla:"operacionResolucion", tipo:"BIT",     grupo:"Resolución", nota:"" },
+  { campo:"OperacionResolucionTipoFallaId",               original:"tipoFallaId",               tabla:"operacionResolucion", tipo:"INT",     grupo:"Resolución", nota:"" },
+  { campo:"OperacionResolucionLatitud",                   original:"latitud",                   tabla:"operacionResolucion", tipo:"DECIMAL", grupo:"Resolución", nota:"DECIMAL(10,7)" },
+  { campo:"OperacionResolucionLongitud",                  original:"longitud",                  tabla:"operacionResolucion", tipo:"DECIMAL", grupo:"Resolución", nota:"DECIMAL(10,7)" },
+  { campo:"OperacionResolucionFecha",                     original:"fechaResolucion",           tabla:"operacionResolucion", tipo:"DATETIME",grupo:"Resolución", nota:"" },
+  // ── Activo ──
+  { campo:"ActivoId",                  original:"id",                             tabla:"activo",                               tipo:"INT",          grupo:"Activo",            nota:"" },
+  { campo:"Activo",                    original:"nombre",                         tabla:"activo",                               tipo:"NVARCHAR",     grupo:"Activo",            nota:"" },
+  { campo:"ActivoCodigo",              original:"codigo",                         tabla:"activo",                               tipo:"NVARCHAR",     grupo:"Activo",            nota:"" },
+  { campo:"ActivoElementoId",          original:"id",                             tabla:"activoElementos",                      tipo:"INT",          grupo:"Activo",            nota:"" },
+  { campo:"ActivoElementoCodigo",      original:"codigo",                         tabla:"activoElementos",                      tipo:"NVARCHAR",     grupo:"Activo",            nota:"" },
+  { campo:"ActivoElementoHabitacion",  original:"habitacion",                     tabla:"activoElementos",                      tipo:"NVARCHAR",     grupo:"Activo",            nota:"" },
+  { campo:"ActivoElementoTipoInstalacion", original:"tipoInstalacion",            tabla:"activoElementos",                      tipo:"NVARCHAR",     grupo:"Activo",            nota:"" },
+  // ── Proceso & Plan ──
+  { campo:"ProcesoId",                 original:"id",                             tabla:"proceso",                              tipo:"INT",          grupo:"Proceso & Plan",    nota:"" },
+  { campo:"Proceso",                   original:"nombre",                         tabla:"proceso",                              tipo:"NVARCHAR",     grupo:"Proceso & Plan",    nota:"" },
+  { campo:"OrdenTrabajoPlanNombre",     original:"nombre",                         tabla:"plan",                                 tipo:"NVARCHAR",     grupo:"Proceso & Plan",    nota:"" },
+  // ── OT Personas ──
+  { campo:"OrdenTrabajoSolicitante",   original:"nombre",                         tabla:"persona",                              tipo:"NVARCHAR",     grupo:"OT Personas",       nota:"" },
+  { campo:"OrdenTrabajoResponsable",   original:"nombre",                         tabla:"persona",                              tipo:"NVARCHAR",     grupo:"OT Personas",       nota:"" },
+  // ── Instalación ──
+  { campo:"EstadoInstalacionId",       original:"id",                             tabla:"estadoInstalacion",                    tipo:"INT",          grupo:"Instalación",       nota:"" },
+  { campo:"EstadoInstalacion",         original:"nombre",                         tabla:"estadoInstalacion",                    tipo:"NVARCHAR",     grupo:"Instalación",       nota:"" },
+  { campo:"RecintoId",                 original:"id",                             tabla:"recinto",                              tipo:"INT",          grupo:"Instalación",       nota:"" },
+  { campo:"Recinto",                   original:"nombre",                         tabla:"recinto",                              tipo:"NVARCHAR",     grupo:"Instalación",       nota:"" },
+]*/ // fin COLS inline — ahora cargado desde cols_meta.js
+
+// ── Catalog: qué campos tienen catálogo ──
+const CATALOG_MAP = {
+  "EstadoOrdenTrabajoId":  "Estado OT",
+  "TipoTareaId":           "Tipo Tarea",
+  "SubTipoTareaId":        "Sub Tipo Tarea",
+  "Nivel3Id":              "Nivel 3",
+  "Nivel4Id":              "Nivel 4",
+  "TipoOperacionId":       "Tipo Operación",
+  "EspecialidadId":        "Especialidad",
+  "EstadoOperacionId":     "Estado Operación",
+  "MotivoDetencionId":     "Motivo Detención",
+  "MotivoNoEjecucionId":   "Motivo No Ejecución",
+  "GrupoResolutorOperacionId": "Grupo Resolutor",
+  "SitioOperacionId":          "Sitio",
+  "ZonaOperacionId":           "Zona",
+  "PrioridadOperacionId":      "Prioridad",
+  "ProcesoId":                 "Proceso",
+  "OrdenTrabajoPlanId":        "Plan",
+  "EstadoInstalacionId":   "Estado Instalación",
+  "RecintoId":             "Recinto",
+};
+
+// ── Catalog state ──
+let lookupData = null;      // null = no cargado todavía, {} = cargado
+let catalogLoaded = false;
+
+function loadLookupData() {
+  // window.LOOKUP_DATA es inyectado por <script src="lookup_data.js">
+  // Usar .js en lugar de fetch() para que funcione con file:// sin servidor HTTP
+  if (window.LOOKUP_DATA) {
+    const data = window.LOOKUP_DATA;
+    lookupData = data.catalogos || {};
+    catalogLoaded = true;
+
+    // Poblar select
+    const sel = document.getElementById("cat-select");
+    Object.keys(lookupData).sort().forEach(key => {
+      const opt = document.createElement("option");
+      opt.value = key;
+      opt.textContent = `${key}  (${lookupData[key].valores.length} valores)`;
+      sel.appendChild(opt);
+    });
+
+    // Actualizar meta del hero con fecha de generación y totales
+    const meta = data._meta || {};
+    if (meta.generado) {
+      const d = new Date(meta.generado);
+      document.querySelector(".catalog-header-left p").innerHTML =
+        `Datos al <strong style="color:var(--success)">${d.toLocaleString("es-AR")}</strong> · <code style="background:rgba(129,140,248,.1);color:var(--accent);padding:1px 5px;border-radius:3px;font-size:11px">AmecoDashboards</code>`;
+    }
+    if (meta.total_ots != null) {
+      document.getElementById("stat-ots").textContent = Number(meta.total_ots).toLocaleString("es-AR");
+      document.getElementById("stat-ots-pill").style.display = "";
+    }
+    if (meta.total_operaciones != null) {
+      document.getElementById("stat-ops").textContent = Number(meta.total_operaciones).toLocaleString("es-AR");
+      document.getElementById("stat-ops-pill").style.display = "";
+    }
+  } else {
+    // lookup_data.js no existe todavía → mostrar instrucciones
+    document.getElementById("cat-placeholder").innerHTML = `
+      <span class="big-icon">⚙️</span>
+      <p style="margin-bottom:12px">El archivo <code>lookup_data.js</code> no existe todavía.</p>
+      <p style="color:var(--muted);font-size:12px;margin-bottom:16px">
+        Ejecutá el archivo <strong>.bat</strong> para generar los datos desde <strong>AmecoDashboards</strong>:
+      </p>
+      <div class="cmd">C:\superset\generar_lookup.bat</div>
+      <p style="margin-top:14px;font-size:12px;color:var(--muted)">
+        No necesitás Python instalado — usa el Python del contenedor Docker.<br>
+        Después recargá esta página.
+      </p>
+    `;
+    document.getElementById("cat-select").disabled = true;
+  }
+}
+
+function renderCatalog(key) {
+  const body     = document.getElementById("cat-body");
+  const meta     = document.getElementById("cat-meta");
+  const countEl  = document.getElementById("cat-count");
+  const ph       = document.getElementById("cat-placeholder");
+
+  if (!key || !lookupData) {
+    ph.style.display = "block";
+    meta.style.display = "none";
+    return;
+  }
+
+  const cat = lookupData[key];
+  if (!cat) return;
+
+  ph.style.display = "none";
+  meta.style.display = "inline-block";
+  countEl.textContent = cat.valores.length;
+
+  // Quitar tabla anterior
+  const old = body.querySelector(".catalog-table-wrap");
+  if (old) old.remove();
+
+  if (cat.valores.length === 0) {
+    body.insertAdjacentHTML("beforeend", `
+      <div class="catalog-empty">
+        Sin datos en la tabla para este catálogo.
+      </div>
+    `);
+    return;
+  }
+
+  const wrap = document.createElement("div");
+  wrap.className = "catalog-table-wrap";
+
+  const hasUsos = cat.valores.some(v => v.usos !== undefined);
+
+  const rows = cat.valores.map(v => {
+    const usos = v.usos !== undefined ? Number(v.usos).toLocaleString('es-CL') : '';
+    const usosStyle = v.usos === 0 ? 'color:#64748b;font-style:italic' : 'color:var(--success);font-weight:600';
+    return `
+      <tr${v.usos === 0 ? ' style="opacity:.5"' : ''}>
+        <td class="cat-id">${v.id}</td>
+        <td class="cat-val">${v.valor ?? "—"}</td>
+        ${hasUsos ? `<td style="text-align:right;font-family:monospace;font-size:12px;${usosStyle}">${usos}</td>` : ''}
+      </tr>
+    `;
+  }).join("");
+
+  wrap.innerHTML = `
+    <table class="cat-table">
+      <thead>
+        <tr>
+          <th>${cat.idCol}</th>
+          <th>${cat.valorCol}</th>
+          ${hasUsos ? '<th style="text-align:right">Usos</th>' : ''}
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+
+  body.appendChild(wrap);
+}
+
+document.getElementById("cat-select").addEventListener("change", e => {
+  // limpiar tabla anterior si existe
+  const old = document.getElementById("cat-body").querySelector(".catalog-table-wrap, .catalog-empty");
+  if (old) old.remove();
+  renderCatalog(e.target.value);
+});
+
+// Cargar al inicio
+loadLookupData();
+
+// ── Helpers ──
+function tipoClass(t) {
+  if (t === "INT")      return "tipo-int";
+  if (t === "NVARCHAR") return "tipo-nvarchar";
+  if (t === "DATETIME") return "tipo-datetime";
+  if (t === "BIT")      return "tipo-bit";
+  if (t === "DECIMAL")  return "tipo-decimal";
+  return "";
+}
+
+function tablaStyle(t) {
+  const c = tablaColors[t] || { bg: "rgba(148,163,184,.15)", color: "#94a3b8" };
+  return `style="background:${c.bg};color:${c.color}"`;
+}
+
+// ── State ──
+let filterGrupo = "", filterTipo = "", filterSearch = "";
+let sortCol = null, sortDir = 1;
+
+function renderTable() {
+  const tbody = document.getElementById("tbody");
+  const noRes = document.getElementById("no-results");
+
+  // Filter
+  let data = COLS.filter(r => {
+    const haystack = (r.campo + r.original + r.tabla + r.tipo + r.grupo + r.nota).toLowerCase();
+    const matchSearch = !filterSearch || haystack.includes(filterSearch.toLowerCase());
+    const matchGrupo  = !filterGrupo  || r.grupo === filterGrupo;
+    const matchTipo   = !filterTipo   || r.tipo  === filterTipo;
+    return matchSearch && matchGrupo && matchTipo;
+  });
+
+  // Sort
+  if (sortCol) {
+    data = [...data].sort((a, b) => {
+      if (sortCol === "usos") {
+        const ua = window.LOOKUP_DATA?._meta?.usos?.[a.campo] ?? -1;
+        const ub = window.LOOKUP_DATA?._meta?.usos?.[b.campo] ?? -1;
+        return (ua - ub) * sortDir;
+      }
+      const va = a[sortCol] || "", vb = b[sortCol] || "";
+      return va.localeCompare(vb) * sortDir;
+    });
+  }
+
+  document.getElementById("result-count").textContent = `${data.length} de ${COLS.length} columnas`;
+
+  // Group by grupo (only if no sort active or sortCol === "grupo")
+  const useGroups = !sortCol || sortCol === "grupo";
+
+  tbody.innerHTML = "";
+
+  if (data.length === 0) {
+    noRes.style.display = "block";
+    return;
+  }
+  noRes.style.display = "none";
+
+  let currentGrupo = null;
+  let rowNum = 0;
+
+  data.forEach(r => {
+    if (useGroups && r.grupo !== currentGrupo) {
+      currentGrupo = r.grupo;
+      const gr = document.createElement("tr");
+      gr.className = "grupo-row";
+      gr.innerHTML = `<td colspan="8">⬡ ${r.grupo}</td>`;
+      tbody.appendChild(gr);
+    }
+
+    rowNum++;
+    const catLabel = CATALOG_MAP[r.campo];
+    const catBadge = catLabel
+      ? `<a class="cat-link" onclick="jumpToCatalog('${catLabel}')">ver valores</a>`
+      : "";
+
+    const usosVal = window.LOOKUP_DATA?._meta?.usos?.[r.campo];
+    const usosDisplay = usosVal != null ? usosVal.toLocaleString("es-AR") : "—";
+    const usosClass = usosVal == null ? "" : usosVal === 0 ? " usos-zero" : " usos-high";
+
+    const tr = document.createElement("tr");
+    if (usosVal === 0) tr.classList.add("row-zero-usos");
+    tr.innerHTML = `
+      <td class="col-num">${rowNum}</td>
+      <td class="col-campo">${r.campo}${catBadge}</td>
+      <td class="col-orig">${r.original}</td>
+      <td class="col-tabla"><span class="tabla-badge" ${tablaStyle(r.tabla)}>${r.tabla}</span></td>
+      <td class="col-tipo"><span class="tipo-badge ${tipoClass(r.tipo)}">${r.tipo}</span></td>
+      <td style="font-size:12px;color:var(--muted)">${r.grupo}</td>
+      <td class="col-nota">${r.nota}</td>
+      <td class="col-usos${usosClass}">${usosDisplay}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── Events ──
+document.getElementById("search").addEventListener("input", e => {
+  filterSearch = e.target.value;
+  renderTable();
+});
+
+document.getElementById("sel-grupo").addEventListener("change", e => {
+  filterGrupo = e.target.value;
+  renderTable();
+});
+
+document.getElementById("sel-tipo").addEventListener("change", e => {
+  filterTipo = e.target.value;
+  renderTable();
+});
+
+// Sort on header click
+document.querySelectorAll("thead th[data-col]").forEach(th => {
+  th.addEventListener("click", () => {
+    const col = th.dataset.col;
+    if (sortCol === col) {
+      sortDir *= -1;
+    } else {
+      sortCol = col; sortDir = 1;
+    }
+    document.querySelectorAll("thead th").forEach(t => t.classList.remove("sort-asc","sort-desc"));
+    th.classList.add(sortDir === 1 ? "sort-asc" : "sort-desc");
+    renderTable();
+  });
+});
+
+// Sidebar grupo/tipo filter pills
+document.querySelectorAll(".grupo-link").forEach(a => {
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    const g = a.dataset.grupo;
+    filterGrupo = filterGrupo === g ? "" : g;
+    document.getElementById("sel-grupo").value = filterGrupo;
+    document.querySelectorAll(".grupo-link").forEach(x => x.classList.remove("active"));
+    if (filterGrupo) a.classList.add("active");
+    renderTable();
+  });
+});
+
+document.querySelectorAll(".tipo-link").forEach(a => {
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    const t = a.dataset.tipo;
+    filterTipo = filterTipo === t ? "" : t;
+    document.getElementById("sel-tipo").value = filterTipo;
+    document.querySelectorAll(".tipo-link").forEach(x => x.classList.remove("active"));
+    if (filterTipo) a.classList.add("active");
+    renderTable();
+  });
+});
+
+// Jump to catalog section and select the given catalog key
+function jumpToCatalog(label) {
+  const sel = document.getElementById("cat-select");
+  sel.value = label;
+  const old = document.getElementById("cat-body").querySelector(".catalog-table-wrap, .catalog-empty");
+  if (old) old.remove();
+  renderCatalog(label);
+  document.getElementById("catalog-card").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// Initial render
+renderTable();
+</script>
+</body>
+</html>

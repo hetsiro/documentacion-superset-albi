@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7
+    restart: unless-stopped
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: superset
+      POSTGRES_PASSWORD: superset
+      POSTGRES_DB: superset
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: unless-stopped
+    ports:
+      - "1434:1433"
+    environment:
+      SA_PASSWORD: "AmecoSQL2024!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_AGENT_ENABLED: "true"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  superset:
+    build: .
+    image: superset-local
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://superset:superset@db/superset
+      REDIS_URL: redis://redis:6379/0
+      SUPERSET_SECRET_KEY: MiClaveSecretaSuperSegura2024xyz
+    volumes:
+      - ./superset_config.py:/app/pythonpath/superset_config.py
+    depends_on:
+      - redis
+      - db
+      - sqlserver
+
+volumes:
+  db_data:
+  sqlserver_data:
