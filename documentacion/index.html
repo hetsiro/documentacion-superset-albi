@@ -263,13 +263,13 @@
   <a href="#paso4">3. Crear admin</a>
   <a href="#paso5">4. SQL Server Docker</a>
   <a href="#paso6">5. Linked Server</a>
-  <a href="#paso7">6. Job de actualización</a>
-  <a href="#job-sql">    Comando SQL del Job</a>
+  <a href="#paso7">6. Jobs de actualización</a>
   <a href="#paso8">7. Conectar Superset</a>
   <a href="#paso9">8. Crear Dataset</a>
   <div class="nav-section">Mantenimiento</div>
   <a href="#columnas">Agregar/quitar columnas</a>
   <a href="#historial">Historial del Job</a>
+  <a href="#clonar-dashboard">Clonar Dashboard</a>
   <a href="#comandos">Comandos útiles</a>
   <div class="nav-section">Roadmap</div>
   <a href="#azure">Migración a Azure</a>
@@ -478,12 +478,7 @@ docker compose up -d --build</pre>
     </div>
     <div class="code-block">
       <div class="code-header"><span>bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-      <pre>docker compose exec superset superset fab create-admin \
-  --username admin \
-  --firstname Admin \
-  --lastname Admin \
-  --email admin@admin.com \
-  --password admin</pre>
+      <pre>docker compose exec superset superset fab create-admin --username admin --firstname Admin --lastname Admin --email admin@admin.com --password admin</pre>
     </div>
     <div class="code-block">
       <div class="code-header"><span>bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
@@ -551,8 +546,9 @@ EXEC sp_addlinkedsrvlogin
   <!-- PASO 7 -->
   <section id="paso7">
     <details class="step-accordion numbered">
-    <summary><span class="step-num">6</span> Crear el Job de actualización (cada 1 hora)</summary>
+    <summary><span class="step-num">6</span> Crear Jobs de actualización (cada 1 hora)</summary>
     <div class="step-accordion-body">
+    <h3>Job 1 — AmecoDashboards</h3>
     <p>En SSMS conectado a <code>localhost,1434</code>, expandir <strong>Agente SQL Server → Jobs → Nuevo Job</strong>:</p>
     <table>
       <tr><th>Campo</th><th>Valor</th></tr>
@@ -582,7 +578,6 @@ BEGIN
         SELECT
             ot.id                               AS OrdenTrabajoId,
             ot.fechaInicio                      AS OrdenTrabajoFechaInicio,
-            ot.planId                           AS OrdenTrabajoPlanId,
             emp.nombre                          AS OrdenTrabajoEmpresa,
             estot.id                            AS EstadoOrdenTrabajoId,
             estot.nombre                        AS EstadoOrdenTrabajo,
@@ -593,36 +588,15 @@ BEGIN
             ISNULL(ope.tiempoPerdidoMin, 0)     AS OperacionTiempoPerdido,
             ope.fechaFin                        AS OperacionFechaFin,
             ope.fechaResolucion                 AS OperacionFechaResolucion,
-            ope.detalleSolucion                 AS OperacionSolucionComentario,
-            ope.cumpleSTD                       AS OperacionTiempoEstandarCumplido,
-            ope.requiereMateriales              AS OperacionRequiereMateriales,
             ope.ubicacion                       AS OperacionUbicacion,
             ope.recursos                        AS OperacionRecursos,
-            ope.movilizacion                    AS OperacionMovilizacion,
-            ope.secuencia                       AS OperacionSecuencia,
             ope.dependencia                     AS OperacionDependencia,
             ope.orden                           AS OperacionOrden,
-            ope.plazo                           AS OperacionPlazo,
-            ope.trabajo                         AS OperacionTrabajo,
-            ope.precio1                         AS OperacionPrecio1,
-            ope.precio2                         AS OperacionPrecio2,
-            ope.latitud                         AS OperacionLatitud,
-            ope.longitud                        AS OperacionLongitud,
             ope.direccion                       AS OperacionDireccion,
             ope.duracionTraslado                AS OperacionTiempoTraslado,
-            ope.elementoLinea                   AS OperacionElementoLinea,
-            ope.elementoCodigo                  AS OperacionElementoCodigo,
-            ope.elementoDescripcion             AS OperacionElementoDescripcion,
-            ope.requiereAprobacion              AS OperacionRequiereAprobacion,
-            ope.evidenciaFlag                   AS OperacionEvidenciaFlag,
-            ope.secuenciadorFlag                AS OperacionSecuenciadorFlag,
             ope.procesoOperacionId              AS OperacionProcesoId,
             ope.operacionPadreId                AS OperacionPadreId,
-            ope.fechaAgendada                   AS OperacionFechaAgendada,
-            ope.fechaProgramada                 AS OperacionFechaProgramada,
             ope.fechaAsignacion                 AS OperacionFechaAsignacion,
-            ope.fechaLiberacion                 AS OperacionFechaLiberacion,
-            ope.fechaDesasignacion              AS OperacionFechaDesasignacion,
             ope.fechaDetenidoInicio             AS OperacionFechaDetenidoInicio,
             ope.fechaDetenidoFin                AS OperacionFechaDetenidoFin,
             ISNULL(operesol.fechainicioTareaReal, ISNULL(ope.fechaInicioTareaReal, ope.fechaInicio)) AS OperacionFechaInicio,
@@ -641,16 +615,14 @@ BEGIN
             espec.nombre                        AS Especialidad,
             estadoOperacion.id                  AS EstadoOperacionId,
             estadoOperacion.nombre              AS EstadoOperacion,
-            motivoDet.id                        AS MotivoDetencionId,
-            motivoDet.valor                     AS MotivoDetencion,
-            motivoDetTipo.nombre                AS MotivoDetencionTipo,
-            motivoNoEjec.id                     AS MotivoNoEjecucionId,
-            motivoNoEjec.valor                  AS MotivoNoEjecucion,
             grupo.id                            AS GrupoResolutorOperacionId,
             grupo.nombre                        AS GrupoResolutorOperacion,
-            pers.nombre                         AS OperacionResolutor,
+            resolutor.personaId                 AS ResolutorPersonaId,
+    pers.nombre                         AS OperacionResolutor,
             ISNULL(turno.nombre, 'Sin asignar') AS OperacionResolutorTurno,
             cargo.nombre                        AS OperacionResolutorCargo,
+            perfil.id                           AS ResolutorPerfilId,
+            perfil.nombre                       AS ResolutorPerfil,
             sitio.id                            AS SitioOperacionId,
             sitio.nombre                        AS SitioOperacion,
             zona.id                             AS ZonaOperacionId,
@@ -662,30 +634,19 @@ BEGIN
             operesol.tiempoResolucionBruto      AS OperacionResolucionTiempoBruto,
             operesol.tiempoTrasladoDeclarado    AS OperacionResolucionTiempoTraslado,
             operesol.tiemposAdministrativos     AS OperacionResolucionTiemposAdministrativos,
-            operesol.noEjecutada                AS OperacionResolucionNoEjecutada,
-            operesol.otAbortada                 AS OperacionResolucionOrdenTrabajoAbortada,
-            operesol.cumpleEstandares           AS OperacionResolucionCumpleEstandares,
             operesol.esPreparacionDocumentacion AS OperacionResolucionEsPreparacionDoc,
             operesol.esObtencionAutorizaciones  AS OperacionResolucionEsObtencionAutorizaciones,
             operesol.esObtencionPermisosES      AS OperacionResolucionEsObtencionPermisos,
-            operesol.tipoFallaId                AS OperacionResolucionTipoFallaId,
             operesol.latitud                    AS OperacionResolucionLatitud,
             operesol.longitud                   AS OperacionResolucionLongitud,
             operesol.fechaResolucion            AS OperacionResolucionFecha,
             activo.id                           AS ActivoId,
             activo.nombre                       AS Activo,
             activo.codigo                       AS ActivoCodigo,
-            activoElem.id                       AS ActivoElementoId,
-            activoElem.codigo                   AS ActivoElementoCodigo,
-            activoElem.habitacion               AS ActivoElementoHabitacion,
-            activoElem.tipoInstalacion          AS ActivoElementoTipoInstalacion,
             proceso.id                          AS ProcesoId,
             proceso.nombre                      AS Proceso,
-            pln.nombre                          AS OrdenTrabajoPlanNombre,
             solicitante.nombre                  AS OrdenTrabajoSolicitante,
             responsable.nombre                  AS OrdenTrabajoResponsable,
-            estadoInst.id                       AS EstadoInstalacionId,
-            estadoInst.nombre                   AS EstadoInstalacion,
             recinto.id                          AS RecintoId,
             recinto.nombre                      AS Recinto,
             ot.descripcion                      AS OrdenTrabajoDescripcion,
@@ -697,6 +658,8 @@ BEGIN
             ot.fechaCreacion                    AS OrdenTrabajoFechaCreacion,
             ot.ubicacion                        AS OrdenTrabajoUbicacion,
             ot.nochero                          AS OrdenTrabajoNochero,
+            ot.ganttId                          AS OrdenTrabajoPlanId,
+            CASE WHEN ot.ganttId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan,
             tipoAct.id                          AS TipoActividadId,
             tipoAct.nombreReal                  AS TipoActividad
         FROM        AMECO_DEV.Ameco.albi.ordenTrabajo           AS ot
@@ -716,20 +679,15 @@ BEGIN
         LEFT JOIN   AMECO_DEV.Ameco.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
         LEFT JOIN   AMECO_DEV.Ameco.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
         LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS pers             ON resolutor.personaId          = pers.id
+        LEFT JOIN   AMECO_DEV.Ameco.albi.perfil                 AS perfil           ON perfil.id                    = resolutor.perfilId
         LEFT JOIN   AMECO_DEV.Ameco.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
         LEFT JOIN   AMECO_DEV.Ameco.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
         LEFT JOIN   AMECO_DEV.Ameco.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
         LEFT JOIN   AMECO_DEV.Ameco.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
-        LEFT JOIN   AMECO_DEV.Ameco.albi.motivo                 AS motivoDet        ON motivoDet.id                 = ope.motivoDetencionId
-        LEFT JOIN   AMECO_DEV.Ameco.albi.motivoTipo             AS motivoDetTipo    ON motivoDetTipo.id             = motivoDet.motivoTipoId
-        LEFT JOIN   AMECO_DEV.Ameco.albi.motivo                 AS motivoNoEjec     ON motivoNoEjec.id              = operesol.motivoNoEjecutadaId
         LEFT JOIN   AMECO_DEV.Ameco.albi.activo                 AS activo           ON activo.id                    = ot.activoId
-        LEFT JOIN   AMECO_DEV.Ameco.albi.activoElementos        AS activoElem       ON activoElem.id                = ope.activoElementosId
         LEFT JOIN   AMECO_DEV.Ameco.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
-        LEFT JOIN   AMECO_DEV.Ameco.albi.[plan]                 AS pln              ON pln.id                       = ot.planId
         LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
         LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
-        LEFT JOIN   AMECO_DEV.Ameco.albi.estadoInstalacion      AS estadoInst       ON estadoInst.id                = ot.estadoInstalacionId
         LEFT JOIN   AMECO_DEV.Ameco.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
         LEFT JOIN   AMECO_DEV.Ameco.albi.ordenTrabajoAdicionales AS otadic          ON otadic.ordenTrabajoId        = ot.id
         LEFT JOIN   AMECO_DEV.Ameco.albi.tipoActividad           AS tipoAct         ON tipoAct.id                   = otadic.tipoActividadId
@@ -748,7 +706,6 @@ INSERT INTO AmecoHubIntegracion.dbo.AmecoDashboards
 SELECT
     ot.id                               AS OrdenTrabajoId,
     ot.fechaInicio                      AS OrdenTrabajoFechaInicio,
-    ot.planId                           AS OrdenTrabajoPlanId,
     emp.nombre                          AS OrdenTrabajoEmpresa,
     estot.id                            AS EstadoOrdenTrabajoId,
     estot.nombre                        AS EstadoOrdenTrabajo,
@@ -759,36 +716,15 @@ SELECT
     ISNULL(ope.tiempoPerdidoMin, 0)     AS OperacionTiempoPerdido,
     ope.fechaFin                        AS OperacionFechaFin,
     ope.fechaResolucion                 AS OperacionFechaResolucion,
-    ope.detalleSolucion                 AS OperacionSolucionComentario,
-    ope.cumpleSTD                       AS OperacionTiempoEstandarCumplido,
-    ope.requiereMateriales              AS OperacionRequiereMateriales,
     ope.ubicacion                       AS OperacionUbicacion,
     ope.recursos                        AS OperacionRecursos,
-    ope.movilizacion                    AS OperacionMovilizacion,
-    ope.secuencia                       AS OperacionSecuencia,
     ope.dependencia                     AS OperacionDependencia,
     ope.orden                           AS OperacionOrden,
-    ope.plazo                           AS OperacionPlazo,
-    ope.trabajo                         AS OperacionTrabajo,
-    ope.precio1                         AS OperacionPrecio1,
-    ope.precio2                         AS OperacionPrecio2,
-    ope.latitud                         AS OperacionLatitud,
-    ope.longitud                        AS OperacionLongitud,
     ope.direccion                       AS OperacionDireccion,
     ope.duracionTraslado                AS OperacionTiempoTraslado,
-    ope.elementoLinea                   AS OperacionElementoLinea,
-    ope.elementoCodigo                  AS OperacionElementoCodigo,
-    ope.elementoDescripcion             AS OperacionElementoDescripcion,
-    ope.requiereAprobacion              AS OperacionRequiereAprobacion,
-    ope.evidenciaFlag                   AS OperacionEvidenciaFlag,
-    ope.secuenciadorFlag                AS OperacionSecuenciadorFlag,
     ope.procesoOperacionId              AS OperacionProcesoId,
     ope.operacionPadreId                AS OperacionPadreId,
-    ope.fechaAgendada                   AS OperacionFechaAgendada,
-    ope.fechaProgramada                 AS OperacionFechaProgramada,
     ope.fechaAsignacion                 AS OperacionFechaAsignacion,
-    ope.fechaLiberacion                 AS OperacionFechaLiberacion,
-    ope.fechaDesasignacion              AS OperacionFechaDesasignacion,
     ope.fechaDetenidoInicio             AS OperacionFechaDetenidoInicio,
     ope.fechaDetenidoFin                AS OperacionFechaDetenidoFin,
     ISNULL(operesol.fechainicioTareaReal, ISNULL(ope.fechaInicioTareaReal, ope.fechaInicio)) AS OperacionFechaInicio,
@@ -807,16 +743,14 @@ SELECT
     espec.nombre                        AS Especialidad,
     estadoOperacion.id                  AS EstadoOperacionId,
     estadoOperacion.nombre              AS EstadoOperacion,
-    motivoDet.id                        AS MotivoDetencionId,
-    motivoDet.valor                     AS MotivoDetencion,
-    motivoDetTipo.nombre                AS MotivoDetencionTipo,
-    motivoNoEjec.id                     AS MotivoNoEjecucionId,
-    motivoNoEjec.valor                  AS MotivoNoEjecucion,
     grupo.id                            AS GrupoResolutorOperacionId,
     grupo.nombre                        AS GrupoResolutorOperacion,
+    resolutor.personaId                 AS ResolutorPersonaId,
     pers.nombre                         AS OperacionResolutor,
     ISNULL(turno.nombre, 'Sin asignar') AS OperacionResolutorTurno,
     cargo.nombre                        AS OperacionResolutorCargo,
+    perfil.id                           AS ResolutorPerfilId,
+    perfil.nombre                       AS ResolutorPerfil,
     sitio.id                            AS SitioOperacionId,
     sitio.nombre                        AS SitioOperacion,
     zona.id                             AS ZonaOperacionId,
@@ -828,30 +762,19 @@ SELECT
     operesol.tiempoResolucionBruto      AS OperacionResolucionTiempoBruto,
     operesol.tiempoTrasladoDeclarado    AS OperacionResolucionTiempoTraslado,
     operesol.tiemposAdministrativos     AS OperacionResolucionTiemposAdministrativos,
-    operesol.noEjecutada                AS OperacionResolucionNoEjecutada,
-    operesol.otAbortada                 AS OperacionResolucionOrdenTrabajoAbortada,
-    operesol.cumpleEstandares           AS OperacionResolucionCumpleEstandares,
     operesol.esPreparacionDocumentacion AS OperacionResolucionEsPreparacionDoc,
     operesol.esObtencionAutorizaciones  AS OperacionResolucionEsObtencionAutorizaciones,
     operesol.esObtencionPermisosES      AS OperacionResolucionEsObtencionPermisos,
-    operesol.tipoFallaId                AS OperacionResolucionTipoFallaId,
     operesol.latitud                    AS OperacionResolucionLatitud,
     operesol.longitud                   AS OperacionResolucionLongitud,
     operesol.fechaResolucion            AS OperacionResolucionFecha,
     activo.id                           AS ActivoId,
     activo.nombre                       AS Activo,
     activo.codigo                       AS ActivoCodigo,
-    activoElem.id                       AS ActivoElementoId,
-    activoElem.codigo                   AS ActivoElementoCodigo,
-    activoElem.habitacion               AS ActivoElementoHabitacion,
-    activoElem.tipoInstalacion          AS ActivoElementoTipoInstalacion,
     proceso.id                          AS ProcesoId,
     proceso.nombre                      AS Proceso,
-    pln.nombre                          AS OrdenTrabajoPlanNombre,
     solicitante.nombre                  AS OrdenTrabajoSolicitante,
     responsable.nombre                  AS OrdenTrabajoResponsable,
-    estadoInst.id                       AS EstadoInstalacionId,
-    estadoInst.nombre                   AS EstadoInstalacion,
     recinto.id                          AS RecintoId,
     recinto.nombre                      AS Recinto,
     ot.descripcion                      AS OrdenTrabajoDescripcion,
@@ -863,6 +786,8 @@ SELECT
     ot.fechaCreacion                    AS OrdenTrabajoFechaCreacion,
     ot.ubicacion                        AS OrdenTrabajoUbicacion,
     ot.nochero                          AS OrdenTrabajoNochero,
+    ot.ganttId                          AS OrdenTrabajoPlanId,
+    CASE WHEN ot.ganttId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan,
     tipoAct.id                          AS TipoActividadId,
     tipoAct.nombreReal                  AS TipoActividad
 
@@ -883,20 +808,15 @@ LEFT JOIN   AMECO_DEV.Ameco.albi.prioridad              AS prioridad        ON p
 LEFT JOIN   AMECO_DEV.Ameco.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
 LEFT JOIN   AMECO_DEV.Ameco.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
 LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS pers             ON resolutor.personaId          = pers.id
+LEFT JOIN   AMECO_DEV.Ameco.albi.perfil                 AS perfil           ON perfil.id                    = resolutor.perfilId
 LEFT JOIN   AMECO_DEV.Ameco.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
 LEFT JOIN   AMECO_DEV.Ameco.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
 LEFT JOIN   AMECO_DEV.Ameco.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
 LEFT JOIN   AMECO_DEV.Ameco.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
-LEFT JOIN   AMECO_DEV.Ameco.albi.motivo                 AS motivoDet        ON motivoDet.id                 = ope.motivoDetencionId
-LEFT JOIN   AMECO_DEV.Ameco.albi.motivoTipo             AS motivoDetTipo    ON motivoDetTipo.id             = motivoDet.motivoTipoId
-LEFT JOIN   AMECO_DEV.Ameco.albi.motivo                 AS motivoNoEjec     ON motivoNoEjec.id              = operesol.motivoNoEjecutadaId
 LEFT JOIN   AMECO_DEV.Ameco.albi.activo                 AS activo           ON activo.id                    = ot.activoId
-LEFT JOIN   AMECO_DEV.Ameco.albi.activoElementos        AS activoElem       ON activoElem.id                = ope.activoElementosId
 LEFT JOIN   AMECO_DEV.Ameco.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
-LEFT JOIN   AMECO_DEV.Ameco.albi.[plan]                 AS pln              ON pln.id                       = ot.planId
 LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
 LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
-LEFT JOIN   AMECO_DEV.Ameco.albi.estadoInstalacion      AS estadoInst       ON estadoInst.id                = ot.estadoInstalacionId
 LEFT JOIN   AMECO_DEV.Ameco.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
 LEFT JOIN   AMECO_DEV.Ameco.albi.ordenTrabajoAdicionales AS otadic          ON otadic.ordenTrabajoId        = ot.id
 LEFT JOIN   AMECO_DEV.Ameco.albi.tipoActividad           AS tipoAct         ON tipoAct.id                   = otadic.tipoActividadId
@@ -935,10 +855,397 @@ SELECT *
 FROM dbo.AmecoDashboards
 WHERE OperacionPadreId IS NULL</pre>
     </div>
+    <h3>Job 2 — AmecoAsistencia</h3>
+    <p>Job separado — si falla uno no afecta al otro. En SSMS → <strong>Agente SQL Server → Jobs → Nuevo Job</strong>:</p>
+    <table>
+      <tr><th>Campo</th><th>Valor</th></tr>
+      <tr><td>Nombre</td><td><code>Actualizar AmecoAsistencia</code></td></tr>
+      <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
+      <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
+      <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
+      <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
+      <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
+    </table>
+    <details id="job-asistencia-sql">
+      <summary>Ver comando SQL completo del Job</summary>
+      <div class="code-block">
+        <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>USE AmecoHubIntegracion;
+GO
+
+-- =============================================
+-- PASO 1: Crear la tabla si no existe
+-- =============================================
+IF OBJECT_ID('AmecoHubIntegracion.dbo.AmecoAsistencia') IS NULL
+BEGIN
+    SELECT TOP 0 *
+    INTO AmecoHubIntegracion.dbo.AmecoAsistencia
+    FROM (
+        SELECT
+            a.id                        AS AsistenciaId,
+            a.personaId                 AS PersonaId,
+            p.nombre                    AS Persona,
+            pf.id                       AS PerfilId,
+            pf.nombre                   AS Perfil,
+            t.id                        AS TurnoId,
+            t.nombre                    AS Turno,
+            t.horaInicio                AS TurnoHoraInicio,
+            t.horaFin                   AS TurnoHoraFin,
+            r.especialidadId            AS EspecialidadId,
+            esp.nombre                  AS Especialidad,
+            r.zonaId                    AS ZonaId,
+            z.nombre                    AS Zona,
+            r.activo                    AS ResolutorActivo,
+            a.tipo                      AS AsistenciaTipo,
+            a.fechaHora                 AS AsistenciaFechaHora,
+            CAST(a.fechaHora AS DATE)   AS AsistenciaFecha,
+            a.latitud                   AS AsistenciaLatitud,
+            a.longitud                  AS AsistenciaLongitud,
+            a.estado                    AS AsistenciaEstado
+        FROM        AMECO_DEV.Ameco.albi.asistencia     AS a
+        JOIN        AMECO_DEV.Ameco.albi.persona        AS p    ON p.id     = a.personaId
+        JOIN        AMECO_DEV.Ameco.albi.resolutor      AS r    ON r.personaId = a.personaId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.perfil         AS pf   ON pf.id    = r.perfilId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.turno          AS t    ON t.id     = r.turnoId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.especialidad   AS esp  ON esp.id   = r.especialidadId
+        LEFT JOIN   AMECO_DEV.Ameco.albi.zona           AS z    ON z.id     = r.zonaId
+        WHERE 1 = 0
+    ) AS t
+    PRINT 'Tabla AmecoAsistencia creada'
+END
+
+-- =============================================
+-- PASO 2: Actualizar los datos
+-- =============================================
+TRUNCATE TABLE AmecoHubIntegracion.dbo.AmecoAsistencia
+
+INSERT INTO AmecoHubIntegracion.dbo.AmecoAsistencia
+SELECT
+    a.id                        AS AsistenciaId,
+    a.personaId                 AS PersonaId,
+    p.nombre                    AS Persona,
+    pf.id                       AS PerfilId,
+    pf.nombre                   AS Perfil,
+    t.id                        AS TurnoId,
+    t.nombre                    AS Turno,
+    t.horaInicio                AS TurnoHoraInicio,
+    t.horaFin                   AS TurnoHoraFin,
+    r.especialidadId            AS EspecialidadId,
+    esp.nombre                  AS Especialidad,
+    r.zonaId                    AS ZonaId,
+    z.nombre                    AS Zona,
+    r.activo                    AS ResolutorActivo,
+    a.tipo                      AS AsistenciaTipo,
+    a.fechaHora                 AS AsistenciaFechaHora,
+    CAST(a.fechaHora AS DATE)   AS AsistenciaFecha,
+    a.latitud                   AS AsistenciaLatitud,
+    a.longitud                  AS AsistenciaLongitud,
+    a.estado                    AS AsistenciaEstado
+FROM        AMECO_DEV.Ameco.albi.asistencia     AS a
+JOIN        AMECO_DEV.Ameco.albi.persona        AS p    ON p.id     = a.personaId
+JOIN        AMECO_DEV.Ameco.albi.resolutor      AS r    ON r.personaId = a.personaId
+LEFT JOIN   AMECO_DEV.Ameco.albi.perfil         AS pf   ON pf.id    = r.perfilId
+LEFT JOIN   AMECO_DEV.Ameco.albi.turno          AS t    ON t.id     = r.turnoId
+LEFT JOIN   AMECO_DEV.Ameco.albi.especialidad   AS esp  ON esp.id   = r.especialidadId
+LEFT JOIN   AMECO_DEV.Ameco.albi.zona           AS z    ON z.id     = r.zonaId</pre>
+      </div>
+    </details>
+    <h3>Job 3 — CentinelaDashboards</h3>
+    <p>Misma estructura que AmecoDashboards pero apunta a <code>AMECO_DEV.Albi.albi</code>. En SSMS → <strong>Agente SQL Server → Jobs → Nuevo Job</strong>:</p>
+    <table>
+      <tr><th>Campo</th><th>Valor</th></tr>
+      <tr><td>Nombre</td><td><code>Actualizar CentinelaDashboards</code></td></tr>
+      <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
+      <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
+      <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
+      <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
+      <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
+    </table>
+    <details id="job-centinela-sql">
+      <summary>Ver comando SQL completo del Job</summary>
+      <div class="code-block">
+        <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>USE AmecoHubIntegracion;
+GO
+
+-- =============================================
+-- PASO 1: Crear la tabla si no existe
+-- =============================================
+IF OBJECT_ID('AmecoHubIntegracion.dbo.CentinelaDashboards') IS NULL
+BEGIN
+    SELECT TOP 0 *
+    INTO AmecoHubIntegracion.dbo.CentinelaDashboards
+    FROM (
+        SELECT
+            ot.id                               AS OrdenTrabajoId,
+            ot.fechaInicio                      AS OrdenTrabajoFechaInicio,
+            emp.nombre                          AS OrdenTrabajoEmpresa,
+            estot.id                            AS EstadoOrdenTrabajoId,
+            estot.nombre                        AS EstadoOrdenTrabajo,
+            ope.id                              AS OperacionId,
+            ope.descripcion                     AS OperacionDescripcion,
+            ope.duracionMinSTD                  AS OperacionTiempoEstandar,
+            ope.duracionReal                    AS OperacionTiempoDuracionReal,
+            ISNULL(ope.tiempoPerdidoMin, 0)     AS OperacionTiempoPerdido,
+            ope.fechaFin                        AS OperacionFechaFin,
+            ope.fechaResolucion                 AS OperacionFechaResolucion,
+            ope.ubicacion                       AS OperacionUbicacion,
+            ope.recursos                        AS OperacionRecursos,
+            ope.dependencia                     AS OperacionDependencia,
+            ope.orden                           AS OperacionOrden,
+            ope.direccion                       AS OperacionDireccion,
+            ope.duracionTraslado                AS OperacionTiempoTraslado,
+            ope.procesoOperacionId              AS OperacionProcesoId,
+            CASE WHEN ope.id = (SELECT MIN(o2.id) FROM AMECO_DEV.Albi.albi.operacion o2 WHERE o2.ordenTrabajoId = ot.id) THEN NULL ELSE (SELECT MIN(o2.id) FROM AMECO_DEV.Albi.albi.operacion o2 WHERE o2.ordenTrabajoId = ot.id) END AS OperacionPadreId,
+            ope.fechaAsignacion                 AS OperacionFechaAsignacion,
+            ope.fechaDetenidoInicio             AS OperacionFechaDetenidoInicio,
+            ope.fechaDetenidoFin                AS OperacionFechaDetenidoFin,
+            ISNULL(operesol.fechainicioTareaReal, ISNULL(ope.fechaInicioTareaReal, ope.fechaInicio)) AS OperacionFechaInicio,
+            tipotarea.id                        AS TipoTareaId,
+            tipotarea.nombre                    AS TipoTarea,
+            subtipotar.id                       AS SubTipoTareaId,
+            subtipotar.nombre                   AS SubTipoTarea,
+            n3.id                               AS Nivel3Id,
+            n3.nombre                           AS Nivel3,
+            n4.id                               AS Nivel4Id,
+            n4.nombre                           AS Nivel4,
+            neg.nombre                          AS OrdenTrabajoNegocio,
+            tipoOperacion.id                    AS TipoOperacionId,
+            tipoOperacion.nombre                AS TipoOperacion,
+            espec.id                            AS EspecialidadId,
+            espec.nombre                        AS Especialidad,
+            estadoOperacion.id                  AS EstadoOperacionId,
+            estadoOperacion.nombre              AS EstadoOperacion,
+            grupo.id                            AS GrupoResolutorOperacionId,
+            grupo.nombre                        AS GrupoResolutorOperacion,
+            resolutor.personaId                 AS ResolutorPersonaId,
+            pers.nombre                         AS OperacionResolutor,
+            ISNULL(turno.nombre, 'Sin asignar') AS OperacionResolutorTurno,
+            cargo.nombre                        AS OperacionResolutorCargo,
+            perfil.id                           AS ResolutorPerfilId,
+            perfil.nombre                       AS ResolutorPerfil,
+            sitio.id                            AS SitioOperacionId,
+            sitio.nombre                        AS SitioOperacion,
+            zona.id                             AS ZonaOperacionId,
+            zona.nombre                         AS ZonaOperacion,
+            prioridad.id                        AS PrioridadOperacionId,
+            prioridad.nombre                    AS PrioridadOperacion,
+            operesol.tiempoEspera               AS OperacionResolucionTiempoEspera,
+            operesol.duracionEjecucion          AS OperacionResolucionTiempoEjecucion,
+            operesol.tiempoResolucionBruto      AS OperacionResolucionTiempoBruto,
+            operesol.tiempoTrasladoDeclarado    AS OperacionResolucionTiempoTraslado,
+            operesol.tiemposAdministrativos     AS OperacionResolucionTiemposAdministrativos,
+            operesol.esPreparacionDocumentacion AS OperacionResolucionEsPreparacionDoc,
+            operesol.esObtencionAutorizaciones  AS OperacionResolucionEsObtencionAutorizaciones,
+            operesol.esObtencionPermisosES      AS OperacionResolucionEsObtencionPermisos,
+            operesol.latitud                    AS OperacionResolucionLatitud,
+            operesol.longitud                   AS OperacionResolucionLongitud,
+            operesol.fechaResolucion            AS OperacionResolucionFecha,
+            activo.id                           AS ActivoId,
+            activo.nombre                       AS Activo,
+            activo.codigo                       AS ActivoCodigo,
+            proceso.id                          AS ProcesoId,
+            proceso.nombre                      AS Proceso,
+            solicitante.nombre                  AS OrdenTrabajoSolicitante,
+            responsable.nombre                  AS OrdenTrabajoResponsable,
+            recinto.id                          AS RecintoId,
+            recinto.nombre                      AS Recinto,
+            ot.descripcion                      AS OrdenTrabajoDescripcion,
+            ot.fechaFin                         AS OrdenTrabajoFechaFin,
+            ot.fechaInicioReal                  AS OrdenTrabajoFechaInicioReal,
+            ot.fechaFinReal                     AS OrdenTrabajoFechaFinReal,
+            ot.tiempoResolucionBruto            AS OrdenTrabajoTiempoResolucionBruto,
+            ot.duracion                         AS OrdenTrabajoDuracion,
+            ot.fechaCreacion                    AS OrdenTrabajoFechaCreacion,
+            ot.ubicacion                        AS OrdenTrabajoUbicacion,
+            ot.nochero                          AS OrdenTrabajoNochero,
+            ot.planId                           AS OrdenTrabajoPlanId,
+            CASE WHEN ot.planId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan
+        FROM        AMECO_DEV.Albi.albi.ordenTrabajo           AS ot
+        INNER JOIN  AMECO_DEV.Albi.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
+        LEFT JOIN   AMECO_DEV.Albi.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
+        LEFT JOIN   AMECO_DEV.Albi.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId
+        LEFT JOIN   AMECO_DEV.Albi.albi.nivel3                 AS n3               ON ot.nivel3Id                  = n3.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.nivel4                 AS n4               ON ot.nivel4Id                  = n4.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.estadoOt               AS estot            ON ot.estadoOtId                = estot.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.estadoOperacion        AS estadoOperacion  ON estadoOperacion.id           = ope.estadoOperacionId
+        LEFT JOIN   AMECO_DEV.Albi.albi.tipoTarea              AS tipotarea        ON tipotarea.id                 = ot.tipoTareaId
+        LEFT JOIN   AMECO_DEV.Albi.albi.subtipoTarea           AS subtipotar       ON ot.subtipoTareaId            = subtipotar.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.prioridad              AS prioridad        ON prioridad.id                 = ope.prioridadId
+        LEFT JOIN   AMECO_DEV.Albi.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
+        LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS pers             ON resolutor.personaId          = pers.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.perfil                 AS perfil           ON perfil.id                    = resolutor.perfilId
+        LEFT JOIN   AMECO_DEV.Albi.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
+        LEFT JOIN   AMECO_DEV.Albi.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
+        LEFT JOIN   AMECO_DEV.Albi.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
+        LEFT JOIN   AMECO_DEV.Albi.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
+        LEFT JOIN   AMECO_DEV.Albi.albi.activo                 AS activo           ON activo.id                    = ot.activoId
+        LEFT JOIN   AMECO_DEV.Albi.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
+        LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
+        LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
+        LEFT JOIN   AMECO_DEV.Albi.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
+        WHERE 1 = 0
+    ) AS t
+    PRINT 'Tabla CentinelaDashboards creada'
+END
+
+-- =============================================
+-- PASO 2: Actualizar los datos
+-- =============================================
+TRUNCATE TABLE AmecoHubIntegracion.dbo.CentinelaDashboards
+
+INSERT INTO AmecoHubIntegracion.dbo.CentinelaDashboards
+SELECT
+    ot.id                               AS OrdenTrabajoId,
+    ot.fechaInicio                      AS OrdenTrabajoFechaInicio,
+    emp.nombre                          AS OrdenTrabajoEmpresa,
+    estot.id                            AS EstadoOrdenTrabajoId,
+    estot.nombre                        AS EstadoOrdenTrabajo,
+    ope.id                              AS OperacionId,
+    ope.descripcion                     AS OperacionDescripcion,
+    ope.duracionMinSTD                  AS OperacionTiempoEstandar,
+    ope.duracionReal                    AS OperacionTiempoDuracionReal,
+    ISNULL(ope.tiempoPerdidoMin, 0)     AS OperacionTiempoPerdido,
+    ope.fechaFin                        AS OperacionFechaFin,
+    ope.fechaResolucion                 AS OperacionFechaResolucion,
+    ope.ubicacion                       AS OperacionUbicacion,
+    ope.recursos                        AS OperacionRecursos,
+    ope.dependencia                     AS OperacionDependencia,
+    ope.orden                           AS OperacionOrden,
+    ope.direccion                       AS OperacionDireccion,
+    ope.duracionTraslado                AS OperacionTiempoTraslado,
+    ope.procesoOperacionId              AS OperacionProcesoId,
+    CASE WHEN ope.id = (SELECT MIN(o2.id) FROM AMECO_DEV.Albi.albi.operacion o2 WHERE o2.ordenTrabajoId = ot.id) THEN NULL ELSE (SELECT MIN(o2.id) FROM AMECO_DEV.Albi.albi.operacion o2 WHERE o2.ordenTrabajoId = ot.id) END AS OperacionPadreId,
+    ope.fechaAsignacion                 AS OperacionFechaAsignacion,
+    ope.fechaDetenidoInicio             AS OperacionFechaDetenidoInicio,
+    ope.fechaDetenidoFin                AS OperacionFechaDetenidoFin,
+    ISNULL(operesol.fechainicioTareaReal, ISNULL(ope.fechaInicioTareaReal, ope.fechaInicio)) AS OperacionFechaInicio,
+    tipotarea.id                        AS TipoTareaId,
+    tipotarea.nombre                    AS TipoTarea,
+    subtipotar.id                       AS SubTipoTareaId,
+    subtipotar.nombre                   AS SubTipoTarea,
+    n3.id                               AS Nivel3Id,
+    n3.nombre                           AS Nivel3,
+    n4.id                               AS Nivel4Id,
+    n4.nombre                           AS Nivel4,
+    neg.nombre                          AS OrdenTrabajoNegocio,
+    tipoOperacion.id                    AS TipoOperacionId,
+    tipoOperacion.nombre                AS TipoOperacion,
+    espec.id                            AS EspecialidadId,
+    espec.nombre                        AS Especialidad,
+    estadoOperacion.id                  AS EstadoOperacionId,
+    estadoOperacion.nombre              AS EstadoOperacion,
+    grupo.id                            AS GrupoResolutorOperacionId,
+    grupo.nombre                        AS GrupoResolutorOperacion,
+    resolutor.personaId                 AS ResolutorPersonaId,
+    pers.nombre                         AS OperacionResolutor,
+    ISNULL(turno.nombre, 'Sin asignar') AS OperacionResolutorTurno,
+    cargo.nombre                        AS OperacionResolutorCargo,
+    perfil.id                           AS ResolutorPerfilId,
+    perfil.nombre                       AS ResolutorPerfil,
+    sitio.id                            AS SitioOperacionId,
+    sitio.nombre                        AS SitioOperacion,
+    zona.id                             AS ZonaOperacionId,
+    zona.nombre                         AS ZonaOperacion,
+    prioridad.id                        AS PrioridadOperacionId,
+    prioridad.nombre                    AS PrioridadOperacion,
+    operesol.tiempoEspera               AS OperacionResolucionTiempoEspera,
+    operesol.duracionEjecucion          AS OperacionResolucionTiempoEjecucion,
+    operesol.tiempoResolucionBruto      AS OperacionResolucionTiempoBruto,
+    operesol.tiempoTrasladoDeclarado    AS OperacionResolucionTiempoTraslado,
+    operesol.tiemposAdministrativos     AS OperacionResolucionTiemposAdministrativos,
+    operesol.esPreparacionDocumentacion AS OperacionResolucionEsPreparacionDoc,
+    operesol.esObtencionAutorizaciones  AS OperacionResolucionEsObtencionAutorizaciones,
+    operesol.esObtencionPermisosES      AS OperacionResolucionEsObtencionPermisos,
+    operesol.latitud                    AS OperacionResolucionLatitud,
+    operesol.longitud                   AS OperacionResolucionLongitud,
+    operesol.fechaResolucion            AS OperacionResolucionFecha,
+    activo.id                           AS ActivoId,
+    activo.nombre                       AS Activo,
+    activo.codigo                       AS ActivoCodigo,
+    proceso.id                          AS ProcesoId,
+    proceso.nombre                      AS Proceso,
+    solicitante.nombre                  AS OrdenTrabajoSolicitante,
+    responsable.nombre                  AS OrdenTrabajoResponsable,
+    recinto.id                          AS RecintoId,
+    recinto.nombre                      AS Recinto,
+    ot.descripcion                      AS OrdenTrabajoDescripcion,
+    ot.fechaFin                         AS OrdenTrabajoFechaFin,
+    ot.fechaInicioReal                  AS OrdenTrabajoFechaInicioReal,
+    ot.fechaFinReal                     AS OrdenTrabajoFechaFinReal,
+    ot.tiempoResolucionBruto            AS OrdenTrabajoTiempoResolucionBruto,
+    ot.duracion                         AS OrdenTrabajoDuracion,
+    ot.fechaCreacion                    AS OrdenTrabajoFechaCreacion,
+    ot.ubicacion                        AS OrdenTrabajoUbicacion,
+    ot.nochero                          AS OrdenTrabajoNochero,
+    ot.planId                           AS OrdenTrabajoPlanId,
+    CASE WHEN ot.planId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan
+
+FROM        AMECO_DEV.Albi.albi.ordenTrabajo           AS ot
+INNER JOIN  AMECO_DEV.Albi.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
+LEFT JOIN   AMECO_DEV.Albi.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
+LEFT JOIN   AMECO_DEV.Albi.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
+LEFT JOIN   AMECO_DEV.Albi.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
+LEFT JOIN   AMECO_DEV.Albi.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
+LEFT JOIN   AMECO_DEV.Albi.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId
+LEFT JOIN   AMECO_DEV.Albi.albi.nivel3                 AS n3               ON ot.nivel3Id                  = n3.id
+LEFT JOIN   AMECO_DEV.Albi.albi.nivel4                 AS n4               ON ot.nivel4Id                  = n4.id
+LEFT JOIN   AMECO_DEV.Albi.albi.estadoOt               AS estot            ON ot.estadoOtId                = estot.id
+LEFT JOIN   AMECO_DEV.Albi.albi.estadoOperacion        AS estadoOperacion  ON estadoOperacion.id           = ope.estadoOperacionId
+LEFT JOIN   AMECO_DEV.Albi.albi.tipoTarea              AS tipotarea        ON tipotarea.id                 = ot.tipoTareaId
+LEFT JOIN   AMECO_DEV.Albi.albi.subtipoTarea           AS subtipotar       ON ot.subtipoTareaId            = subtipotar.id
+LEFT JOIN   AMECO_DEV.Albi.albi.prioridad              AS prioridad        ON prioridad.id                 = ope.prioridadId
+LEFT JOIN   AMECO_DEV.Albi.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
+LEFT JOIN   AMECO_DEV.Albi.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
+LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS pers             ON resolutor.personaId          = pers.id
+LEFT JOIN   AMECO_DEV.Albi.albi.perfil                 AS perfil           ON perfil.id                    = resolutor.perfilId
+LEFT JOIN   AMECO_DEV.Albi.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
+LEFT JOIN   AMECO_DEV.Albi.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
+LEFT JOIN   AMECO_DEV.Albi.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
+LEFT JOIN   AMECO_DEV.Albi.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
+LEFT JOIN   AMECO_DEV.Albi.albi.activo                 AS activo           ON activo.id                    = ot.activoId
+LEFT JOIN   AMECO_DEV.Albi.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
+LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
+LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
+LEFT JOIN   AMECO_DEV.Albi.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId</pre>
+      </div>
+    </details>
+
+    <h3>Vistas de OrdenesTrabajo</h3>
+    <div class="callout warning">
+      <span class="callout-icon">⚠️</span>
+      <div>Cada vez que se agregue una columna a un Job, hay que correr el <code>ALTER VIEW</code> correspondiente para que los datasets de Superset reciban la nueva columna.</div>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span>sql — SSMS localhost,1434 — Ameco</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>CREATE VIEW dbo.v_OrdenesTrabajo AS
+SELECT *
+FROM dbo.AmecoDashboards
+WHERE OperacionPadreId IS NULL
+
+-- Actualizaciones posteriores:
+-- ALTER VIEW dbo.v_OrdenesTrabajo AS
+-- SELECT * FROM dbo.AmecoDashboards WHERE OperacionPadreId IS NULL</pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span>sql — SSMS localhost,1434 — Centinela</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+      <pre>CREATE VIEW dbo.v_OrdenesTrabajoCentinela AS
+SELECT *
+FROM dbo.CentinelaDashboards
+WHERE OperacionPadreId IS NULL
+
+-- Actualizaciones posteriores:
+-- ALTER VIEW dbo.v_OrdenesTrabajoCentinela AS
+-- SELECT * FROM dbo.CentinelaDashboards WHERE OperacionPadreId IS NULL</pre>
+    </div>
     </div></details>
   </section>
 
-  <!-- PASO 8 -->
+  <!-- PASO 7 -->
   <section id="paso8">
     <details class="step-accordion numbered">
     <summary><span class="step-num">7</span> Conectar Superset al SQL Server Docker</summary>
@@ -955,7 +1262,7 @@ WHERE OperacionPadreId IS NULL</pre>
     </div></details>
   </section>
 
-  <!-- PASO 9 -->
+  <!-- PASO 8 -->
   <section id="paso9">
     <details class="step-accordion numbered">
     <summary><span class="step-num">8</span> Crear el Dataset en Superset</summary>
@@ -1029,6 +1336,136 @@ INNER JOIN msdb.dbo.sysjobhistory h ON j.job_id = h.job_id
 WHERE j.name = 'Actualizar AmecoDashboards'
 ORDER BY h.run_date DESC, h.run_time DESC</pre>
       </div>
+    </div>
+    </details>
+  </section>
+
+  <!-- CLONAR DASHBOARD -->
+  <section id="clonar-dashboard">
+    <details class="step-accordion">
+    <summary>Clonar un Dashboard para otro cliente</summary>
+    <div class="step-accordion-body">
+      <p>Procedimiento para duplicar un dashboard existente (ej. Ameco) y reasignarlo a otro cliente (ej. Centinela), reutilizando datasets que ya existen en Superset.</p>
+
+      <h3>Prerrequisitos</h3>
+      <ul style="margin-bottom:16px;line-height:1.8">
+        <li>Las <strong>tablas destino</strong> deben existir en SQL Server (ej. <code>CentinelaDashboards</code>, <code>v_OrdenesTrabajoCentinela</code>) y estar pobladas.</li>
+        <li>Los <strong>datasets destino</strong> deben estar creados en Superset apuntando a esas tablas.</li>
+        <li>Anotar en qué <strong>conexión de BD</strong> están los datasets destino (puede ser distinta a la del dashboard original).</li>
+      </ul>
+
+      <h3>Paso 1 — Exportar el dashboard original</h3>
+      <p>En Superset → Dashboards → click en <code>...</code> del dashboard → <strong>Export</strong>. Se descarga un ZIP.</p>
+
+      <h3>Paso 2 — Descomprimir y editar</h3>
+      <p>Descomprimir el ZIP. La estructura interna es:</p>
+      <div class="code-block">
+        <div class="code-header"><span>estructura del ZIP</span></div>
+        <pre>nombre_export/
+  metadata.yaml
+  dashboards/NOMBRE-DASHBOARD_1.yaml
+  databases/NOMBRE-BD.yaml
+  datasets/NOMBRE-BD/NombreDataset_1.yaml
+  charts/NombreChart_1.yaml
+  charts/NombreChart_2.yaml
+  ...</pre>
+      </div>
+
+      <h3>Paso 3 — Reemplazos en el contenido YAML</h3>
+      <p>En <strong>todos</strong> los archivos <code>.yaml</code>:</p>
+      <ol style="line-height:1.8">
+        <li><strong>Nombres de charts y dashboard:</strong> reemplazar el prefijo del cliente (ej. <code>[Ameco]</code> → <code>[Centinela]</code>, <code>DEV-AMECO-...</code> → <code>DEV-CENTINELA-...</code>).</li>
+        <li><strong>Nombres de datasets:</strong> reemplazar las referencias (ej. <code>AmecoDashboards</code> → <code>CentinelaDashboards</code>, <code>v_OrdenesTrabajo</code> → <code>v_OrdenesTrabajoCentinela</code>).</li>
+        <li><strong>UUIDs de charts y dashboard:</strong> generar UUIDs nuevos para que no sobreescriban los originales. Cada UUID que aparezca en los YAML de charts y dashboard debe ser reemplazado por uno nuevo (se puede hacer con un script de find &amp; replace global).</li>
+      </ol>
+
+      <div class="callout danger">
+        <span class="callout-icon">🚨</span>
+        <div><strong>NO reemplazar</strong> los UUIDs de datasets ni de la base de datos. Estos deben coincidir con los que ya existen en Superset para que se reutilicen en vez de crear nuevos.</div>
+      </div>
+
+      <h3>Paso 4 — Obtener los UUIDs reales de Superset</h3>
+      <p>Consultar la API de Superset para obtener los UUIDs de los datasets y la BD destino:</p>
+      <div class="code-block">
+        <div class="code-header"><span>bash — obtener token</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>TOKEN=$(docker exec superset-superset-1 bash -c 'curl -s -X POST \
+  http://localhost:8088/api/v1/security/login \
+  -H "Content-Type: application/json" \
+  -d "{\"username\":\"admin\",\"password\":\"admin\",\"provider\":\"db\"}" \
+  | python3 -c "import sys,json; print(json.load(sys.stdin)[\"access_token\"])"')</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span>bash — obtener UUIDs de databases</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>docker exec superset-superset-1 bash -c \
+  "curl -s http://localhost:8088/api/v1/database/ -H 'Authorization: Bearer $TOKEN'" \
+  | python3 -c "
+import sys, json
+for d in json.load(sys.stdin).get('result', []):
+    print(f\"{d['database_name']} | uuid={d.get('uuid','?')} | id={d['id']}\")"</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span>bash — obtener UUIDs de datasets (filtrar por nombre)</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>docker exec superset-superset-1 bash -c \
+  "curl -s 'http://localhost:8088/api/v1/dataset/?q=(filters:!((col:table_name,opr:ct,value:Centinela)))' \
+  -H 'Authorization: Bearer $TOKEN'" \
+  | python3 -c "
+import sys, json
+for d in json.load(sys.stdin).get('result', []):
+    print(f\"{d['table_name']} | uuid={d.get('uuid','?')} | db={d['database']['database_name']}\")"</pre>
+      </div>
+
+      <h3>Paso 5 — Ajustar los UUIDs en el export</h3>
+      <p>En los archivos YAML del export, reemplazar:</p>
+      <table>
+        <tr><th>Archivo</th><th>Campo</th><th>Valor</th></tr>
+        <tr><td><code>databases/NOMBRE-BD.yaml</code></td><td><code>uuid</code></td><td>UUID real de la BD destino en Superset</td></tr>
+        <tr><td><code>datasets/*/NombreDataset.yaml</code></td><td><code>uuid</code></td><td>UUID real del dataset en Superset</td></tr>
+        <tr><td><code>datasets/*/NombreDataset.yaml</code></td><td><code>database_uuid</code></td><td>UUID real de la BD destino</td></tr>
+      </table>
+      <p style="margin-top:10px">Adicionalmente, renombrar la <strong>carpeta</strong> <code>datasets/NOMBRE-BD-VIEJA/</code> al nombre de la BD destino y el archivo <code>databases/NOMBRE-BD-VIEJA.yaml</code> igualmente.</p>
+
+      <h3>Paso 6 — Crear el ZIP correctamente</h3>
+      <div class="callout danger">
+        <span class="callout-icon">🚨</span>
+        <div>Superset corre en <strong>Linux</strong>. El ZIP debe tener <strong>forward slashes</strong> (<code>/</code>) en las rutas internas, no backslashes. Si se crea desde Windows con PowerShell, las rutas quedan con <code>\</code> y el import falla silenciosamente. La forma segura es crear el ZIP <strong>dentro del contenedor Docker</strong>.</div>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span>bash — crear ZIP dentro del contenedor</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre><span class="cm"># Copiar la carpeta editada al contenedor</span>
+docker cp carpeta_export superset-superset-1:/tmp/carpeta_export
+
+<span class="cm"># Crear ZIP con Python (garantiza forward slashes)</span>
+docker exec superset-superset-1 python3 -c "
+import zipfile, os
+with zipfile.ZipFile('/tmp/dashboard_import.zip', 'w', zipfile.ZIP_DEFLATED) as zf:
+    for root, dirs, files in os.walk('/tmp/carpeta_export'):
+        for f in files:
+            filepath = os.path.join(root, f)
+            arcname = 'carpeta_export/' + os.path.relpath(filepath, '/tmp/carpeta_export')
+            zf.write(filepath, arcname)
+"
+
+<span class="cm"># Copiar el ZIP de vuelta</span>
+docker cp superset-superset-1:/tmp/dashboard_import.zip ./dashboard_import.zip</pre>
+      </div>
+
+      <h3>Paso 7 — Importar en Superset</h3>
+      <ol style="line-height:1.8">
+        <li>Ir a <strong>Settings (ruedita) → Import Dashboard</strong> (NO Import Dataset).</li>
+        <li>Seleccionar el ZIP generado.</li>
+        <li>Marcar el checkbox <strong>"Overwrite"</strong> para que actualice los datasets existentes.</li>
+        <li>Si pide contraseña de la BD, ingresar la del usuario <code>sa</code>.</li>
+      </ol>
+
+      <h3>Resumen de errores comunes</h3>
+      <table>
+        <tr><th>Error</th><th>Causa</th><th>Solución</th></tr>
+        <tr><td><code>Expecting value: line 1 column 1</code></td><td>ZIP sin carpeta raíz o con backslashes</td><td>Crear el ZIP dentro del contenedor Linux</td></tr>
+        <tr><td><code>UNIQUE constraint failed: tables.table_name</code></td><td>Dataset ya existe con UUID distinto</td><td>Usar el UUID real del dataset existente (consultar API)</td></tr>
+        <tr><td><code>Dataset already exists and overwrite=true was not passed</code></td><td>Dataset existe con mismo UUID</td><td>Marcar checkbox "Overwrite" al importar</td></tr>
+        <tr><td><code>Could not find a valid command to import file</code></td><td>Se importó desde "Import Dataset" en vez de "Import Dashboard"</td><td>Importar desde Settings → Import Dashboard</td></tr>
+        <tr><td>Pide contraseña de BD</td><td>UUID de BD no coincide con una existente</td><td>Usar el UUID real de la BD destino</td></tr>
+      </table>
     </div>
     </details>
   </section>

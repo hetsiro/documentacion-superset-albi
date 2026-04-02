@@ -286,7 +286,9 @@
 
   <div class="nav-section">Navegación</div>
   <a href="index.html" class="nav-ext">← Guía de instalación</a>
-  <a href="diccionario.html" class="active">Diccionario de datos</a>
+  <div class="nav-section">Diccionario de datos</div>
+  <a href="diccionario.html" class="active">Ameco</a>
+  <a href="#" class="sub" style="color:var(--muted);cursor:default;opacity:.5">Centinela (pendiente)</a>
   <div class="nav-section">Requerimientos</div>
   <a href="requerimientos.html" class="sub">Índice</a>
   <a href="requerimientos_ameco.html" class="sub">↳ Ameco</a>
@@ -694,7 +696,7 @@ function renderCatalog(key) {
 
   const rows = cat.valores.map(v => {
     const usos = v.usos !== undefined ? Number(v.usos).toLocaleString('es-CL') : '';
-    const usosStyle = v.usos === 0 ? 'color:#64748b;font-style:italic' : 'color:var(--success);font-weight:600';
+    const usosStyle = v.usos === 0 ? 'color:var(--danger);font-weight:600' : 'color:var(--success);font-weight:600';
     return `
       <tr${v.usos === 0 ? ' style="opacity:.5"' : ''}>
         <td class="cat-id">${v.id}</td>

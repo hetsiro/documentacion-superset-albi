@@ -48,17 +48,13 @@ LOOKUPS = [
     ("Tipo Operación",        "TipoOperacionId",            "TipoOperacion",              "tipoOperacion",         "id", "nombre"),
     ("Especialidad",          "EspecialidadId",              "Especialidad",               "especialidad",          "id", "nombre"),
     ("Estado Operación",      "EstadoOperacionId",           "EstadoOperacion",            "estadoOperacion",       "id", "nombre"),
-    ("Motivo Detención",      "MotivoDetencionId",           "MotivoDetencion",            "motivo",                "id", "valor"),
-    ("Motivo No Ejecución",   "MotivoNoEjecucionId",         "MotivoNoEjecucion",          "motivo",                "id", "valor"),
     ("Grupo Resolutor",       "GrupoResolutorOperacionId",   "GrupoResolutorOperacion",    "grupoResolutor",        "id", "nombre"),
     ("Sitio",                 "SitioOperacionId",            "SitioOperacion",             "sitio",                 "id", "nombre"),
     ("Zona",                  "ZonaOperacionId",             "ZonaOperacion",              "zona",                  "id", "nombre"),
     ("Prioridad",             "PrioridadOperacionId",        "PrioridadOperacion",         "prioridad",             "id", "nombre"),
     ("Proceso",               "ProcesoId",                   "Proceso",                    "proceso",               "id", "nombre"),
-    ("Plan",                  "OrdenTrabajoPlanId",          "OrdenTrabajoPlanNombre",     "plan",                  "id", "nombre"),
-    ("Estado Instalación",    "EstadoInstalacionId",         "EstadoInstalacion",          "estadoInstalacion",     "id", "nombre"),
     ("Recinto",               "RecintoId",                   "Recinto",                    "recinto",               "id", "nombre"),
-    ("Motivo Detención Tipo", "MotivoDetencionId",           "MotivoDetencionTipo",        None,                    None, None),  # sin tabla catalogo directa
+    ("Perfil Resolutor",      "ResolutorPerfilId",            "ResolutorPerfil",            "perfil",                "id", "nombre"),
     ("Tipo Actividad",        "TipoActividadId",             "TipoActividad",              "tipoActividad",         "id", "nombreReal"),
 ]
 

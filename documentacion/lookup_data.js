@@ -1,15 +1,14 @@
 window.LOOKUP_DATA = {
   "_meta": {
-    "generado": "2026-04-02T04:17:58",
+    "generado": "2026-04-02T14:03:51",
     "tabla": "AmecoHubIntegracion.dbo.AmecoDashboards",
-    "total_valores": 1069,
-    "catalogos": 20,
+    "total_valores": 1030,
+    "catalogos": 16,
     "total_ots": 1837,
     "total_operaciones": 1896,
     "usos": {
       "OrdenTrabajoId": 1896,
       "OrdenTrabajoFechaInicio": 1896,
-      "OrdenTrabajoPlanId": 0,
       "OrdenTrabajoEmpresa": 1896,
       "EstadoOrdenTrabajoId": 1896,
       "EstadoOrdenTrabajo": 1896,
@@ -20,36 +19,15 @@ window.LOOKUP_DATA = {
       "OperacionTiempoPerdido": 1896,
       "OperacionFechaFin": 348,
       "OperacionFechaResolucion": 1788,
-      "OperacionSolucionComentario": 0,
-      "OperacionTiempoEstandarCumplido": 0,
-      "OperacionRequiereMateriales": 0,
       "OperacionUbicacion": 1894,
       "OperacionRecursos": 1557,
-      "OperacionMovilizacion": 0,
-      "OperacionSecuencia": 0,
       "OperacionDependencia": 1557,
       "OperacionOrden": 1896,
-      "OperacionPlazo": 0,
-      "OperacionTrabajo": 0,
-      "OperacionPrecio1": 0,
-      "OperacionPrecio2": 0,
-      "OperacionLatitud": 0,
-      "OperacionLongitud": 0,
       "OperacionDireccion": 339,
       "OperacionTiempoTraslado": 1845,
-      "OperacionElementoLinea": 0,
-      "OperacionElementoCodigo": 0,
-      "OperacionElementoDescripcion": 0,
-      "OperacionRequiereAprobacion": 0,
-      "OperacionEvidenciaFlag": 0,
-      "OperacionSecuenciadorFlag": 0,
       "OperacionProcesoId": 1557,
       "OperacionPadreId": 59,
-      "OperacionFechaAgendada": 0,
-      "OperacionFechaProgramada": 0,
       "OperacionFechaAsignacion": 1750,
-      "OperacionFechaLiberacion": 0,
-      "OperacionFechaDesasignacion": 0,
       "OperacionFechaDetenidoInicio": 2,
       "OperacionFechaDetenidoFin": 1,
       "OperacionFechaInicio": 1896,
@@ -68,16 +46,13 @@ window.LOOKUP_DATA = {
       "Especialidad": 1557,
       "EstadoOperacionId": 1896,
       "EstadoOperacion": 1896,
-      "MotivoDetencionId": 0,
-      "MotivoDetencion": 0,
-      "MotivoDetencionTipo": 0,
-      "MotivoNoEjecucionId": 0,
-      "MotivoNoEjecucion": 0,
       "GrupoResolutorOperacionId": 1839,
       "GrupoResolutorOperacion": 1839,
       "OperacionResolutor": 1840,
       "OperacionResolutorTurno": 1896,
       "OperacionResolutorCargo": 1840,
+      "ResolutorPerfilId": 1840,
+      "ResolutorPerfil": 1840,
       "SitioOperacionId": 1585,
       "SitioOperacion": 1585,
       "ZonaOperacionId": 1585,
@@ -89,30 +64,19 @@ window.LOOKUP_DATA = {
       "OperacionResolucionTiempoBruto": 1804,
       "OperacionResolucionTiempoTraslado": 1800,
       "OperacionResolucionTiemposAdministrativos": 1804,
-      "OperacionResolucionNoEjecutada": 0,
-      "OperacionResolucionOrdenTrabajoAbortada": 0,
-      "OperacionResolucionCumpleEstandares": 0,
       "OperacionResolucionEsPreparacionDoc": 1804,
       "OperacionResolucionEsObtencionAutorizaciones": 1804,
       "OperacionResolucionEsObtencionPermisos": 1804,
-      "OperacionResolucionTipoFallaId": 0,
       "OperacionResolucionLatitud": 1804,
       "OperacionResolucionLongitud": 1804,
       "OperacionResolucionFecha": 1789,
       "ActivoId": 1886,
       "Activo": 1886,
       "ActivoCodigo": 1886,
-      "ActivoElementoId": 0,
-      "ActivoElementoCodigo": 0,
-      "ActivoElementoHabitacion": 0,
-      "ActivoElementoTipoInstalacion": 0,
       "ProcesoId": 1557,
       "Proceso": 1557,
-      "OrdenTrabajoPlanNombre": 0,
       "OrdenTrabajoSolicitante": 433,
       "OrdenTrabajoResponsable": 1738,
-      "EstadoInstalacionId": 0,
-      "EstadoInstalacion": 0,
       "RecintoId": 134,
       "Recinto": 134,
       "OrdenTrabajoDescripcion": 1896,
@@ -5057,268 +5021,6 @@ window.LOOKUP_DATA = {
         }
       ]
     },
-    "Motivo Detención": {
-      "idCol": "MotivoDetencionId",
-      "valorCol": "MotivoDetencion",
-      "valores": [
-        {
-          "id": 34,
-          "valor": "Atraso en maniobras",
-          "usos": 0
-        },
-        {
-          "id": 38,
-          "valor": "Con frente de trabajo / sin entrega de equipo",
-          "usos": 0
-        },
-        {
-          "id": 43,
-          "valor": "Condiciones climáticas",
-          "usos": 0
-        },
-        {
-          "id": 42,
-          "valor": "Eq. fuera de servicio",
-          "usos": 0
-        },
-        {
-          "id": 31,
-          "valor": "Espera acceso a area",
-          "usos": 0
-        },
-        {
-          "id": 45,
-          "valor": "Espera de operador / recurso",
-          "usos": 0
-        },
-        {
-          "id": 33,
-          "valor": "Espera enfriamiento de equipo",
-          "usos": 0
-        },
-        {
-          "id": 35,
-          "valor": "Espera materiales",
-          "usos": 0
-        },
-        {
-          "id": 32,
-          "valor": "Espera otro especialista",
-          "usos": 0
-        },
-        {
-          "id": 30,
-          "valor": "Espera transporte",
-          "usos": 0
-        },
-        {
-          "id": 40,
-          "valor": "Factor climatico / contexto operacional/voladura",
-          "usos": 0
-        },
-        {
-          "id": 41,
-          "valor": "Falta de horas para mantto",
-          "usos": 0
-        },
-        {
-          "id": 39,
-          "valor": "Falta de mano obra mantto",
-          "usos": 0
-        },
-        {
-          "id": 44,
-          "valor": "Falta de recursos",
-          "usos": 0
-        },
-        {
-          "id": 37,
-          "valor": "Falta de repuesto",
-          "usos": 0
-        },
-        {
-          "id": 29,
-          "valor": "No se requiere ejecutar",
-          "usos": 0
-        },
-        {
-          "id": 36,
-          "valor": "OT Cancelada duplicada",
-          "usos": 0
-        },
-        {
-          "id": 25,
-          "valor": "OT Cancelada equipo fuera de servicio",
-          "usos": 0
-        },
-        {
-          "id": 27,
-          "valor": "OT Cancelada no es necesario ejecutar",
-          "usos": 0
-        },
-        {
-          "id": 26,
-          "valor": "OT Cancelada no hay anomalia",
-          "usos": 0
-        },
-        {
-          "id": 22,
-          "valor": "OT Detenida Falta Materiales",
-          "usos": 0
-        },
-        {
-          "id": 24,
-          "valor": "OT Detenida falta recurso de apoyo",
-          "usos": 0
-        },
-        {
-          "id": 23,
-          "valor": "OT Detenida no se permite acceso a area",
-          "usos": 0
-        },
-        {
-          "id": 46,
-          "valor": "Tronadura",
-          "usos": 0
-        },
-        {
-          "id": 28,
-          "valor": "Ya se realizo esta tarea",
-          "usos": 0
-        }
-      ]
-    },
-    "Motivo No Ejecución": {
-      "idCol": "MotivoNoEjecucionId",
-      "valorCol": "MotivoNoEjecucion",
-      "valores": [
-        {
-          "id": 34,
-          "valor": "Atraso en maniobras",
-          "usos": 0
-        },
-        {
-          "id": 38,
-          "valor": "Con frente de trabajo / sin entrega de equipo",
-          "usos": 0
-        },
-        {
-          "id": 43,
-          "valor": "Condiciones climáticas",
-          "usos": 0
-        },
-        {
-          "id": 42,
-          "valor": "Eq. fuera de servicio",
-          "usos": 0
-        },
-        {
-          "id": 31,
-          "valor": "Espera acceso a area",
-          "usos": 0
-        },
-        {
-          "id": 45,
-          "valor": "Espera de operador / recurso",
-          "usos": 0
-        },
-        {
-          "id": 33,
-          "valor": "Espera enfriamiento de equipo",
-          "usos": 0
-        },
-        {
-          "id": 35,
-          "valor": "Espera materiales",
-          "usos": 0
-        },
-        {
-          "id": 32,
-          "valor": "Espera otro especialista",
-          "usos": 0
-        },
-        {
-          "id": 30,
-          "valor": "Espera transporte",
-          "usos": 0
-        },
-        {
-          "id": 40,
-          "valor": "Factor climatico / contexto operacional/voladura",
-          "usos": 0
-        },
-        {
-          "id": 41,
-          "valor": "Falta de horas para mantto",
-          "usos": 0
-        },
-        {
-          "id": 39,
-          "valor": "Falta de mano obra mantto",
-          "usos": 0
-        },
-        {
-          "id": 44,
-          "valor": "Falta de recursos",
-          "usos": 0
-        },
-        {
-          "id": 37,
-          "valor": "Falta de repuesto",
-          "usos": 0
-        },
-        {
-          "id": 29,
-          "valor": "No se requiere ejecutar",
-          "usos": 0
-        },
-        {
-          "id": 36,
-          "valor": "OT Cancelada duplicada",
-          "usos": 0
-        },
-        {
-          "id": 25,
-          "valor": "OT Cancelada equipo fuera de servicio",
-          "usos": 0
-        },
-        {
-          "id": 27,
-          "valor": "OT Cancelada no es necesario ejecutar",
-          "usos": 0
-        },
-        {
-          "id": 26,
-          "valor": "OT Cancelada no hay anomalia",
-          "usos": 0
-        },
-        {
-          "id": 22,
-          "valor": "OT Detenida Falta Materiales",
-          "usos": 0
-        },
-        {
-          "id": 24,
-          "valor": "OT Detenida falta recurso de apoyo",
-          "usos": 0
-        },
-        {
-          "id": 23,
-          "valor": "OT Detenida no se permite acceso a area",
-          "usos": 0
-        },
-        {
-          "id": 46,
-          "valor": "Tronadura",
-          "usos": 0
-        },
-        {
-          "id": 28,
-          "valor": "Ya se realizo esta tarea",
-          "usos": 0
-        }
-      ]
-    },
     "Grupo Resolutor": {
       "idCol": "GrupoResolutorOperacionId",
       "valorCol": "GrupoResolutorOperacion",
@@ -5514,17 +5216,6 @@ window.LOOKUP_DATA = {
         }
       ]
     },
-    "Plan": {
-      "idCol": "OrdenTrabajoPlanId",
-      "valorCol": "OrdenTrabajoPlanNombre",
-      "valores": [],
-      "error": "(156, b\"Incorrect syntax near the keyword 'plan'.DB-Lib error message 20018, severity 15:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
-    },
-    "Estado Instalación": {
-      "idCol": "EstadoInstalacionId",
-      "valorCol": "EstadoInstalacion",
-      "valores": []
-    },
     "Recinto": {
       "idCol": "RecintoId",
       "valorCol": "Recinto",
@@ -5541,10 +5232,66 @@ window.LOOKUP_DATA = {
         }
       ]
     },
-    "Motivo Detención Tipo": {
-      "idCol": "MotivoDetencionId",
-      "valorCol": "MotivoDetencionTipo",
-      "valores": []
+    "Perfil Resolutor": {
+      "idCol": "ResolutorPerfilId",
+      "valorCol": "ResolutorPerfil",
+      "valores": [
+        {
+          "id": 2,
+          "valor": "Administrador",
+          "usos": 48
+        },
+        {
+          "id": 9,
+          "valor": "Confiabilidad",
+          "usos": 124
+        },
+        {
+          "id": 11,
+          "valor": "Consulta",
+          "usos": 0
+        },
+        {
+          "id": 7,
+          "valor": "Jefe Mantención",
+          "usos": 13
+        },
+        {
+          "id": 5,
+          "valor": "Jefe Mantenimiento",
+          "usos": 0
+        },
+        {
+          "id": 8,
+          "valor": "Jefe Planificación",
+          "usos": 3
+        },
+        {
+          "id": 10,
+          "valor": "Jefe Taller",
+          "usos": 0
+        },
+        {
+          "id": 6,
+          "valor": "Planificador",
+          "usos": 505
+        },
+        {
+          "id": 4,
+          "valor": "Resolutor",
+          "usos": 53
+        },
+        {
+          "id": 1,
+          "valor": "Superadministrador",
+          "usos": 0
+        },
+        {
+          "id": 3,
+          "valor": "Supervisor",
+          "usos": 1094
+        }
+      ]
     },
     "Tipo Actividad": {
       "idCol": "TipoActividadId",

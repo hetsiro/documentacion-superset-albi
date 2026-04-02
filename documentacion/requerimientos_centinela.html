@@ -370,31 +370,6 @@
   <a href="requerimientos_ameco.html" class="sub">↳ Ameco</a>
   <a href="requerimientos_centinela.html" class="sub active">↳ Centinela</a>
 
-  <div class="nav-section">General</div>
-  <a href="#reglas" class="sub">Reglas generales</a>
-
-  <div class="nav-section">Módulos</div>
-  <a href="#modulo1" class="sub m1">1 · Modelo de tiempos</a>
-  <a href="#modulo2" class="sub m2">2 · Tasa de Finalización</a>
-  <a href="#modulo3" class="sub m3">3 · Tasa de Cumplimiento</a>
-
-  <div class="nav-section">Módulo 1</div>
-  <a href="#m1-req"      class="sub m1">Qué pide el cliente</a>
-  <a href="#m1-cols"     class="sub m1">Columnas necesarias</a>
-  <a href="#m1-charts"   class="sub m1">Charts a configurar</a>
-  <a href="#m1-pending"  class="sub m1">Pendientes</a>
-
-  <div class="nav-section">Módulo 2</div>
-  <a href="#m2-req"      class="sub m2">Qué pide el cliente</a>
-  <a href="#m2-cols"     class="sub m2">Columnas necesarias</a>
-  <a href="#m2-charts"   class="sub m2">Charts a configurar</a>
-  <a href="#m2-pending"  class="sub m2">Pendientes</a>
-
-  <div class="nav-section">Módulo 3</div>
-  <a href="#m3-req"      class="sub m3">Qué pide el cliente</a>
-  <a href="#m3-cols"     class="sub m3">Columnas necesarias</a>
-  <a href="#m3-sql"      class="sub m3">Charts a configurar</a>
-  <a href="#m3-pending"  class="sub m3">Pendientes</a>
 </nav>
 
 <!-- ══════════════════════ MAIN ══════════════════════ -->
@@ -405,641 +380,75 @@
     <div class="hero-top">
       <div>
         <h1>Requerimientos — Centinela</h1>
-        <p>Análisis del PPT <em>"Paneles de gestión y mejora — Albibot"</em>. Cada módulo detalla qué pide el cliente, qué columnas de <code>AmecoDashboards</code> se necesitan, el query SQL y el tipo de gráfico en Superset.</p>
+        <p>Pendiente de actualizar. Los requerimientos de Centinela se basan en los de Ameco pero con configuraciones y datos propios.</p>
       </div>
     </div>
     <div class="hero-badges">
-      <span class="hero-badge">3 módulos</span>
-      <span class="hero-badge">Reemplaza Power BI</span>
-      <span class="hero-badge">Filtro por rango de fechas</span>
-      <span class="hero-badge">Refresco cada 1 hora ✓</span>
-    </div>
-    <div class="hero-note">
-      <strong>✅ Compatibilidad con la infraestructura actual:</strong>
-      El refresco de datos cada 1 hora que ya está configurado (Job SQL Agent + Redis Cache) cumple exactamente con el requisito del cliente de "1 hora o más". No se necesitan cambios en la infraestructura.
+      <span class="hero-badge">Pendiente</span>
+      <span class="hero-badge">Basado en Ameco</span>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════════ -->
-  <!-- REGLAS GENERALES                                 -->
-  <!-- ════════════════════════════════════════════════ -->
-  <section id="reglas" class="rules-section">
-    <h2>📋 Reglas generales para queries y visualizaciones</h2>
-    <div class="rules-grid">
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- DIFERENCIAS CON AMECO                        -->
+  <!-- ══════════════════════════════════════════════ -->
 
-      <div class="rule-card rule-null">
-        <div class="rule-title">⬜ NULLs siempre visibles</div>
-        <div class="rule-body">
-          Hay registros con datos faltantes (aproximadamente <strong>~300 filas</strong> sin valor en ciertos campos). Estos se almacenan como <code>NULL</code> en <code>AmecoDashboards</code> y <strong>deben mostrarse siempre</strong> — en gráficos y tablas — sin ocultarlos.<br><br>
-          En Superset: activar <strong>"Show empty/null values"</strong> en cada chart. En tablas, la celda aparecerá vacía o con el literal <code>NULL</code>. <strong>No agregar filtros <code>IS NOT NULL</code></strong> en ninguna query salvo que haya una razón explícita documentada.
-        </div>
-      </div>
-
-      <div class="rule-card rule-usage">
-        <div class="rule-title">📊 Uso de campos según disponibilidad de datos</div>
-        <div class="rule-body">
-          Consultar la columna <strong>Usos</strong> del <a href="diccionario.html" style="color:#818cf8">Diccionario de Datos</a> antes de usar un campo en una query:<br><br>
-          <strong>Usos = 0</strong> → campo sin datos, <strong>no utilizar</strong> en ninguna query ni visualización.<br>
-          <strong>Usos bajo (1–~50)</strong> → campo con muy pocos datos, se puede usar pero <strong>advertir</strong> en el requerimiento que los resultados pueden no ser representativos.<br>
-          <strong>Usos alto</strong> → campo confiable, usar con normalidad.
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════ -->
-  <!-- MÓDULO 1 — MODELO DE TIEMPOS                    -->
-  <!-- ════════════════════════════════════════════════ -->
-  <div class="module" id="modulo1">
-    <div class="module-header m1">
-      <div class="module-num m1">1</div>
-      <div class="module-title">
-        <h2>Modelo de Tiempos</h2>
-        <p>Objetivo: conocer el uso del tiempo por parte de los resolutores</p>
-      </div>
-    </div>
-    <div class="module-body">
-
-      <!-- Requerimiento -->
-      <div class="card m1-card" id="m1-req">
-        <div class="card-title">Qué pide el cliente (verbatim del PPT)</div>
-        <div class="req-box">
-          <div class="req-item">
-            <div class="req-bullet m1">1.1</div>
-            <div class="req-text">
-              <strong>Vista principal — tiempos por Especialidad y por Zona:</strong><br>
-              Esfuerzo estándar · Esfuerzo declarado · Traslado declarado · Espera declarada · Administrativo declarado · <strong>Total</strong> (suma de todos los declarados) · <strong>Capacidad instalada</strong> <em>(apertura por zona solo si es posible)</em>
-            </div>
-          </div>
-          <div class="req-item">
-            <div class="req-bullet m1">1.2</div>
-            <div class="req-text">
-              <strong>Drill-down:</strong> Al seleccionar una Especialidad o Zona → abrir los mismos tiempos desglosados <strong>por Resolutor</strong>
-            </div>
-          </div>
-          <div class="req-item">
-            <div class="req-bullet m1">1.3</div>
-            <div class="req-text">
-              <strong>Capacidad instalada:</strong> Solo incluir resolutores <em>presentes cada jornada</em>
-            </div>
-          </div>
-          <div class="req-item">
-            <div class="req-bullet m1">⚡</div>
-            <div class="req-text">
-              <strong>Velocímetro (gauge):</strong> Tiempos declarados totales / Total jornada laboral → ejemplo en PPT: <strong style="color:var(--m1)">70%</strong> — Total jornada: 3285.14 hs
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Columnas -->
-      <div class="card m1-card" id="m1-cols">
-        <div class="card-title">Columnas de AmecoDashboards que se necesitan</div>
-        <div class="sub-label">Dimensiones (GROUP BY)</div>
-        <div class="col-grid" style="margin-bottom:14px">
-          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">EspecialidadId</a></span>
-          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">Especialidad</a></span>
-          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">ZonaOperacionId</a></span>
-          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">ZonaOperacion</a></span>
-          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">OperacionResolutor</a></span>
-          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">OperacionResolutorTurno</a></span>
-        </div>
-        <div class="sub-label">Métricas (SUM / AVG)</div>
-        <div class="col-grid" style="margin-bottom:14px">
-          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionTiempoEstandar</a></span>
-          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionTiempoDuracionReal</a></span>
-          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionResolucionTiempoTraslado</a></span>
-          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionResolucionTiempoEspera</a></span>
-          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionResolucionTiemposAdministrativos</a></span>
-        </div>
-        <div class="sub-label">Filtro de fechas</div>
-        <div class="col-grid">
-          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OperacionFechaInicio</a></span>
-          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OperacionFechaFin</a></span>
-        </div>
-
-        <p style="font-size:12px;color:var(--muted);margin-top:8px">✅ Jornada = 12 hs = 720 min. Los valores en la BD están en <strong>minutos</strong> → dividir por 60 al visualizar en horas.</p>
-      </div>
-
-      <!-- Charts -->
-      <div class="card m1-card" id="m1-charts">
-        <div class="card-title">Charts a configurar en Superset</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Dataset único: <code>dbo.AmecoDashboards</code> · Filtro de fecha: <code>OperacionFechaInicio</code></p>
-
-        <!-- Table -->
-        <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📊 Table — Tiempos por Especialidad</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Tiempos por Especialidad</code></span></div>
-          </div>
-          <div class="sub-label">Group By</div>
-          <p style="font-size:12px;margin-bottom:10px"><code>Especialidad</code> · opcional: <code>ZonaOperacion</code></p>
-          <div class="sub-label">Métricas simples (Simple aggregate → SUM, dividir por 60)</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(OperacionTiempoEstandar) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(OperacionTiempoDuracionReal) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoTraslado) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEspera) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiemposAdministrativos) / 60.0</span></div>
-          </div>
-          <div class="sub-label">Total Declarado (hs) — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))) / <span class="nb">60.0</span></pre>
-          </div>
-        </div>
-
-        <!-- Gauge -->
-        <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">🔵 Gauge — % Uso de jornada</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Uso de Jornada</code></span></div>
-            <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
-          </div>
-          <div class="sub-label">Métrica — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">ROUND</span>(
-    <span class="kw">CAST</span>(
-        <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
-      + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
-      + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
-      + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))
-    <span class="kw">AS FLOAT</span>)
-  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OperacionResolutor</span>) * <span class="nb">720</span>, <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
-)</pre>
-          </div>
-        </div>
-
-        <!-- Big Numbers -->
-        <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">🔢 Big Numbers (3 charts separados)</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título #1</span><span class="formula-eq"><code>[Centinela] | Total Declarado (hs)</code></span></div>
-            <div class="formula-row"><span class="formula-name">Título #2</span><span class="formula-eq"><code>[Centinela] | Capacidad Instalada (hs)</code></span></div>
-            <div class="formula-row"><span class="formula-name">Título #3</span><span class="formula-eq"><code>[Centinela] | Resolutores Activos</code></span></div>
-          </div>
-          <div class="sub-label">Total Declarado (hs) — misma Custom SQL que la tabla</div>
-          <div class="sub-label" style="margin-top:10px">Capacidad Instalada (hs) — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OperacionResolutor</span>) * <span class="nb">720</span> / <span class="nb">60.0</span></pre>
-          </div>
-          <div class="sub-label" style="margin-top:10px">Resolutores activos — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OperacionResolutor</span>)</pre>
-          </div>
-        </div>
-
-        <!-- Bar Chart -->
-        <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px">
-          <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📏 Bar Chart — Drill-down por Resolutor</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Tiempos por Resolutor</code></span></div>
-          </div>
-          <div class="sub-label">Group By</div>
-          <p style="font-size:12px;margin-bottom:6px"><code>OperacionResolutor</code> · <code>OperacionResolutorTurno</code></p>
-          <div class="sub-label">Métricas</div>
-          <p style="font-size:12px;color:var(--muted)">Las mismas métricas SUM de la tabla + Total Declarado. Al hacer clic en una Especialidad en la tabla, este chart se filtra automáticamente por cross-filter.</p>
-        </div>
-      </div>
-
-    </div>
-
-  <!-- Pendientes — sección independiente -->
-  <div id="m1-pending" class="m1-card" style="margin-top:16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;">
-    <div class="card-title">Pendientes / Preguntas al cliente</div>
-        <div class="pending-list">
-          <div class="ok-item">
-            <span class="pi-icon">✅</span>
-            <span class="pi-text"><strong>Jornada = 12 hs = 720 min</strong> (confirmado). Capacidad instalada = COUNT(DISTINCT OperacionResolutor) × 720 min.</span>
-          </div>
-          <div class="ok-item">
-            <span class="pi-icon">✅</span>
-            <span class="pi-text"><strong>Los valores en la BD están en minutos.</strong> El PPT muestra horas → al visualizar, aplicar <code>SUM(col) / 60.0</code> para convertir a horas.</span>
-          </div>
-          <div class="ok-item">
-            <span class="pi-icon">✅</span>
-            <span class="pi-text">Las columnas de tiempo ya están disponibles en AmecoDashboards: OperacionTiempoEstandar, OperacionTiempoDuracionReal, OperacionResolucionTiempoTraslado, OperacionResolucionTiempoEspera, OperacionResolucionTiemposAdministrativos.</span>
-          </div>
-        </div>
+  <div class="rules-section" style="margin-top:32px">
+    <h2>Diferencias respecto a Ameco</h2>
+    <p class="desc">Centinela comparte la estructura general de Ameco pero las siguientes formulas y definiciones son propias.</p>
   </div>
-</div>
 
-  <!-- ════════════════════════════════════════════════ -->
-  <!-- MÓDULO 2 — TASA DE FINALIZACIÓN                  -->
-  <!-- ════════════════════════════════════════════════ -->
-  <div class="module" id="modulo2">
+  <!-- ── Backlog ── -->
+  <div class="module" id="backlog">
     <div class="module-header m2">
-      <div class="module-num m2">2</div>
+      <div class="module-num">1</div>
       <div class="module-title">
-        <h2>Avance OTs y Operaciones — Tasa de Finalización</h2>
-        <p>Objetivo: conocer la tasa de ingreso vs. resolución de OTs y Operaciones</p>
+        <h2>Backlog</h2>
+        <p>OTs abiertas con 3 o mas dias desde su inicio</p>
       </div>
     </div>
     <div class="module-body">
 
-      <!-- Requerimiento -->
-      <div class="card m2-card" id="m2-req">
-        <div class="card-title">Qué pide el cliente (verbatim del PPT)</div>
+      <div class="card m2-card">
+        <div class="card-title">Definicion</div>
         <div class="req-box">
           <div class="req-item">
-            <div class="req-bullet m2">2.1</div>
-            <div class="req-text">
-              <strong>Incluir selector OT ↔ Operaciones</strong> (el usuario puede cambiar entre ambas vistas).<br>
-              Abrir los valores por: <strong>Tipo de tarea (nivel 1)</strong> · <strong>Entidad (nivel 2)</strong> · <strong>Especialidad</strong> · <strong>Zona</strong>
-            </div>
-          </div>
-          <div class="req-item">
-            <div class="req-bullet m2">2.2</div>
-            <div class="req-text">
-              <strong>Fórmulas:</strong><br>
-              — OTs: <em>OTs resueltas / OTs ingresadas en el rango de fechas seleccionado</em><br>
-              — Operaciones: <em>Operaciones resueltas / Operaciones ingresadas en el rango</em>
-            </div>
-          </div>
-          <div class="req-item">
-            <div class="req-bullet m2">⚡</div>
-            <div class="req-text">
-              <strong>Velocímetro (gauge):</strong> Tasa de Finalización (OTs resueltas / total OTs ingresadas)
-            </div>
+            <div class="req-bullet">1</div>
+            <div class="req-text">Una OT es <strong>backlog</strong> cuando su <span class="col">EstadoOrdenTrabajo</span> es <strong>'Abierta'</strong> y han pasado <strong>3 o mas dias</strong> desde <span class="col">OrdenTrabajoFechaInicio</span>.</div>
           </div>
         </div>
       </div>
 
-      <!-- Columnas -->
-      <div class="card m2-card" id="m2-cols">
-        <div class="card-title">Columnas y datasets necesarios</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">El selector OT ↔ Operaciones usa dos datasets distintos en Superset — cada vista del switch apunta a uno.</p>
-
-        <!-- Vista OT -->
-        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:16px">
-          <div style="font-size:12px;font-weight:700;color:var(--m2);margin-bottom:12px">Vista OT — dataset: <code>dbo.v_OrdenesTrabajo</code></div>
-          <div class="sub-label">Identificador</div>
-          <div class="col-grid" style="margin-bottom:10px">
-            <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OrdenTrabajoId</a></span>
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">EstadoOrdenTrabajo</a></span>
-          </div>
-          <div class="sub-label">Dimensiones de apertura</div>
-          <div class="col-grid" style="margin-bottom:10px">
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">TipoTarea</a></span>
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">SubTipoTarea</a></span>
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">Nivel3</a></span>
-          </div>
-          <div class="sub-label">Fecha de filtro</div>
-          <div class="col-grid" style="margin-bottom:12px">
-            <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OrdenTrabajoFechaInicio</a></span>
-          </div>
-          <div class="formula-box">
-            <div class="formula-row"><span class="formula-name">OTs ingresadas</span><span class="formula-eq">= COUNT(OrdenTrabajoId) WHERE OrdenTrabajoFechaInicio IN rango</span></div>
-            <div class="formula-row"><span class="formula-name">OTs resueltas</span><span class="formula-eq">= COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta','Cerrada') THEN OrdenTrabajoId END)</span></div>
-            <div class="formula-row"><span class="formula-name">Tasa Finalización OT (%)</span><span class="formula-eq">= OTs resueltas / OTs ingresadas × 100</span></div>
-          </div>
-          <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Sin <code>DISTINCT</code> — la vista ya garantiza una fila por OT.</p>
-        </div>
-
-        <!-- Vista Operaciones -->
-        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px">
-          <div style="font-size:12px;font-weight:700;color:var(--m2);margin-bottom:12px">Vista Operaciones — dataset: <code>dbo.AmecoDashboards</code></div>
-          <div class="sub-label">Identificador</div>
-          <div class="col-grid" style="margin-bottom:10px">
-            <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionId</a></span>
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">EstadoOperacion</a></span>
-          </div>
-          <div class="sub-label">Dimensiones de apertura</div>
-          <div class="col-grid" style="margin-bottom:10px">
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">TipoTarea</a></span>
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">SubTipoTarea</a></span>
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">Nivel3</a></span>
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">Especialidad</a></span>
-            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">ZonaOperacion</a></span>
-          </div>
-          <div class="sub-label">Fecha de filtro</div>
-          <div class="col-grid" style="margin-bottom:12px">
-            <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OperacionFechaInicio</a></span>
-          </div>
-          <div class="formula-box">
-            <div class="formula-row"><span class="formula-name">Operaciones ingresadas</span><span class="formula-eq">= COUNT(DISTINCT OperacionId) WHERE OperacionFechaInicio IN rango</span></div>
-            <div class="formula-row"><span class="formula-name">Operaciones resueltas</span><span class="formula-eq">= COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</span></div>
-            <div class="formula-row"><span class="formula-name">Tasa Finalización Op. (%)</span><span class="formula-eq">= Operaciones resueltas / Operaciones ingresadas × 100</span></div>
-          </div>
-          <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Jerarquía: <code>TipoTarea</code> (N1) → <code>SubTipoTarea</code> (N2) → <code>Nivel3</code> (N3). <code>Especialidad</code> y <code>ZonaOperacion</code> disponibles solo en esta vista.</p>
-        </div>
-
-        <p style="font-size:12px;color:var(--success);margin-top:12px">✅ Estado OT: <strong>'Resuelta'</strong> o <strong>'Cerrada'</strong>. Estado Operación: solo <strong>'Resuelta'</strong> — <strong>'Finalizada'</strong> no existe en el catálogo.</p>
-      </div>
-
-      <!-- Charts -->
-      <div class="card m2-card" id="m2-charts">
-        <div class="card-title">Charts a configurar en Superset</div>
-
-        <!-- Gauge -->
-        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">🔵 Gauge — Tasa de Finalización global</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Tasa Finalización OT</code></span></div>
-            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-            <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
-          </div>
-          <div class="sub-label">Métrica — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">ROUND</span>(
-    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOrdenTrabajo</span> <span class="kw">IN</span> (<span class="str">'Resuelta'</span>, <span class="str">'Cerrada'</span>) <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
-  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
-)</pre>
-          </div>
-        </div>
-
-        <!-- Table Vista OT -->
-        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">📊 Table — Vista OT</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | OTs por Tipo de Tarea</code></span></div>
-            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-            <div class="formula-row"><span class="formula-name">Group By</span><span class="formula-eq">TipoTarea · SubTipoTarea</span></div>
-            <div class="formula-row"><span class="formula-name">OTs_Ingresadas</span><span class="formula-eq">COUNT(OrdenTrabajoId) — simple aggregate</span></div>
-          </div>
-          <div class="sub-label">OTs_Resueltas — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOrdenTrabajo</span> <span class="kw">IN</span> (<span class="str">'Resuelta'</span>, <span class="str">'Cerrada'</span>) <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
-          </div>
-          <div class="sub-label" style="margin-top:10px">TasaFinalizacion_pct — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">ROUND</span>(
-    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOrdenTrabajo</span> <span class="kw">IN</span> (<span class="str">'Resuelta'</span>, <span class="str">'Cerrada'</span>) <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
-  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
-)</pre>
-          </div>
-        </div>
-
-        <!-- Table Vista Operaciones -->
-        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">📊 Table — Vista Operaciones</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Operaciones por Especialidad y Zona</code></span></div>
-            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards</span></div>
-            <div class="formula-row"><span class="formula-name">Group By</span><span class="formula-eq">TipoTarea · SubTipoTarea · Especialidad · ZonaOperacion</span></div>
-            <div class="formula-row"><span class="formula-name">Operaciones_Ingresadas</span><span class="formula-eq">COUNT(DISTINCT OperacionId) — simple aggregate</span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
-          </div>
-          <div class="sub-label">Operaciones_Resueltas — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT CASE WHEN</span> <span class="col">EstadoOperacion</span> = <span class="str">'Resuelta'</span> <span class="kw">THEN</span> <span class="col">OperacionId</span> <span class="kw">END</span>)</pre>
-          </div>
-          <div class="sub-label" style="margin-top:10px">TasaFinalizacion_pct — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">ROUND</span>(
-    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">DISTINCT CASE WHEN</span> <span class="col">EstadoOperacion</span> = <span class="str">'Resuelta'</span> <span class="kw">THEN</span> <span class="col">OperacionId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
-  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OperacionId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
-)</pre>
-          </div>
-        </div>
-
-        <!-- Line Chart -->
-        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px">
-          <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">📈 Line Chart — Evolución en el tiempo</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título (OT)</span><span class="formula-eq"><code>[Centinela] | Evolución Tasa Finalización OT</code></span></div>
-            <div class="formula-row"><span class="formula-name">Título (Operaciones)</span><span class="formula-eq"><code>[Centinela] | Evolución Tasa Finalización Op.</code></span></div>
-          </div>
-          <p style="font-size:12px;color:var(--muted)">Mismos datasets y métricas que las tablas según la vista activa (OT u Operaciones). Group By: fecha truncada por semana o mes. Superset lo genera automáticamente al elegir el Time Grain en el eje X.</p>
-        </div>
-      </div>
-
-    </div>
-
-  <!-- Pendientes — sección independiente -->
-  <div id="m2-pending" class="m2-card" style="margin-top:16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;">
-    <div class="card-title">Pendientes / Preguntas al cliente</div>
-        <div class="pending-list">
-          <div class="ok-item">
-            <span class="pi-icon">✅</span>
-            <span class="pi-text"><strong>Estados confirmados:</strong> Estado OT = <code>'Resuelta'</code> o <code>'Cerrada'</code>. Estado Operación = solo <code>'Resuelta'</code> — <code>'Finalizada'</code> no existe en el catálogo.</span>
-          </div>
-          <div class="ok-item">
-            <span class="pi-icon">✅</span>
-            <span class="pi-text"><strong>"Entidad (nivel 2)" en el PPT = <code>SubTipoTarea</code> en la BD</strong> (también llamado SubSistemas). Jerarquía completa: TipoTarea → SubTipoTarea → Nivel3(Componente) → Nivel4(Acción).</span>
-          </div>
-          <div class="ok-item">
-            <span class="pi-icon">✅</span>
-            <span class="pi-text">El selector OT ↔ Operaciones usa dos datasets: <code>v_OrdenesTrabajo</code> para la vista OT (sin DISTINCT) y <code>AmecoDashboards</code> para la vista Operaciones (con COUNT DISTINCT OperacionId).</span>
-          </div>
-        </div>
-  </div>
-</div>
-
-  <!-- ════════════════════════════════════════════════ -->
-  <!-- MÓDULO 3 — TASA DE CUMPLIMIENTO (SLA)            -->
-  <!-- ════════════════════════════════════════════════ -->
-  <div class="module" id="modulo3">
-    <div class="module-header m3">
-      <div class="module-num m3">3</div>
-      <div class="module-title">
-        <h2>Tasa de Cumplimiento (SLA)</h2>
-        <p>Objetivo: conocer la tasa de cumplimiento de los acuerdos de nivel de servicio de las OT</p>
-      </div>
-    </div>
-    <div class="module-body">
-
-      <!-- Requerimiento -->
-      <div class="card m3-card" id="m3-req">
-        <div class="card-title">Qué pide el cliente (verbatim del PPT)</div>
-        <div class="req-box">
-          <div class="req-item">
-            <div class="req-bullet m3">3.1</div>
-            <div class="req-text">
-              Desde la pestaña "Tasa de cumplimiento", abrir los valores por:<br>
-              <strong>Tipo de tarea (Nivel 1)</strong> · <strong>Entidad (Nivel 2)</strong> · <strong>Zona</strong>
-            </div>
-          </div>
-          <div class="req-item">
-            <div class="req-bullet m3">3.2</div>
-            <div class="req-text">
-              <strong>Tasa cumplimiento:</strong> OTs resueltas dentro del plazo / OTs resueltas totales en el rango<br>
-              <strong>Días promedio de atraso</strong> (solo si tasa &lt; 100%): suma de días atrasados de OTs resueltas atrasadas / total OTs resueltas atrasadas
-            </div>
-          </div>
-          <div class="req-item">
-            <div class="req-bullet m3">⚡</div>
-            <div class="req-text">
-              <strong>Velocímetro (gauge):</strong> Tasa de Cumplimiento global (OTs resueltas dentro de plazo / OTs resueltas totales)
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Columnas -->
-      <div class="card m3-card" id="m3-cols">
-        <div class="card-title">Columnas de AmecoDashboards que se necesitan</div>
-        <div class="sub-label">Criterio SLA — comparación fecha planificada vs real</div>
-        <div class="col-grid" style="margin-bottom:6px">
-          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OrdenTrabajoFechaInicio</a></span>
-          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OrdenTrabajoFechaFin</a></span>
-          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OrdenTrabajoFechaFinReal</a></span>
-        </div>
-        <p style="font-size:12px;color:var(--success);margin-bottom:14px">✅ <strong style="color:var(--success)">Criterio SLA confirmado:</strong> <code>OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin</code> → cumplió plazo. <code>OrdenTrabajoFechaFin</code> es la fecha comprometida de cierre de la OT.</p>
-        <div class="sub-label">Estado (solo OTs resueltas/cerradas)</div>
-        <div class="col-grid" style="margin-bottom:14px">
-          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">EstadoOrdenTrabajo</a></span>
-          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OrdenTrabajoId</a></span>
-        </div>
-        <div class="sub-label">Dimensiones de apertura</div>
-        <div class="col-grid" style="margin-bottom:6px">
-          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">TipoTarea</a></span>
-          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">SubTipoTarea</a></span>
-          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario.html">ZonaOperacion</a></span>
-        </div>
-        <p style="font-size:11.5px;color:var(--muted);margin-bottom:14px"><code>SubTipoTarea</code> = Entidad (Nivel 2) del requerimiento. <code>ZonaOperacion</code> es campo de operación — ver nota en query.</p>
-
-        <p style="font-size:12px;color:var(--muted);margin-top:8px">⚠ Las OTs sin <code>OrdenTrabajoFechaFinReal</code> (~75 registros) son OTs aún abiertas. Se cuentan en <em>OTs sin cerrar</em> y <strong>se muestran siempre</strong> (regla general: NULLs visibles).</p>
-      </div>
-
-      <!-- Charts -->
-      <div class="card m3-card" id="m3-sql">
-        <div class="card-title">Charts a configurar en Superset</div>
-
-        <!-- Prerequisito -->
-        <div style="background:var(--bg-alt);border-radius:8px;padding:12px 16px;margin-bottom:16px">
-          <div style="font-size:12px;font-weight:700;margin-bottom:8px">⚙ Prerequisito — Crear vista en SSMS (una sola vez)</div>
-          <div class="code-block" style="margin-bottom:0">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="kw">CREATE VIEW</span> dbo.v_OrdenesTrabajo <span class="kw">AS</span>
-<span class="kw">SELECT</span> * <span class="kw">FROM</span> dbo.AmecoDashboards <span class="kw">WHERE</span> <span class="col">OperacionPadreId</span> <span class="kw">IS NULL</span></pre>
-          </div>
-        </div>
-
-        <!-- Gauge -->
-        <div style="border:1px solid var(--m3);border-radius:8px;padding:14px 16px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:700;color:var(--m3);margin-bottom:10px">🔵 Gauge — % Cumplimiento SLA global</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Cumplimiento SLA</code></span></div>
-            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-            <div class="formula-row"><span class="formula-name">Filtro</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range) · EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
-            <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
-          </div>
-          <div class="sub-label">TasaCumplimiento_pct — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">ROUND</span>(
-    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
-  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
-)</pre>
-          </div>
-        </div>
-
-        <!-- Table -->
-        <div style="border:1px solid var(--m3);border-radius:8px;padding:14px 16px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:700;color:var(--m3);margin-bottom:10px">📊 Table — por TipoTarea / Entidad</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | SLA por Tipo de Tarea</code></span></div>
-            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-            <div class="formula-row"><span class="formula-name">Group By</span><span class="formula-eq">TipoTarea · SubTipoTarea</span></div>
-            <div class="formula-row"><span class="formula-name">OTs_Resueltas</span><span class="formula-eq">COUNT(OrdenTrabajoId) — simple aggregate</span></div>
-          </div>
-          <div class="sub-label">OTs_CumplieronSLA — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
-          </div>
-          <div class="sub-label" style="margin-top:10px">OTs_Atrasadas — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &gt; <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
-          </div>
-          <div class="sub-label" style="margin-top:10px">OTs_SinCerrar — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> <span class="kw">IS NULL THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
-          </div>
-          <div class="sub-label" style="margin-top:10px">TasaCumplimiento_pct — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">ROUND</span>(
-    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
-  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
-)</pre>
-          </div>
-          <div class="sub-label" style="margin-top:10px">DiasPromedioAtraso — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">AVG</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &gt; <span class="col">OrdenTrabajoFechaFin</span>
-    <span class="kw">THEN</span> <span class="kw">CAST</span>(<span class="fn">DATEDIFF</span>(day, <span class="col">OrdenTrabajoFechaFin</span>, <span class="col">OrdenTrabajoFechaFinReal</span>) <span class="kw">AS FLOAT</span>)
+      <div class="card m2-card">
+        <div class="card-title">Chart — Big Number</div>
+        <p class="desc">Tipo: <code>big_number_total</code> — muestra la cantidad total de OTs en backlog.</p>
+        <div class="sub-label">Metrica (Custom SQL)</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql — Superset metric</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="kw">COUNT</span>(<span class="kw">DISTINCT</span> <span class="kw">CASE</span>
+    <span class="kw">WHEN</span> <span class="col">EstadoOrdenTrabajo</span> = <span class="str">'Abierta'</span>
+     <span class="kw">AND</span> <span class="fn">DATEDIFF</span>(<span class="kw">day</span>, <span class="col">OrdenTrabajoFechaInicio</span>, <span class="fn">GETDATE</span>()) >= <span class="nb">3</span>
+    <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span>
 <span class="kw">END</span>)</pre>
-          </div>
         </div>
-
-        <!-- Big Number -->
-        <div style="border:1px solid var(--m3);border-radius:8px;padding:14px 16px;margin-bottom:12px">
-          <div style="font-size:13px;font-weight:700;color:var(--m3);margin-bottom:10px">🔢 Big Number — Días Promedio Atraso global</div>
-          <div class="formula-box">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Días Promedio Atraso</code></span></div>
-            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-            <div class="formula-row"><span class="formula-name">Métrica</span><span class="formula-eq">DiasPromedioAtraso — misma Custom SQL que la tabla</span></div>
-          </div>
+        <div class="sub-label">Filtro alternativo (si se usa COUNT simple)</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql — Superset adhoc filter</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="col">EstadoOrdenTrabajo</span> = <span class="str">'Abierta'</span>
+<span class="kw">AND</span> <span class="fn">DATEDIFF</span>(<span class="kw">day</span>, <span class="col">OrdenTrabajoFechaInicio</span>, <span class="fn">GETDATE</span>()) >= <span class="nb">3</span></pre>
         </div>
+      </div>
 
-        <!-- Bar Chart Zona -->
-        <div style="border:1px solid var(--m3);border-radius:8px;padding:14px 16px">
-          <div style="font-size:13px;font-weight:700;color:var(--m3);margin-bottom:10px">📊 Bar Chart — por Zona</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | SLA por Zona</code></span></div>
-            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards (ZonaOperacion es campo de operación, no de OT)</span></div>
-            <div class="formula-row"><span class="formula-name">Group By</span><span class="formula-eq">ZonaOperacion</span></div>
-          </div>
-          <div class="sub-label">OTs_Resueltas — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OrdenTrabajoId</span>)</pre>
-          </div>
-          <div class="sub-label" style="margin-top:10px">OTs_CumplieronSLA — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
-          </div>
-          <div class="sub-label" style="margin-top:10px">TasaCumplimiento_pct — Custom SQL</div>
-          <div class="code-block">
-            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre><span class="fn">ROUND</span>(
-    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">DISTINCT CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
-  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
-)</pre>
-          </div>
-          <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Si una OT tiene operaciones en distintas zonas aparece en varias filas — comportamiento esperado.</p>
+      <div class="card m2-card">
+        <div class="card-title">Diferencia con Ameco</div>
+        <div class="ok-item">
+          <span class="pi-icon">&#8505;</span>
+          <div class="pi-text">En Ameco no se usa el criterio de 3 dias. En Centinela, <strong>solo</strong> se consideran backlog las OTs abiertas con >= 3 dias desde su fecha de inicio.</div>
         </div>
       </div>
 
     </div>
-
-  <!-- Pendientes — sección independiente -->
-  <div id="m3-pending" class="m3-card" style="margin-top:16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;">
-    <div class="card-title">Pendientes / Preguntas al cliente</div>
-        <div class="pending-list">
-          <div class="ok-item">
-            <span class="pi-icon">✅</span>
-            <span class="pi-text"><strong>TareaPlazo no se utiliza</strong> como criterio de SLA.</span>
-          </div>
-          <div class="ok-item">
-            <span class="pi-icon">✅</span>
-            <span class="pi-text"><strong>Fecha de inicio confirmada:</strong> <code>OrdenTrabajoFechaInicio</code>.</span>
-          </div>
-          <div class="ok-item">
-            <span class="pi-icon">✅</span>
-            <span class="pi-text"><code>OperacionResolucionFecha</code> y <code>OperacionFechaResolucion</code> están ambas disponibles. Usar <code>OperacionResolucionFecha</code> (de operacionResolucion) que es la fuente más precisa.</span>
-          </div>
-        </div>
   </div>
-</div>
 
 </main>
 
