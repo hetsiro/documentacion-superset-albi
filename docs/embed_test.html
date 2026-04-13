@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Embebido — Superset con Guest Token</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 20px; }
+  h1 { font-size: 18px; margin-bottom: 16px; color: #333; }
+  .controls {
+    background: #fff; border-radius: 8px; padding: 16px;
+    margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  label { font-size: 13px; font-weight: 600; color: #555; }
+  select, input, button {
+    padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;
+    font-size: 13px;
+  }
+  button {
+    background: #0088a8; color: #fff; border: none; cursor: pointer;
+    font-weight: 600; padding: 8px 20px;
+  }
+  button:hover { background: #006d87; }
+  #dashboard-container {
+    background: #fff; border-radius: 8px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    height: 80vh;
+  }
+  #dashboard-container iframe {
+    width: 100%; height: 100%; border: none;
+  }
+  .log { font-size: 12px; color: #888; margin-top: 8px; font-family: monospace; }
+  .log.error { color: #e53e3e; }
+  .log.success { color: #38a169; }
+</style>
+</head>
+<body>
+
+<h1>Test Embebido — Superset Dashboard</h1>
+
+<div class="controls">
+  <div>
+    <label>Superset URL</label><br>
+    <input id="superset-url" value="http://localhost:8088" style="width:250px">
+  </div>
+  <div>
+    <label>Dashboard UUID</label><br>
+    <input id="dashboard-uuid" placeholder="uuid del dashboard" style="width:300px">
+  </div>
+  <div>
+    <label>Negocio (filtro RLS)</label><br>
+    <select id="negocio">
+      <option value="">Sin filtro</option>
+      <option value="Mantenimiento equipos">Mantenimiento equipos</option>
+      <option value="Operaciones">Operaciones</option>
+    </select>
+  </div>
+  <div>
+    <label>Usuario Superset</label><br>
+    <input id="admin-user" value="admin" style="width:120px">
+  </div>
+  <div>
+    <label>Password</label><br>
+    <input id="admin-pass" type="password" value="admin" style="width:120px">
+  </div>
+  <div style="align-self:flex-end">
+    <button onclick="loadDashboard()">Cargar Dashboard</button>
+  </div>
+</div>
+
+<div id="log-area"></div>
+<div id="dashboard-container"></div>
+
+<script>
+function log(msg, type = '') {
+  const el = document.createElement('div');
+  el.className = 'log ' + type;
+  el.textContent = new Date().toLocaleTimeString() + ' — ' + msg;
+  document.getElementById('log-area').prepend(el);
+}
+
+async function loadDashboard() {
+  const baseUrl = document.getElementById('superset-url').value.replace(/\/$/, '');
+  const dashboardUuid = document.getElementById('dashboard-uuid').value.trim();
+  const negocio = document.getElementById('negocio').value;
+  const user = document.getElementById('admin-user').value;
+  const pass = document.getElementById('admin-pass').value;
+
+  if (!dashboardUuid) {
+    log('Falta el UUID del dashboard', 'error');
+    return;
+  }
+
+  try {
+    // Paso 1: Login para obtener access_token
+    log('Obteniendo access token...');
+    const loginRes = await fetch(baseUrl + '/api/v1/security/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: user, password: pass, provider: 'db' })
+    });
+    const loginData = await loginRes.json();
+    const accessToken = loginData.access_token;
+    if (!accessToken) throw new Error('No se obtuvo access_token');
+    log('Access token obtenido', 'success');
+
+    // Paso 2: Obtener CSRF token
+    log('Obteniendo CSRF token...');
+    const csrfRes = await fetch(baseUrl + '/api/v1/security/csrf_token/', {
+      headers: { 'Authorization': 'Bearer ' + accessToken }
+    });
+    const csrfData = await csrfRes.json();
+    const csrfToken = csrfData.result;
+    log('CSRF token obtenido', 'success');
+
+    // Paso 3: Solicitar Guest Token
+    log('Solicitando guest token...');
+    const rlsRules = negocio
+      ? [{ clause: "OrdenTrabajoNegocio = '" + negocio + "'" }]
+      : [];
+
+    const guestRes = await fetch(baseUrl + '/api/v1/security/guest_token/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken,
+        'X-CSRFToken': csrfToken
+      },
+      body: JSON.stringify({
+        user: { username: 'guest_' + (negocio || 'all'), first_name: 'Guest', last_name: 'User' },
+        resources: [{ type: 'dashboard', id: dashboardUuid }],
+        rls: rlsRules
+      })
+    });
+
+    if (!guestRes.ok) {
+      const errText = await guestRes.text();
+      throw new Error('Guest token error: ' + guestRes.status + ' — ' + errText);
+    }
+
+    const guestData = await guestRes.json();
+    const guestToken = guestData.token;
+    log('Guest token obtenido' + (negocio ? ' (RLS: ' + negocio + ')' : ' (sin filtro)'), 'success');
+
+    // Paso 4: Cargar dashboard con el Superset Embedded SDK
+    log('Cargando dashboard embebido...');
+    const container = document.getElementById('dashboard-container');
+    container.innerHTML = '';
+
+    // Cargar SDK dinámicamente
+    if (!window.supersetEmbeddedSdk) {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/@superset-ui/embedded-sdk@0.1.0-alpha.10/bundle/index.min.js';
+      document.head.appendChild(script);
+      await new Promise(r => script.onload = r);
+    }
+
+    window.supersetEmbeddedSdk.embedDashboard({
+      id: dashboardUuid,
+      supersetDomain: baseUrl,
+      mountPoint: container,
+      fetchGuestToken: () => Promise.resolve(guestToken),
+      dashboardUiConfig: {
+        hideTitle: true,
+        hideChartControls: false,
+        hideTab: false
+      }
+    });
+
+    log('Dashboard cargado exitosamente', 'success');
+
+  } catch (err) {
+    log(err.message, 'error');
+    console.error(err);
+  }
+}
+</script>
+
+</body>
+</html>

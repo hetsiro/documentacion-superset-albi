@@ -5,6 +5,13 @@ FEATURE_FLAGS = {
     "EMBEDDED_SUPERSET": True,
 }
 
+# Guest Token para embebido seguro
+GUEST_ROLE_NAME = "Public"
+GUEST_TOKEN_JWT_SECRET = "MiClaveGuestToken2024xyz"
+GUEST_TOKEN_JWT_ALGO = "HS256"
+GUEST_TOKEN_HEADER_NAME = "X-GuestToken"
+GUEST_TOKEN_JWT_EXP_SECONDS = 3600  # 1 hora
+
 HTTP_HEADERS = {"X-Frame-Options": "ALLOWALL"}
 
 TALISMAN_ENABLED = False

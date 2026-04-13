@@ -1,0 +1,1 @@
+FROM acrsuper1284.azurecr.io/superset-mssql:latest@sha256:0e1c757df09ceb2f160f7eabcfa448a9635815d92c6e9d3f12f04ee318f4bb3d

@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Requerimientos Centinela — Paneles</title>
+<style>
+  :root {
+    --sidebar-w: 260px;
+    --accent: #818cf8;
+    --accent-light: rgba(129,140,248,.1);
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #334155;
+    --bg: #0f172a;
+    --bg-surface: #1e293b;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --m1: #60a5fa;   /* azul  — Modelo de Tiempos */
+    --m2: #34d399;   /* verde — Tasa Finalización */
+    --m3: #f472b6;   /* rosa  — Tasa Cumplimiento SLA */
+  }
+  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+
+  /* ── Sidebar ── */
+  nav {
+    width: var(--sidebar-w);
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border);
+    position: fixed; top: 0; left: 0; bottom: 0;
+    overflow-y: auto; padding: 24px 0; z-index: 100;
+  }
+  .nav-logo { padding: 0 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .nav-logo h1 { font-size: 15px; font-weight: 700; color: var(--accent); }
+  .nav-logo p  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .nav-section { padding: 4px 20px; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 16px; margin-bottom: 4px; }
+  nav a { display: block; padding: 7px 20px; font-size: 13px; color: var(--muted); text-decoration: none; border-left: 3px solid transparent; transition: all .15s; }
+  nav a:hover  { color: var(--accent); background: var(--accent-light); }
+  nav a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-light); font-weight: 600; }
+  nav a.sub    { padding-left: 34px; font-size: 12px; }
+  nav a.m1 { border-left-color: transparent; }
+  nav a.m1:hover, nav a.m1.active { color: var(--m1); border-left-color: var(--m1); background: rgba(96,165,250,.08); }
+  nav a.m2:hover, nav a.m2.active { color: var(--m2); border-left-color: var(--m2); background: rgba(52,211,153,.08); }
+  nav a.m3:hover, nav a.m3.active { color: var(--m3); border-left-color: var(--m3); background: rgba(244,114,182,.08); }
+  nav::-webkit-scrollbar { width: 6px; }
+  nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── Main ── */
+  main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 40px 56px;
+    max-width: 1400px;
+    margin-right: auto;
+    margin-left: calc(var(--sidebar-w) + max(0px, (100vw - var(--sidebar-w) - 1400px) / 2));
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4c1d95 100%);
+    border-radius: 12px; padding: 32px 36px; margin-bottom: 36px;
+    border: 1px solid rgba(129,140,248,.2);
+  }
+  .hero-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .hero h1  { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .hero p   { font-size: 14px; opacity: .85; line-height: 1.6; max-width: 580px; }
+  .hero-badges { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  .hero-badge { background: rgba(255,255,255,.12); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; }
+  .hero-note {
+    background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.3);
+    border-radius: 8px; padding: 10px 14px; font-size: 12.5px; color: #fcd34d;
+    margin-top: 18px; line-height: 1.5;
+  }
+  .hero-note strong { color: var(--warning); }
+
+  /* ── Reglas generales ── */
+  .rules-section {
+    margin-bottom: 44px;
+  }
+  .rules-section h2 {
+    font-size: 16px; font-weight: 700; color: var(--text);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .rules-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  @media (max-width: 760px) { .rules-grid { grid-template-columns: 1fr; } }
+  .rule-card {
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .rule-card.rule-null  { border-left: 3px solid #34d399; }
+  .rule-card.rule-usage { border-left: 3px solid #818cf8; }
+  .rule-card .rule-title {
+    font-size: 13px; font-weight: 700; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .rule-card.rule-null  .rule-title { color: #34d399; }
+  .rule-card.rule-usage .rule-title { color: #818cf8; }
+  .rule-card .rule-body {
+    font-size: 12.5px; color: var(--muted); line-height: 1.6;
+  }
+  .rule-card .rule-body code {
+    background: rgba(255,255,255,.07); padding: 1px 5px; border-radius: 3px;
+    font-size: 11.5px; color: var(--text);
+  }
+  .rule-card .rule-body strong { color: var(--text); }
+
+  /* ── Module sections ── */
+  .module { margin-bottom: 52px; scroll-margin-top: 28px; }
+
+  .module-header {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 24px; border-radius: 12px 12px 0 0;
+    border: 1px solid var(--border);
+  }
+  .module-header.m1 { background: rgba(96,165,250,.08);  border-color: rgba(96,165,250,.3);  }
+  .module-header.m2 { background: rgba(52,211,153,.08);  border-color: rgba(52,211,153,.3);  }
+  .module-header.m3 { background: rgba(244,114,182,.08); border-color: rgba(244,114,182,.3); }
+
+  .module-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; flex-shrink: 0;
+  }
+  .m1 .module-num { background: rgba(96,165,250,.2);  color: var(--m1); }
+  .m2 .module-num { background: rgba(52,211,153,.2);  color: var(--m2); }
+  .m3 .module-num { background: rgba(244,114,182,.2); color: var(--m3); }
+
+  .module-title h2 { font-size: 18px; font-weight: 700; }
+  .module-title p  { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .m1 .module-title h2 { color: var(--m1); }
+  .m2 .module-title h2 { color: var(--m2); }
+  .m3 .module-title h2 { color: var(--m3); }
+
+  .module-body {
+    border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 12px 12px; overflow: hidden;
+  }
+
+  /* ── Cards inside module ── */
+  .card {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card:last-child { border-bottom: none; }
+  .card-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--muted); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title::before {
+    content: ''; display: inline-block; width: 3px; height: 14px;
+    border-radius: 2px; background: var(--accent);
+  }
+  .m1-card .card-title::before { background: var(--m1); }
+  .m2-card .card-title::before { background: var(--m2); }
+  .m3-card .card-title::before { background: var(--m3); }
+
+  /* ── Req list (verbatim from PPT) ── */
+  .req-box {
+    background: rgba(255,255,255,.03); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 18px;
+  }
+  .req-item { display: flex; gap: 10px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6; }
+  .req-item:last-child { margin-bottom: 0; }
+  .req-bullet {
+    flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; margin-top: 2px;
+  }
+  .m1 .req-bullet { background: rgba(96,165,250,.2);  color: var(--m1); }
+  .m2 .req-bullet { background: rgba(52,211,153,.2);  color: var(--m2); }
+  .m3 .req-bullet { background: rgba(244,114,182,.2); color: var(--m3); }
+  .req-text { color: var(--text); }
+  .req-text strong { color: #f1f5f9; }
+  .req-text em { color: var(--warning); font-style: normal; font-size: 12px; }
+
+  /* ── Column pills ── */
+  .col-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .col-pill {
+    background: rgba(129,140,248,.08); border: 1px solid rgba(129,140,248,.2);
+    border-radius: 6px; padding: 5px 10px;
+    font-family: 'Courier New', monospace; font-size: 11.5px;
+    color: #c4b5fd; cursor: default; transition: background .15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .col-pill:hover { background: rgba(129,140,248,.15); }
+  .col-pill .type-dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+  }
+  .dot-int      { background: #60a5fa; }
+  .dot-nvarchar { background: #34d399; }
+  .dot-datetime { background: #fbbf24; }
+  .dot-bit      { background: #c084fc; }
+  .dot-decimal  { background: #fb7185; }
+  .col-pill a { color: inherit; text-decoration: none; }
+  .col-pill a:hover { text-decoration: underline; }
+
+  /* ── Formula box ── */
+  .formula-box {
+    background: rgba(251,191,36,.06); border: 1px solid rgba(251,191,36,.2);
+    border-radius: 8px; padding: 12px 16px;
+    font-family: 'Courier New', monospace; font-size: 13px; color: #fcd34d;
+    line-height: 1.8;
+  }
+  .formula-box .formula-label {
+    font-family: -apple-system, sans-serif; font-size: 11px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--muted); margin-bottom: 8px; font-style: normal;
+  }
+  .formula-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 6px; }
+  .formula-row:last-child { margin-bottom: 0; }
+  .formula-name { color: var(--warning); min-width: 220px; font-size: 12px; }
+  .formula-eq   { color: #fcd34d; }
+
+  /* ── Code blocks ── */
+  .code-block { border-radius: 8px; overflow: hidden; margin: 4px 0; border: 1px solid #1e293b; }
+  .code-header {
+    background: #020617; padding: 8px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #1e293b;
+  }
+  .code-header span { font-size: 11px; color: #6c7086; font-family: monospace; }
+  .copy-btn {
+    background: #1e293b; border: none; color: #cdd6f4;
+    font-size: 11px; padding: 3px 10px; border-radius: 4px; cursor: pointer; transition: background .15s;
+  }
+  .copy-btn:hover { background: #334155; }
+  .copy-btn.copied { background: #059669; color: #fff; }
+  pre {
+    padding: 16px 20px; overflow-x: auto; font-size: 12.5px;
+    line-height: 1.75; color: #cdd6f4;
+    font-family: 'Courier New', Consolas, monospace;
+    background: #0f172a;
+  }
+  pre .kw  { color: #818cf8; }   /* keywords */
+  pre .fn  { color: #60a5fa; }   /* functions */
+  pre .col,
+  .formula-eq .col,
+  .formula-name .col {
+    color: #7dd3fc;
+    background: rgba(125, 211, 252, 0.08);
+    border: 1px solid rgba(125, 211, 252, 0.22);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.97em;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  pre .col:hover,
+  .formula-eq .col:hover,
+  .formula-name .col:hover {
+    background: rgba(125, 211, 252, 0.18);
+    border-color: rgba(125, 211, 252, 0.5);
+  }
+  pre .str { color: #a6e3a1; }   /* strings */
+  pre .cm  { color: #6c7086; font-style: italic; } /* comments */
+  pre .nb  { color: #fbbf24; }   /* numbers */
+
+  /* ── Chart type pills ── */
+  .chart-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+  .chart-pill {
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px;
+  }
+  .chart-pill .chart-icon { font-size: 20px; }
+  .chart-pill .chart-name { font-weight: 600; color: var(--text); }
+  .chart-pill .chart-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ── Pending / notes ── */
+  .pending-list { display: flex; flex-direction: column; gap: 8px; }
+  .pending-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: rgba(251,191,36,.06); border: 1px solid rgba(251,191,36,.2);
+    border-radius: 6px; padding: 10px 14px; font-size: 13px; line-height: 1.5;
+  }
+  .pending-item .pi-icon { flex-shrink: 0; font-size: 15px; }
+  .pending-item .pi-text { color: #fcd34d; }
+  .pending-item .pi-text strong { color: var(--warning); }
+
+  /* ── Resolucion note ── */
+  .ok-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: rgba(52,211,153,.06); border: 1px solid rgba(52,211,153,.2);
+    border-radius: 6px; padding: 10px 14px; font-size: 13px; line-height: 1.5;
+  }
+  .ok-item .pi-text { color: #6ee7b7; }
+
+  /* ── Sub-section labels ── */
+  .sub-label {
+    font-size: 12px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .07em;
+    margin-bottom: 8px; margin-top: 16px;
+  }
+  .sub-label:first-child { margin-top: 0; }
+
+  p.desc { font-size: 14px; line-height: 1.7; color: var(--muted); margin-bottom: 12px; }
+  p code { background: rgba(129,140,248,.1); color: var(--accent); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; }
+
+  /* ── Velocímetro mockup ── */
+  .gauge-mockup {
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px 24px;
+    display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+  }
+  .gauge-visual {
+    flex-shrink: 0; text-align: center;
+  }
+  .gauge-arc {
+    width: 120px; height: 60px; position: relative;
+    border-radius: 60px 60px 0 0; overflow: hidden;
+  }
+  .gauge-bg   { position: absolute; inset: 0; background: rgba(255,255,255,.05); }
+  .gauge-fill { position: absolute; inset: 0; border-radius: 60px 60px 0 0; overflow: hidden; }
+  .gauge-num  { font-size: 28px; font-weight: 800; margin-top: 6px; }
+  .gauge-lbl  { font-size: 11px; color: var(--muted); }
+  .gauge-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .gauge-desc strong { color: var(--text); display: block; font-size: 14px; margin-bottom: 4px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    main { margin-left: 0; margin-right: 0; padding: 20px 16px; max-width: 100%; }
+  }
+</style>
+  <style>
+    /* ── Tooltip de campo ── */
+    #field-tooltip {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      background: #1a1d2e;
+      border: 1px solid #3a3f5c;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #d0d4e8;
+      max-width: 300px;
+      pointer-events: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      line-height: 1.5;
+    }
+    #field-tooltip .tt-campo  { font-weight: 700; font-size: 13px; color: #a5c8ff; margin-bottom: 3px; }
+    #field-tooltip .tt-meta   { color: #7a8099; font-size: 11px; margin-bottom: 4px; }
+    #field-tooltip .tt-origen { color: #666e8a; font-size: 11px; font-family: monospace; margin-bottom: 4px; }
+    #field-tooltip .tt-nota   { color: #c8b8ff; font-style: italic; margin-top: 4px; font-size: 11.5px; }
+    #field-tooltip .tt-usos   { color: #7ec8a0; margin-top: 6px; font-size: 11px; border-top: 1px solid #2e3250; padding-top: 5px; }
+    span.col { cursor: help; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════ SIDEBAR ══════════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <h1>Superset Docs</h1>
+    <p>SQL Server + Docker</p>
+  </div>
+
+  <div class="nav-section">Navegación</div>
+  <a href="index.html">← Guía de instalación</a>
+  <a href="diccionario_centinela.html">Diccionario de datos</a>
+  <div class="nav-section">Requerimientos</div>
+  <a href="requerimientos.html" class="sub">Índice</a>
+  <a href="requerimientos_ameco.html" class="sub">↳ Ameco</a>
+  <a href="requerimientos_centinela.html" class="sub">↳ Centinela</a>
+  <div class="nav-section">Centinela</div>
+  <a href="requerimientos_centinela_paneles.html" class="sub active">Paneles de gestión</a>
+  <a href="requerimientos_centinela_operacionales.html" class="sub">Indicadores Operacionales</a>
+
+  <div class="nav-section">General</div>
+  <a href="#reglas" class="sub">Reglas generales</a>
+
+  <div class="nav-section">Módulos</div>
+  <a href="#modulo1" class="sub m1">1 · Modelo de tiempos</a>
+  <a href="#modulo2" class="sub m2">2 · Tasa de Finalización</a>
+  <a href="#modulo3" class="sub m3">3 · Tasa de Cumplimiento</a>
+
+  <div class="nav-section">Módulo 1</div>
+  <a href="#m1-req"      class="sub m1">Qué pide el cliente</a>
+  <a href="#m1-cols"     class="sub m1">Columnas necesarias</a>
+  <a href="#m1-charts"   class="sub m1">Charts a configurar</a>
+  <a href="#m1-pending"  class="sub m1">Pendientes</a>
+
+  <div class="nav-section">Módulo 2</div>
+  <a href="#m2-req"      class="sub m2">Qué pide el cliente</a>
+  <a href="#m2-cols"     class="sub m2">Columnas necesarias</a>
+  <a href="#m2-charts"   class="sub m2">Charts a configurar</a>
+  <a href="#m2-pending"  class="sub m2">Pendientes</a>
+
+  <div class="nav-section">Módulo 3</div>
+  <a href="#m3-req"      class="sub m3">Qué pide el cliente</a>
+  <a href="#m3-cols"     class="sub m3">Columnas necesarias</a>
+  <a href="#m3-sql"      class="sub m3">Charts a configurar</a>
+  <a href="#m3-pending"  class="sub m3">Pendientes</a>
+</nav>
+
+<!-- ══════════════════════ MAIN ══════════════════════ -->
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <h1>Requerimientos — Centinela</h1>
+        <p>Análisis del PPT <em>"Paneles de gestión y mejora — Albibot"</em>. Cada módulo detalla qué pide el cliente, qué columnas de <code>CentinelaDashboards</code> se necesitan, el query SQL y el tipo de gráfico en Superset.</p>
+      </div>
+    </div>
+    <div class="hero-badges">
+      <span class="hero-badge">3 módulos</span>
+      <span class="hero-badge">Reemplaza Power BI</span>
+      <span class="hero-badge">Filtro por rango de fechas</span>
+      <span class="hero-badge">Refresco cada 1 hora ✓</span>
+    </div>
+    <div class="hero-note">
+      <strong>✅ Compatibilidad con la infraestructura actual:</strong>
+      El refresco de datos cada 1 hora que ya está configurado (Job SQL Agent + Redis Cache) cumple exactamente con el requisito del cliente de "1 hora o más". No se necesitan cambios en la infraestructura.
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- REGLAS GENERALES                                 -->
+  <!-- ════════════════════════════════════════════════ -->
+  <section id="reglas" class="rules-section">
+    <h2>📋 Reglas generales para queries y visualizaciones</h2>
+    <div class="rules-grid">
+
+      <div class="rule-card rule-null">
+        <div class="rule-title">⬜ NULLs siempre visibles</div>
+        <div class="rule-body">
+          Hay registros con datos faltantes (aproximadamente <strong>~300 filas</strong> sin valor en ciertos campos). Estos se almacenan como <code>NULL</code> en <code>CentinelaDashboards</code> y <strong>deben mostrarse siempre</strong> — en gráficos y tablas — sin ocultarlos.<br><br>
+          En Superset: activar <strong>"Show empty/null values"</strong> en cada chart. En tablas, la celda aparecerá vacía o con el literal <code>NULL</code>. <strong>No agregar filtros <code>IS NOT NULL</code></strong> en ninguna query salvo que haya una razón explícita documentada.
+        </div>
+      </div>
+
+      <div class="rule-card rule-usage">
+        <div class="rule-title">📊 Uso de campos según disponibilidad de datos</div>
+        <div class="rule-body">
+          Consultar la columna <strong>Usos</strong> del <a href="diccionario_centinela.html" style="color:#818cf8">Diccionario de Datos</a> antes de usar un campo en una query:<br><br>
+          <strong>Usos = 0</strong> → campo sin datos, <strong>no utilizar</strong> en ninguna query ni visualización.<br>
+          <strong>Usos bajo (1–~50)</strong> → campo con muy pocos datos, se puede usar pero <strong>advertir</strong> en el requerimiento que los resultados pueden no ser representativos.<br>
+          <strong>Usos alto</strong> → campo confiable, usar con normalidad.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- MÓDULO 1 — MODELO DE TIEMPOS                    -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="module" id="modulo1">
+    <div class="module-header m1">
+      <div class="module-num m1">1</div>
+      <div class="module-title">
+        <h2>Modelo de Tiempos</h2>
+        <p>Objetivo: conocer el uso del tiempo por parte de los resolutores</p>
+      </div>
+    </div>
+    <div class="module-body">
+
+      <!-- Requerimiento -->
+      <div class="card m1-card" id="m1-req">
+        <div class="card-title">Qué pide el cliente (verbatim del PPT)</div>
+        <div class="req-box">
+          <div class="req-item">
+            <div class="req-bullet m1">1.1</div>
+            <div class="req-text">
+              <strong>Vista principal — tiempos por Especialidad y por Zona:</strong><br>
+              Esfuerzo estándar · Esfuerzo declarado · Traslado declarado · Espera declarada · Administrativo declarado · <strong>Total</strong> (suma de todos los declarados) · <strong>Capacidad instalada</strong> <em>(apertura por zona solo si es posible)</em>
+            </div>
+          </div>
+          <div class="req-item">
+            <div class="req-bullet m1">1.2</div>
+            <div class="req-text">
+              <strong>Drill-down:</strong> Al seleccionar una Especialidad o Zona → abrir los mismos tiempos desglosados <strong>por Resolutor</strong>
+            </div>
+          </div>
+          <div class="req-item">
+            <div class="req-bullet m1">1.3</div>
+            <div class="req-text">
+              <strong>Capacidad instalada:</strong> Solo incluir resolutores <em>presentes cada jornada</em>
+            </div>
+          </div>
+          <div class="req-item">
+            <div class="req-bullet m1">⚡</div>
+            <div class="req-text">
+              <strong>Velocímetro (gauge):</strong> Tiempos declarados totales / Total jornada laboral → ejemplo en PPT: <strong style="color:var(--m1)">70%</strong> — Total jornada: 3285.14 hs
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columnas -->
+      <div class="card m1-card" id="m1-cols">
+        <div class="card-title">Columnas de CentinelaDashboards que se necesitan</div>
+        <div class="sub-label">Dimensiones (GROUP BY)</div>
+        <div class="col-grid" style="margin-bottom:14px">
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">EspecialidadId</a></span>
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">Especialidad</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">ZonaOperacionId</a></span>
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">ZonaOperacion</a></span>
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">OperacionResolutor</a></span>
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">OperacionResolutorTurno</a></span>
+        </div>
+        <div class="sub-label">Métricas (SUM / AVG)</div>
+        <div class="col-grid" style="margin-bottom:14px">
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionTiempoEstandar</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionTiempoDuracionReal</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionResolucionTiempoTraslado</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionResolucionTiempoEspera</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionResolucionTiemposAdministrativos</a></span>
+        </div>
+        <div class="sub-label">Filtro de fechas</div>
+        <div class="col-grid">
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OperacionFechaInicio</a></span>
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OperacionFechaFin</a></span>
+        </div>
+
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">✅ Jornada = 12 hs = 720 min. Los valores en la BD están en <strong>minutos</strong> → dividir por 60 al visualizar en horas.</p>
+      </div>
+
+      <!-- Charts -->
+      <div class="card m1-card" id="m1-charts">
+        <div class="card-title">Charts a configurar en Superset</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Dataset único: <code>albi.CentinelaDashboards</code> · Filtro de fecha: <code>OperacionFechaInicio</code></p>
+
+        <!-- Table -->
+        <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📊 Table — Tiempos por Especialidad</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Tiempos por Especialidad</code></span></div>
+          </div>
+          <div class="sub-label">Group By</div>
+          <p style="font-size:12px;margin-bottom:10px"><code>Especialidad</code> · opcional: <code>ZonaOperacion</code></p>
+          <div class="sub-label">Métricas simples (Simple aggregate → SUM, dividir por 60)</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(OperacionTiempoEstandar) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(OperacionTiempoDuracionReal) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoTraslado) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEspera) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiemposAdministrativos) / 60.0</span></div>
+          </div>
+          <div class="sub-label">Total Declarado (hs) — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
++ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
++ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
++ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))) / <span class="nb">60.0</span></pre>
+          </div>
+        </div>
+
+        <!-- Gauge -->
+        <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">🔵 Gauge — % Uso de jornada</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Uso de Jornada</code></span></div>
+            <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
+          </div>
+          <div class="sub-label">Métrica — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(
+        <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
+      + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
+      + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
+      + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))
+    <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(
+        <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="fn">CONCAT</span>(<span class="col">OperacionResolutor</span>, <span class="str">'|'</span>, <span class="kw">CAST</span>(<span class="col">OperacionFechaInicio</span> <span class="kw">AS DATE</span>)))
+      * <span class="nb">720</span>, <span class="nb">0</span>)
+  * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+          </div>
+        </div>
+
+        <!-- Big Numbers -->
+        <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">🔢 Big Numbers (3 charts separados)</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título #1</span><span class="formula-eq"><code>[Centinela] | Total Declarado (hs)</code></span></div>
+            <div class="formula-row"><span class="formula-name">Título #2</span><span class="formula-eq"><code>[Centinela] | Capacidad Instalada (hs)</code></span></div>
+            <div class="formula-row"><span class="formula-name">Título #3</span><span class="formula-eq"><code>[Centinela] | Resolutores Activos</code></span></div>
+          </div>
+          <div class="sub-label">Total Declarado (hs) — misma Custom SQL que la tabla</div>
+          <div class="sub-label" style="margin-top:10px">Capacidad Instalada (hs) — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="fn">CONCAT</span>(<span class="col">OperacionResolutor</span>, <span class="str">'|'</span>, <span class="kw">CAST</span>(<span class="col">OperacionFechaInicio</span> <span class="kw">AS DATE</span>))) * <span class="nb">720</span> / <span class="nb">60.0</span></pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Resolutores activos — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OperacionResolutor</span>)</pre>
+          </div>
+        </div>
+
+        <!-- Table Selector (cross-filter) -->
+        <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:6px">📋 Table pequeña — Selector Especialidad / Zona</div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Reemplaza al Bar Chart original. Al hacer clic en una fila emite el cross-filter por nombre (ej. "Eléctrico"), no por valor numérico — soluciona el problema de filtrado incorrecto del bar chart.</p>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título (por Especialidad)</span><span class="formula-eq"><code>[Centinela] | Selector Especialidad</code></span></div>
+            <div class="formula-row"><span class="formula-name">Título (por Zona)</span><span class="formula-eq"><code>[Centinela] | Selector Zona</code></span></div>
+            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+            <div class="formula-row"><span class="formula-name">Group By (tab Especialidad)</span><span class="formula-eq">Especialidad</span></div>
+            <div class="formula-row"><span class="formula-name">Group By (tab Zona)</span><span class="formula-eq">ZonaOperacion</span></div>
+          </div>
+          <div class="sub-label">Métrica — Total Declarado (hs) · Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
++ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
++ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
++ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))) / <span class="nb">60.0</span></pre>
+          </div>
+          <p style="font-size:11.5px;color:var(--muted);margin-top:8px">⚙ En Superset: activar <strong>Enable cross-filter</strong> en este chart. Colocarlo a la izquierda de la tabla de resolutores en el dashboard.</p>
+        </div>
+
+        <!-- Table Resolutores (recibe el cross-filter) -->
+        <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px">
+          <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📊 Table — Tiempos por Resolutor</div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Recibe el cross-filter del selector de la izquierda — muestra solo los resolutores de la especialidad o zona seleccionada.</p>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Tiempos por Resolutor</code></span></div>
+            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+            <div class="formula-row"><span class="formula-name">Group By</span><span class="formula-eq">OperacionResolutor</span></div>
+          </div>
+          <div class="sub-label">Métricas — mismas SUM que la tabla de Especialidad</div>
+          <div class="formula-box">
+            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(OperacionTiempoEstandar) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(OperacionTiempoDuracionReal) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoTraslado) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEspera) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiemposAdministrativos) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Total Declarado (hs)</span><span class="formula-eq">misma Custom SQL que tabla Especialidad</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  <!-- Pendientes — sección independiente -->
+  <div id="m1-pending" class="m1-card" style="margin-top:16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;">
+    <div class="card-title">Pendientes / Preguntas al cliente</div>
+        <div class="pending-list">
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
+            <span class="pi-text"><strong>Jornada = 12 hs = 720 min</strong> (confirmado). Capacidad instalada = COUNT(DISTINCT resolutor+día) × 720 min — se cuentan combinaciones únicas (resolutor, día) para no inflar la capacidad cuando un resolutor tiene múltiples operaciones en el mismo día.</span>
+          </div>
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
+            <span class="pi-text"><strong>Los valores en la BD están en minutos.</strong> El PPT muestra horas → al visualizar, aplicar <code>SUM(col) / 60.0</code> para convertir a horas.</span>
+          </div>
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
+            <span class="pi-text">Las columnas de tiempo ya están disponibles en CentinelaDashboards: OperacionTiempoEstandar, OperacionTiempoDuracionReal, OperacionResolucionTiempoTraslado, OperacionResolucionTiempoEspera, OperacionResolucionTiemposAdministrativos.</span>
+          </div>
+          <div class="pending-item">
+            <span class="pi-icon">⚠️</span>
+            <span class="pi-text">
+              <strong>Datos corruptos en OperacionTiempoDuracionReal.</strong>
+              Se detectaron <strong>99 operaciones</strong> (de 1.802) con valores imposibles — el mayor registra <strong>1.051.440 min ≈ 2 años</strong>. Esos 99 registros representan el <strong>98% del tiempo declarado total</strong>, distorsionando completamente el gauge y las tablas.<br><br>
+              Las métricas <strong>no aplican filtro</strong> por ahora para que el resultado en el dashboard deje en evidencia el problema al cliente. Una vez corregidos los datos en la app, los números serán precisos sin necesidad de cambiar las queries.<br><br>
+              Query para identificar los registros afectados:
+              <code>SELECT OperacionId, OperacionResolutor, CAST(OperacionFechaInicio AS DATE) AS Fecha, OperacionTiempoDuracionReal, ROUND(OperacionTiempoDuracionReal/60.0,1) AS Horas FROM albi.CentinelaDashboards WHERE OperacionTiempoDuracionReal &gt; 720 ORDER BY OperacionTiempoDuracionReal DESC</code>
+            </span>
+          </div>
+        </div>
+  </div>
+</div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- MÓDULO 2 — TASA DE FINALIZACIÓN                  -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="module" id="modulo2">
+    <div class="module-header m2">
+      <div class="module-num m2">2</div>
+      <div class="module-title">
+        <h2>Avance OTs y Operaciones — Tasa de Finalización</h2>
+        <p>Objetivo: conocer la tasa de ingreso vs. resolución de OTs y Operaciones</p>
+      </div>
+    </div>
+    <div class="module-body">
+
+      <!-- Requerimiento -->
+      <div class="card m2-card" id="m2-req">
+        <div class="card-title">Qué pide el cliente (verbatim del PPT)</div>
+        <div class="req-box">
+          <div class="req-item">
+            <div class="req-bullet m2">2.1</div>
+            <div class="req-text">
+              <strong>Incluir selector OT ↔ Operaciones</strong> (el usuario puede cambiar entre ambas vistas).<br>
+              4 tabs de apertura, cada uno con su propia tabla (Ingresadas / Resueltas / Tasa Finalización):<br>
+              <strong>Sistemas</strong> · <strong>Subsistemas</strong> · <strong>Especialidad</strong> · <strong>Zona</strong>
+            </div>
+          </div>
+          <div class="req-item">
+            <div class="req-bullet m2">2.2</div>
+            <div class="req-text">
+              <strong>Fórmulas:</strong><br>
+              — OTs: <em>OTs resueltas / OTs ingresadas en el rango de fechas seleccionado</em><br>
+              — Operaciones: <em>Operaciones resueltas / Operaciones ingresadas en el rango</em>
+            </div>
+          </div>
+          <div class="req-item">
+            <div class="req-bullet m2">⚡</div>
+            <div class="req-text">
+              <strong>Velocímetro (gauge):</strong> Tasa de Finalización (OTs resueltas / total OTs ingresadas)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columnas -->
+      <div class="card m2-card" id="m2-cols">
+        <div class="card-title">Columnas y datasets necesarios</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">El selector OT ↔ Operaciones usa dos datasets distintos en Superset — cada vista del switch apunta a uno.</p>
+
+        <!-- Vista OT -->
+        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:16px">
+          <div style="font-size:12px;font-weight:700;color:var(--m2);margin-bottom:12px">Vista OT — dataset: <code>dbo.v_OrdenesTrabajo</code></div>
+          <div class="sub-label">Identificador</div>
+          <div class="col-grid" style="margin-bottom:10px">
+            <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OrdenTrabajoId</a></span>
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">EstadoOrdenTrabajo</a></span>
+          </div>
+          <div class="sub-label">Dimensiones de apertura (tabs)</div>
+          <div class="col-grid" style="margin-bottom:10px">
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">TipoTarea</a> <span style="font-size:10px;color:var(--muted)">→ tab Sistemas</span></span>
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">SubTipoTarea</a> <span style="font-size:10px;color:var(--muted)">→ tab Subsistemas</span></span>
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">Especialidad</a> <span style="font-size:10px;color:var(--muted)">→ tab Especialidad</span></span>
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">ZonaOperacion</a> <span style="font-size:10px;color:var(--muted)">→ tab Zona</span></span>
+          </div>
+          <div class="sub-label">Fecha de filtro</div>
+          <div class="col-grid" style="margin-bottom:12px">
+            <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OrdenTrabajoFechaInicio</a></span>
+          </div>
+          <div class="formula-box">
+            <div class="formula-row"><span class="formula-name">OTs ingresadas</span><span class="formula-eq">= COUNT(OrdenTrabajoId) WHERE OrdenTrabajoFechaInicio IN rango</span></div>
+            <div class="formula-row"><span class="formula-name">OTs resueltas</span><span class="formula-eq">= COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta','Cerrada') THEN OrdenTrabajoId END)</span></div>
+            <div class="formula-row"><span class="formula-name">Tasa Finalización OT (%)</span><span class="formula-eq">= OTs resueltas / OTs ingresadas × 100</span></div>
+          </div>
+          <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Sin <code>DISTINCT</code> — la vista ya garantiza una fila por OT.</p>
+        </div>
+
+        <!-- Vista Operaciones -->
+        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px">
+          <div style="font-size:12px;font-weight:700;color:var(--m2);margin-bottom:12px">Vista Operaciones — dataset: <code>albi.CentinelaDashboards</code></div>
+          <div class="sub-label">Identificador</div>
+          <div class="col-grid" style="margin-bottom:10px">
+            <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionId</a></span>
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">EstadoOperacion</a></span>
+          </div>
+          <div class="sub-label">Dimensiones de apertura</div>
+          <div class="col-grid" style="margin-bottom:10px">
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">TipoTarea</a></span>
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">SubTipoTarea</a></span>
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">Nivel3</a></span>
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">Especialidad</a></span>
+            <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">ZonaOperacion</a></span>
+          </div>
+          <div class="sub-label">Fecha de filtro</div>
+          <div class="col-grid" style="margin-bottom:12px">
+            <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OperacionFechaInicio</a></span>
+          </div>
+          <div class="formula-box">
+            <div class="formula-row"><span class="formula-name">Operaciones ingresadas</span><span class="formula-eq">= COUNT(OperacionId) WHERE OperacionFechaInicio IN rango</span></div>
+            <div class="formula-row"><span class="formula-name">Operaciones resueltas</span><span class="formula-eq">= COUNT(CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</span></div>
+            <div class="formula-row"><span class="formula-name">Tasa Finalización Op. (%)</span><span class="formula-eq">= Operaciones resueltas / Operaciones ingresadas × 100</span></div>
+          </div>
+          <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Jerarquía: <code>TipoTarea</code> (N1) → <code>SubTipoTarea</code> (N2) → <code>Nivel3</code> (N3). <code>Especialidad</code> y <code>ZonaOperacion</code> disponibles solo en esta vista.</p>
+        </div>
+
+        <p style="font-size:12px;color:var(--success);margin-top:12px">✅ Estado OT: <strong>'Resuelta'</strong> o <strong>'Cerrada'</strong>. Estado Operación: solo <strong>'Resuelta'</strong> — <strong>'Finalizada'</strong> no existe en el catálogo.</p>
+      </div>
+
+      <!-- Charts -->
+      <div class="card m2-card" id="m2-charts">
+        <div class="card-title">Charts a configurar en Superset</div>
+
+        <!-- Prerequisito vista -->
+        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px;background:color-mix(in srgb,var(--m2) 6%,transparent)">
+          <div style="font-size:12px;font-weight:700;color:var(--m2);margin-bottom:8px">⚙ Prerequisito — Crear vista en SSMS (una sola vez)</div>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="kw">CREATE VIEW</span> dbo.v_OrdenesTrabajo <span class="kw">AS</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> albi.CentinelaDashboards <span class="kw">WHERE</span> <span class="col">OperacionPadreId</span> <span class="kw">IS NULL</span></pre>
+          </div>
+        </div>
+
+        <!-- Gauge OT -->
+        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">🔵 Gauge — Tasa de Finalización OT</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Tasa Finalización OT</code></span></div>
+            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
+            <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          </div>
+          <div class="sub-label">Métrica — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOrdenTrabajo</span> <span class="kw">IN</span> (<span class="str">'Resuelta'</span>, <span class="str">'Cerrada'</span>) <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+          </div>
+        </div>
+
+        <!-- Gauge Operaciones -->
+        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">🔵 Gauge — Tasa de Finalización Operaciones</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Tasa Finalización Operaciones</code></span></div>
+            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+            <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          </div>
+          <div class="sub-label">Métrica — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOperacion</span> = <span class="str">'Resuelta'</span> <span class="kw">THEN</span> <span class="col">OperacionId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OperacionId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+          </div>
+        </div>
+
+        <!-- Sub-header métricas compartidas OT -->
+        <div style="font-size:12px;font-weight:700;color:var(--m2);margin:16px 0 8px">📋 4 Tables — Vista OT (dataset: <code>dbo.v_OrdenesTrabajo</code>)</div>
+        <p style="font-size:11.5px;color:var(--muted);margin-bottom:10px">Una tabla por tab. Las métricas son iguales en los 4 — solo cambia el <strong>Group By</strong>.</p>
+
+        <!-- Métricas OT (compartidas) -->
+        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+            <div style="background:color-mix(in srgb,var(--m2) 10%,transparent);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;color:var(--m2)">Tab 1 — Sistemas<br><span style="font-size:11px;font-weight:400;color:var(--muted)">Group By: TipoTarea</span></div>
+            <div style="background:color-mix(in srgb,var(--m2) 10%,transparent);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;color:var(--m2)">Tab 2 — Subsistemas<br><span style="font-size:11px;font-weight:400;color:var(--muted)">Group By: SubTipoTarea</span></div>
+            <div style="background:color-mix(in srgb,var(--m2) 10%,transparent);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;color:var(--m2)">Tab 3 — Especialidad<br><span style="font-size:11px;font-weight:400;color:var(--muted)">Group By: Especialidad</span></div>
+            <div style="background:color-mix(in srgb,var(--m2) 10%,transparent);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;color:var(--m2)">Tab 4 — Zona<br><span style="font-size:11px;font-weight:400;color:var(--muted)">Group By: ZonaOperacion</span></div>
+          </div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Títulos</span><span class="formula-eq"><code>[Centinela] | OTs por Sistemas</code> · <code>[Centinela] | OTs por Subsistemas</code> · <code>[Centinela] | OTs por Especialidad</code> · <code>[Centinela] | OTs por Zona</code></span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          </div>
+          <div class="sub-label">Ingresadas — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Resueltas — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOrdenTrabajo</span> <span class="kw">IN</span> (<span class="str">'Resuelta'</span>, <span class="str">'Cerrada'</span>) <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Tasa Finalización % — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOrdenTrabajo</span> <span class="kw">IN</span> (<span class="str">'Resuelta'</span>, <span class="str">'Cerrada'</span>) <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+          </div>
+        </div>
+
+        <!-- Sub-header métricas compartidas Operaciones -->
+        <div style="font-size:12px;font-weight:700;color:var(--m2);margin:16px 0 8px">📋 4 Tables — Vista Operaciones (dataset: <code>albi.CentinelaDashboards</code>)</div>
+        <p style="font-size:11.5px;color:var(--muted);margin-bottom:10px">Misma estructura que Vista OT — las métricas son iguales en los 4, solo cambia el <strong>Group By</strong>.</p>
+
+        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+            <div style="background:color-mix(in srgb,var(--m2) 10%,transparent);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;color:var(--m2)">Tab 1 — Sistemas<br><span style="font-size:11px;font-weight:400;color:var(--muted)">Group By: TipoTarea</span></div>
+            <div style="background:color-mix(in srgb,var(--m2) 10%,transparent);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;color:var(--m2)">Tab 2 — Subsistemas<br><span style="font-size:11px;font-weight:400;color:var(--muted)">Group By: SubTipoTarea</span></div>
+            <div style="background:color-mix(in srgb,var(--m2) 10%,transparent);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;color:var(--m2)">Tab 3 — Especialidad<br><span style="font-size:11px;font-weight:400;color:var(--muted)">Group By: Especialidad</span></div>
+            <div style="background:color-mix(in srgb,var(--m2) 10%,transparent);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;color:var(--m2)">Tab 4 — Zona<br><span style="font-size:11px;font-weight:400;color:var(--muted)">Group By: ZonaOperacion</span></div>
+          </div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Títulos</span><span class="formula-eq"><code>[Centinela] | Ops por Sistemas</code> · <code>[Centinela] | Ops por Subsistemas</code> · <code>[Centinela] | Ops por Especialidad</code> · <code>[Centinela] | Ops por Zona</code></span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          </div>
+          <div class="sub-label">Ingresadas — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="col">OperacionId</span>)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Resueltas — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOperacion</span> = <span class="str">'Resuelta'</span> <span class="kw">THEN</span> <span class="col">OperacionId</span> <span class="kw">END</span>)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Tasa Finalización % — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOperacion</span> = <span class="str">'Resuelta'</span> <span class="kw">THEN</span> <span class="col">OperacionId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OperacionId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+          </div>
+        </div>
+
+        <!-- Line Chart -->
+        <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px">
+          <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">📈 Line Chart — Evolución en el tiempo</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título (OT)</span><span class="formula-eq"><code>[Centinela] | Evolución Tasa Finalización OT</code></span></div>
+            <div class="formula-row"><span class="formula-name">Título (Operaciones)</span><span class="formula-eq"><code>[Centinela] | Evolución Tasa Finalización Op.</code></span></div>
+          </div>
+          <p style="font-size:12px;color:var(--muted)">Mismos datasets y métricas que las tablas según la vista activa (OT u Operaciones). Group By: fecha truncada por semana o mes. Superset lo genera automáticamente al elegir el Time Grain en el eje X.</p>
+        </div>
+      </div>
+
+    </div>
+
+  <!-- Pendientes — sección independiente -->
+  <div id="m2-pending" class="m2-card" style="margin-top:16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;">
+    <div class="card-title">Pendientes / Preguntas al cliente</div>
+        <div class="pending-list">
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
+            <span class="pi-text"><strong>Estados confirmados:</strong> Estado OT = <code>'Resuelta'</code> o <code>'Cerrada'</code>. Estado Operación = solo <code>'Resuelta'</code> — <code>'Finalizada'</code> no existe en el catálogo.</span>
+          </div>
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
+            <span class="pi-text"><strong>"Entidad (nivel 2)" en el PPT = <code>SubTipoTarea</code> en la BD</strong> (también llamado SubSistemas). Jerarquía completa: TipoTarea → SubTipoTarea → Nivel3(Componente) → Nivel4(Acción).</span>
+          </div>
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
+            <span class="pi-text">El selector OT ↔ Operaciones usa dos datasets: <code>v_OrdenesTrabajo</code> para la vista OT y <code>CentinelaDashboards</code> para la vista Operaciones. Las operaciones son únicas en la tabla — no se necesita DISTINCT.</span>
+          </div>
+        </div>
+  </div>
+</div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- MÓDULO 3 — TASA DE CUMPLIMIENTO (SLA)            -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="module" id="modulo3">
+    <div class="module-header m3">
+      <div class="module-num m3">3</div>
+      <div class="module-title">
+        <h2>Tasa de Cumplimiento (SLA)</h2>
+        <p>Objetivo: conocer la tasa de cumplimiento de los acuerdos de nivel de servicio de las OT</p>
+      </div>
+    </div>
+    <div class="module-body">
+
+      <!-- Requerimiento -->
+      <div class="card m3-card" id="m3-req">
+        <div class="card-title">Qué pide el cliente (verbatim del PPT)</div>
+        <div class="req-box">
+          <div class="req-item">
+            <div class="req-bullet m3">3.1</div>
+            <div class="req-text">
+              Desde la pestaña "Tasa de cumplimiento", abrir los valores por:<br>
+              <strong>Tipo de tarea (Nivel 1)</strong> · <strong>Entidad (Nivel 2)</strong> · <strong>Zona</strong>
+            </div>
+          </div>
+          <div class="req-item">
+            <div class="req-bullet m3">3.2</div>
+            <div class="req-text">
+              <strong>Tasa cumplimiento:</strong> OTs resueltas dentro del plazo / OTs resueltas totales en el rango<br>
+              <strong>Días promedio de atraso</strong> (solo si tasa &lt; 100%): suma de días atrasados de OTs resueltas atrasadas / total OTs resueltas atrasadas
+            </div>
+          </div>
+          <div class="req-item">
+            <div class="req-bullet m3">⚡</div>
+            <div class="req-text">
+              <strong>Velocímetro (gauge):</strong> Tasa de Cumplimiento global (OTs resueltas dentro de plazo / OTs resueltas totales)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columnas -->
+      <div class="card m3-card" id="m3-cols">
+        <div class="card-title">Columnas de CentinelaDashboards que se necesitan</div>
+        <div class="sub-label">Criterio SLA — comparación fecha planificada vs real</div>
+        <div class="col-grid" style="margin-bottom:6px">
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OrdenTrabajoFechaInicio</a></span>
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OrdenTrabajoFechaFin</a></span>
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OrdenTrabajoFechaFinReal</a></span>
+        </div>
+        <p style="font-size:12px;color:var(--success);margin-bottom:14px">✅ <strong style="color:var(--success)">Criterio SLA confirmado:</strong> <code>OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin</code> → cumplió plazo. <code>OrdenTrabajoFechaFin</code> es la fecha comprometida de cierre de la OT.</p>
+        <div class="sub-label">Estado (solo OTs resueltas/cerradas)</div>
+        <div class="col-grid" style="margin-bottom:14px">
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">EstadoOrdenTrabajo</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OrdenTrabajoId</a></span>
+        </div>
+        <div class="sub-label">Dimensiones de apertura</div>
+        <div class="col-grid" style="margin-bottom:6px">
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">TipoTarea</a></span>
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">SubTipoTarea</a></span>
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">ZonaOperacion</a></span>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-bottom:14px"><code>SubTipoTarea</code> = Entidad (Nivel 2) del requerimiento. <code>ZonaOperacion</code> es campo de operación — ver nota en query.</p>
+
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">⚠ Las OTs sin <code>OrdenTrabajoFechaFinReal</code> (~75 registros) son OTs aún abiertas. Se cuentan en <em>OTs sin cerrar</em> y <strong>se muestran siempre</strong> (regla general: NULLs visibles).</p>
+      </div>
+
+      <!-- Charts -->
+      <div class="card m3-card" id="m3-sql">
+        <div class="card-title">Charts a configurar en Superset</div>
+
+        <!-- Prerequisito -->
+        <div style="background:var(--bg-alt);border-radius:8px;padding:12px 16px;margin-bottom:16px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:8px">⚙ Prerequisito — Crear vista en SSMS (una sola vez)</div>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="kw">CREATE VIEW</span> dbo.v_OrdenesTrabajo <span class="kw">AS</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> albi.CentinelaDashboards <span class="kw">WHERE</span> <span class="col">OperacionPadreId</span> <span class="kw">IS NULL</span></pre>
+          </div>
+        </div>
+
+        <!-- Gauge -->
+        <div style="border:1px solid var(--m3);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--m3);margin-bottom:10px">🔵 Gauge — % Cumplimiento SLA global</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Cumplimiento SLA</code></span></div>
+            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range) · EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
+            <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
+          </div>
+          <div class="sub-label">Tasa Cumplimiento % — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div style="border:1px solid var(--m3);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--m3);margin-bottom:10px">📊 Table — por TipoTarea / Entidad</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | SLA por Tipo de Tarea</code></span></div>
+            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
+            <div class="formula-row"><span class="formula-name">Group By</span><span class="formula-eq">TipoTarea · SubTipoTarea</span></div>
+            <div class="formula-row"><span class="formula-name">Total Resueltas</span><span class="formula-eq">COUNT(OrdenTrabajoId) — simple aggregate</span></div>
+          </div>
+          <div class="sub-label">En Plazo — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Fuera de Plazo — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &gt; <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Sin Cerrar — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> <span class="kw">IS NULL THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Tasa Cumplimiento % — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Días Prom. Atraso — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">AVG</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &gt; <span class="col">OrdenTrabajoFechaFin</span>
+    <span class="kw">THEN</span> <span class="kw">CAST</span>(<span class="fn">DATEDIFF</span>(day, <span class="col">OrdenTrabajoFechaFin</span>, <span class="col">OrdenTrabajoFechaFinReal</span>) <span class="kw">AS FLOAT</span>)
+<span class="kw">END</span>)</pre>
+          </div>
+        </div>
+
+        <!-- Big Number -->
+        <div style="border:1px solid var(--m3);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--m3);margin-bottom:10px">🔢 Big Number — Días Promedio Atraso global</div>
+          <div class="formula-box">
+            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Días Promedio Atraso</code></span></div>
+            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
+            <div class="formula-row"><span class="formula-name">Métrica</span><span class="formula-eq">Días Prom. Atraso — misma Custom SQL que la tabla</span></div>
+          </div>
+        </div>
+
+        <!-- Bar Chart Zona -->
+        <div style="border:1px solid var(--m3);border-radius:8px;padding:14px 16px">
+          <div style="font-size:13px;font-weight:700;color:var(--m3);margin-bottom:10px">📊 Bar Chart — por Zona</div>
+          <div class="formula-box" style="margin-bottom:10px">
+            <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | SLA por Zona</code></span></div>
+            <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards (ZonaOperacion es campo de operación, no de OT)</span></div>
+            <div class="formula-row"><span class="formula-name">Group By</span><span class="formula-eq">ZonaOperacion</span></div>
+          </div>
+          <div class="sub-label">OTs_Resueltas — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OrdenTrabajoId</span>)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">En Plazo — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
+          </div>
+          <div class="sub-label" style="margin-top:10px">Tasa Cumplimiento % — Custom SQL</div>
+          <div class="code-block">
+            <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+          </div>
+          <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Si una OT tiene operaciones en distintas zonas aparece en varias filas — comportamiento esperado.</p>
+        </div>
+      </div>
+
+    </div>
+
+  <!-- Pendientes — sección independiente -->
+  <div id="m3-pending" class="m3-card" style="margin-top:16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;">
+    <div class="card-title">Pendientes / Preguntas al cliente</div>
+        <div class="pending-list">
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
+            <span class="pi-text"><strong>TareaPlazo no se utiliza</strong> como criterio de SLA.</span>
+          </div>
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
+            <span class="pi-text"><strong>Fecha de inicio confirmada:</strong> <code>OrdenTrabajoFechaInicio</code>.</span>
+          </div>
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
+            <span class="pi-text"><code>OperacionResolucionFecha</code> y <code>OperacionFechaResolucion</code> están ambas disponibles. Usar <code>OperacionResolucionFecha</code> (de operacionResolucion) que es la fuente más precisa.</span>
+          </div>
+        </div>
+  </div>
+</div>
+
+</main>
+
+<div id="field-tooltip"></div>
+
+<script src="cols_meta_centinela.js"></script>
+<script src="lookup_data_centinela.js" onerror="window.LOOKUP_DATA=null"></script>
+<script>
+  // ── Tooltip de campo ──────────────────────────────────────────────────────
+  (function () {
+    const tt = document.getElementById('field-tooltip');
+
+    // Índice por nombre de campo
+    const meta = {};
+    (window.COLS_META || []).forEach(c => { meta[c.campo] = c; });
+
+    function show(e, nombre) {
+      const m = meta[nombre];
+      if (!m) return;
+      const usos = window.LOOKUP_DATA?._meta?.usos?.[nombre];
+      const usosStr = usos != null ? Number(usos).toLocaleString('es-CL') : '—';
+
+      let h = `<div class="tt-campo">${m.campo}</div>`;
+      h += `<div class="tt-meta">${m.tipo} &nbsp;·&nbsp; ${m.grupo}</div>`;
+      h += `<div class="tt-origen">origen: ${m.tabla}.${m.original}</div>`;
+      if (m.nota) h += `<div class="tt-nota">${m.nota}</div>`;
+      h += `<div class="tt-usos">Usos en CentinelaDashboards: <strong>${usosStr}</strong></div>`;
+
+      tt.innerHTML = h;
+      tt.style.display = 'block';
+      move(e);
+    }
+
+    function move(e) {
+      const pad = 16;
+      let x = e.clientX + pad, y = e.clientY + pad;
+      tt.style.left = '0'; tt.style.top = '0'; // reset para medir
+      const w = tt.offsetWidth, h2 = tt.offsetHeight;
+      if (x + w > window.innerWidth)  x = e.clientX - w - pad;
+      if (y + h2 > window.innerHeight) y = e.clientY - h2 - pad;
+      tt.style.left = x + 'px';
+      tt.style.top  = y + 'px';
+    }
+
+    function hide() { tt.style.display = 'none'; }
+
+    function attach(el, getName) {
+      el.addEventListener('mouseenter', e => show(e, getName(el)));
+      el.addEventListener('mousemove',  move);
+      el.addEventListener('mouseleave', hide);
+    }
+
+    // ── Auto-wrap column names inside formula-eq text ─────────────────────
+    // Build sorted list (longest first to avoid partial matches)
+    const colNames = Object.keys(meta).sort((a, b) => b.length - a.length);
+    if (colNames.length > 0) {
+      const escaped = colNames.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const colPattern = new RegExp('(?<![\\w])(' + escaped.join('|') + ')(?![\\w])', 'g');
+      document.querySelectorAll('.formula-eq, .formula-name').forEach(el => {
+        // Skip rows that are chart titles (contain <code>) or are already wrapped
+        if (el.querySelector('code, span.col')) return;
+        el.innerHTML = el.innerHTML.replace(colPattern, '<span class="col">$1</span>');
+      });
+    }
+
+    // Col-pills
+    document.querySelectorAll('.col-pill a').forEach(el =>
+      attach(el, el => el.textContent.trim())
+    );
+
+    // Spans en bloques de código y fórmulas
+    document.querySelectorAll('span.col').forEach(el =>
+      attach(el, el => el.textContent.trim())
+    );
+  })();
+
+  // ── Copiar código ─────────────────────────────────────────────────────────
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.innerText).then(() => {
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('.module, [id^="m"]');
+  const navLinks  = document.querySelectorAll('nav a[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+    navLinks.forEach(a => {
+      const href = a.getAttribute('href').replace('#','');
+      a.classList.toggle('active', href === current);
+    });
+  });
+</script>
+</body>
+</html>

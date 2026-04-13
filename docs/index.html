@@ -820,8 +820,7 @@ LEFT JOIN   AMECO_DEV.Ameco.albi.persona                AS responsable      ON r
 LEFT JOIN   AMECO_DEV.Ameco.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
 LEFT JOIN   AMECO_DEV.Ameco.albi.ordenTrabajoAdicionales AS otadic          ON otadic.ordenTrabajoId        = ot.id
 LEFT JOIN   AMECO_DEV.Ameco.albi.tipoActividad           AS tipoAct         ON tipoAct.id                   = otadic.tipoActividadId
-
-</pre>
+WHERE ot.fechaInicio >= DATEADD(month, -6, GETDATE())</pre>
       </div>
     </details>
 
@@ -850,7 +849,7 @@ ORDER BY h.run_date DESC, h.run_time DESC</pre>
     </div>
     <div class="code-block">
       <div class="code-header"><span>sql — SSMS localhost,1434</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-      <pre>ALTER VIEW dbo.v_OrdenesTrabajo AS
+      <pre>ALTER VIEW dbo.v_OrdenesTrabajoAmeco AS
 SELECT *
 FROM dbo.AmecoDashboards
 WHERE OperacionPadreId IS NULL</pre>
@@ -1211,7 +1210,8 @@ LEFT JOIN   AMECO_DEV.Albi.albi.activo                 AS activo           ON ac
 LEFT JOIN   AMECO_DEV.Albi.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
 LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
 LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
-LEFT JOIN   AMECO_DEV.Albi.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId</pre>
+LEFT JOIN   AMECO_DEV.Albi.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
+WHERE ot.fechaInicio >= DATEADD(month, -6, GETDATE())</pre>
       </div>
     </details>
 
@@ -1222,13 +1222,13 @@ LEFT JOIN   AMECO_DEV.Albi.albi.recinto                AS recinto          ON re
     </div>
     <div class="code-block">
       <div class="code-header"><span>sql — SSMS localhost,1434 — Ameco</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-      <pre>CREATE VIEW dbo.v_OrdenesTrabajo AS
+      <pre>CREATE VIEW dbo.v_OrdenesTrabajoAmeco AS
 SELECT *
 FROM dbo.AmecoDashboards
 WHERE OperacionPadreId IS NULL
 
 -- Actualizaciones posteriores:
--- ALTER VIEW dbo.v_OrdenesTrabajo AS
+-- ALTER VIEW dbo.v_OrdenesTrabajoAmeco AS
 -- SELECT * FROM dbo.AmecoDashboards WHERE OperacionPadreId IS NULL</pre>
     </div>
     <div class="code-block">
@@ -1244,6 +1244,7 @@ WHERE OperacionPadreId IS NULL
     </div>
     </div></details>
   </section>
+
 
   <!-- PASO 7 -->
   <section id="paso8">
@@ -1493,20 +1494,281 @@ docker cp superset-superset-1:/tmp/dashboard_import.zip ./dashboard_import.zip</
   <!-- AZURE -->
   <section id="azure">
     <details class="step-accordion">
-    <summary>Migración a Azure (pendiente)</summary>
+    <summary>Migración a Azure</summary>
     <div class="step-accordion-body">
-      <p>Cuando se migre a Azure, los cambios principales serán:</p>
+      <p>En Azure SQL Database no hay linked servers ni queries cross-database. La sincronización de datos se hace via <strong>n8n</strong> (SELECT en PROD → TRUNCATE + INSERT en Azure).</p>
       <table class="migration-table">
         <tr><th>Local</th><th>Azure</th></tr>
         <tr><td>SQL Server Docker</td><td>Azure SQL Database</td></tr>
         <tr><td>Superset Docker local</td><td>Azure Container Apps</td></tr>
-        <tr><td>Job SQL Agent</td><td>Azure Data Factory</td></tr>
+        <tr><td>Job SQL Agent</td><td>n8n (Schedule → SELECT PROD → TRUNCATE + INSERT Azure)</td></tr>
         <tr><td>localhost:8088</td><td>URL pública de Azure</td></tr>
         <tr><td>sqlserver:1433</td><td>Azure SQL connection string</td></tr>
+        <tr><td>SELECT INTO (linked server)</td><td>CREATE TABLE manual + n8n INSERT</td></tr>
       </table>
+
+      <h3 id="create-tables-azure">CREATE TABLE — Tablas y Vistas</h3>
+      <p>Ejecutar una sola vez en SSMS conectado a <code>AmecoHubIntegracion</code> en Azure. Despues n8n solo hace TRUNCATE + INSERT.</p>
+
+      <h4>AmecoDashboards</h4>
+      <div class="code-block">
+        <div class="code-header"><span>sql — Azure AmecoHubIntegracion</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>CREATE TABLE dbo.AmecoDashboards (
+    OrdenTrabajoId                              INT,
+    OrdenTrabajoFechaInicio                     DATETIME,
+    OrdenTrabajoEmpresa                         NVARCHAR(200),
+    EstadoOrdenTrabajoId                        INT,
+    EstadoOrdenTrabajo                          NVARCHAR(100),
+    OperacionId                                 INT,
+    OperacionDescripcion                        NVARCHAR(MAX),
+    OperacionTiempoEstandar                     INT,
+    OperacionTiempoDuracionReal                 INT,
+    OperacionTiempoPerdido                      INT,
+    OperacionFechaFin                           DATETIME,
+    OperacionFechaResolucion                    DATETIME,
+    OperacionUbicacion                          NVARCHAR(MAX),
+    OperacionRecursos                           INT,
+    OperacionDependencia                        NVARCHAR(200),
+    OperacionOrden                              INT,
+    OperacionDireccion                          NVARCHAR(200),
+    OperacionTiempoTraslado                     INT,
+    OperacionProcesoId                          INT,
+    OperacionPadreId                            INT,
+    OperacionFechaAsignacion                    DATETIME,
+    OperacionFechaDetenidoInicio                DATETIME,
+    OperacionFechaDetenidoFin                   DATETIME,
+    OperacionFechaInicio                        DATETIME,
+    TipoTareaId                                 INT,
+    TipoTarea                                   NVARCHAR(100),
+    SubTipoTareaId                              INT,
+    SubTipoTarea                                NVARCHAR(100),
+    Nivel3Id                                    INT,
+    Nivel3                                      NVARCHAR(200),
+    Nivel4Id                                    INT,
+    Nivel4                                      NVARCHAR(200),
+    OrdenTrabajoNegocio                         NVARCHAR(200),
+    TipoOperacionId                             INT,
+    TipoOperacion                               NVARCHAR(100),
+    EspecialidadId                               INT,
+    Especialidad                                NVARCHAR(100),
+    EstadoOperacionId                           INT,
+    EstadoOperacion                             NVARCHAR(100),
+    GrupoResolutorOperacionId                   INT,
+    GrupoResolutorOperacion                     NVARCHAR(200),
+    ResolutorPersonaId                          INT,
+    OperacionResolutor                          NVARCHAR(200),
+    OperacionResolutorTurno                     NVARCHAR(100),
+    OperacionResolutorCargo                     NVARCHAR(100),
+    ResolutorPerfilId                           INT,
+    ResolutorPerfil                             NVARCHAR(100),
+    SitioOperacionId                            INT,
+    SitioOperacion                              NVARCHAR(200),
+    ZonaOperacionId                             INT,
+    ZonaOperacion                               NVARCHAR(200),
+    PrioridadOperacionId                        INT,
+    PrioridadOperacion                          NVARCHAR(100),
+    OperacionResolucionTiempoEspera             INT,
+    OperacionResolucionTiempoEjecucion          INT,
+    OperacionResolucionTiempoBruto              INT,
+    OperacionResolucionTiempoTraslado           INT,
+    OperacionResolucionTiemposAdministrativos   INT,
+    OperacionResolucionEsPreparacionDoc         BIT,
+    OperacionResolucionEsObtencionAutorizaciones BIT,
+    OperacionResolucionEsObtencionPermisos      BIT,
+    OperacionResolucionLatitud                  NVARCHAR(50),
+    OperacionResolucionLongitud                 NVARCHAR(50),
+    OperacionResolucionFecha                    DATETIME,
+    ActivoId                                    INT,
+    Activo                                      NVARCHAR(200),
+    ActivoCodigo                                NVARCHAR(100),
+    ProcesoId                                   INT,
+    Proceso                                     NVARCHAR(200),
+    OrdenTrabajoSolicitante                     NVARCHAR(200),
+    OrdenTrabajoResponsable                     NVARCHAR(200),
+    RecintoId                                   INT,
+    Recinto                                     NVARCHAR(200),
+    OrdenTrabajoDescripcion                     NVARCHAR(MAX),
+    OrdenTrabajoFechaFin                        DATETIME,
+    OrdenTrabajoFechaInicioReal                 DATETIME,
+    OrdenTrabajoFechaFinReal                    DATETIME,
+    OrdenTrabajoTiempoResolucionBruto           INT,
+    OrdenTrabajoDuracion                        INT,
+    OrdenTrabajoFechaCreacion                   DATETIME,
+    OrdenTrabajoUbicacion                       NVARCHAR(MAX),
+    OrdenTrabajoNochero                         BIT,
+    OrdenTrabajoPlanId                          INT,
+    OrdenTrabajoPlan                            NVARCHAR(20),
+    TipoActividadId                             INT,
+    TipoActividad                               NVARCHAR(100)
+)</pre>
+      </div>
+
+      <h4>CentinelaDashboards</h4>
+      <div class="code-block">
+        <div class="code-header"><span>sql — Azure AmecoHubIntegracion</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>CREATE TABLE dbo.CentinelaDashboards (
+    OrdenTrabajoId                              INT,
+    OrdenTrabajoFechaInicio                     DATETIME,
+    OrdenTrabajoEmpresa                         NVARCHAR(200),
+    EstadoOrdenTrabajoId                        INT,
+    EstadoOrdenTrabajo                          NVARCHAR(100),
+    OperacionId                                 INT,
+    OperacionDescripcion                        NVARCHAR(MAX),
+    OperacionTiempoEstandar                     INT,
+    OperacionTiempoDuracionReal                 INT,
+    OperacionTiempoPerdido                      INT,
+    OperacionFechaFin                           DATETIME,
+    OperacionFechaResolucion                    DATETIME,
+    OperacionUbicacion                          NVARCHAR(MAX),
+    OperacionRecursos                           INT,
+    OperacionDependencia                        NVARCHAR(200),
+    OperacionOrden                              INT,
+    OperacionDireccion                          NVARCHAR(200),
+    OperacionTiempoTraslado                     INT,
+    OperacionProcesoId                          INT,
+    OperacionPadreId                            INT,
+    OperacionFechaAsignacion                    DATETIME,
+    OperacionFechaDetenidoInicio                DATETIME,
+    OperacionFechaDetenidoFin                   DATETIME,
+    OperacionFechaInicio                        DATETIME,
+    TipoTareaId                                 INT,
+    TipoTarea                                   NVARCHAR(100),
+    SubTipoTareaId                              INT,
+    SubTipoTarea                                NVARCHAR(100),
+    Nivel3Id                                    INT,
+    Nivel3                                      NVARCHAR(200),
+    Nivel4Id                                    INT,
+    Nivel4                                      NVARCHAR(200),
+    OrdenTrabajoNegocio                         NVARCHAR(200),
+    TipoOperacionId                             INT,
+    TipoOperacion                               NVARCHAR(100),
+    EspecialidadId                               INT,
+    Especialidad                                NVARCHAR(100),
+    EstadoOperacionId                           INT,
+    EstadoOperacion                             NVARCHAR(100),
+    GrupoResolutorOperacionId                   INT,
+    GrupoResolutorOperacion                     NVARCHAR(200),
+    ResolutorPersonaId                          INT,
+    OperacionResolutor                          NVARCHAR(200),
+    OperacionResolutorTurno                     NVARCHAR(100),
+    OperacionResolutorCargo                     NVARCHAR(100),
+    ResolutorPerfilId                           INT,
+    ResolutorPerfil                             NVARCHAR(100),
+    SitioOperacionId                            INT,
+    SitioOperacion                              NVARCHAR(200),
+    ZonaOperacionId                             INT,
+    ZonaOperacion                               NVARCHAR(200),
+    PrioridadOperacionId                        INT,
+    PrioridadOperacion                          NVARCHAR(100),
+    OperacionResolucionTiempoEspera             INT,
+    OperacionResolucionTiempoEjecucion          INT,
+    OperacionResolucionTiempoBruto              INT,
+    OperacionResolucionTiempoTraslado           INT,
+    OperacionResolucionTiemposAdministrativos   INT,
+    OperacionResolucionEsPreparacionDoc         BIT,
+    OperacionResolucionEsObtencionAutorizaciones BIT,
+    OperacionResolucionEsObtencionPermisos      BIT,
+    OperacionResolucionLatitud                  NVARCHAR(50),
+    OperacionResolucionLongitud                 NVARCHAR(50),
+    OperacionResolucionFecha                    DATETIME,
+    ActivoId                                    INT,
+    Activo                                      NVARCHAR(200),
+    ActivoCodigo                                NVARCHAR(100),
+    ProcesoId                                   INT,
+    Proceso                                     NVARCHAR(200),
+    OrdenTrabajoSolicitante                     NVARCHAR(200),
+    OrdenTrabajoResponsable                     NVARCHAR(200),
+    RecintoId                                   INT,
+    Recinto                                     NVARCHAR(200),
+    OrdenTrabajoDescripcion                     NVARCHAR(MAX),
+    OrdenTrabajoFechaFin                        DATETIME,
+    OrdenTrabajoFechaInicioReal                 DATETIME,
+    OrdenTrabajoFechaFinReal                    DATETIME,
+    OrdenTrabajoTiempoResolucionBruto           INT,
+    OrdenTrabajoDuracion                        INT,
+    OrdenTrabajoFechaCreacion                   DATETIME,
+    OrdenTrabajoUbicacion                       NVARCHAR(MAX),
+    OrdenTrabajoNochero                         BIT,
+    OrdenTrabajoPlanId                          INT,
+    OrdenTrabajoPlan                            NVARCHAR(20)
+)</pre>
+      </div>
+      <div class="callout warning">
+        <span class="callout-icon">&#9888;&#65039;</span>
+        <div>CentinelaDashboards no tiene <code>TipoActividadId</code> ni <code>TipoActividad</code> (esas columnas son exclusivas de Ameco).</div>
+      </div>
+
+      <h4>AmecoAsistencia</h4>
+      <div class="code-block">
+        <div class="code-header"><span>sql — Azure AmecoHubIntegracion</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>CREATE TABLE dbo.AmecoAsistencia (
+    AsistenciaId        INT,
+    PersonaId           INT,
+    Persona             NVARCHAR(200),
+    PerfilId            INT,
+    Perfil              NVARCHAR(200),
+    TurnoId             INT,
+    Turno               NVARCHAR(200),
+    TurnoHoraInicio     TIME,
+    TurnoHoraFin        TIME,
+    EspecialidadId      INT,
+    Especialidad        NVARCHAR(200),
+    ZonaId              INT,
+    Zona                NVARCHAR(200),
+    ResolutorActivo     BIT,
+    AsistenciaTipo      NVARCHAR(50),
+    AsistenciaFechaHora DATETIME,
+    AsistenciaFecha     DATE,
+    AsistenciaLatitud   FLOAT,
+    AsistenciaLongitud  FLOAT,
+    AsistenciaEstado    NVARCHAR(50)
+)</pre>
+      </div>
+
+      <h4>CentinelaAsistencia</h4>
+      <div class="code-block">
+        <div class="code-header"><span>sql — Azure AmecoHubIntegracion</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>CREATE TABLE dbo.CentinelaAsistencia (
+    AsistenciaId        INT,
+    PersonaId           INT,
+    Persona             NVARCHAR(200),
+    PerfilId            INT,
+    Perfil              NVARCHAR(200),
+    TurnoId             INT,
+    Turno               NVARCHAR(200),
+    TurnoHoraInicio     TIME,
+    TurnoHoraFin        TIME,
+    EspecialidadId      INT,
+    Especialidad        NVARCHAR(200),
+    ZonaId              INT,
+    Zona                NVARCHAR(200),
+    ResolutorActivo     BIT,
+    AsistenciaTipo      NVARCHAR(50),
+    AsistenciaFechaHora DATETIME,
+    AsistenciaFecha     DATE,
+    AsistenciaLatitud   FLOAT,
+    AsistenciaLongitud  FLOAT,
+    AsistenciaEstado    NVARCHAR(50)
+)</pre>
+      </div>
+
+      <h4>Vistas</h4>
+      <div class="code-block">
+        <div class="code-header"><span>sql — Azure AmecoHubIntegracion</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>CREATE VIEW dbo.v_OrdenesTrabajoAmeco AS
+SELECT * FROM dbo.AmecoDashboards
+WHERE OperacionPadreId IS NULL</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span>sql — Azure AmecoHubIntegracion</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>CREATE VIEW dbo.v_OrdenesTrabajoCentinela AS
+SELECT * FROM dbo.CentinelaDashboards
+WHERE OperacionPadreId IS NULL</pre>
+      </div>
+
       <div class="callout info">
         <span class="callout-icon">ℹ️</span>
-        <div>La query del dataset, la tabla y la lógica del job son exactamente iguales en Azure. Solo cambian las cadenas de conexión y los servicios de infraestructura.</div>
+        <div>Las vistas se crean una sola vez. Si se agrega una columna a la tabla, ejecutar <code>ALTER VIEW</code> para refrescar.</div>
       </div>
     </div>
     </details>

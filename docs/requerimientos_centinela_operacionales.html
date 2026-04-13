@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Requerimientos Centinela — Indicadores Operacionales</title>
+<style>
+  :root {
+    --sidebar-w: 260px;
+    --accent: #818cf8;
+    --accent-light: rgba(129,140,248,.1);
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #334155;
+    --bg: #0f172a;
+    --bg-surface: #1e293b;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --m1: #fbbf24;   /* amarillo — Indicadores de Actividad */
+    --m2: #60a5fa;   /* azul — Indicadores de Personas */
+  }
+  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+
+  /* ── Sidebar ── */
+  nav {
+    width: var(--sidebar-w);
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border);
+    position: fixed; top: 0; left: 0; bottom: 0;
+    overflow-y: auto; padding: 24px 0; z-index: 100;
+  }
+  .nav-logo { padding: 0 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .nav-logo h1 { font-size: 15px; font-weight: 700; color: var(--accent); }
+  .nav-logo p  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .nav-section { padding: 4px 20px; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 16px; margin-bottom: 4px; }
+  nav a { display: block; padding: 7px 20px; font-size: 13px; color: var(--muted); text-decoration: none; border-left: 3px solid transparent; transition: all .15s; }
+  nav a:hover  { color: var(--accent); background: var(--accent-light); }
+  nav a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-light); font-weight: 600; }
+  nav a.sub    { padding-left: 34px; font-size: 12px; }
+  nav a.m1:hover, nav a.m1.active { color: var(--m1); border-left-color: var(--m1); background: rgba(251,191,36,.08); }
+  nav a.m2:hover, nav a.m2.active { color: var(--m2); border-left-color: var(--m2); background: rgba(96,165,250,.08); }
+  nav::-webkit-scrollbar { width: 6px; }
+  nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── Main ── */
+  main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 40px 56px;
+    max-width: 1400px;
+    margin-right: auto;
+    margin-left: calc(var(--sidebar-w) + max(0px, (100vw - var(--sidebar-w) - 1400px) / 2));
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #422006 0%, #78350f 60%, #92400e 100%);
+    border-radius: 12px; padding: 32px 36px; margin-bottom: 36px;
+    border: 1px solid rgba(251,191,36,.25);
+  }
+  .hero h1  { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: #fef3c7; }
+  .hero p   { font-size: 14px; opacity: .85; line-height: 1.6; max-width: 580px; color: #fde68a; }
+  .hero-badges { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  .hero-badge { background: rgba(255,255,255,.12); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; color: #fef3c7; }
+
+  /* ── Module sections ── */
+  .module { margin-bottom: 52px; scroll-margin-top: 28px; }
+
+  .module-header {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 24px; border-radius: 12px 12px 0 0;
+    border: 1px solid var(--border);
+  }
+  .module-header.m1 { background: rgba(251,191,36,.08);  border-color: rgba(251,191,36,.3);  }
+  .module-header.m2 { background: rgba(96,165,250,.08);  border-color: rgba(96,165,250,.3);  }
+
+  .module-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; flex-shrink: 0;
+  }
+  .m1 .module-num { background: rgba(251,191,36,.2);  color: var(--m1); }
+  .m2 .module-num { background: rgba(96,165,250,.2);  color: var(--m2); }
+
+  .module-title h2 { font-size: 18px; font-weight: 700; }
+  .module-title p  { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .m1 .module-title h2 { color: var(--m1); }
+  .m2 .module-title h2 { color: var(--m2); }
+
+  .module-body {
+    border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 12px 12px; overflow: hidden;
+  }
+
+  /* ── Cards inside module ── */
+  .card { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+  .card:last-child { border-bottom: none; }
+  .card-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--muted); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title::before {
+    content: ''; display: inline-block; width: 3px; height: 14px;
+    border-radius: 2px; background: var(--accent);
+  }
+  .m1-card .card-title::before { background: var(--m1); }
+  .m2-card .card-title::before { background: var(--m2); }
+
+  /* ── Req list ── */
+  .req-box {
+    background: rgba(255,255,255,.03); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 18px;
+  }
+  .req-item { display: flex; gap: 10px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6; }
+  .req-item:last-child { margin-bottom: 0; }
+  .req-bullet {
+    flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; margin-top: 2px;
+  }
+  .req-text { color: var(--text); }
+  .req-text strong { color: #f1f5f9; }
+
+  /* ── Column pills ── */
+  .col-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .col-pill {
+    background: rgba(129,140,248,.08); border: 1px solid rgba(129,140,248,.2);
+    border-radius: 6px; padding: 5px 10px;
+    font-family: 'Courier New', monospace; font-size: 11.5px;
+    color: #c4b5fd; cursor: default; transition: background .15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .col-pill:hover { background: rgba(129,140,248,.15); }
+  .col-pill .type-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .dot-int      { background: #60a5fa; }
+  .dot-nvarchar { background: #34d399; }
+  .dot-datetime { background: #fbbf24; }
+  .col-pill a { color: inherit; text-decoration: none; }
+  .col-pill a:hover { text-decoration: underline; }
+
+  /* ── Formula box ── */
+  .formula-box {
+    background: rgba(251,191,36,.06); border: 1px solid rgba(251,191,36,.2);
+    border-radius: 8px; padding: 12px 16px;
+    font-family: 'Courier New', monospace; font-size: 13px; color: #fcd34d;
+    line-height: 1.8;
+  }
+  .formula-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 6px; }
+  .formula-row:last-child { margin-bottom: 0; }
+  .formula-name { color: var(--warning); min-width: 220px; font-size: 12px; }
+  .formula-eq   { color: #fcd34d; }
+
+  /* ── Code blocks ── */
+  .code-block { border-radius: 8px; overflow: hidden; margin: 4px 0; border: 1px solid #1e293b; }
+  .code-header {
+    background: #020617; padding: 8px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #1e293b;
+  }
+  .code-header span { font-size: 11px; color: #6c7086; font-family: monospace; }
+  .copy-btn {
+    background: #1e293b; border: none; color: #cdd6f4;
+    font-size: 11px; padding: 3px 10px; border-radius: 4px; cursor: pointer; transition: background .15s;
+  }
+  .copy-btn:hover { background: #334155; }
+  .copy-btn.copied { background: #059669; color: #fff; }
+  pre {
+    padding: 16px 20px; overflow-x: auto; font-size: 12.5px;
+    line-height: 1.75; color: #cdd6f4;
+    font-family: 'Courier New', Consolas, monospace;
+    background: #0f172a;
+  }
+  pre .kw  { color: #818cf8; }
+  pre .fn  { color: #60a5fa; }
+  pre .col,
+  .formula-eq .col,
+  .formula-name .col {
+    color: #7dd3fc;
+    background: rgba(125, 211, 252, 0.08);
+    border: 1px solid rgba(125, 211, 252, 0.22);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.97em;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  pre .col:hover,
+  .formula-eq .col:hover,
+  .formula-name .col:hover {
+    background: rgba(125, 211, 252, 0.18);
+    border-color: rgba(125, 211, 252, 0.5);
+  }
+  pre .str { color: #a6e3a1; }
+  pre .nb  { color: #fbbf24; }
+
+  /* ── Sub-section labels ── */
+  .sub-label {
+    font-size: 12px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .07em;
+    margin-bottom: 8px; margin-top: 16px;
+  }
+  .sub-label:first-child { margin-top: 0; }
+  p code { background: rgba(129,140,248,.1); color: var(--accent); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; }
+
+  /* ── Pending / notes ── */
+  .pending-list { display: flex; flex-direction: column; gap: 8px; }
+  .ok-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: rgba(52,211,153,.06); border: 1px solid rgba(52,211,153,.2);
+    border-radius: 6px; padding: 10px 14px; font-size: 13px; line-height: 1.5;
+  }
+  .ok-item .pi-text { color: #6ee7b7; }
+  .pending-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: rgba(251,191,36,.06); border: 1px solid rgba(251,191,36,.2);
+    border-radius: 6px; padding: 10px 14px; font-size: 13px; line-height: 1.5;
+  }
+  .pending-item .pi-icon { flex-shrink: 0; font-size: 15px; }
+  .pending-item .pi-text { color: #fcd34d; }
+
+  /* ── Tooltip ── */
+  #field-tooltip {
+    display: none; position: fixed; z-index: 9999;
+    background: #1a1d2e; border: 1px solid #3a3f5c; border-radius: 8px;
+    padding: 10px 14px; font-size: 12px; color: #d0d4e8;
+    max-width: 300px; pointer-events: none; box-shadow: 0 6px 20px rgba(0,0,0,0.5); line-height: 1.5;
+  }
+  #field-tooltip .tt-campo  { font-weight: 700; font-size: 13px; color: #a5c8ff; margin-bottom: 3px; }
+  #field-tooltip .tt-meta   { color: #7a8099; font-size: 11px; margin-bottom: 4px; }
+  #field-tooltip .tt-origen { color: #666e8a; font-size: 11px; font-family: monospace; margin-bottom: 4px; }
+  #field-tooltip .tt-nota   { color: #c8b8ff; font-style: italic; margin-top: 4px; font-size: 11.5px; }
+  #field-tooltip .tt-usos   { color: #7ec8a0; margin-top: 6px; font-size: 11px; border-top: 1px solid #2e3250; padding-top: 5px; }
+  span.col { cursor: help; }
+
+  @media (max-width: 768px) {
+    nav { display: none; }
+    main { margin-left: 0; margin-right: 0; padding: 20px 16px; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ SIDEBAR ══════════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <h1>Superset Docs</h1>
+    <p>SQL Server + Docker</p>
+  </div>
+
+  <div class="nav-section">Navegacion</div>
+  <a href="index.html">← Guia de instalacion</a>
+  <a href="diccionario_centinela.html">Diccionario de datos</a>
+  <div class="nav-section">Requerimientos</div>
+  <a href="requerimientos.html" class="sub">Indice</a>
+  <a href="requerimientos_ameco.html" class="sub">↳ Ameco</a>
+  <a href="requerimientos_centinela.html" class="sub">↳ Centinela</a>
+  <div class="nav-section">Centinela</div>
+  <a href="requerimientos_centinela_paneles.html" class="sub">Paneles de gestion</a>
+  <a href="requerimientos_centinela_operacionales.html" class="sub active">Indicadores Operacionales</a>
+
+  <div class="nav-section">Modulos</div>
+  <a href="#modulo1" class="sub m1">1 · Indicadores de Actividad</a>
+  <a href="#modulo2" class="sub m2">2 · Indicadores de Personas</a>
+
+  <div class="nav-section">Modulo 1</div>
+  <a href="#m1-req"      class="sub m1">Que pide el cliente</a>
+  <a href="#m1-cols"     class="sub m1">Columnas necesarias</a>
+  <a href="#m1-charts"   class="sub m1">Charts a configurar</a>
+  <a href="#m1-pending"  class="sub m1">Pendientes</a>
+
+  <div class="nav-section">Modulo 2</div>
+  <a href="#m2-req"      class="sub m2">Que pide el cliente</a>
+  <a href="#m2-cols"     class="sub m2">Columnas necesarias</a>
+  <a href="#m2-charts"   class="sub m2">Charts a configurar</a>
+  <a href="#m2-pending"  class="sub m2">Pendientes</a>
+</nav>
+
+<!-- ══════════════════════ MAIN ══════════════════════ -->
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Requerimientos — Indicadores Operacionales</h1>
+    <p>Indicadores operacionales del dashboard. Dos pestanas: Indicadores de Actividad e Indicadores de Personas.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">v_OrdenesTrabajo</span>
+      <span class="hero-badge">CentinelaDashboards</span>
+      <span class="hero-badge">5 KPIs</span>
+    </div>
+  </div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     MODULO 1 — Indicadores de Actividad
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<div class="module" id="modulo1">
+  <div class="module-header m1">
+    <div class="module-num">1</div>
+    <div class="module-title">
+      <h2>Indicadores de Actividad</h2>
+      <p>KPIs principales — pestana "Indicadores de Actividad"</p>
+    </div>
+  </div>
+
+  <div class="module-body">
+
+    <!-- Requerimiento -->
+    <div class="card m1-card" id="m1-req">
+      <div class="card-title">Que pide el cliente</div>
+      <div class="req-box">
+        <div class="req-item">
+          <div class="req-bullet" style="background:rgba(251,191,36,.2);color:var(--m1)">1.1</div>
+          <div class="req-text">
+            <strong>Dos pestanas:</strong> Indicadores de Actividad · Indicadores de Personas.<br>
+            Este modulo cubre la primera pestana.
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-bullet" style="background:rgba(251,191,36,.2);color:var(--m1)">1.2</div>
+          <div class="req-text">
+            <strong>5 tarjetas KPI (Big Number):</strong><br>
+            — <strong>OTs creadas:</strong> total de OTs en el rango de fechas<br>
+            — <strong>OTs terminadas:</strong> OTs con estado Resuelta o Cerrada<br>
+            — <strong>Tasa de finalizacion:</strong> OTs terminadas / OTs creadas x 100<br>
+            — <strong>Operaciones resueltas:</strong> operaciones con estado Resuelta<br>
+            — <strong>OTs Backlog:</strong> OTs con tipo de actividad Backlog
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-bullet" style="background:rgba(251,191,36,.2);color:var(--m1)">1.3</div>
+          <div class="req-text">
+            <strong>Tendencia de OTs:</strong> Line Chart con dos series (OTs nuevas y OTs terminadas) agrupadas por dia.<br>
+            <strong>Estado de OTs a la fecha fin:</strong> Bar Chart horizontal con la cantidad de OTs por estado (Abierta, Asignada, Detenida, Resuelta, Cancelada).
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-bullet" style="background:rgba(251,191,36,.2);color:var(--m1)">⚡</div>
+          <div class="req-text">
+            <strong>Filtro de fecha:</strong> el usuario gestiona el rango por <code>OrdenTrabajoFechaInicio</code> (OTs) y <code>OperacionFechaInicio</code> (Operaciones).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columnas -->
+    <div class="card m1-card" id="m1-cols">
+      <div class="card-title">Columnas y datasets necesarios</div>
+
+      <!-- Vista OT -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:var(--m1);margin-bottom:12px">Vista OT — dataset: <code>albi.v_OrdenesTrabajoCentinela</code></div>
+        <div class="sub-label">Identificador</div>
+        <div class="col-grid" style="margin-bottom:10px">
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OrdenTrabajoId</a></span>
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">EstadoOrdenTrabajo</a></span>
+        </div>
+        <div class="sub-label">Backlog (OTs abiertas >= 3 dias)</div>
+        <div class="col-grid" style="margin-bottom:10px">
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">EstadoOrdenTrabajo</a></span>
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OrdenTrabajoFechaInicio</a></span>
+        </div>
+        <div class="sub-label">Fecha de filtro</div>
+        <div class="col-grid" style="margin-bottom:12px">
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OrdenTrabajoFechaInicio</a></span>
+        </div>
+      </div>
+
+      <!-- Vista Operaciones -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px">
+        <div style="font-size:12px;font-weight:700;color:var(--m1);margin-bottom:12px">Vista Operaciones — dataset: <code>albi.CentinelaDashboards</code></div>
+        <div class="sub-label">Identificador</div>
+        <div class="col-grid" style="margin-bottom:10px">
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionId</a></span>
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">EstadoOperacion</a></span>
+        </div>
+        <div class="sub-label">Fecha de filtro</div>
+        <div class="col-grid" style="margin-bottom:12px">
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OperacionFechaInicio</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="card m1-card" id="m1-charts">
+      <div class="card-title">Charts a configurar en Superset</div>
+
+      <!-- OTs Creadas -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">🔢 Big Number — OTs Creadas</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | OTs Creadas</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.v_OrdenesTrabajoCentinela</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>)</pre>
+        </div>
+      </div>
+
+      <!-- OTs Terminadas -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">🔢 Big Number — OTs Terminadas</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | OTs Terminadas</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.v_OrdenesTrabajoCentinela</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOrdenTrabajo</span> <span class="kw">IN</span> (<span class="str">'Resuelta'</span>, <span class="str">'Cerrada'</span>) <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
+        </div>
+      </div>
+
+      <!-- Tasa de Finalizacion -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">🔢 Big Number — Tasa de Finalizacion</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Tasa de Finalizacion</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.v_OrdenesTrabajoCentinela</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Sufijo</span><span class="formula-eq">%</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOrdenTrabajo</span> <span class="kw">IN</span> (<span class="str">'Resuelta'</span>, <span class="str">'Cerrada'</span>) <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+        </div>
+      </div>
+
+      <!-- Operaciones Resueltas -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">🔢 Big Number — Operaciones Resueltas</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Operaciones Resueltas</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOperacion</span> = <span class="str">'Resuelta'</span> <span class="kw">THEN</span> <span class="col">OperacionId</span> <span class="kw">END</span>)</pre>
+        </div>
+      </div>
+
+      <!-- OTs Backlog -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">🔢 Big Number — OTs Backlog</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | OTs Backlog</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.v_OrdenesTrabajoCentinela</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOrdenTrabajo = 'Abierta' AND >= 3 dias</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="kw">CASE</span>
+    <span class="kw">WHEN</span> <span class="col">EstadoOrdenTrabajo</span> = <span class="str">'Abierta'</span>
+     <span class="kw">AND</span> <span class="fn">DATEDIFF</span>(<span class="kw">day</span>, <span class="col">OrdenTrabajoFechaInicio</span>, <span class="fn">GETDATE</span>()) >= <span class="nb">3</span>
+    <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span>
+<span class="kw">END</span>)</pre>
+        </div>
+      </div>
+
+      <!-- Tendencia de OTs -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px;margin-top:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📈 Line Chart — Tendencia de OTs</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Tendencia de OTs</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.v_OrdenesTrabajoCentinela</span></div>
+          <div class="formula-row"><span class="formula-name">X-axis</span><span class="formula-eq">OrdenTrabajoFechaInicio</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+        </div>
+        <div class="sub-label">Metrics (2 metricas, cada una genera una linea)</div>
+        <div class="sub-label" style="margin-top:8px">OTs nuevas — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>)</pre>
+        </div>
+        <div class="sub-label" style="margin-top:10px">OTs terminadas — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">EstadoOrdenTrabajo</span> <span class="kw">IN</span> (<span class="str">'Resuelta'</span>, <span class="str">'Cerrada'</span>) <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>)</pre>
+        </div>
+      </div>
+
+      <!-- Estado de OTs -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📊 Bar Chart — Estado de OTs a la fecha fin</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Estado de OTs</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.v_OrdenesTrabajoCentinela</span></div>
+          <div class="formula-row"><span class="formula-name">X-axis</span><span class="formula-eq">EstadoOrdenTrabajo</span></div>
+          <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">EstadoOrdenTrabajoId (para cross-filter)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Orientacion</span><span class="formula-eq">Horizontal (en Customize)</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>)</pre>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Estados esperados: Abierta · Asignada · Detenida · Resuelta · Cancelada</p>
+      </div>
+      <!-- Operaciones resueltas por especialidad -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px;margin-top:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📋 Table — Operaciones resueltas por especialidad</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Ops resueltas por especialidad</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+          <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">Especialidad</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOperacion = 'Resuelta'</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="col">OperacionId</span>)</pre>
+        </div>
+      </div>
+
+      <!-- Operaciones pendientes por especialidad -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📋 Table — Operaciones pendientes por especialidad</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Ops pendientes por especialidad</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+          <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">Especialidad</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOperacion IN ('Abierta','Por abrir','Asignada','Detenida','Agendada')</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="col">OperacionId</span>)</pre>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Pendientes = Abierta · Por abrir · Asignada · Detenida · Agendada (excluye Resuelta, Cancelada, No ejecutada)</p>
+      </div>
+
+      <!-- Operaciones en Backlog por especialidad -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px;margin-top:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📋 Table — Operaciones en Backlog por especialidad</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Ops Backlog por especialidad</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+          <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">Especialidad</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOrdenTrabajo = 'Abierta' AND >= 3 dias</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="col">OperacionId</span>)</pre>
+        </div>
+      </div>
+
+      <!-- Operaciones por Zona -->
+      <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px">
+        <div style="font-size:13px;font-weight:700;color:var(--m1);margin-bottom:10px">📊 Bar Chart — Operaciones por Zona</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Operaciones por Zona</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+          <div class="formula-row"><span class="formula-name">X-axis</span><span class="formula-eq">ZonaOperacion</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Orientacion</span><span class="formula-eq">Horizontal (en Customize)</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="col">OperacionId</span>)</pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Pendientes -->
+  <div id="m1-pending" class="m1-card" style="margin-top:16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;">
+    <div class="card-title">Pendientes / Preguntas al cliente</div>
+    <div class="pending-list">
+      <div class="ok-item">
+        <span class="pi-icon">✅</span>
+        <span class="pi-text"><strong>OTs creadas</strong> = total de OTs filtrado por <code>OrdenTrabajoFechaInicio</code> en el rango seleccionado.</span>
+      </div>
+      <div class="ok-item">
+        <span class="pi-icon">✅</span>
+        <span class="pi-text"><strong>OTs terminadas:</strong> <code>EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</code>.</span>
+      </div>
+      <div class="ok-item">
+        <span class="pi-icon">✅</span>
+        <span class="pi-text"><strong>OTs Backlog:</strong> <code>EstadoOrdenTrabajo = 'Abierta'</code> con <code>DATEDIFF(day, OrdenTrabajoFechaInicio, GETDATE()) >= 3</code>. Diferente a Ameco que usa TipoActividad.</span>
+      </div>
+      <div class="pending-item">
+        <span class="pi-icon">⏳</span>
+        <span class="pi-text"><strong>Pestana "Indicadores de Personas"</strong> — pendiente de definir contenido (Modulo 2).</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     MODULO 2 — Indicadores de Personas
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<div class="module" id="modulo2">
+  <div class="module-header m2">
+    <div class="module-num">2</div>
+    <div class="module-title">
+      <h2>Indicadores de Personas</h2>
+      <p>Pestana "Indicadores de Personas" — KPIs de tiempos, cumplimiento y personal</p>
+    </div>
+  </div>
+
+  <div class="module-body">
+
+    <!-- Requerimiento -->
+    <div class="card m2-card" id="m2-req">
+      <div class="card-title">Que pide el cliente</div>
+      <div class="req-box">
+        <div class="req-item">
+          <div class="req-bullet" style="background:rgba(96,165,250,.2);color:var(--m2)">2.1</div>
+          <div class="req-text">
+            <strong>5 tarjetas KPI:</strong><br>
+            — <strong>Tiempos asociados a la OT en HH:</strong> suma de tiempos declarados (DuracionReal + Traslado + Espera + Administrativos) de las operaciones de OTs resueltas, en horas<br>
+            — <strong>Tiempo promedio de resolucion:</strong> suma de tiempos de ejecucion de las operaciones / OTs resueltas, en horas<br>
+            — <strong>Tasa de cumplimiento:</strong> OTs resueltas dentro del plazo / OTs resueltas totales x 100<br>
+            — <strong>Personal presente hoy:</strong> resolutores presentes (dia/noche)<br>
+            — <strong>Supervisores presentes hoy:</strong> supervisores presentes (dia/noche)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columnas -->
+    <div class="card m2-card" id="m2-cols">
+      <div class="card-title">Columnas y datasets necesarios</div>
+
+      <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:var(--m2);margin-bottom:12px">Vista OT — dataset: <code>albi.v_OrdenesTrabajoCentinela</code></div>
+        <div class="sub-label">Tiempos declarados (para HH)</div>
+        <div class="col-grid" style="margin-bottom:10px">
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionTiempoDuracionReal</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionResolucionTiempoTraslado</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionResolucionTiempoEspera</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionResolucionTiemposAdministrativos</a></span>
+        </div>
+        <div class="sub-label">Tiempo de ejecucion (para promedio)</div>
+        <div class="col-grid" style="margin-bottom:10px">
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario_centinela.html">OperacionResolucionTiempoEjecucion</a></span>
+        </div>
+        <div class="sub-label">SLA (para tasa cumplimiento)</div>
+        <div class="col-grid" style="margin-bottom:10px">
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OrdenTrabajoFechaFin</a></span>
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OrdenTrabajoFechaFinReal</a></span>
+        </div>
+        <div class="sub-label">Estado y fecha</div>
+        <div class="col-grid" style="margin-bottom:10px">
+          <span class="col-pill"><span class="type-dot dot-nvarchar"></span><a href="diccionario_centinela.html">EstadoOrdenTrabajo</a></span>
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario_centinela.html">OrdenTrabajoFechaInicio</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="card m2-card" id="m2-charts">
+      <div class="card-title">Charts a configurar en Superset</div>
+
+      <!-- Tiempos asociados a la OT en HH -->
+      <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">🔢 Big Number — Tiempos asociados a la OT en HH</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Tiempos OT en HH</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.v_OrdenesTrabajoCentinela</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
+          <div class="formula-row"><span class="formula-name">Sufijo</span><span class="formula-eq">hrs</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">ROUND</span>(
+    (<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
+   + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
+   + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
+   + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>)))
+  / <span class="nb">60.0</span>, <span class="nb">1</span>
+)</pre>
+        </div>
+      </div>
+
+      <!-- Tiempo promedio de resolucion -->
+      <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">🔢 Big Number — Tiempo promedio de resolucion</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Tiempo Prom. Resolucion</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.v_OrdenesTrabajoCentinela</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
+          <div class="formula-row"><span class="formula-name">Sufijo</span><span class="formula-eq">hrs</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>)) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>)
+  / <span class="nb">60.0</span>, <span class="nb">2</span>
+)</pre>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:8px">SUM(ejecucion de todas las operaciones) / COUNT(DISTINCT OTs resueltas) / 60 → horas promedio por OT</p>
+      </div>
+
+      <!-- Tasa de cumplimiento -->
+      <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">🔢 Big Number — Tasa de cumplimiento</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Tasa de Cumplimiento</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.v_OrdenesTrabajoCentinela</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
+          <div class="formula-row"><span class="formula-name">Sufijo</span><span class="formula-eq">%</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">ROUND</span>(
+    <span class="kw">CAST</span>(<span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">OrdenTrabajoFechaFinReal</span> &lt;= <span class="col">OrdenTrabajoFechaFin</span> <span class="kw">THEN</span> <span class="col">OrdenTrabajoId</span> <span class="kw">END</span>) <span class="kw">AS FLOAT</span>)
+  / <span class="fn">NULLIF</span>(<span class="fn">COUNT</span>(<span class="col">OrdenTrabajoId</span>), <span class="nb">0</span>) * <span class="nb">100</span>, <span class="nb">1</span>
+)</pre>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:8px">OTs resueltas dentro del plazo (FechaFinReal &lt;= FechaFin) / total OTs resueltas x 100</p>
+      </div>
+
+      <!-- Personal presente hoy -->
+      <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">📋 Table — Personal presente hoy para asignacion</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Personal Presente Hoy</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoAsistencia</span></div>
+          <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">Turno</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">Turno IN ('Turno Diurno','Turno Nocturno') · ResolutorActivo = 1</span></div>
+        </div>
+        <div class="sub-label">Presentes — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT CASE WHEN</span> <span class="col">AsistenciaTipo</span> = <span class="str">'E'</span>
+    <span class="kw">AND CAST</span>(<span class="col">AsistenciaFechaHora</span> <span class="kw">AS DATE</span>) = <span class="kw">CAST</span>(<span class="fn">GETDATE</span>() <span class="kw">AS DATE</span>)
+    <span class="kw">THEN</span> <span class="col">PersonaId</span> <span class="kw">END</span>)</pre>
+        </div>
+        <div class="sub-label" style="margin-top:10px">Total — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">PersonaId</span>)</pre>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Resultado: Turno Diurno → X de Y · Turno Nocturno → X de Y. Solo turnos Diurno y Nocturno.</p>
+      </div>
+
+      <!-- Supervisores presentes hoy -->
+      <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">📋 Table — Supervisores presentes hoy para asignacion</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Supervisores Presente Hoy</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoAsistencia</span></div>
+          <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">Turno</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">Turno IN ('Turno Diurno','Turno Nocturno') · ResolutorActivo = 1 · Perfil = 'Supervisor'</span></div>
+        </div>
+        <div class="sub-label">Presentes — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT CASE WHEN</span> <span class="col">AsistenciaTipo</span> = <span class="str">'E'</span>
+    <span class="kw">AND CAST</span>(<span class="col">AsistenciaFechaHora</span> <span class="kw">AS DATE</span>) = <span class="kw">CAST</span>(<span class="fn">GETDATE</span>() <span class="kw">AS DATE</span>)
+    <span class="kw">THEN</span> <span class="col">PersonaId</span> <span class="kw">END</span>)</pre>
+        </div>
+        <div class="sub-label" style="margin-top:10px">Total — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="col">PersonaId</span>)</pre>
+        </div>
+      </div>
+
+      <!-- Tiempos reportados del periodo -->
+      <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">📋 Table — Tiempos reportados del periodo</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Tiempos reportados por persona</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+          <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">OperacionResolutor · ZonaOperacion · Especialidad</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOperacion = 'Resuelta'</span></div>
+        </div>
+        <div class="sub-label">Tiempo Espera (hrs) — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">ROUND</span>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>)) / <span class="nb">60.0</span>, <span class="nb">1</span>)</pre>
+        </div>
+        <div class="sub-label" style="margin-top:10px">Tiempo Traslado (hrs) — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">ROUND</span>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>)) / <span class="nb">60.0</span>, <span class="nb">1</span>)</pre>
+        </div>
+        <div class="sub-label" style="margin-top:10px">Tiempo Administrativo (hrs) — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">ROUND</span>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>)) / <span class="nb">60.0</span>, <span class="nb">1</span>)</pre>
+        </div>
+        <div class="sub-label" style="margin-top:10px">Duracion Real (hrs) — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">ROUND</span>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>)) / <span class="nb">60.0</span>, <span class="nb">1</span>)</pre>
+        </div>
+        <div class="sub-label" style="margin-top:10px">Duracion Ejecucion (hrs) — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">ROUND</span>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>)) / <span class="nb">60.0</span>, <span class="nb">1</span>)</pre>
+        </div>
+      </div>
+
+      <!-- Ranking carga de trabajo -->
+      <div style="border:1px solid var(--m2);border-radius:8px;padding:14px 16px">
+        <div style="font-size:13px;font-weight:700;color:var(--m2);margin-bottom:10px">📊 Bar Chart — Ranking carga de trabajo por trabajador</div>
+        <div class="formula-box" style="margin-bottom:10px">
+          <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Centinela] | Ranking carga de trabajo</code></span></div>
+          <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
+          <div class="formula-row"><span class="formula-name">X-axis</span><span class="formula-eq">OperacionResolutor</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Sort query by</span><span class="formula-eq">Metrica DESC</span></div>
+        </div>
+        <div class="sub-label">Metrica — Custom SQL</div>
+        <div class="code-block">
+          <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+          <pre><span class="fn">COUNT</span>(<span class="col">OperacionId</span>)</pre>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:8px">Operaciones asignadas a cada trabajador. Ordenado de mayor a menor.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Pendientes -->
+  <div id="m2-pending" class="m2-card" style="margin-top:16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;">
+    <div class="card-title">Pendientes / Preguntas al cliente</div>
+    <div class="pending-list">
+      <div class="ok-item">
+        <span class="pi-icon">✅</span>
+        <span class="pi-text"><strong>Tiempos OT en HH:</strong> SUM(DuracionReal + Traslado + Espera + Administrativos) / 60 para OTs resueltas.</span>
+      </div>
+      <div class="ok-item">
+        <span class="pi-icon">✅</span>
+        <span class="pi-text"><strong>Tiempo prom. resolucion:</strong> SUM(OperacionResolucionTiempoEjecucion) / COUNT(DISTINCT OTs resueltas) / 60.</span>
+      </div>
+      <div class="ok-item">
+        <span class="pi-icon">✅</span>
+        <span class="pi-text"><strong>Tasa cumplimiento:</strong> OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin → cumplio plazo.</span>
+      </div>
+      <div class="ok-item">
+        <span class="pi-icon">✅</span>
+        <span class="pi-text"><strong>Personal presente / Supervisores:</strong> dataset <code>AmecoAsistencia</code> creado. Filtrar por <code>AsistenciaTipo = 'E'</code>, <code>AsistenciaFecha = hoy</code>, <code>Perfil = 'Supervisor'</code> para supervisores.</span>
+      </div>
+      <div class="ok-item">
+        <span class="pi-icon">✅</span>
+        <span class="pi-text"><strong>Tiempos reportados:</strong> tabla agrupada por OperacionResolutor con 5 columnas de tiempo en horas.</span>
+      </div>
+      <div class="ok-item">
+        <span class="pi-icon">✅</span>
+        <span class="pi-text"><strong>Ranking carga:</strong> Bar Chart por OperacionResolutor, COUNT(OperacionId) ordenado DESC.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div id="field-tooltip"></div>
+
+<script src="cols_meta_centinela.js"></script>
+<script src="lookup_data_centinela.js" onerror="window.LOOKUP_DATA=null"></script>
+<script>
+  (function () {
+    const tt = document.getElementById('field-tooltip');
+    const meta = {};
+    (window.COLS_META || []).forEach(c => { meta[c.campo] = c; });
+
+    function show(e, nombre) {
+      const m = meta[nombre];
+      if (!m) return;
+      const usos = window.LOOKUP_DATA?._meta?.usos?.[nombre];
+      const usosStr = usos != null ? Number(usos).toLocaleString('es-CL') : '—';
+      let h = `<div class="tt-campo">${m.campo}</div>`;
+      h += `<div class="tt-meta">${m.tipo} &nbsp;·&nbsp; ${m.grupo}</div>`;
+      h += `<div class="tt-origen">origen: ${m.tabla}.${m.original}</div>`;
+      if (m.nota) h += `<div class="tt-nota">${m.nota}</div>`;
+      h += `<div class="tt-usos">Usos en CentinelaDashboards: <strong>${usosStr}</strong></div>`;
+      tt.innerHTML = h;
+      tt.style.display = 'block';
+      move(e);
+    }
+    function move(e) {
+      const pad = 16;
+      let x = e.clientX + pad, y = e.clientY + pad;
+      tt.style.left = '0'; tt.style.top = '0';
+      const w = tt.offsetWidth, h2 = tt.offsetHeight;
+      if (x + w > window.innerWidth)  x = e.clientX - w - pad;
+      if (y + h2 > window.innerHeight) y = e.clientY - h2 - pad;
+      tt.style.left = x + 'px';
+      tt.style.top  = y + 'px';
+    }
+    function hide() { tt.style.display = 'none'; }
+    function attach(el, getName) {
+      el.addEventListener('mouseenter', e => show(e, getName(el)));
+      el.addEventListener('mousemove',  move);
+      el.addEventListener('mouseleave', hide);
+    }
+
+    const colNames = Object.keys(meta).sort((a, b) => b.length - a.length);
+    if (colNames.length > 0) {
+      const escaped = colNames.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const colPattern = new RegExp('(?<![\\w])(' + escaped.join('|') + ')(?![\\w])', 'g');
+      document.querySelectorAll('.formula-eq, .formula-name').forEach(el => {
+        if (el.querySelector('code, span.col')) return;
+        el.innerHTML = el.innerHTML.replace(colPattern, '<span class="col">$1</span>');
+      });
+    }
+
+    document.querySelectorAll('.col-pill a').forEach(el =>
+      attach(el, el => el.textContent.trim())
+    );
+    document.querySelectorAll('span.col').forEach(el =>
+      attach(el, el => el.textContent.trim())
+    );
+  })();
+
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.innerText).then(() => {
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  const sections = document.querySelectorAll('.module, [id^="m"]');
+  const navLinks  = document.querySelectorAll('nav a[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+    navLinks.forEach(a => {
+      const href = a.getAttribute('href').replace('#','');
+      a.classList.toggle('active', href === current);
+    });
+  });
+</script>
+</body>
+</html>

@@ -58,6 +58,13 @@ LOOKUPS = [
     ("Tipo Actividad",        "TipoActividadId",             "TipoActividad",              "tipoActividad",         "id", "nombreReal"),
 ]
 
+# Catálogos de Asistencia — se consultan desde AmecoAsistencia (DISTINCT)
+LOOKUPS_ASISTENCIA = [
+    ("Asistencia Tipo",       "AsistenciaTipo",              "AsistenciaTipo"),
+    ("Asistencia Estado",     "AsistenciaEstado",            "AsistenciaEstado"),
+]
+TABLA_ASISTENCIA = "dbo.AmecoAsistencia"
+
 def main():
     try:
         import pymssql
@@ -134,6 +141,45 @@ def main():
             print(f"  ⚠  {label:<25} error: {e}")
             result[label] = {"idCol": col_id, "valorCol": col_valor, "valores": [], "error": str(e)}
 
+    # ── Catálogos de Asistencia (DISTINCT desde AmecoAsistencia) ──────────────
+    print("\n  Catálogos de Asistencia...")
+    for label, col_valor, col_valor_alias in LOOKUPS_ASISTENCIA:
+        try:
+            query = f"""
+                SELECT DISTINCT {col_valor} AS id, {col_valor} AS valor
+                FROM {TABLA_ASISTENCIA}
+                WHERE {col_valor} IS NOT NULL
+                ORDER BY {col_valor}
+            """
+            cursor.execute(query)
+            rows = cursor.fetchall()
+
+            usos_por_valor = {}
+            try:
+                usos_query = f"""
+                    SELECT {col_valor}, COUNT(*) AS usos
+                    FROM {TABLA_ASISTENCIA}
+                    WHERE {col_valor} IS NOT NULL
+                    GROUP BY {col_valor}
+                """
+                cursor.execute(usos_query)
+                for r in cursor.fetchall():
+                    usos_por_valor[r[0]] = r[1]
+            except Exception:
+                pass
+
+            result[label] = {
+                "idCol":    col_valor,
+                "valorCol": col_valor,
+                "valores":  [{"id": str(r[0]), "valor": str(r[1]), "usos": usos_por_valor.get(r[0], 0)} for r in rows]
+            }
+            count = len(rows)
+            total_valores += count
+            print(f"  ✔  {label:<25} {count:>4} valores  ← {TABLA_ASISTENCIA}")
+        except Exception as e:
+            print(f"  ⚠  {label:<25} error: {e}")
+            result[label] = {"idCol": col_valor, "valorCol": col_valor, "valores": [], "error": str(e)}
+
     # ── Usos: COUNT(col) por cada columna de AmecoDashboards ─────────────────
     print("\n  Calculando usos por columna...")
     usos = {}
@@ -162,7 +208,7 @@ def main():
                 for j, col in enumerate(bloque_cols):
                     usos[col] = row[j]
 
-        print(f"  ✔  Usos calculados para {len(usos)} columnas")
+        print(f"  ✔  Usos calculados para {len(usos)} columnas (AmecoDashboards)")
 
         # Totales OT y Operaciones
         cursor.execute("""
@@ -176,7 +222,38 @@ def main():
             total_ots, total_operaciones = row[0], row[1]
             print(f"  ✔  Total OTs: {total_ots:,}  |  Total Operaciones: {total_operaciones:,}")
     except Exception as e:
-        print(f"  ⚠  Error calculando usos: {e}")
+        print(f"  ⚠  Error calculando usos (Dashboards): {e}")
+
+    # ── Usos: COUNT(col) por cada columna de AmecoAsistencia ─────────────────
+    total_asistencias = 0
+    try:
+        cursor.execute("""
+            SELECT COLUMN_NAME
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'AmecoAsistencia'
+            ORDER BY ORDINAL_POSITION
+        """)
+        columnas_asist = [row[0] for row in cursor.fetchall()]
+
+        BLOQUE = 50
+        for i in range(0, len(columnas_asist), BLOQUE):
+            bloque_cols = columnas_asist[i:i+BLOQUE]
+            partes = [f"COUNT([{c}]) AS [{c}]" for c in bloque_cols]
+            cursor.execute(f"SELECT {', '.join(partes)} FROM {TABLA_ASISTENCIA}")
+            row = cursor.fetchone()
+            if row:
+                for j, col in enumerate(bloque_cols):
+                    usos[col] = row[j]
+
+        print(f"  ✔  Usos calculados para {len(columnas_asist)} columnas (AmecoAsistencia)")
+
+        cursor.execute(f"SELECT COUNT(*) FROM {TABLA_ASISTENCIA}")
+        row = cursor.fetchone()
+        if row:
+            total_asistencias = row[0]
+            print(f"  ✔  Total Asistencias: {total_asistencias:,}")
+    except Exception as e:
+        print(f"  ⚠  Error calculando usos (Asistencia): {e}")
 
     conn.close()
 
@@ -188,6 +265,7 @@ def main():
             "catalogos": len(result),
             "total_ots": total_ots,
             "total_operaciones": total_operaciones,
+            "total_asistencias": total_asistencias,
             "usos": usos,
         },
         "catalogos": result

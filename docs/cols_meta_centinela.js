@@ -1,6 +1,6 @@
 /**
- * cols_meta.js — Metadatos de columnas de AmecoDashboards
- * Cargado por diccionario.html y requerimientos.html
+ * cols_meta_centinela.js — Metadatos de columnas de CentinelaDashboards
+ * Cargado por diccionario_centinela.html y requerimientos_centinela.html
  */
 window.COLS_META = [
   // ── Orden de Trabajo ──
@@ -15,8 +15,8 @@ window.COLS_META = [
   { campo:"OrdenTrabajoFechaCreacion",                   original:"fechaCreacion",                               tabla:"ordenTrabajo",                         tipo:"DATETIME", grupo:"Orden de Trabajo",    nota:"" },
   { campo:"OrdenTrabajoUbicacion",                       original:"ubicacion",                                   tabla:"ordenTrabajo",                         tipo:"NVARCHAR", grupo:"Orden de Trabajo",    nota:"" },
   { campo:"OrdenTrabajoNochero",                         original:"nochero",                                     tabla:"ordenTrabajo",                         tipo:"BIT",      grupo:"Orden de Trabajo",    nota:"" },
-  { campo:"TipoActividadId",                             original:"id",                                          tabla:"tipoActividad",                        tipo:"INT",      grupo:"Orden de Trabajo",    nota:"" },
-  { campo:"TipoActividad",                               original:"nombreReal",                                  tabla:"tipoActividad",                        tipo:"NVARCHAR", grupo:"Orden de Trabajo",    nota:"Ej: Backlog, Correctivo menor, PM" },
+  { campo:"OrdenTrabajoPlanId",                           original:"planId",                                      tabla:"ordenTrabajo",                         tipo:"INT",      grupo:"Orden de Trabajo",    nota:"NULL = Correctivo" },
+  { campo:"OrdenTrabajoPlan",                             original:"CASE planId",                                 tabla:"ordenTrabajo",                         tipo:"NVARCHAR", grupo:"Orden de Trabajo",    nota:"Correctivo / Preventivo" },
   { campo:"OrdenTrabajoEmpresa",                         original:"nombre",                                      tabla:"empresa",                              tipo:"NVARCHAR", grupo:"Orden de Trabajo",    nota:"" },
   { campo:"OrdenTrabajoNegocio",                         original:"nombre",                                      tabla:"negocio",                              tipo:"NVARCHAR", grupo:"Clasificación",       nota:"" },
   { campo:"OrdenTrabajoSolicitante",                     original:"nombre",                                      tabla:"persona",                              tipo:"NVARCHAR", grupo:"OT Personas",         nota:"" },
@@ -97,4 +97,25 @@ window.COLS_META = [
   // ── Instalación ──
   { campo:"RecintoId",                                   original:"id",                                          tabla:"recinto",                              tipo:"INT",      grupo:"Instalación",         nota:"" },
   { campo:"Recinto",                                     original:"nombre",                                      tabla:"recinto",                              tipo:"NVARCHAR", grupo:"Instalación",         nota:"" },
+  // ── Asistencia (CentinelaAsistencia) ──
+  { campo:"AsistenciaId",                               original:"id",                                          tabla:"asistencia",                           tipo:"INT",      grupo:"Asistencia",          nota:"" },
+  { campo:"PersonaId",                                  original:"personaId",                                   tabla:"asistencia",                           tipo:"INT",      grupo:"Asistencia",          nota:"" },
+  { campo:"Persona",                                    original:"nombre",                                      tabla:"persona",                              tipo:"NVARCHAR", grupo:"Asistencia",          nota:"Nombre del resolutor" },
+  { campo:"PerfilId",                                   original:"id",                                          tabla:"perfil",                               tipo:"INT",      grupo:"Asistencia",          nota:"" },
+  { campo:"Perfil",                                     original:"nombre",                                      tabla:"perfil",                               tipo:"NVARCHAR", grupo:"Asistencia",          nota:"Ej: Supervisor, Técnico" },
+  { campo:"TurnoId",                                    original:"id",                                          tabla:"turno",                                tipo:"INT",      grupo:"Asistencia",          nota:"" },
+  { campo:"Turno",                                      original:"nombre",                                      tabla:"turno",                                tipo:"NVARCHAR", grupo:"Asistencia",          nota:"" },
+  { campo:"TurnoHoraInicio",                            original:"horaInicio",                                  tabla:"turno",                                tipo:"TIME",     grupo:"Asistencia",          nota:"" },
+  { campo:"TurnoHoraFin",                               original:"horaFin",                                     tabla:"turno",                                tipo:"TIME",     grupo:"Asistencia",          nota:"" },
+  { campo:"EspecialidadId",                             original:"especialidadId",                              tabla:"resolutor",                            tipo:"INT",      grupo:"Asistencia",          nota:"" },
+  { campo:"Especialidad",                               original:"nombre",                                      tabla:"especialidad",                         tipo:"NVARCHAR", grupo:"Asistencia",          nota:"" },
+  { campo:"ZonaId",                                     original:"zonaId",                                      tabla:"resolutor",                            tipo:"INT",      grupo:"Asistencia",          nota:"" },
+  { campo:"Zona",                                       original:"nombre",                                      tabla:"zona",                                 tipo:"NVARCHAR", grupo:"Asistencia",          nota:"" },
+  { campo:"ResolutorActivo",                            original:"activo",                                      tabla:"resolutor",                            tipo:"BIT",      grupo:"Asistencia",          nota:"" },
+  { campo:"AsistenciaTipo",                             original:"tipo",                                        tabla:"asistencia",                           tipo:"NVARCHAR", grupo:"Asistencia",          nota:"Ej: Entrada, Salida" },
+  { campo:"AsistenciaFechaHora",                        original:"fechaHora",                                   tabla:"asistencia",                           tipo:"DATETIME", grupo:"Asistencia",          nota:"Fecha y hora del registro" },
+  { campo:"AsistenciaFecha",                            original:"CAST(fechaHora AS DATE)",                     tabla:"asistencia",                           tipo:"DATE",     grupo:"Asistencia",          nota:"Solo la fecha, sin hora" },
+  { campo:"AsistenciaLatitud",                          original:"latitud",                                     tabla:"asistencia",                           tipo:"FLOAT",    grupo:"Asistencia",          nota:"" },
+  { campo:"AsistenciaLongitud",                         original:"longitud",                                    tabla:"asistencia",                           tipo:"FLOAT",    grupo:"Asistencia",          nota:"" },
+  { campo:"AsistenciaEstado",                           original:"estado",                                      tabla:"asistencia",                           tipo:"NVARCHAR", grupo:"Asistencia",          nota:"" },
 ];

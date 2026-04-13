@@ -58,7 +58,7 @@ if %ERRORLEVEL% NEQ 0 (
 REM ── Copiar JS de vuelta al host ─────────────────────────────────────────────
 echo.
 echo  [3/3] Copiando resultados al host...
-docker cp %CONTAINER_ID%:/tmp/lookup_data.js "%~dp0documentacion\lookup_data.js"
+docker cp %CONTAINER_ID%:/tmp/lookup_data.js "%~dp0..\docs\lookup_data.js"
 if %ERRORLEVEL% NEQ 0 (
     echo  ERROR al copiar lookup_data.js de vuelta.
     pause
@@ -67,7 +67,7 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo.
 echo  ================================================
-echo   Listo!  documentacion\lookup_data.js creado.
+echo   Listo!  docs\lookup_data.js creado.
 echo   Recarga diccionario.html para ver los catalogos.
 echo  ================================================
 echo.
