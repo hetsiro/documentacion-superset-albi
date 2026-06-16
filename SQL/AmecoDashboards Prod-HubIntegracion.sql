@@ -1,13 +1,14 @@
-USE HubIntegracion;
+USE AmecoHubIntegracion;
 GO
 
 -- =============================================
 -- PASO 1: Crear la tabla si no existe
+-- Solo se ejecuta la primera vez
 -- =============================================
-IF OBJECT_ID('HubIntegracion.albi.CentinelaDashboards') IS NULL
+IF OBJECT_ID('AmecoHubIntegracion.dbo.AmecoDashboards') IS NULL
 BEGIN
     SELECT TOP 0 *
-    INTO HubIntegracion.albi.CentinelaDashboards
+    INTO AmecoHubIntegracion.dbo.AmecoDashboards
     FROM (
         SELECT
             ot.id                               AS OrdenTrabajoId,
@@ -29,7 +30,7 @@ BEGIN
             ope.direccion                       AS OperacionDireccion,
             ope.duracionTraslado                AS OperacionTiempoTraslado,
             ope.procesoOperacionId              AS OperacionProcesoId,
-            CASE WHEN ope.id = (SELECT MIN(o2.id) FROM Albi.albi.operacion o2 WHERE o2.ordenTrabajoId = ot.id) THEN NULL ELSE (SELECT MIN(o2.id) FROM Albi.albi.operacion o2 WHERE o2.ordenTrabajoId = ot.id) END AS OperacionPadreId,
+            ope.operacionPadreId                AS OperacionPadreId,
             ope.fechaAsignacion                 AS OperacionFechaAsignacion,
             ope.fechaDetenidoInicio             AS OperacionFechaDetenidoInicio,
             ope.fechaDetenidoFin                AS OperacionFechaDetenidoFin,
@@ -52,7 +53,7 @@ BEGIN
             grupo.id                            AS GrupoResolutorOperacionId,
             grupo.nombre                        AS GrupoResolutorOperacion,
             resolutor.personaId                 AS ResolutorPersonaId,
-            pers.nombre                         AS OperacionResolutor,
+    pers.nombre                         AS OperacionResolutor,
             ISNULL(turno.nombre, 'Sin asignar') AS OperacionResolutorTurno,
             cargo.nombre                        AS OperacionResolutorCargo,
             perfil.id                           AS ResolutorPerfilId,
@@ -92,50 +93,51 @@ BEGIN
             ot.fechaCreacion                    AS OrdenTrabajoFechaCreacion,
             ot.ubicacion                        AS OrdenTrabajoUbicacion,
             ot.nochero                          AS OrdenTrabajoNochero,
-            ot.planId                           AS OrdenTrabajoPlanId,
-            CASE WHEN ot.planId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan,
-            (ISNULL((SELECT COUNT(DISTINCT oc.personaId)
-                     FROM Albi.albi.operacionColaboradores oc
-                     WHERE oc.operacionId = ope.id), 0)
-             + CASE WHEN ope.resolutorId IS NULL THEN 0 ELSE 1 END) AS OperacionCantidadInvolucrados
-        FROM        Albi.albi.ordenTrabajo           AS ot
-        INNER JOIN  Albi.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
-        LEFT JOIN   Albi.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
-        LEFT JOIN   Albi.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
-        LEFT JOIN   Albi.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
-        LEFT JOIN   Albi.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
-        LEFT JOIN   Albi.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId
-        LEFT JOIN   Albi.albi.nivel3                 AS n3               ON ot.nivel3Id                  = n3.id
-        LEFT JOIN   Albi.albi.nivel4                 AS n4               ON ot.nivel4Id                  = n4.id
-        LEFT JOIN   Albi.albi.estadoOt               AS estot            ON ot.estadoOtId                = estot.id
-        LEFT JOIN   Albi.albi.estadoOperacion        AS estadoOperacion  ON estadoOperacion.id           = ope.estadoOperacionId
-        LEFT JOIN   Albi.albi.tipoTarea              AS tipotarea        ON tipotarea.id                 = ot.tipoTareaId
-        LEFT JOIN   Albi.albi.subtipoTarea           AS subtipotar       ON ot.subtipoTareaId            = subtipotar.id
-        LEFT JOIN   Albi.albi.prioridad              AS prioridad        ON prioridad.id                 = ope.prioridadId
-        LEFT JOIN   Albi.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
-        LEFT JOIN   Albi.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
-        LEFT JOIN   Albi.albi.persona                AS pers             ON resolutor.personaId          = pers.id
-        LEFT JOIN   Albi.albi.perfil                 AS perfil           ON perfil.id                    = resolutor.perfilId
-        LEFT JOIN   Albi.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
-        LEFT JOIN   Albi.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
-        LEFT JOIN   Albi.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
-        LEFT JOIN   Albi.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
-        LEFT JOIN   Albi.albi.activo                 AS activo           ON activo.id                    = ot.activoId
-        LEFT JOIN   Albi.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
-        LEFT JOIN   Albi.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
-        LEFT JOIN   Albi.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
-        LEFT JOIN   Albi.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
+            ot.ganttId                          AS OrdenTrabajoPlanId,
+            CASE WHEN ot.ganttId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan,
+            tipoAct.id                          AS TipoActividadId,
+            tipoAct.nombreReal                  AS TipoActividad
+        FROM        Ameco.albi.ordenTrabajo           AS ot
+        INNER JOIN  Ameco.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
+        LEFT JOIN   Ameco.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
+        LEFT JOIN   Ameco.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
+        LEFT JOIN   Ameco.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
+        LEFT JOIN   Ameco.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
+        LEFT JOIN   Ameco.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId
+        LEFT JOIN   Ameco.albi.nivel3                 AS n3               ON ot.nivel3Id                  = n3.id
+        LEFT JOIN   Ameco.albi.nivel4                 AS n4               ON ot.nivel4Id                  = n4.id
+        LEFT JOIN   Ameco.albi.estadoOt               AS estot            ON ot.estadoOtId                = estot.id
+        LEFT JOIN   Ameco.albi.estadoOperacion        AS estadoOperacion  ON estadoOperacion.id           = ope.estadoOperacionId
+        LEFT JOIN   Ameco.albi.tipoTarea              AS tipotarea        ON tipotarea.id                 = ot.tipoTareaId
+        LEFT JOIN   Ameco.albi.subtipoTarea           AS subtipotar       ON ot.subtipoTareaId            = subtipotar.id
+        LEFT JOIN   Ameco.albi.prioridad              AS prioridad        ON prioridad.id                 = ope.prioridadId
+        LEFT JOIN   Ameco.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
+        LEFT JOIN   Ameco.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
+        LEFT JOIN   Ameco.albi.persona                AS pers             ON resolutor.personaId          = pers.id
+        LEFT JOIN   Ameco.albi.perfil                 AS perfil           ON perfil.id                    = resolutor.perfilId
+        LEFT JOIN   Ameco.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
+        LEFT JOIN   Ameco.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
+        LEFT JOIN   Ameco.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
+        LEFT JOIN   Ameco.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
+        LEFT JOIN   Ameco.albi.activo                 AS activo           ON activo.id                    = ot.activoId
+        LEFT JOIN   Ameco.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
+        LEFT JOIN   Ameco.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
+        LEFT JOIN   Ameco.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
+        LEFT JOIN   Ameco.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
+        LEFT JOIN   Ameco.albi.ordenTrabajoAdicionales AS otadic          ON otadic.ordenTrabajoId        = ot.id
+        LEFT JOIN   Ameco.albi.tipoActividad           AS tipoAct         ON tipoAct.id                   = otadic.tipoActividadId
         WHERE 1 = 0
     ) AS t
-    PRINT 'Tabla CentinelaDashboards creada'
+    PRINT 'Tabla creada por primera vez'
 END
 
 -- =============================================
 -- PASO 2: Actualizar los datos
+-- Se ejecuta cada 1 hora sin DROP
 -- =============================================
-TRUNCATE TABLE HubIntegracion.albi.CentinelaDashboards
+TRUNCATE TABLE AmecoHubIntegracion.dbo.AmecoDashboards
 
-INSERT INTO HubIntegracion.albi.CentinelaDashboards
+INSERT INTO AmecoHubIntegracion.dbo.AmecoDashboards
 SELECT
     ot.id                               AS OrdenTrabajoId,
     ot.fechaInicio                      AS OrdenTrabajoFechaInicio,
@@ -156,7 +158,7 @@ SELECT
     ope.direccion                       AS OperacionDireccion,
     ope.duracionTraslado                AS OperacionTiempoTraslado,
     ope.procesoOperacionId              AS OperacionProcesoId,
-    CASE WHEN ope.id = (SELECT MIN(o2.id) FROM Albi.albi.operacion o2 WHERE o2.ordenTrabajoId = ot.id) THEN NULL ELSE (SELECT MIN(o2.id) FROM Albi.albi.operacion o2 WHERE o2.ordenTrabajoId = ot.id) END AS OperacionPadreId,
+    ope.operacionPadreId                AS OperacionPadreId,
     ope.fechaAsignacion                 AS OperacionFechaAsignacion,
     ope.fechaDetenidoInicio             AS OperacionFechaDetenidoInicio,
     ope.fechaDetenidoFin                AS OperacionFechaDetenidoFin,
@@ -219,38 +221,38 @@ SELECT
     ot.fechaCreacion                    AS OrdenTrabajoFechaCreacion,
     ot.ubicacion                        AS OrdenTrabajoUbicacion,
     ot.nochero                          AS OrdenTrabajoNochero,
-    ot.planId                           AS OrdenTrabajoPlanId,
-    CASE WHEN ot.planId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan,
-    (ISNULL((SELECT COUNT(DISTINCT oc.personaId)
-             FROM Albi.albi.operacionColaboradores oc
-             WHERE oc.operacionId = ope.id), 0)
-     + CASE WHEN ope.resolutorId IS NULL THEN 0 ELSE 1 END) AS OperacionCantidadInvolucrados
+    ot.ganttId                          AS OrdenTrabajoPlanId,
+    CASE WHEN ot.ganttId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan,
+    tipoAct.id                          AS TipoActividadId,
+    tipoAct.nombreReal                  AS TipoActividad
 
-FROM        Albi.albi.ordenTrabajo           AS ot
-INNER JOIN  Albi.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
-LEFT JOIN   Albi.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
-LEFT JOIN   Albi.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
-LEFT JOIN   Albi.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
-LEFT JOIN   Albi.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
-LEFT JOIN   Albi.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId
-LEFT JOIN   Albi.albi.nivel3                 AS n3               ON ot.nivel3Id                  = n3.id
-LEFT JOIN   Albi.albi.nivel4                 AS n4               ON ot.nivel4Id                  = n4.id
-LEFT JOIN   Albi.albi.estadoOt               AS estot            ON ot.estadoOtId                = estot.id
-LEFT JOIN   Albi.albi.estadoOperacion        AS estadoOperacion  ON estadoOperacion.id           = ope.estadoOperacionId
-LEFT JOIN   Albi.albi.tipoTarea              AS tipotarea        ON tipotarea.id                 = ot.tipoTareaId
-LEFT JOIN   Albi.albi.subtipoTarea           AS subtipotar       ON ot.subtipoTareaId            = subtipotar.id
-LEFT JOIN   Albi.albi.prioridad              AS prioridad        ON prioridad.id                 = ope.prioridadId
-LEFT JOIN   Albi.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
-LEFT JOIN   Albi.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
-LEFT JOIN   Albi.albi.persona                AS pers             ON resolutor.personaId          = pers.id
-LEFT JOIN   Albi.albi.perfil                 AS perfil           ON perfil.id                    = resolutor.perfilId
-LEFT JOIN   Albi.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
-LEFT JOIN   Albi.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
-LEFT JOIN   Albi.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
-LEFT JOIN   Albi.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
-LEFT JOIN   Albi.albi.activo                 AS activo           ON activo.id                    = ot.activoId
-LEFT JOIN   Albi.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
-LEFT JOIN   Albi.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
-LEFT JOIN   Albi.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
-LEFT JOIN   Albi.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
+FROM        Ameco.albi.ordenTrabajo           AS ot
+INNER JOIN  Ameco.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
+LEFT JOIN   Ameco.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
+LEFT JOIN   Ameco.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
+LEFT JOIN   Ameco.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
+LEFT JOIN   Ameco.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
+LEFT JOIN   Ameco.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId
+LEFT JOIN   Ameco.albi.nivel3                 AS n3               ON ot.nivel3Id                  = n3.id
+LEFT JOIN   Ameco.albi.nivel4                 AS n4               ON ot.nivel4Id                  = n4.id
+LEFT JOIN   Ameco.albi.estadoOt               AS estot            ON ot.estadoOtId                = estot.id
+LEFT JOIN   Ameco.albi.estadoOperacion        AS estadoOperacion  ON estadoOperacion.id           = ope.estadoOperacionId
+LEFT JOIN   Ameco.albi.tipoTarea              AS tipotarea        ON tipotarea.id                 = ot.tipoTareaId
+LEFT JOIN   Ameco.albi.subtipoTarea           AS subtipotar       ON ot.subtipoTareaId            = subtipotar.id
+LEFT JOIN   Ameco.albi.prioridad              AS prioridad        ON prioridad.id                 = ope.prioridadId
+LEFT JOIN   Ameco.albi.grupoResolutor         AS grupo            ON ope.grupoResolutorId         = grupo.id
+LEFT JOIN   Ameco.albi.resolutor              AS resolutor        ON ope.resolutorId              = resolutor.personaId
+LEFT JOIN   Ameco.albi.persona                AS pers             ON resolutor.personaId          = pers.id
+LEFT JOIN   Ameco.albi.perfil                 AS perfil           ON perfil.id                    = resolutor.perfilId
+LEFT JOIN   Ameco.albi.sitio                  AS sitio            ON ope.sitioId                  = sitio.id
+LEFT JOIN   Ameco.albi.zona                   AS zona             ON zona.id                      = sitio.zonaId
+LEFT JOIN   Ameco.albi.turno                  AS turno            ON turno.id                     = resolutor.turnoId
+LEFT JOIN   Ameco.albi.cargoResolutor         AS cargo            ON cargo.id                     = resolutor.cargoResolutorId
+LEFT JOIN   Ameco.albi.activo                 AS activo           ON activo.id                    = ot.activoId
+LEFT JOIN   Ameco.albi.proceso                AS proceso          ON proceso.id                   = ot.procesoId
+LEFT JOIN   Ameco.albi.persona                AS solicitante      ON solicitante.id               = ot.solicitanteId
+LEFT JOIN   Ameco.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
+LEFT JOIN   Ameco.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
+LEFT JOIN   Ameco.albi.ordenTrabajoAdicionales AS otadic          ON otadic.ordenTrabajoId        = ot.id
+LEFT JOIN   Ameco.albi.tipoActividad           AS tipoAct         ON tipoAct.id                   = otadic.tipoActividadId
 WHERE ot.fechaInicio >= DATEADD(month, -6, GETDATE())

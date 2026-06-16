@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk 'NR>=598 && NR<=1464' \"C:/Albi/superset/docs/index.html\")",
+      "Bash(az --version)",
+      "Bash(az account *)"
+    ]
+  }
+}

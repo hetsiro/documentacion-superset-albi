@@ -43,6 +43,7 @@ window.COLS_META = [
   { campo:"OperacionFechaDetenidoInicio",                original:"fechaDetenidoInicio",                         tabla:"operacion",                            tipo:"DATETIME", grupo:"Operación - Fechas",  nota:"" },
   { campo:"OperacionFechaDetenidoFin",                   original:"fechaDetenidoFin",                            tabla:"operacion",                            tipo:"DATETIME", grupo:"Operación - Fechas",  nota:"" },
   { campo:"OperacionFechaInicio",                        original:"fechaInicioTareaReal / fechaInicio",          tabla:"operacionResolucion / operacion",       tipo:"DATETIME", grupo:"Operación - Fechas",  nota:"ISNULL en cascada: operesol → ope → ot" },
+  { campo:"OperacionCantidadInvolucrados",               original:"COUNT(DISTINCT personaId) + (resolutorId IS NOT NULL)", tabla:"operacionColaboradores + operacion",  tipo:"INT",      grupo:"Operación",           nota:"Personas asignadas a la operación (resolutor + colaboradores). Multiplicar por este campo para obtener HH-persona — replica la lógica del SP albi.dashboard01KPI01v2." },
   // ── Clasificación ──
   { campo:"TipoTareaId",                                 original:"id",                                          tabla:"tipoTarea",                            tipo:"INT",      grupo:"Clasificación",       nota:"" },
   { campo:"TipoTarea",                                   original:"nombre",                                      tabla:"tipoTarea",                            tipo:"NVARCHAR", grupo:"Clasificación",       nota:"Nivel 1 de jerarquía" },

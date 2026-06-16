@@ -1,0 +1,198 @@
+slice_name: '[Centinela] | Operaciones por Subsistemas'
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  datasource: 26__table
+  viz_type: table
+  slice_id: 42
+  query_mode: aggregate
+  groupby:
+  - SubTipoTarea
+  temporal_columns_lookup:
+    OrdenTrabajoFechaInicio: true
+    OperacionFechaFin: true
+    OperacionFechaResolucion: true
+    OperacionFechaAgendada: true
+    OperacionFechaProgramada: true
+    OperacionFechaAsignacion: true
+    OperacionFechaLiberacion: true
+    OperacionFechaDesasignacion: true
+    OperacionFechaDetenidoInicio: true
+    OperacionFechaDetenidoFin: true
+    OperacionFechaInicio: true
+    OperacionResolucionFecha: true
+    OrdenTrabajoFechaFin: true
+    OrdenTrabajoFechaInicioReal: true
+    OrdenTrabajoFechaFinReal: true
+    OrdenTrabajoFechaCreacion: true
+  metrics:
+  - aggregate: COUNT
+    column:
+      advanced_data_type: null
+      changed_on: '2026-04-01T15:25:59.030499'
+      column_name: OrdenTrabajoId
+      created_on: '2026-04-01T15:25:58.948087'
+      description: null
+      expression: ''
+      extra: '{}'
+      filterable: true
+      groupby: true
+      id: 50
+      is_active: true
+      is_dttm: false
+      python_date_format: null
+      type: INTEGER
+      type_generic: 0
+      uuid: 96b225a2-9970-4b13-8b56-c579edf9ab86
+      verbose_name: null
+    datasourceWarning: false
+    expressionType: SIMPLE
+    hasCustomLabel: true
+    label: Ingresadas
+    optionName: metric_5vvoomac3zh_4xqh3tvfozb
+    sqlExpression: null
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: Resueltas
+    optionName: metric_dh77hopqhrv_iqaj5jbffeh
+    sqlExpression: "COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId\
+      \ END)\r\n"
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: "Tasa Finalizaci\xF3n %"
+    optionName: metric_obl38rajh4_41mjsm3tgp6
+    sqlExpression: "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion =\
+      \ 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId),\
+      \ 0) * 100, 1\r\n)"
+  all_columns: []
+  percent_metrics: []
+  adhoc_filters:
+  - clause: WHERE
+    comparator: No filter
+    expressionType: SIMPLE
+    isExtra: false
+    operator: TEMPORAL_RANGE
+    subject: OrdenTrabajoFechaInicio
+  order_by_cols: []
+  server_pagination: false
+  row_limit: 10000
+  percent_metric_calculation: row_limit
+  show_totals: true
+  table_timestamp_format: smart_date
+  include_search: false
+  allow_rearrange_columns: false
+  allow_render_html: true
+  column_config:
+    Ingresadas:
+      d3NumberFormat: ~g
+    Resueltas:
+      d3NumberFormat: ~g
+    "Tasa Finalizaci\xF3n %":
+      d3NumberFormat: ~g
+      d3SmallNumberFormat: ~g
+  show_cell_bars: true
+  align_pn: false
+  color_pn: true
+  comparison_color_enabled: false
+  comparison_color_scheme: Green
+  conditional_formatting: []
+  comparison_type: values
+  extra_form_data: {}
+  dashboards:
+  - 3
+  annotation_layers: []
+query_context: '{"datasource": {"id": 26, "type": "table"}, "force": false, "queries":
+  [{"filters": [{"col": "OrdenTrabajoFechaInicio", "op": "TEMPORAL_RANGE", "val":
+  "No filter"}], "extras": {"having": "", "where": ""}, "applied_time_extras": {},
+  "columns": ["SubTipoTarea"], "metrics": [{"aggregate": "COUNT", "column": {"advanced_data_type":
+  null, "changed_on": "2026-04-01T15:25:59.030499", "column_name": "OrdenTrabajoId",
+  "created_on": "2026-04-01T15:25:58.948087", "description": null, "expression": "",
+  "extra": "{}", "filterable": true, "groupby": true, "id": 50, "is_active": true,
+  "is_dttm": false, "python_date_format": null, "type": "INTEGER", "type_generic":
+  0, "uuid": "96b225a2-9970-4b13-8b56-c579edf9ab86", "verbose_name": null}, "datasourceWarning":
+  false, "expressionType": "SIMPLE", "hasCustomLabel": true, "label": "Ingresadas",
+  "optionName": "metric_5vvoomac3zh_4xqh3tvfozb", "sqlExpression": null}, {"aggregate":
+  null, "column": null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel":
+  true, "label": "Resueltas", "optionName": "metric_dh77hopqhrv_iqaj5jbffeh", "sqlExpression":
+  "COUNT(DISTINCT CASE WHEN EstadoOperacion = ''Resuelta'' THEN OperacionId END)\r\n"},
+  {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Tasa Finalizaci\u00f3n %", "optionName":
+  "metric_obl38rajh4_41mjsm3tgp6", "sqlExpression": "ROUND(\r\n    CAST(COUNT(DISTINCT
+  CASE WHEN EstadoOperacion = ''Resuelta'' THEN OperacionId END) AS FLOAT)\r\n  /
+  NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"}], "orderby": [[{"aggregate":
+  "COUNT", "column": {"advanced_data_type": null, "changed_on": "2026-04-01T15:25:59.030499",
+  "column_name": "OrdenTrabajoId", "created_on": "2026-04-01T15:25:58.948087", "description":
+  null, "expression": "", "extra": "{}", "filterable": true, "groupby": true, "id":
+  50, "is_active": true, "is_dttm": false, "python_date_format": null, "type": "INTEGER",
+  "type_generic": 0, "uuid": "96b225a2-9970-4b13-8b56-c579edf9ab86", "verbose_name":
+  null}, "datasourceWarning": false, "expressionType": "SIMPLE", "hasCustomLabel":
+  true, "label": "Ingresadas", "optionName": "metric_5vvoomac3zh_4xqh3tvfozb", "sqlExpression":
+  null}, false]], "annotation_layers": [], "row_limit": 10000, "series_limit": 0,
+  "group_others_when_limit_reached": false, "order_desc": true, "url_params": {},
+  "custom_params": {}, "custom_form_data": {}, "post_processing": [], "time_offsets":
+  []}, {"filters": [{"col": "OrdenTrabajoFechaInicio", "op": "TEMPORAL_RANGE", "val":
+  "No filter"}], "extras": {"having": "", "where": ""}, "applied_time_extras": {},
+  "columns": [], "metrics": [{"aggregate": "COUNT", "column": {"advanced_data_type":
+  null, "changed_on": "2026-04-01T15:25:59.030499", "column_name": "OrdenTrabajoId",
+  "created_on": "2026-04-01T15:25:58.948087", "description": null, "expression": "",
+  "extra": "{}", "filterable": true, "groupby": true, "id": 50, "is_active": true,
+  "is_dttm": false, "python_date_format": null, "type": "INTEGER", "type_generic":
+  0, "uuid": "96b225a2-9970-4b13-8b56-c579edf9ab86", "verbose_name": null}, "datasourceWarning":
+  false, "expressionType": "SIMPLE", "hasCustomLabel": true, "label": "Ingresadas",
+  "optionName": "metric_5vvoomac3zh_4xqh3tvfozb", "sqlExpression": null}, {"aggregate":
+  null, "column": null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel":
+  true, "label": "Resueltas", "optionName": "metric_dh77hopqhrv_iqaj5jbffeh", "sqlExpression":
+  "COUNT(DISTINCT CASE WHEN EstadoOperacion = ''Resuelta'' THEN OperacionId END)\r\n"},
+  {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Tasa Finalizaci\u00f3n %", "optionName":
+  "metric_obl38rajh4_41mjsm3tgp6", "sqlExpression": "ROUND(\r\n    CAST(COUNT(DISTINCT
+  CASE WHEN EstadoOperacion = ''Resuelta'' THEN OperacionId END) AS FLOAT)\r\n  /
+  NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"}], "annotation_layers": [],
+  "row_limit": 0, "row_offset": 0, "series_limit": 0, "group_others_when_limit_reached":
+  false, "url_params": {}, "custom_params": {}, "custom_form_data": {}, "post_processing":
+  [], "time_offsets": []}], "form_data": {"datasource": "26__table", "viz_type": "table",
+  "slice_id": 42, "query_mode": "aggregate", "groupby": ["SubTipoTarea"], "temporal_columns_lookup":
+  {"OrdenTrabajoFechaInicio": true, "OperacionFechaFin": true, "OperacionFechaResolucion":
+  true, "OperacionFechaAgendada": true, "OperacionFechaProgramada": true, "OperacionFechaAsignacion":
+  true, "OperacionFechaLiberacion": true, "OperacionFechaDesasignacion": true, "OperacionFechaDetenidoInicio":
+  true, "OperacionFechaDetenidoFin": true, "OperacionFechaInicio": true, "OperacionResolucionFecha":
+  true, "OrdenTrabajoFechaFin": true, "OrdenTrabajoFechaInicioReal": true, "OrdenTrabajoFechaFinReal":
+  true, "OrdenTrabajoFechaCreacion": true}, "metrics": [{"aggregate": "COUNT", "column":
+  {"advanced_data_type": null, "changed_on": "2026-04-01T15:25:59.030499", "column_name":
+  "OrdenTrabajoId", "created_on": "2026-04-01T15:25:58.948087", "description": null,
+  "expression": "", "extra": "{}", "filterable": true, "groupby": true, "id": 50,
+  "is_active": true, "is_dttm": false, "python_date_format": null, "type": "INTEGER",
+  "type_generic": 0, "uuid": "96b225a2-9970-4b13-8b56-c579edf9ab86", "verbose_name":
+  null}, "datasourceWarning": false, "expressionType": "SIMPLE", "hasCustomLabel":
+  true, "label": "Ingresadas", "optionName": "metric_5vvoomac3zh_4xqh3tvfozb", "sqlExpression":
+  null}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Resueltas", "optionName": "metric_dh77hopqhrv_iqaj5jbffeh",
+  "sqlExpression": "COUNT(DISTINCT CASE WHEN EstadoOperacion = ''Resuelta'' THEN OperacionId
+  END)\r\n"}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Tasa Finalizaci\u00f3n %", "optionName":
+  "metric_obl38rajh4_41mjsm3tgp6", "sqlExpression": "ROUND(\r\n    CAST(COUNT(DISTINCT
+  CASE WHEN EstadoOperacion = ''Resuelta'' THEN OperacionId END) AS FLOAT)\r\n  /
+  NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"}], "all_columns": [], "percent_metrics":
+  [], "adhoc_filters": [{"clause": "WHERE", "comparator": "No filter", "expressionType":
+  "SIMPLE", "isExtra": false, "operator": "TEMPORAL_RANGE", "subject": "OrdenTrabajoFechaInicio"}],
+  "order_by_cols": [], "server_pagination": false, "row_limit": 10000, "percent_metric_calculation":
+  "row_limit", "show_totals": true, "table_timestamp_format": "smart_date", "include_search":
+  false, "allow_rearrange_columns": false, "allow_render_html": true, "column_config":
+  {"Ingresadas": {"d3NumberFormat": "~g"}, "Resueltas": {"d3NumberFormat": "~g"},
+  "Tasa Finalizaci\u00f3n %": {"d3NumberFormat": "~g", "d3SmallNumberFormat": "~g"}},
+  "show_cell_bars": true, "align_pn": false, "color_pn": true, "comparison_color_enabled":
+  false, "comparison_color_scheme": "Green", "conditional_formatting": [], "comparison_type":
+  "values", "extra_form_data": {}, "dashboards": [3], "force": false, "result_format":
+  "json", "result_type": "full"}, "result_format": "json", "result_type": "full"}'
+cache_timeout: null
+uuid: 1bd3097a-8ebd-481e-88cd-8691e62df30d
+version: 1.0.0
+dataset_uuid: d94c84b7-cfc7-4f36-9da2-bf177787cf34

@@ -240,6 +240,55 @@
   .step-accordion.numbered[open] > summary { border-bottom-color: rgba(129,140,248,.35); }
   .step-accordion.numbered > summary:hover { background: rgba(129,140,248,.14); }
 
+  /* Job summary table */
+  .jobs-summary { font-size: 13px; margin-bottom: 24px; }
+  .jobs-summary td { padding: 8px 14px; }
+  .jobs-summary a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .jobs-summary a:hover { text-decoration: underline; }
+
+  /* Job badges */
+  .job-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .job-badge.ameco { background: rgba(129,140,248,.18); color: #c7d2fe; }
+  .job-badge.centinela { background: rgba(244,114,182,.18); color: #fbcfe8; }
+
+  /* Job cards */
+  .job-card { margin: 10px 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+  .job-card > summary {
+    background: var(--bg-surface);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+  .job-card > summary::-webkit-details-marker { display: none; }
+  .job-card > summary::before { content: "▶"; font-size: 10px; color: var(--muted); transition: transform .2s; }
+  .job-card[open] > summary::before { transform: rotate(90deg); }
+  .job-card > summary:hover { background: rgba(129,140,248,.05); }
+  .job-card.ameco { border-left: 4px solid #818cf8; }
+  .job-card.centinela { border-left: 4px solid #f472b6; }
+  .job-card .job-title { font-family: 'Courier New', Consolas, monospace; font-size: 14px; }
+  .job-card .job-target { color: var(--muted); font-weight: 400; font-family: 'Courier New', Consolas, monospace; font-size: 12.5px; margin-left: auto; }
+  .job-card-body { padding: 16px 20px; background: var(--bg); }
+  .job-card-body > details { margin: 8px 0; }
+  .job-card-body > details > summary { font-size: 12.5px; padding: 10px 14px; }
+
+  /* Hide job target on small screens */
+  @media (max-width: 768px) { .job-card .job-target { display: none; } }
+
   /* Responsive */
   @media (max-width: 768px) {
     nav { display: none; }
@@ -271,8 +320,10 @@
   <a href="#historial">Historial del Job</a>
   <a href="#clonar-dashboard">Clonar Dashboard</a>
   <a href="#comandos">Comandos útiles</a>
-  <div class="nav-section">Roadmap</div>
-  <a href="#azure">Migración a Azure</a>
+  <div class="nav-section">Infraestructura</div>
+  <a href="#azure">Configuracion Azure</a>
+  <a href="#ci-cd">CI/CD con Claude</a>
+  <a href="#css-templates">CSS Templates Superset</a>
   <div class="nav-section">Referencia</div>
   <a href="diccionario.html" style="color:var(--accent);font-weight:600">Diccionario de datos →</a>
   <div class="nav-section">Requerimientos</div>
@@ -548,22 +599,69 @@ EXEC sp_addlinkedsrvlogin
     <details class="step-accordion numbered">
     <summary><span class="step-num">6</span> Crear Jobs de actualización (cada 1 hora)</summary>
     <div class="step-accordion-body">
-    <h3>Job 1 — AmecoDashboards</h3>
-    <p>En SSMS conectado a <code>localhost,1434</code>, expandir <strong>Agente SQL Server → Jobs → Nuevo Job</strong>:</p>
-    <table>
-      <tr><th>Campo</th><th>Valor</th></tr>
-      <tr><td>Nombre</td><td><code>Actualizar AmecoDashboards</code></td></tr>
-      <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
-      <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
-      <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
-      <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
-      <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
+
+    <p>Cada job es <strong>independiente</strong> — si uno falla no afecta a los demás. Todos se crean en SSMS conectado a <code>localhost,1434</code> desde <strong>Agente SQL Server → Jobs → Nuevo Job</strong>, programados <em>diariamente cada 1 hora</em> entre <code>00:00:00</code> y <code>23:59:59</code>.</p>
+
+    <table class="jobs-summary">
+      <tr><th>Job</th><th>Tabla destino</th><th>Origen</th><th>Cliente</th></tr>
+      <tr>
+        <td><a href="#job-ameco-dashboards"><code>Actualizar AmecoDashboards</code></a></td>
+        <td><code>dbo.AmecoDashboards</code></td>
+        <td><code>Ameco.albi</code></td>
+        <td><span class="job-badge ameco">Ameco</span></td>
+      </tr>
+      <tr>
+        <td><a href="#job-ameco-asistencia"><code>Actualizar AmecoAsistencia</code></a></td>
+        <td><code>dbo.AmecoAsistencia</code></td>
+        <td><code>Ameco.albi</code></td>
+        <td><span class="job-badge ameco">Ameco</span></td>
+      </tr>
+      <tr>
+        <td><a href="#job-centinela-dashboards"><code>Actualizar CentinelaDashboards</code></a></td>
+        <td><code>dbo.CentinelaDashboards</code></td>
+        <td><code>Albi.albi</code></td>
+        <td><span class="job-badge centinela">Centinela</span></td>
+      </tr>
+      <tr>
+        <td><a href="#job-centinela-asistencia"><code>Actualizar CentinelaAsistencia</code></a></td>
+        <td><code>dbo.CentinelaAsistencia</code></td>
+        <td><code>Albi.albi</code></td>
+        <td><span class="job-badge centinela">Centinela</span></td>
+      </tr>
     </table>
-    <details id="job-sql">
-      <summary>Ver comando SQL completo del Job (crear tabla + insertar datos)</summary>
-      <div class="code-block">
-        <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-        <pre>USE AmecoHubIntegracion;
+
+    <div class="callout warning">
+      <span class="callout-icon">⚠️</span>
+      <div>Cada vez que se agregue una columna a un Job de Dashboards, hay que correr el <code>ALTER VIEW</code> correspondiente para que los datasets de Superset que usan la vista reciban la nueva columna.</div>
+    </div>
+
+    <!-- Job: AmecoDashboards -->
+    <details class="job-card ameco" id="job-ameco-dashboards">
+      <summary>
+        <span class="job-badge ameco">Ameco</span>
+        <span class="job-title">AmecoDashboards</span>
+        <span class="job-target">→ dbo.AmecoDashboards</span>
+      </summary>
+      <div class="job-card-body">
+
+        <details>
+          <summary>Configuración del Job en SSMS</summary>
+          <table>
+            <tr><th>Campo</th><th>Valor</th></tr>
+            <tr><td>Nombre</td><td><code>Actualizar AmecoDashboards</code></td></tr>
+            <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
+            <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
+            <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
+            <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
+            <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
+          </table>
+        </details>
+
+        <details id="job-sql">
+          <summary>SQL completo del Job (crear tabla + insertar datos)</summary>
+          <div class="code-block">
+            <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>USE AmecoHubIntegracion;
 GO
 
 -- =============================================
@@ -821,55 +919,54 @@ LEFT JOIN   AMECO_DEV.Ameco.albi.recinto                AS recinto          ON r
 LEFT JOIN   AMECO_DEV.Ameco.albi.ordenTrabajoAdicionales AS otadic          ON otadic.ordenTrabajoId        = ot.id
 LEFT JOIN   AMECO_DEV.Ameco.albi.tipoActividad           AS tipoAct         ON tipoAct.id                   = otadic.tipoActividadId
 WHERE ot.fechaInicio >= DATEADD(month, -6, GETDATE())</pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>Vista <code>dbo.v_OrdenesTrabajoAmeco</code> (filtra OT padre)</summary>
+          <div class="code-block">
+            <div class="code-header"><span>sql — SSMS localhost,1434 — Ameco</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>CREATE VIEW dbo.v_OrdenesTrabajoAmeco AS
+SELECT *
+FROM dbo.AmecoDashboards
+WHERE OperacionPadreId IS NULL
+
+-- Actualizaciones posteriores:
+-- ALTER VIEW dbo.v_OrdenesTrabajoAmeco AS
+-- SELECT * FROM dbo.AmecoDashboards WHERE OperacionPadreId IS NULL</pre>
+          </div>
+        </details>
+
       </div>
     </details>
 
-    <p>Ver historial del job:</p>
-    <div class="code-block">
-      <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-      <pre>SELECT
-    j.name                          AS JobNombre,
-    h.run_date                      AS FechaEjecucion,
-    h.run_time                      AS HoraEjecucion,
-    CASE h.run_status
-        WHEN 0 THEN 'Falló'
-        WHEN 1 THEN 'Exitoso'
-        WHEN 3 THEN 'Cancelado'
-    END                             AS Estado,
-    h.message                       AS MensajeError
-FROM msdb.dbo.sysjobs j
-INNER JOIN msdb.dbo.sysjobhistory h ON j.job_id = h.job_id
-WHERE j.name = 'Actualizar AmecoDashboards'
-ORDER BY h.run_date DESC, h.run_time DESC</pre>
-    </div>
-    <h3>Actualizar vista <code>dbo.v_OrdenesTrabajo</code></h3>
-    <div class="callout warning">
-      <span class="callout-icon">⚠️</span>
-      <div>Cada vez que se agregue una columna al Job, hay que correr el <code>ALTER VIEW</code> para que los datasets de Superset que usan la vista reciban la nueva columna.</div>
-    </div>
-    <div class="code-block">
-      <div class="code-header"><span>sql — SSMS localhost,1434</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-      <pre>ALTER VIEW dbo.v_OrdenesTrabajoAmeco AS
-SELECT *
-FROM dbo.AmecoDashboards
-WHERE OperacionPadreId IS NULL</pre>
-    </div>
-    <h3>Job 2 — AmecoAsistencia</h3>
-    <p>Job separado — si falla uno no afecta al otro. En SSMS → <strong>Agente SQL Server → Jobs → Nuevo Job</strong>:</p>
-    <table>
-      <tr><th>Campo</th><th>Valor</th></tr>
-      <tr><td>Nombre</td><td><code>Actualizar AmecoAsistencia</code></td></tr>
-      <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
-      <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
-      <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
-      <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
-      <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
-    </table>
-    <details id="job-asistencia-sql">
-      <summary>Ver comando SQL completo del Job</summary>
-      <div class="code-block">
-        <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-        <pre>USE AmecoHubIntegracion;
+    <!-- Job: AmecoAsistencia -->
+    <details class="job-card ameco" id="job-ameco-asistencia">
+      <summary>
+        <span class="job-badge ameco">Ameco</span>
+        <span class="job-title">AmecoAsistencia</span>
+        <span class="job-target">→ dbo.AmecoAsistencia</span>
+      </summary>
+      <div class="job-card-body">
+
+        <details>
+          <summary>Configuración del Job en SSMS</summary>
+          <table>
+            <tr><th>Campo</th><th>Valor</th></tr>
+            <tr><td>Nombre</td><td><code>Actualizar AmecoAsistencia</code></td></tr>
+            <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
+            <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
+            <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
+            <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
+            <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
+          </table>
+        </details>
+
+        <details id="job-asistencia-sql">
+          <summary>SQL completo del Job</summary>
+          <div class="code-block">
+            <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>USE AmecoHubIntegracion;
 GO
 
 -- =============================================
@@ -947,24 +1044,41 @@ LEFT JOIN   AMECO_DEV.Ameco.albi.perfil         AS pf   ON pf.id    = r.perfilId
 LEFT JOIN   AMECO_DEV.Ameco.albi.turno          AS t    ON t.id     = r.turnoId
 LEFT JOIN   AMECO_DEV.Ameco.albi.especialidad   AS esp  ON esp.id   = r.especialidadId
 LEFT JOIN   AMECO_DEV.Ameco.albi.zona           AS z    ON z.id     = r.zonaId</pre>
+          </div>
+        </details>
+
       </div>
     </details>
-    <h3>Job 3 — CentinelaDashboards</h3>
-    <p>Misma estructura que AmecoDashboards pero apunta a <code>AMECO_DEV.Albi.albi</code>. En SSMS → <strong>Agente SQL Server → Jobs → Nuevo Job</strong>:</p>
-    <table>
-      <tr><th>Campo</th><th>Valor</th></tr>
-      <tr><td>Nombre</td><td><code>Actualizar CentinelaDashboards</code></td></tr>
-      <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
-      <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
-      <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
-      <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
-      <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
-    </table>
-    <details id="job-centinela-sql">
-      <summary>Ver comando SQL completo del Job</summary>
-      <div class="code-block">
-        <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-        <pre>USE AmecoHubIntegracion;
+
+    <!-- Job: CentinelaDashboards -->
+    <details class="job-card centinela" id="job-centinela-dashboards">
+      <summary>
+        <span class="job-badge centinela">Centinela</span>
+        <span class="job-title">CentinelaDashboards</span>
+        <span class="job-target">→ dbo.CentinelaDashboards</span>
+      </summary>
+      <div class="job-card-body">
+
+        <p>Misma estructura que <code>AmecoDashboards</code>, apuntando a <code>AMECO_DEV.Albi.albi</code> (BD Centinela en el linked server).</p>
+
+        <details>
+          <summary>Configuración del Job en SSMS</summary>
+          <table>
+            <tr><th>Campo</th><th>Valor</th></tr>
+            <tr><td>Nombre</td><td><code>Actualizar CentinelaDashboards</code></td></tr>
+            <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
+            <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
+            <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
+            <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
+            <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
+          </table>
+        </details>
+
+        <details id="job-centinela-sql">
+          <summary>SQL completo del Job (crear tabla + insertar datos)</summary>
+          <div class="code-block">
+            <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>USE AmecoHubIntegracion;
 GO
 
 -- =============================================
@@ -1212,28 +1326,14 @@ LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS solicitante      ON so
 LEFT JOIN   AMECO_DEV.Albi.albi.persona                AS responsable      ON responsable.id               = ot.responsableId
 LEFT JOIN   AMECO_DEV.Albi.albi.recinto                AS recinto          ON recinto.id                   = activo.recintoId
 WHERE ot.fechaInicio >= DATEADD(month, -6, GETDATE())</pre>
-      </div>
-    </details>
+          </div>
+        </details>
 
-    <h3>Vistas de OrdenesTrabajo</h3>
-    <div class="callout warning">
-      <span class="callout-icon">⚠️</span>
-      <div>Cada vez que se agregue una columna a un Job, hay que correr el <code>ALTER VIEW</code> correspondiente para que los datasets de Superset reciban la nueva columna.</div>
-    </div>
-    <div class="code-block">
-      <div class="code-header"><span>sql — SSMS localhost,1434 — Ameco</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-      <pre>CREATE VIEW dbo.v_OrdenesTrabajoAmeco AS
-SELECT *
-FROM dbo.AmecoDashboards
-WHERE OperacionPadreId IS NULL
-
--- Actualizaciones posteriores:
--- ALTER VIEW dbo.v_OrdenesTrabajoAmeco AS
--- SELECT * FROM dbo.AmecoDashboards WHERE OperacionPadreId IS NULL</pre>
-    </div>
-    <div class="code-block">
-      <div class="code-header"><span>sql — SSMS localhost,1434 — Centinela</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-      <pre>CREATE VIEW dbo.v_OrdenesTrabajoCentinela AS
+        <details>
+          <summary>Vista <code>dbo.v_OrdenesTrabajoCentinela</code> (filtra OT padre)</summary>
+          <div class="code-block">
+            <div class="code-header"><span>sql — SSMS localhost,1434 — Centinela</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>CREATE VIEW dbo.v_OrdenesTrabajoCentinela AS
 SELECT *
 FROM dbo.CentinelaDashboards
 WHERE OperacionPadreId IS NULL
@@ -1241,12 +1341,130 @@ WHERE OperacionPadreId IS NULL
 -- Actualizaciones posteriores:
 -- ALTER VIEW dbo.v_OrdenesTrabajoCentinela AS
 -- SELECT * FROM dbo.CentinelaDashboards WHERE OperacionPadreId IS NULL</pre>
-    </div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- Job: CentinelaAsistencia -->
+    <details class="job-card centinela" id="job-centinela-asistencia">
+      <summary>
+        <span class="job-badge centinela">Centinela</span>
+        <span class="job-title">CentinelaAsistencia</span>
+        <span class="job-target">→ dbo.CentinelaAsistencia</span>
+      </summary>
+      <div class="job-card-body">
+
+        <p>Misma estructura que <code>AmecoAsistencia</code>, apuntando a <code>AMECO_DEV.Albi.albi</code> (BD Centinela en el linked server).</p>
+
+        <details>
+          <summary>Configuración del Job en SSMS</summary>
+          <table>
+            <tr><th>Campo</th><th>Valor</th></tr>
+            <tr><td>Nombre</td><td><code>Actualizar CentinelaAsistencia</code></td></tr>
+            <tr><td>Nombre del paso</td><td><code>TRUNCATE e INSERT</code></td></tr>
+            <tr><td>Base de datos</td><td><code>AmecoHubIntegracion</code></td></tr>
+            <tr><td>Tipo programación</td><td>Periódica — Diaria</td></tr>
+            <tr><td>Frecuencia diaria</td><td>Cada 1 hora</td></tr>
+            <tr><td>Hora inicio/fin</td><td>00:00:00 / 23:59:59</td></tr>
+          </table>
+        </details>
+
+        <details>
+          <summary>SQL completo del Job (crear tabla + insertar datos)</summary>
+          <div class="code-block">
+            <div class="code-header"><span>sql — Job SQL Agent</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>USE AmecoHubIntegracion;
+GO
+
+-- =============================================
+-- PASO 1: Crear la tabla si no existe
+-- =============================================
+IF OBJECT_ID('AmecoHubIntegracion.dbo.CentinelaAsistencia') IS NULL
+BEGIN
+    SELECT TOP 0 *
+    INTO AmecoHubIntegracion.dbo.CentinelaAsistencia
+    FROM (
+        SELECT
+            a.id                        AS AsistenciaId,
+            a.personaId                 AS PersonaId,
+            p.nombre                    AS Persona,
+            pf.id                       AS PerfilId,
+            pf.nombre                   AS Perfil,
+            t.id                        AS TurnoId,
+            t.nombre                    AS Turno,
+            t.horaInicio                AS TurnoHoraInicio,
+            t.horaFin                   AS TurnoHoraFin,
+            r.especialidadId            AS EspecialidadId,
+            esp.nombre                  AS Especialidad,
+            r.zonaId                    AS ZonaId,
+            z.nombre                    AS Zona,
+            r.activo                    AS ResolutorActivo,
+            a.tipo                      AS AsistenciaTipo,
+            a.fechaHora                 AS AsistenciaFechaHora,
+            CAST(a.fechaHora AS DATE)   AS AsistenciaFecha,
+            a.latitud                   AS AsistenciaLatitud,
+            a.longitud                  AS AsistenciaLongitud,
+            a.estado                    AS AsistenciaEstado
+        FROM        AMECO_DEV.Albi.albi.asistencia     AS a
+        JOIN        AMECO_DEV.Albi.albi.persona        AS p    ON p.id     = a.personaId
+        JOIN        AMECO_DEV.Albi.albi.resolutor      AS r    ON r.personaId = a.personaId
+        LEFT JOIN   AMECO_DEV.Albi.albi.perfil         AS pf   ON pf.id    = r.perfilId
+        LEFT JOIN   AMECO_DEV.Albi.albi.turno          AS t    ON t.id     = r.turnoId
+        LEFT JOIN   AMECO_DEV.Albi.albi.especialidad   AS esp  ON esp.id   = r.especialidadId
+        LEFT JOIN   AMECO_DEV.Albi.albi.zona           AS z    ON z.id     = r.zonaId
+        WHERE 1 = 0
+    ) AS t
+    PRINT 'Tabla CentinelaAsistencia creada'
+END
+
+-- =============================================
+-- PASO 2: Actualizar los datos
+-- =============================================
+TRUNCATE TABLE AmecoHubIntegracion.dbo.CentinelaAsistencia
+
+INSERT INTO AmecoHubIntegracion.dbo.CentinelaAsistencia
+SELECT
+    a.id                        AS AsistenciaId,
+    a.personaId                 AS PersonaId,
+    p.nombre                    AS Persona,
+    pf.id                       AS PerfilId,
+    pf.nombre                   AS Perfil,
+    t.id                        AS TurnoId,
+    t.nombre                    AS Turno,
+    t.horaInicio                AS TurnoHoraInicio,
+    t.horaFin                   AS TurnoHoraFin,
+    r.especialidadId            AS EspecialidadId,
+    esp.nombre                  AS Especialidad,
+    r.zonaId                    AS ZonaId,
+    z.nombre                    AS Zona,
+    r.activo                    AS ResolutorActivo,
+    a.tipo                      AS AsistenciaTipo,
+    a.fechaHora                 AS AsistenciaFechaHora,
+    CAST(a.fechaHora AS DATE)   AS AsistenciaFecha,
+    a.latitud                   AS AsistenciaLatitud,
+    a.longitud                  AS AsistenciaLongitud,
+    a.estado                    AS AsistenciaEstado
+FROM        AMECO_DEV.Albi.albi.asistencia     AS a
+JOIN        AMECO_DEV.Albi.albi.persona        AS p    ON p.id     = a.personaId
+JOIN        AMECO_DEV.Albi.albi.resolutor      AS r    ON r.personaId = a.personaId
+LEFT JOIN   AMECO_DEV.Albi.albi.perfil         AS pf   ON pf.id    = r.perfilId
+LEFT JOIN   AMECO_DEV.Albi.albi.turno          AS t    ON t.id     = r.turnoId
+LEFT JOIN   AMECO_DEV.Albi.albi.especialidad   AS esp  ON esp.id   = r.especialidadId
+LEFT JOIN   AMECO_DEV.Albi.albi.zona           AS z    ON z.id     = r.zonaId
+WHERE a.fechaHora >= DATEADD(month, -6, GETDATE())</pre>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
     </div></details>
   </section>
 
 
-  <!-- PASO 7 -->
+  <!-- PASO 8 -->
   <section id="paso8">
     <details class="step-accordion numbered">
     <summary><span class="step-num">7</span> Conectar Superset al SQL Server Docker</summary>
@@ -1494,7 +1712,7 @@ docker cp superset-superset-1:/tmp/dashboard_import.zip ./dashboard_import.zip</
   <!-- AZURE -->
   <section id="azure">
     <details class="step-accordion">
-    <summary>Migración a Azure</summary>
+    <summary>Configuracion Azure</summary>
     <div class="step-accordion-body">
       <p>En Azure SQL Database no hay linked servers ni queries cross-database. La sincronización de datos se hace via <strong>n8n</strong> (SELECT en PROD → TRUNCATE + INSERT en Azure).</p>
       <table class="migration-table">
@@ -1770,6 +1988,433 @@ WHERE OperacionPadreId IS NULL</pre>
         <span class="callout-icon">ℹ️</span>
         <div>Las vistas se crean una sola vez. Si se agrega una columna a la tabla, ejecutar <code>ALTER VIEW</code> para refrescar.</div>
       </div>
+    </div>
+    </details>
+  </section>
+
+  <!-- CI/CD CON CLAUDE -->
+  <section id="ci-cd">
+    <details class="step-accordion">
+    <summary>CI/CD con Claude — Deploy de Superset</summary>
+    <div class="step-accordion-body">
+      <p>Claude puede buildear y pushear imagenes Docker al Azure Container Registry. Para eso necesita las credenciales del ACR (no de Azure).</p>
+
+      <h3>Paso 1 — Obtener credenciales del ACR</h3>
+      <p>En Azure Portal ir a: <code>acrsuper1284</code> > <strong>Claves de acceso</strong> (Access keys). Copiar:</p>
+      <ul style="margin:10px 0 16px 24px;color:var(--muted);font-size:13.5px;line-height:1.8">
+        <li><strong>Servidor de inicio de sesion</strong> (login server)</li>
+        <li><strong>Nombre de usuario</strong> (username)</li>
+        <li><strong>Password</strong> (cualquiera de las dos)</li>
+      </ul>
+      <div class="callout warning">
+        <span class="callout-icon">&#9888;&#65039;</span>
+        <div>No incluir la contraseña en archivos de codigo ni en commits. Solo proporcionarla en el chat cuando Claude la solicite.</div>
+      </div>
+
+      <h3>Paso 2 — Entregar credenciales a Claude</h3>
+      <p>En el chat con Claude, proporcionar los 3 valores. Claude ejecutara:</p>
+      <div class="code-block">
+        <div class="code-header"><span>bash — Docker login</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre>docker login acrsuper1284.azurecr.io --username &lt;usuario&gt; --password &lt;password&gt;</pre>
+      </div>
+
+      <h3>Paso 3 — Build y Push</h3>
+      <p>Claude puede ejecutar estos comandos automaticamente (requiere Docker Desktop corriendo):</p>
+      <div class="code-block">
+        <div class="code-header"><span>bash — Build &amp; Push</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+        <pre><span class="cm"># Build imagen de produccion</span>
+docker build -f Dockerfile.prod -t acrsuper1284.azurecr.io/superset-mssql:latest .
+
+<span class="cm"># Push al registry</span>
+docker push acrsuper1284.azurecr.io/superset-mssql:latest</pre>
+      </div>
+
+      <h3>Paso 4 — Reiniciar contenedor</h3>
+      <p>El reinicio del contenedor debe hacerse manualmente desde Azure Portal:</p>
+      <ul style="margin:10px 0 16px 24px;color:var(--muted);font-size:13.5px;line-height:1.8">
+        <li>Ir a <code>superset-app</code> > <strong>Reiniciar</strong></li>
+        <li>Esperar a que el estado sea <strong>Running</strong></li>
+        <li>Ir a pestaña <strong>Conectar</strong> > <code>/bin/bash</code> > Connect</li>
+        <li>Ejecutar: <code>superset db upgrade && superset init</code></li>
+      </ul>
+
+      <h3>Alcance de las credenciales del ACR</h3>
+      <table class="migration-table">
+        <tr><th>Permiso</th><th>Tiene acceso</th></tr>
+        <tr><td>Subir/bajar imagenes Docker</td><td>Si</td></tr>
+        <tr><td>Reiniciar contenedores</td><td>No (requiere az login)</td></tr>
+        <tr><td>Acceder a bases de datos</td><td>No</td></tr>
+        <tr><td>Modificar configuracion de red</td><td>No</td></tr>
+      </table>
+    </div>
+    </details>
+  </section>
+
+  <!-- CSS TEMPLATES SUPERSET -->
+  <section id="css-templates">
+    <details class="step-accordion">
+    <summary>CSS Templates para Dashboards Superset</summary>
+    <div class="step-accordion-body">
+      <p>Templates CSS personalizados para los dashboards de Superset. Se aplican en: <strong>Edit Dashboard > CSS</strong> (pegar el contenido completo).</p>
+
+      <details class="step-accordion" style="margin-top:16px">
+        <summary>Light Theme — Centinela</summary>
+        <div class="step-accordion-body">
+          <div class="code-block">
+            <div class="code-header"><span>css — Light Theme</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>/* ═══════════════════════════════════════════════
+   SUPERSET DASHBOARD — CENTINELA LIGHT THEME
+   Solo selectores reales verificados via DOM
+   ═══════════════════════════════════════════════ */
+
+/* ── Fuente global ── */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
+
+/* ── Todo el dashboard ── */
+.dashboard, .dashboard-content, .grid-container,
+.ant-tabs, .ant-tabs-content, .ant-tabs-tabpane {
+  background: #f5f6fa !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* ── Cards — borde izquierdo acento ── */
+.dashboard-component-chart-holder {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-left: 3px solid rgba(0, 150, 200, 0.35) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06) !important;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  margin: 4px !important;
+}
+
+.dashboard-component-chart-holder:hover {
+  border-color: rgba(0, 150, 200, 0.2) !important;
+  border-left: 3px solid rgba(0, 150, 200, 0.7) !important;
+  box-shadow: 0 4px 20px rgba(0, 150, 200, 0.08), 0 2px 12px rgba(0,0,0,0.06) !important;
+  transform: translateY(-3px) scale(1.003) !important;
+}
+
+.dashboard-chart {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Big Numbers ── */
+.header-line {
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+  color: #0088a8 !important;
+  text-align: center !important;
+  justify-content: center !important;
+  letter-spacing: 1.5px !important;
+  text-shadow: 0 0 12px rgba(0, 136, 168, 0.15) !important;
+}
+
+.superset-legacy-chart-big-number .header-line {
+  font-size: 2.8em !important;
+}
+
+.header-line .subheader-line {
+  font-family: 'Rajdhani', sans-serif !important;
+  color: rgba(0, 136, 168, 0.5) !important;
+  font-weight: 600 !important;
+  font-size: 0.35em !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  text-shadow: none !important;
+}
+
+/* ── Titulos de charts ── */
+.editable-title, .editable-title a {
+  font-family: 'Inter', sans-serif !important;
+  color: #6b7280 !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+}
+
+.dashboard-component-chart-holder:hover .editable-title a {
+  color: #0088a8 !important;
+}
+
+/* ── Header ── */
+.dashboard-header {
+  background: #f5f6fa !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+
+/* ── Tabs ── */
+.ant-tabs-tab {
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  color: #6b7280 !important;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #0088a8 !important;
+}
+
+.ant-tabs-ink-bar {
+  background: linear-gradient(90deg, #0088a8, #00b8d4) !important;
+  height: 2px !important;
+}
+
+/* ── Filtros ── */
+.filter-bar, .dashboard-filters-wrapper {
+  background: #eef0f4 !important;
+}
+
+/* ── Tablas ── */
+.table.table-striped.table-condensed {
+  font-family: 'Inter', sans-serif !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.table.table-striped.table-condensed th {
+  background: linear-gradient(180deg, rgba(0, 150, 200, 0.06) 0%, rgba(0, 150, 200, 0.02) 100%) !important;
+  color: #0088a8 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  padding: 12px 14px !important;
+  border-bottom: 2px solid rgba(0, 150, 200, 0.15) !important;
+  border-color: rgba(0, 150, 200, 0.08) !important;
+}
+
+.table.table-striped.table-condensed td {
+  color: #374151 !important;
+  font-size: 12.5px !important;
+  padding: 10px 14px !important;
+  border-color: rgba(0,0,0,0.04) !important;
+  transition: all 0.2s ease !important;
+}
+
+.table-striped tbody tr:nth-child(odd) td {
+  background: rgba(0,0,0,0.015) !important;
+}
+
+.table-striped tbody tr:nth-child(even) td {
+  background: transparent !important;
+}
+
+.table.table-striped.table-condensed tbody tr:hover td {
+  background: rgba(0, 150, 200, 0.05) !important;
+  color: #111827 !important;
+}
+
+.table.table-striped.table-condensed tbody tr:hover td:first-child {
+  box-shadow: inset 3px 0 0 #0088a8 !important;
+}
+
+.cell-bar.positive { opacity: 0.5 !important; border-radius: 2px !important; }
+.dt-is-null { color: #c0c4cc !important; font-style: italic !important; }
+.right-border-only { border-right: 1px solid rgba(0, 150, 200, 0.1) !important; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px !important; height: 4px !important; }
+::-webkit-scrollbar-track { background: transparent !important; }
+::-webkit-scrollbar-thumb { background: rgba(0, 150, 200, 0.2) !important; border-radius: 4px !important; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 150, 200, 0.4) !important; }
+
+/* ── Badge filtros ── */
+.ant-badge-count {
+  background: rgba(0, 150, 200, 0.12) !important;
+  border: 1px solid rgba(0, 150, 200, 0.3) !important;
+  color: #0088a8 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+}</pre>
+          </div>
+        </div>
+      </details>
+
+      <details class="step-accordion" style="margin-top:12px">
+        <summary>Dark Theme — Centinela</summary>
+        <div class="step-accordion-body">
+          <div class="code-block">
+            <div class="code-header"><span>css — Dark Theme</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre>/* ═══════════════════════════════════════════════
+   SUPERSET DASHBOARD — CENTINELA DARK THEME
+   Solo selectores reales verificados via DOM
+   ═══════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
+
+/* ── Todo el dashboard ── */
+.dashboard, .dashboard-content, .grid-container,
+.ant-tabs, .ant-tabs-content, .ant-tabs-tabpane {
+  background: #08080c !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* ── Cards ── */
+.dashboard-component-chart-holder {
+  background: #101016 !important;
+  border: 1px solid rgba(0, 210, 255, 0.07) !important;
+  border-left: 3px solid rgba(0, 210, 255, 0.25) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4) !important;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  margin: 4px !important;
+}
+
+.dashboard-component-chart-holder:hover {
+  border-color: rgba(0, 210, 255, 0.35) !important;
+  border-left: 3px solid rgba(0, 210, 255, 0.6) !important;
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.12), 0 8px 32px rgba(0,0,0,0.5) !important;
+  transform: translateY(-3px) scale(1.003) !important;
+}
+
+.dashboard-chart {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Big Numbers ── */
+.header-line {
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+  color: #00e5ff !important;
+  text-align: center !important;
+  justify-content: center !important;
+  letter-spacing: 1.5px !important;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.35), 0 0 40px rgba(0, 229, 255, 0.1) !important;
+}
+
+.superset-legacy-chart-big-number .header-line {
+  font-size: 2.8em !important;
+}
+
+.header-line .subheader-line {
+  font-family: 'Rajdhani', sans-serif !important;
+  color: rgba(0, 229, 255, 0.5) !important;
+  font-weight: 600 !important;
+  font-size: 0.35em !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  text-shadow: none !important;
+}
+
+/* ── Titulos de charts ── */
+.editable-title, .editable-title a {
+  font-family: 'Inter', sans-serif !important;
+  color: #8892a6 !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+}
+
+.dashboard-component-chart-holder:hover .editable-title a {
+  color: #00c8e0 !important;
+}
+
+/* ── Header ── */
+.dashboard-header {
+  background: #08080c !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+}
+
+/* ── Tabs ── */
+.ant-tabs-tab {
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+}
+
+.ant-tabs-ink-bar {
+  background: linear-gradient(90deg, #00c8e0, #00e5ff) !important;
+  height: 2px !important;
+}
+
+/* ── Filtros ── */
+.filter-bar, .dashboard-filters-wrapper {
+  background: #0a0a10 !important;
+}
+
+/* ── Tablas ── */
+.table.table-striped.table-condensed {
+  font-family: 'Inter', sans-serif !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.table.table-striped.table-condensed th {
+  background: linear-gradient(180deg, rgba(0, 210, 255, 0.06) 0%, rgba(0, 210, 255, 0.02) 100%) !important;
+  color: #00c8e0 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  padding: 12px 14px !important;
+  border-bottom: 2px solid rgba(0, 210, 255, 0.12) !important;
+  border-color: rgba(0, 210, 255, 0.06) !important;
+}
+
+.table.table-striped.table-condensed td {
+  color: #b0b8c8 !important;
+  font-size: 12.5px !important;
+  padding: 10px 14px !important;
+  border-color: rgba(255,255,255,0.03) !important;
+  transition: all 0.2s ease !important;
+}
+
+.table-striped tbody tr:nth-child(odd) td {
+  background: rgba(255,255,255,0.015) !important;
+}
+
+.table-striped tbody tr:nth-child(even) td {
+  background: transparent !important;
+}
+
+.table.table-striped.table-condensed tbody tr:hover td {
+  background: rgba(0, 210, 255, 0.05) !important;
+  color: #e0e8f0 !important;
+}
+
+.table.table-striped.table-condensed tbody tr:hover td:first-child {
+  box-shadow: inset 3px 0 0 #00c8e0 !important;
+}
+
+.cell-bar.positive { opacity: 0.6 !important; border-radius: 2px !important; }
+.dt-is-null { color: #3a3f50 !important; font-style: italic !important; }
+.right-border-only { border-right: 1px solid rgba(0, 210, 255, 0.08) !important; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px !important; height: 4px !important; }
+::-webkit-scrollbar-track { background: transparent !important; }
+::-webkit-scrollbar-thumb { background: rgba(0, 210, 255, 0.2) !important; border-radius: 4px !important; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 210, 255, 0.4) !important; }
+
+/* ── Badge filtros ── */
+.ant-badge-count {
+  background: rgba(0, 210, 255, 0.2) !important;
+  border: 1px solid rgba(0, 210, 255, 0.4) !important;
+  color: #00e5ff !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+}</pre>
+          </div>
+        </div>
+      </details>
+
     </div>
     </details>
   </section>

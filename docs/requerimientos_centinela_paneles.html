@@ -538,21 +538,35 @@
           </div>
           <div class="sub-label">Group By</div>
           <p style="font-size:12px;margin-bottom:10px"><code>Especialidad</code> · opcional: <code>ZonaOperacion</code></p>
-          <div class="sub-label">Métricas simples (Simple aggregate → SUM, dividir por 60)</div>
-          <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(OperacionTiempoEstandar) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(OperacionTiempoDuracionReal) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoTraslado) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEspera) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiemposAdministrativos) / 60.0</span></div>
+          <div class="sub-label">Métricas — todas Custom SQL (multiplican por <code>OperacionCantidadInvolucrados</code> para replicar HH-persona del SP <code>albi.dashboard01KPI01v2</code>)</div>
+          <div class="code-block">
+            <div class="code-header"><span>Esfuerzo Estándar (hs)</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoEstandar</span>, <span class="nb">0</span>) * <span class="col">OperacionCantidadInvolucrados</span>) / <span class="nb">60.0</span></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><span>Esfuerzo Declarado (hs)</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>) * <span class="col">OperacionCantidadInvolucrados</span>) / <span class="nb">60.0</span></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><span>Traslado (hs)</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>) * <span class="col">OperacionCantidadInvolucrados</span>) / <span class="nb">60.0</span></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><span>Espera (hs)</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>) * <span class="col">OperacionCantidadInvolucrados</span>) / <span class="nb">60.0</span></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><span>Administrativo (hs)</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+            <pre><span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>) * <span class="col">OperacionCantidadInvolucrados</span>) / <span class="nb">60.0</span></pre>
           </div>
           <div class="sub-label">Total Declarado (hs) — Custom SQL</div>
           <div class="code-block">
             <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))) / <span class="nb">60.0</span></pre>
+            <pre><span class="fn">SUM</span>((<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>)
+   + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>)
+   + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>)
+   + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))
+   * <span class="col">OperacionCantidadInvolucrados</span>) / <span class="nb">60.0</span></pre>
           </div>
         </div>
 
@@ -568,10 +582,11 @@
             <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
             <pre><span class="fn">ROUND</span>(
     <span class="kw">CAST</span>(
-        <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
-      + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
-      + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
-      + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))
+        <span class="fn">SUM</span>((<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>)
+           + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>)
+           + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>)
+           + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))
+           * <span class="col">OperacionCantidadInvolucrados</span>)
     <span class="kw">AS FLOAT</span>)
   / <span class="fn">NULLIF</span>(
         <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="fn">CONCAT</span>(<span class="col">OperacionResolutor</span>, <span class="str">'|'</span>, <span class="kw">CAST</span>(<span class="col">OperacionFechaInicio</span> <span class="kw">AS DATE</span>)))
@@ -616,10 +631,11 @@
           <div class="sub-label">Métrica — Total Declarado (hs) · Custom SQL</div>
           <div class="code-block">
             <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))) / <span class="nb">60.0</span></pre>
+            <pre><span class="fn">SUM</span>((<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>)
+   + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>)
+   + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>)
+   + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))
+   * <span class="col">OperacionCantidadInvolucrados</span>) / <span class="nb">60.0</span></pre>
           </div>
           <p style="font-size:11.5px;color:var(--muted);margin-top:8px">⚙ En Superset: activar <strong>Enable cross-filter</strong> en este chart. Colocarlo a la izquierda de la tabla de resolutores en el dashboard.</p>
         </div>
@@ -633,13 +649,13 @@
             <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
             <div class="formula-row"><span class="formula-name">Group By</span><span class="formula-eq">OperacionResolutor</span></div>
           </div>
-          <div class="sub-label">Métricas — mismas SUM que la tabla de Especialidad</div>
+          <div class="sub-label">Métricas — mismas Custom SQL que la tabla de Especialidad (todas multiplican por <code>OperacionCantidadInvolucrados</code>)</div>
           <div class="formula-box">
-            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(OperacionTiempoEstandar) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(OperacionTiempoDuracionReal) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoTraslado) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEspera) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiemposAdministrativos) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(ISNULL(OperacionTiempoEstandar,0) * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(ISNULL(OperacionResolucionTiempoEjecucion,0) * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(ISNULL(OperacionResolucionTiempoTraslado,0) * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(ISNULL(OperacionResolucionTiempoEspera,0) * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(ISNULL(OperacionResolucionTiemposAdministrativos,0) * OperacionCantidadInvolucrados) / 60.0</span></div>
             <div class="formula-row"><span class="formula-name">Total Declarado (hs)</span><span class="formula-eq">misma Custom SQL que tabla Especialidad</span></div>
           </div>
         </div>

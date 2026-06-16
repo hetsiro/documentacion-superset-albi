@@ -1,4 +1,12 @@
+import os
+
 SECRET_KEY = "MiClaveSecretaSuperSegura2024xyz"
+
+# Metadata DB — Postgres del compose (servicio `db`), persiste en el volumen db_data.
+# Sin esto Superset cae a una SQLite efimera que se pierde al recrear el contenedor.
+SQLALCHEMY_DATABASE_URI = os.environ.get(
+    "DATABASE_URL", "postgresql+psycopg2://superset:superset@db/superset"
+)
 
 FEATURE_FLAGS = {
     "ENABLE_TEMPLATE_PROCESSING": True,
@@ -19,7 +27,7 @@ WTF_CSRF_ENABLED = False
 
 OVERRIDE_HTTP_HEADERS = {"X-Frame-Options": "ALLOWALL"}
 
-BABEL_DEFAULT_LOCALE = "en"
+BABEL_DEFAULT_LOCALE = "es"
 
 # Idiomas disponibles en el selector de la UI
 LANGUAGES = {
@@ -37,17 +45,25 @@ D3_FORMAT = {
 
 THEME_OVERRIDE = {"algorithm": "light"}
 
-# Cache
+# Paleta semáforo para gauges (rojo / amarillo / verde por % de uso)
+EXTRA_CATEGORICAL_COLOR_SCHEMES = [
+    {
+        "id": "semaforo",
+        "label": "Semaforo",
+        "isDefault": False,
+        "colors": ["#DC3545", "#FFC107", "#28A745"],
+    }
+]
+
+# Cache en memoria (SimpleCache) — no requiere servicios externos
 CACHE_CONFIG = {
-    'CACHE_TYPE': 'RedisCache',
+    'CACHE_TYPE': 'SimpleCache',
     'CACHE_DEFAULT_TIMEOUT': 3600,
     'CACHE_KEY_PREFIX': 'superset_',
-    'CACHE_REDIS_URL': 'redis://redis:6379/0'
 }
 
 DATA_CACHE_CONFIG = {
-    'CACHE_TYPE': 'RedisCache',
+    'CACHE_TYPE': 'SimpleCache',
     'CACHE_DEFAULT_TIMEOUT': 3600,
     'CACHE_KEY_PREFIX': 'superset_data_',
-    'CACHE_REDIS_URL': 'redis://redis:6379/0'
 }

@@ -1,0 +1,159 @@
+slice_name: '[Ameco] | Tiempos por Zona'
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  datasource: 28__table
+  viz_type: table
+  slice_id: 34
+  query_mode: aggregate
+  groupby:
+  - OperacionResolutor
+  temporal_columns_lookup:
+    OrdenTrabajoFechaInicio: true
+    OperacionFechaFin: true
+    OperacionFechaResolucion: true
+    OperacionFechaAgendada: true
+    OperacionFechaProgramada: true
+    OperacionFechaAsignacion: true
+    OperacionFechaLiberacion: true
+    OperacionFechaDesasignacion: true
+    OperacionFechaDetenidoInicio: true
+    OperacionFechaDetenidoFin: true
+    OperacionFechaInicio: true
+    OperacionResolucionFecha: true
+    OrdenTrabajoFechaFin: true
+    OrdenTrabajoFechaInicioReal: true
+    OrdenTrabajoFechaFinReal: true
+    OrdenTrabajoFechaCreacion: true
+  metrics:
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: "Esfuerzo Est\xE1ndar (hs)"
+    optionName: metric_44zpsieo5oj_a7od0bxxnb
+    sqlExpression: SUM(OperacionTiempoEstandar) / 60.0
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: Esfuerzo Declarado (hs)
+    optionName: metric_k8y08mfsad_lwgqrlzra7k
+    sqlExpression: "\r\nSUM(OperacionTiempoDuracionReal) / 60.0"
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: Traslado (hs)
+    optionName: metric_57wu13e3ixj_7i823hvsfzi
+    sqlExpression: SUM(OperacionResolucionTiempoTraslado) / 60.0
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: Espera (hs)
+    optionName: metric_1rrp0fartna_felwlnfal3
+    sqlExpression: SUM(OperacionResolucionTiempoEspera) / 60.0
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: Administrativo (hs)
+    optionName: metric_slkzdufln4s_882qmy7n6ni
+    sqlExpression: SUM(OperacionResolucionTiemposAdministrativos) / 60.0
+  all_columns: []
+  percent_metrics: []
+  adhoc_filters:
+  - clause: WHERE
+    comparator: No filter
+    expressionType: SIMPLE
+    operator: TEMPORAL_RANGE
+    subject: OrdenTrabajoFechaInicio
+    isExtra: false
+  order_by_cols: []
+  order_desc: true
+  server_pagination: false
+  server_page_length: 10
+  row_limit: 10000
+  percent_metric_calculation: row_limit
+  show_totals: false
+  table_timestamp_format: smart_date
+  include_search: false
+  allow_rearrange_columns: false
+  allow_render_html: true
+  show_cell_bars: true
+  align_pn: false
+  color_pn: true
+  comparison_color_enabled: false
+  comparison_color_scheme: Green
+  comparison_type: values
+  extra_form_data: {}
+  dashboards:
+  - 3
+  annotation_layers: []
+query_context: '{"datasource": {"id": 28, "type": "table"}, "force": false, "queries":
+  [{"filters": [{"col": "OrdenTrabajoFechaInicio", "op": "TEMPORAL_RANGE", "val":
+  "No filter"}], "extras": {"having": "", "where": ""}, "applied_time_extras": {},
+  "columns": ["OperacionResolutor"], "metrics": [{"aggregate": null, "column": null,
+  "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel": true, "label":
+  "Esfuerzo Est\u00e1ndar (hs)", "optionName": "metric_44zpsieo5oj_a7od0bxxnb", "sqlExpression":
+  "SUM(OperacionTiempoEstandar) / 60.0"}, {"aggregate": null, "column": null, "datasourceWarning":
+  false, "expressionType": "SQL", "hasCustomLabel": true, "label": "Esfuerzo Declarado
+  (hs)", "optionName": "metric_k8y08mfsad_lwgqrlzra7k", "sqlExpression": "\r\nSUM(OperacionTiempoDuracionReal)
+  / 60.0"}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Traslado (hs)", "optionName": "metric_57wu13e3ixj_7i823hvsfzi",
+  "sqlExpression": "SUM(OperacionResolucionTiempoTraslado) / 60.0"}, {"aggregate":
+  null, "column": null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel":
+  true, "label": "Espera (hs)", "optionName": "metric_1rrp0fartna_felwlnfal3", "sqlExpression":
+  "SUM(OperacionResolucionTiempoEspera) / 60.0"}, {"aggregate": null, "column": null,
+  "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel": true, "label":
+  "Administrativo (hs)", "optionName": "metric_slkzdufln4s_882qmy7n6ni", "sqlExpression":
+  "SUM(OperacionResolucionTiemposAdministrativos) / 60.0"}], "orderby": [[{"aggregate":
+  null, "column": null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel":
+  true, "label": "Esfuerzo Est\u00e1ndar (hs)", "optionName": "metric_44zpsieo5oj_a7od0bxxnb",
+  "sqlExpression": "SUM(OperacionTiempoEstandar) / 60.0"}, false]], "annotation_layers":
+  [], "row_limit": 10000, "series_limit": 0, "group_others_when_limit_reached": false,
+  "order_desc": true, "url_params": {}, "custom_params": {}, "custom_form_data": {},
+  "post_processing": [], "time_offsets": []}], "form_data": {"datasource": "28__table",
+  "viz_type": "table", "slice_id": 34, "query_mode": "aggregate", "groupby": ["OperacionResolutor"],
+  "temporal_columns_lookup": {"OrdenTrabajoFechaInicio": true, "OperacionFechaFin":
+  true, "OperacionFechaResolucion": true, "OperacionFechaAgendada": true, "OperacionFechaProgramada":
+  true, "OperacionFechaAsignacion": true, "OperacionFechaLiberacion": true, "OperacionFechaDesasignacion":
+  true, "OperacionFechaDetenidoInicio": true, "OperacionFechaDetenidoFin": true, "OperacionFechaInicio":
+  true, "OperacionResolucionFecha": true, "OrdenTrabajoFechaFin": true, "OrdenTrabajoFechaInicioReal":
+  true, "OrdenTrabajoFechaFinReal": true, "OrdenTrabajoFechaCreacion": true}, "metrics":
+  [{"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Esfuerzo Est\u00e1ndar (hs)", "optionName":
+  "metric_44zpsieo5oj_a7od0bxxnb", "sqlExpression": "SUM(OperacionTiempoEstandar)
+  / 60.0"}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Esfuerzo Declarado (hs)", "optionName":
+  "metric_k8y08mfsad_lwgqrlzra7k", "sqlExpression": "\r\nSUM(OperacionTiempoDuracionReal)
+  / 60.0"}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Traslado (hs)", "optionName": "metric_57wu13e3ixj_7i823hvsfzi",
+  "sqlExpression": "SUM(OperacionResolucionTiempoTraslado) / 60.0"}, {"aggregate":
+  null, "column": null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel":
+  true, "label": "Espera (hs)", "optionName": "metric_1rrp0fartna_felwlnfal3", "sqlExpression":
+  "SUM(OperacionResolucionTiempoEspera) / 60.0"}, {"aggregate": null, "column": null,
+  "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel": true, "label":
+  "Administrativo (hs)", "optionName": "metric_slkzdufln4s_882qmy7n6ni", "sqlExpression":
+  "SUM(OperacionResolucionTiemposAdministrativos) / 60.0"}], "all_columns": [], "percent_metrics":
+  [], "adhoc_filters": [{"clause": "WHERE", "comparator": "No filter", "expressionType":
+  "SIMPLE", "operator": "TEMPORAL_RANGE", "subject": "OrdenTrabajoFechaInicio", "isExtra":
+  false}], "order_by_cols": [], "order_desc": true, "server_pagination": false, "server_page_length":
+  10, "row_limit": 10000, "percent_metric_calculation": "row_limit", "show_totals":
+  false, "table_timestamp_format": "smart_date", "include_search": false, "allow_rearrange_columns":
+  false, "allow_render_html": true, "show_cell_bars": true, "align_pn": false, "color_pn":
+  true, "comparison_color_enabled": false, "comparison_color_scheme": "Green", "comparison_type":
+  "values", "extra_form_data": {}, "dashboards": [3], "force": false, "result_format":
+  "json", "result_type": "full"}, "result_format": "json", "result_type": "full"}'
+cache_timeout: null
+uuid: 37488b71-cb30-4677-879b-1e522b78cc09
+version: 1.0.0
+dataset_uuid: 44284363-6cfb-4dd0-9986-f8cbb3a88802

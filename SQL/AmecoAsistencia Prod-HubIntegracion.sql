@@ -1,13 +1,13 @@
-USE HubIntegracion;
+USE AmecoHubIntegracion;
 GO
 
 -- =============================================
 -- PASO 1: Crear la tabla si no existe
 -- =============================================
-IF OBJECT_ID('HubIntegracion.albi.CentinelaAsistencia') IS NULL
+IF OBJECT_ID('AmecoHubIntegracion.dbo.AmecoAsistencia') IS NULL
 BEGIN
     SELECT TOP 0 *
-    INTO HubIntegracion.albi.CentinelaAsistencia
+    INTO AmecoHubIntegracion.dbo.AmecoAsistencia
     FROM (
         SELECT
             a.id                        AS AsistenciaId,
@@ -30,24 +30,24 @@ BEGIN
             a.latitud                   AS AsistenciaLatitud,
             a.longitud                  AS AsistenciaLongitud,
             a.estado                    AS AsistenciaEstado
-        FROM        Albi.albi.asistencia     AS a
-        JOIN        Albi.albi.persona        AS p    ON p.id     = a.personaId
-        JOIN        Albi.albi.resolutor      AS r    ON r.personaId = a.personaId
-        LEFT JOIN   Albi.albi.perfil         AS pf   ON pf.id    = r.perfilId
-        LEFT JOIN   Albi.albi.turno          AS t    ON t.id     = r.turnoId
-        LEFT JOIN   Albi.albi.especialidad   AS esp  ON esp.id   = r.especialidadId
-        LEFT JOIN   Albi.albi.zona           AS z    ON z.id     = r.zonaId
+        FROM        Ameco.albi.asistencia     AS a
+        JOIN        Ameco.albi.persona        AS p    ON p.id     = a.personaId
+        JOIN        Ameco.albi.resolutor      AS r    ON r.personaId = a.personaId
+        LEFT JOIN   Ameco.albi.perfil         AS pf   ON pf.id    = r.perfilId
+        LEFT JOIN   Ameco.albi.turno          AS t    ON t.id     = r.turnoId
+        LEFT JOIN   Ameco.albi.especialidad   AS esp  ON esp.id   = r.especialidadId
+        LEFT JOIN   Ameco.albi.zona           AS z    ON z.id     = r.zonaId
         WHERE 1 = 0
     ) AS t
-    PRINT 'Tabla CentinelaAsistencia creada'
+    PRINT 'Tabla AmecoAsistencia creada'
 END
 
 -- =============================================
 -- PASO 2: Actualizar los datos
 -- =============================================
-TRUNCATE TABLE HubIntegracion.albi.CentinelaAsistencia
+TRUNCATE TABLE AmecoHubIntegracion.dbo.AmecoAsistencia
 
-INSERT INTO HubIntegracion.albi.CentinelaAsistencia
+INSERT INTO AmecoHubIntegracion.dbo.AmecoAsistencia
 SELECT
     a.id                        AS AsistenciaId,
     a.personaId                 AS PersonaId,
@@ -69,11 +69,11 @@ SELECT
     a.latitud                   AS AsistenciaLatitud,
     a.longitud                  AS AsistenciaLongitud,
     a.estado                    AS AsistenciaEstado
-FROM        Albi.albi.asistencia     AS a
-JOIN        Albi.albi.persona        AS p    ON p.id     = a.personaId
-JOIN        Albi.albi.resolutor      AS r    ON r.personaId = a.personaId
-LEFT JOIN   Albi.albi.perfil         AS pf   ON pf.id    = r.perfilId
-LEFT JOIN   Albi.albi.turno          AS t    ON t.id     = r.turnoId
-LEFT JOIN   Albi.albi.especialidad   AS esp  ON esp.id   = r.especialidadId
-LEFT JOIN   Albi.albi.zona           AS z    ON z.id     = r.zonaId
+FROM        Ameco.albi.asistencia     AS a
+JOIN        Ameco.albi.persona        AS p    ON p.id     = a.personaId
+JOIN        Ameco.albi.resolutor      AS r    ON r.personaId = a.personaId
+LEFT JOIN   Ameco.albi.perfil         AS pf   ON pf.id    = r.perfilId
+LEFT JOIN   Ameco.albi.turno          AS t    ON t.id     = r.turnoId
+LEFT JOIN   Ameco.albi.especialidad   AS esp  ON esp.id   = r.especialidadId
+LEFT JOIN   Ameco.albi.zona           AS z    ON z.id     = r.zonaId
 WHERE a.fechaHora >= DATEADD(month, -6, GETDATE())

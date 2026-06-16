@@ -6,4 +6,10 @@ USER root
 # Copiar configuración de producción
 COPY superset_config_prod.py /app/pythonpath/superset_config.py
 
+# Script de inicialización
+COPY init-superset.sh /app/init-superset.sh
+RUN chmod +x /app/init-superset.sh
+
 USER superset
+
+CMD ["/bin/bash", "/app/init-superset.sh"]

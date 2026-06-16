@@ -1,0 +1,48 @@
+slice_name: '[Ameco] | Capacidad Instalada (hs)'
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 28__table
+  viz_type: big_number_total
+  slice_id: 309
+  metric:
+    aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: '[Ameco] | Capacidad Instalada (hs)'
+    optionName: metric_o7ckpxif3mm_9swabjdcl3
+    sqlExpression: "37 * DATEDIFF(day, '{{ from_dttm }}', '{{ to_dttm }}')\r\n* 11"
+  adhoc_filters:
+  - clause: WHERE
+    comparator: No filter
+    expressionType: SIMPLE
+    isExtra: false
+    operator: TEMPORAL_RANGE
+    subject: OrdenTrabajoFechaInicio
+  header_font_size: 0.4
+  subtitle_font_size: 0.15
+  show_metric_name: false
+  y_axis_format: ~g
+  currency_format:
+    symbol: HRS
+  time_format: smart_date
+  force_timestamp_formatting: false
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 18
+query_context: '{"datasource":{"id":28,"type":"table"},"force":false,"queries":[{"filters":[{"col":"OrdenTrabajoFechaInicio","op":"TEMPORAL_RANGE","val":"No
+  filter"}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[],"metrics":[{"aggregate":null,"column":null,"datasourceWarning":false,"expressionType":"SQL","hasCustomLabel":true,"label":"[Ameco]
+  | Capacidad Instalada (hs)","optionName":"metric_o7ckpxif3mm_9swabjdcl3","sqlExpression":"37
+  * DATEDIFF(day, ''{{ from_dttm }}'', ''{{ to_dttm }}'')\r\n* 11"}],"annotation_layers":[],"series_limit":0,"group_others_when_limit_reached":false,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"28__table","viz_type":"big_number_total","slice_id":309,"metric":{"aggregate":null,"column":null,"datasourceWarning":false,"expressionType":"SQL","hasCustomLabel":true,"label":"[Ameco]
+  | Capacidad Instalada (hs)","optionName":"metric_o7ckpxif3mm_9swabjdcl3","sqlExpression":"37
+  * DATEDIFF(day, ''{{ from_dttm }}'', ''{{ to_dttm }}'')\r\n* 11"},"adhoc_filters":[{"clause":"WHERE","comparator":"No
+  filter","expressionType":"SIMPLE","isExtra":false,"operator":"TEMPORAL_RANGE","subject":"OrdenTrabajoFechaInicio"}],"header_font_size":0.4,"subtitle_font_size":0.15,"show_metric_name":false,"y_axis_format":"~g","currency_format":{"symbol":"HRS"},"time_format":"smart_date","force_timestamp_formatting":false,"conditional_formatting":[],"extra_form_data":{},"dashboards":[18],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: ec2d9afc-c067-4f88-bccf-71623b02c126
+version: 1.0.0
+dataset_uuid: 44284363-6cfb-4dd0-9986-f8cbb3a88802
