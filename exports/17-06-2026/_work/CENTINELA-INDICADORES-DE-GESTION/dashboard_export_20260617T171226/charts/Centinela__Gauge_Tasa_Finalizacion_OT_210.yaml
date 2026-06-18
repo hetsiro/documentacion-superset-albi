@@ -1,0 +1,79 @@
+slice_name: "[Centinela] | Gauge Tasa Finalizaci\xF3n OT"
+description: null
+certified_by: null
+certification_details: null
+viz_type: gauge_chart
+params:
+  datasource: 25__table
+  viz_type: gauge_chart
+  slice_id: 29
+  groupby: []
+  metric:
+    aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: "Tasa Finalizaci\xF3n OT"
+    optionName: metric_qvyx8tmmmse_cxhd76z3gb
+    sqlExpression: "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta',\
+      \ 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId),\
+      \ 0) * 100, 1\r\n)"
+  adhoc_filters:
+  - clause: WHERE
+    comparator: No filter
+    expressionType: SIMPLE
+    operator: TEMPORAL_RANGE
+    subject: OrdenTrabajoFechaCreacion
+  row_limit: 10
+  max_val: 100
+  start_angle: 225
+  end_angle: -45
+  color_scheme: supersetColors
+  font_size: 15
+  number_format: SMART_NUMBER
+  currency_format: {}
+  value_formatter: '{value}'
+  show_pointer: true
+  animation: true
+  show_axis_tick: false
+  show_split_line: false
+  split_number: 10
+  show_progress: true
+  overlap: true
+  round_cap: true
+  intervals: ''
+  interval_color_indices: ''
+  extra_form_data: {}
+  dashboards:
+  - 3
+  annotation_layers: []
+query_context: '{"datasource": {"id": 25, "type": "table"}, "force": false, "queries":
+  [{"filters": [{"col": "OrdenTrabajoFechaCreacion", "op": "TEMPORAL_RANGE", "val":
+  "No filter"}], "extras": {"having": "", "where": ""}, "applied_time_extras": {},
+  "columns": [], "metrics": [{"aggregate": null, "column": null, "datasourceWarning":
+  false, "expressionType": "SQL", "hasCustomLabel": true, "label": "Tasa Finalizaci\u00f3n
+  OT", "optionName": "metric_qvyx8tmmmse_cxhd76z3gb", "sqlExpression": "ROUND(\r\n    CAST(COUNT(CASE
+  WHEN EstadoOrdenTrabajo IN (''Resuelta'', ''Cerrada'') THEN OrdenTrabajoId END)
+  AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"}], "annotation_layers":
+  [], "row_limit": 10, "series_limit": 0, "group_others_when_limit_reached": false,
+  "order_desc": true, "url_params": {}, "custom_params": {}, "custom_form_data": {}}],
+  "form_data": {"datasource": "25__table", "viz_type": "gauge_chart", "slice_id":
+  29, "groupby": [], "metric": {"aggregate": null, "column": null, "datasourceWarning":
+  false, "expressionType": "SQL", "hasCustomLabel": true, "label": "Tasa Finalizaci\u00f3n
+  OT", "optionName": "metric_qvyx8tmmmse_cxhd76z3gb", "sqlExpression": "ROUND(\r\n    CAST(COUNT(CASE
+  WHEN EstadoOrdenTrabajo IN (''Resuelta'', ''Cerrada'') THEN OrdenTrabajoId END)
+  AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"}, "adhoc_filters":
+  [{"clause": "WHERE", "comparator": "No filter", "expressionType": "SIMPLE", "operator":
+  "TEMPORAL_RANGE", "subject": "OrdenTrabajoFechaCreacion"}], "row_limit": 10, "max_val":
+  100, "start_angle": 225, "end_angle": -45, "color_scheme": "supersetColors", "font_size":
+  15, "number_format": "SMART_NUMBER", "currency_format": {}, "value_formatter": "{value}",
+  "show_pointer": true, "animation": true, "show_axis_tick": false, "show_split_line":
+  false, "split_number": 10, "show_progress": true, "overlap": true, "round_cap":
+  true, "intervals": "", "interval_color_indices": "", "extra_form_data": {}, "dashboards":
+  [3], "force": false, "result_format": "json", "result_type": "full"}, "result_format":
+  "json", "result_type": "full"}'
+cache_timeout: null
+uuid: 8e03984b-1d32-42b1-b059-c9f916bb12ce
+version: 1.0.0
+dataset_uuid: ea59d9dc-33ca-4e8f-adf4-475df5b2cdbb

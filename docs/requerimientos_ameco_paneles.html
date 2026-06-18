@@ -322,6 +322,9 @@
   .gauge-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
   .gauge-desc strong { color: var(--text); display: block; font-size: 14px; margin-bottom: 4px; }
 
+  /* ── Chart cards colapsables (solo el título visible) ── */
+  .card-toggle { float: right; font-weight: 400; opacity: .65; }
+
   /* ── Responsive ── */
   @media (max-width: 768px) {
     nav { display: none; }
@@ -421,6 +424,10 @@
       <strong>✅ Compatibilidad con la infraestructura actual:</strong>
       El refresco de datos cada 1 hora que ya está configurado (Job SQL Agent + Redis Cache) cumple exactamente con el requisito del cliente de "1 hora o más". No se necesitan cambios en la infraestructura.
     </div>
+    <div class="hero-note" style="background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.3);color:#6ee7b7">
+      <strong style="color:var(--success)">🔄 Actualización (jun 2026):</strong>
+      Los <strong>esfuerzos/tiempos declarados</strong> ahora se calculan con <code>OperacionResolucionTiempoEjecucion</code> (antes <code>OperacionTiempoDuracionReal</code>, que tenía datos corruptos) y se multiplican por <code>OperacionCantidadInvolucrados</code> para reflejar <strong>horas-hombre</strong> — cada operación pondera por su cantidad de colaboradores. El <strong>filtro temporal</strong> pasó a <code>OrdenTrabajoFechaCreacion</code>.
+    </div>
   </div>
 
   <!-- ════════════════════════════════════════════════ -->
@@ -511,15 +518,15 @@
         <div class="sub-label">Métricas (SUM / AVG)</div>
         <div class="col-grid" style="margin-bottom:14px">
           <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionTiempoEstandar</a></span>
-          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionTiempoDuracionReal</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionResolucionTiempoEjecucion</a></span>
           <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionResolucionTiempoTraslado</a></span>
           <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionResolucionTiempoEspera</a></span>
           <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionResolucionTiemposAdministrativos</a></span>
+          <span class="col-pill"><span class="type-dot dot-int"></span><a href="diccionario.html">OperacionCantidadInvolucrados</a> <span style="font-size:10px;color:var(--muted)">→ ×colaboradores</span></span>
         </div>
         <div class="sub-label">Filtro de fechas</div>
         <div class="col-grid">
-          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OperacionFechaInicio</a></span>
-          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OperacionFechaFin</a></span>
+          <span class="col-pill"><span class="type-dot dot-datetime"></span><a href="diccionario.html">OrdenTrabajoFechaCreacion</a></span>
         </div>
 
         <p style="font-size:12px;color:var(--muted);margin-top:8px">✅ Jornada = 12 hs = 720 min. Los valores en la BD están en <strong>minutos</strong> → dividir por 60 al visualizar en horas.</p>
@@ -528,7 +535,7 @@
       <!-- Charts -->
       <div class="card m1-card" id="m1-charts">
         <div class="card-title">Charts a configurar en Superset</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Dataset único: <code>dbo.AmecoDashboards</code> · Filtro de fecha: <code>OperacionFechaInicio</code></p>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Dataset único: <code>dbo.AmecoDashboards</code> · Filtro de fecha: <code>OrdenTrabajoFechaCreacion</code></p>
 
         <!-- Table -->
         <div style="border:1px solid var(--m1);border-radius:8px;padding:14px 16px;margin-bottom:12px">
@@ -540,19 +547,21 @@
           <p style="font-size:12px;margin-bottom:10px"><code>Especialidad</code> · opcional: <code>ZonaOperacion</code></p>
           <div class="sub-label">Métricas simples (Simple aggregate → SUM, dividir por 60)</div>
           <div class="formula-box" style="margin-bottom:10px">
-            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(OperacionTiempoEstandar) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(OperacionTiempoDuracionReal) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoTraslado) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEspera) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiemposAdministrativos) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEspera * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0</span></div>
           </div>
           <div class="sub-label">Total Declarado (hs) — Custom SQL</div>
           <div class="code-block">
             <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))) / <span class="nb">60.0</span></pre>
+            <pre><span class="fn">SUM</span>(
+  (<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>)
+ + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>)
+ + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>)
+ + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))
+ * <span class="col">OperacionCantidadInvolucrados</span>) / <span class="nb">60.0</span></pre>
           </div>
         </div>
 
@@ -568,7 +577,7 @@
             <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
             <pre><span class="fn">ROUND</span>(
     <span class="kw">CAST</span>(
-        <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
+        <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>))
       + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
       + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
       + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))
@@ -616,10 +625,12 @@
           <div class="sub-label">Métrica — Total Declarado (hs) · Custom SQL</div>
           <div class="code-block">
             <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-            <pre>(<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
-+ <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))) / <span class="nb">60.0</span></pre>
+            <pre><span class="fn">SUM</span>(
+  (<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>)
+ + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>)
+ + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>)
+ + <span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>))
+ * <span class="col">OperacionCantidadInvolucrados</span>) / <span class="nb">60.0</span></pre>
           </div>
           <p style="font-size:11.5px;color:var(--muted);margin-top:8px">⚙ En Superset: activar <strong>Enable cross-filter</strong> en este chart. Colocarlo a la izquierda de la tabla de resolutores en el dashboard.</p>
         </div>
@@ -635,11 +646,11 @@
           </div>
           <div class="sub-label">Métricas — mismas SUM que la tabla de Especialidad</div>
           <div class="formula-box">
-            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(OperacionTiempoEstandar) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(OperacionTiempoDuracionReal) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoTraslado) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEspera) / 60.0</span></div>
-            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiemposAdministrativos) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Esfuerzo Estándar (hs)</span><span class="formula-eq">SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Esfuerzo Declarado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Traslado (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Espera (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiempoEspera * OperacionCantidadInvolucrados) / 60.0</span></div>
+            <div class="formula-row"><span class="formula-name">Administrativo (hs)</span><span class="formula-eq">SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0</span></div>
             <div class="formula-row"><span class="formula-name">Total Declarado (hs)</span><span class="formula-eq">misma Custom SQL que tabla Especialidad</span></div>
           </div>
         </div>
@@ -663,14 +674,11 @@
             <span class="pi-icon">✅</span>
             <span class="pi-text">Las columnas de tiempo ya están disponibles en AmecoDashboards: OperacionTiempoEstandar, OperacionTiempoDuracionReal, OperacionResolucionTiempoTraslado, OperacionResolucionTiempoEspera, OperacionResolucionTiemposAdministrativos.</span>
           </div>
-          <div class="pending-item">
-            <span class="pi-icon">⚠️</span>
+          <div class="ok-item">
+            <span class="pi-icon">✅</span>
             <span class="pi-text">
-              <strong>Datos corruptos en OperacionTiempoDuracionReal.</strong>
-              Se detectaron <strong>99 operaciones</strong> (de 1.802) con valores imposibles — el mayor registra <strong>1.051.440 min ≈ 2 años</strong>. Esos 99 registros representan el <strong>98% del tiempo declarado total</strong>, distorsionando completamente el gauge y las tablas.<br><br>
-              Las métricas <strong>no aplican filtro</strong> por ahora para que el resultado en el dashboard deje en evidencia el problema al cliente. Una vez corregidos los datos en la app, los números serán precisos sin necesidad de cambiar las queries.<br><br>
-              Query para identificar los registros afectados:
-              <code>SELECT OperacionId, OperacionResolutor, CAST(OperacionFechaInicio AS DATE) AS Fecha, OperacionTiempoDuracionReal, ROUND(OperacionTiempoDuracionReal/60.0,1) AS Horas FROM dbo.AmecoDashboards WHERE OperacionTiempoDuracionReal &gt; 720 ORDER BY OperacionTiempoDuracionReal DESC</code>
+              <strong>Esfuerzo declarado migrado a OperacionResolucionTiempoEjecucion.</strong>
+              La columna <code>OperacionTiempoDuracionReal</code> tenía datos corruptos (99 operaciones con valores imposibles, hasta ~2 años, que distorsionaban el 98% del tiempo). El esfuerzo ahora se calcula con <code>OperacionResolucionTiempoEjecucion</code>, que no presenta ese problema. <code>OperacionTiempoDuracionReal</code> sigue en la tabla pero ya no se usa en las métricas.
             </span>
           </div>
         </div>
@@ -803,7 +811,7 @@
             <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Ameco] | Gauge Tasa Finalización OT</code></span></div>
             <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
             <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           </div>
           <div class="sub-label">Métrica — Custom SQL</div>
           <div class="code-block">
@@ -822,7 +830,7 @@
             <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Ameco] | Gauge Tasa Finalización Operaciones</code></span></div>
             <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards</span></div>
             <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           </div>
           <div class="sub-label">Métrica — Custom SQL</div>
           <div class="code-block">
@@ -848,7 +856,7 @@
           </div>
           <div class="formula-box" style="margin-bottom:10px">
             <div class="formula-row"><span class="formula-name">Títulos</span><span class="formula-eq"><code>[Ameco] | OTs por Sistemas</code> · <code>[Ameco] | OTs por Subsistemas</code> · <code>[Ameco] | OTs por Especialidad</code> · <code>[Ameco] | OTs por Zona</code></span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           </div>
           <div class="sub-label">Ingresadas — Custom SQL</div>
           <div class="code-block">
@@ -883,7 +891,7 @@
           </div>
           <div class="formula-box" style="margin-bottom:10px">
             <div class="formula-row"><span class="formula-name">Títulos</span><span class="formula-eq"><code>[Ameco] | Ops por Sistemas</code> · <code>[Ameco] | Ops por Subsistemas</code> · <code>[Ameco] | Ops por Especialidad</code> · <code>[Ameco] | Ops por Zona</code></span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           </div>
           <div class="sub-label">Ingresadas — Custom SQL</div>
           <div class="code-block">
@@ -1024,7 +1032,7 @@
           <div class="formula-box" style="margin-bottom:10px">
             <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Ameco] | Gauge Cumplimiento SLA</code></span></div>
             <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-            <div class="formula-row"><span class="formula-name">Filtro</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range) · EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range) · EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
             <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
           </div>
           <div class="sub-label">Tasa Cumplimiento % — Custom SQL</div>
@@ -1224,6 +1232,27 @@
       setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
     });
   }
+
+  // ── Chart cards colapsables: mostrar solo el título, expandir al clic ──
+  document.querySelectorAll('.module-body div[style*="border:1px solid var(--m"]').forEach(card => {
+    const head = card.firstElementChild;
+    if (!head || !/font-weight:\s*700/.test(head.getAttribute('style') || '')) return;
+    const rest = [...card.children].slice(1);
+    if (!rest.length) return;
+    let open = false;
+    const tog = document.createElement('span');
+    tog.className = 'card-toggle';
+    head.appendChild(document.createTextNode(' '));
+    head.appendChild(tog);
+    head.style.cursor = 'pointer';
+    const render = () => {
+      rest.forEach(el => { el.style.display = open ? '' : 'none'; });
+      head.style.marginBottom = open ? '' : '0';
+      tog.textContent = open ? '▾' : '▸';
+    };
+    head.addEventListener('click', () => { open = !open; render(); });
+    render();
+  });
 
   // Active nav on scroll
   const sections = document.querySelectorAll('.module, [id^="m"]');

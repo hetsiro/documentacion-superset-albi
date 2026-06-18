@@ -1,0 +1,69 @@
+slice_name: '[Centinela] | Esfuerzo Declarado'
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 26__table
+  viz_type: big_number_total
+  slice_id: 197
+  metric:
+    aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: false
+    label: SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados)
+      / 60.0
+    optionName: metric_gl44livf6g_j4lwy0i1zf
+    sqlExpression: SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados)
+      / 60.0
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: EstadoOrdenTrabajoId
+    operator: IN
+    operatorId: IN
+    comparator:
+    - 2
+    - 3
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_4je8crx04p6_b472e7zmqev
+  - expressionType: SIMPLE
+    subject: OrdenTrabajoFechaFinReal
+    operator: TEMPORAL_RANGE
+    operatorId: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_ghc2an1p0rh_937zupxvsro
+  header_font_size: 0.4
+  subtitle_font_size: 0.15
+  show_metric_name: false
+  metric_name_font_size: 0.15
+  y_axis_format: ',.1f'
+  currency_format:
+    symbol: HRS
+  time_format: smart_date
+  force_timestamp_formatting: false
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 14
+query_context: '{"datasource":{"id":26,"type":"table"},"force":false,"queries":[{"filters":[{"col":"EstadoOrdenTrabajoId","op":"IN","val":[2,3]},{"col":"OrdenTrabajoFechaFinReal","op":"TEMPORAL_RANGE","val":"No
+  filter"}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[],"metrics":[{"aggregate":null,"column":null,"datasourceWarning":false,"expressionType":"SQL","hasCustomLabel":false,"label":"SUM(ISNULL(OperacionResolucionTiempoEjecucion,
+  0) * OperacionCantidadInvolucrados) / 60.0","optionName":"metric_gl44livf6g_j4lwy0i1zf","sqlExpression":"SUM(ISNULL(OperacionResolucionTiempoEjecucion,
+  0) * OperacionCantidadInvolucrados) / 60.0"}],"annotation_layers":[],"series_limit":0,"group_others_when_limit_reached":false,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"26__table","viz_type":"big_number_total","slice_id":197,"metric":{"aggregate":null,"column":null,"datasourceWarning":false,"expressionType":"SQL","hasCustomLabel":false,"label":"SUM(ISNULL(OperacionResolucionTiempoEjecucion,
+  0) * OperacionCantidadInvolucrados) / 60.0","optionName":"metric_gl44livf6g_j4lwy0i1zf","sqlExpression":"SUM(ISNULL(OperacionResolucionTiempoEjecucion,
+  0) * OperacionCantidadInvolucrados) / 60.0"},"adhoc_filters":[{"expressionType":"SIMPLE","subject":"EstadoOrdenTrabajoId","operator":"IN","operatorId":"IN","comparator":[2,3],"clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_4je8crx04p6_b472e7zmqev"},{"expressionType":"SIMPLE","subject":"OrdenTrabajoFechaFinReal","operator":"TEMPORAL_RANGE","operatorId":"TEMPORAL_RANGE","comparator":"No
+  filter","clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_ghc2an1p0rh_937zupxvsro"}],"header_font_size":0.4,"subtitle_font_size":0.15,"show_metric_name":false,"metric_name_font_size":0.15,"y_axis_format":",.1f","currency_format":{"symbol":"HRS"},"time_format":"smart_date","force_timestamp_formatting":false,"conditional_formatting":[],"extra_form_data":{},"dashboards":[14],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 09f989ff-040c-4cd4-b38c-63cff9b66707
+version: 1.0.0
+dataset_uuid: d94c84b7-cfc7-4f36-9da2-bf177787cf34

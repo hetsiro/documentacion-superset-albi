@@ -1,0 +1,67 @@
+slice_name: "[Ameco] | Esfuerzo Est\xE1ndar"
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 28__table
+  viz_type: big_number_total
+  slice_id: 252
+  metric:
+    aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: false
+    label: SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0
+    optionName: metric_4ccoyvgjm9t_nzbo7nw3eg
+    sqlExpression: SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: EstadoOrdenTrabajo
+    operator: IN
+    operatorId: IN
+    comparator:
+    - Resuelta
+    - Cerrada
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_dmuj735w62k_ochczijtk9
+  - expressionType: SIMPLE
+    subject: OrdenTrabajoFechaCreacion
+    operator: TEMPORAL_RANGE
+    operatorId: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_wqh4buapu2o_p85s33indot
+  header_font_size: 0.4
+  subtitle_font_size: 0.15
+  show_metric_name: false
+  metric_name_font_size: 0.15
+  y_axis_format: ',.1f'
+  currency_format:
+    symbol: HRS
+  time_format: smart_date
+  force_timestamp_formatting: false
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 18
+query_context: '{"datasource":{"id":28,"type":"table"},"force":false,"queries":[{"filters":[{"col":"EstadoOrdenTrabajo","op":"IN","val":["Resuelta","Cerrada"]},{"col":"OrdenTrabajoFechaCreacion","op":"TEMPORAL_RANGE","val":"No
+  filter"}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[],"metrics":[{"aggregate":null,"column":null,"datasourceWarning":false,"expressionType":"SQL","hasCustomLabel":false,"label":"SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados)
+  / 60.0","optionName":"metric_4ccoyvgjm9t_nzbo7nw3eg","sqlExpression":"SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados)
+  / 60.0"}],"annotation_layers":[],"series_limit":0,"group_others_when_limit_reached":false,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"28__table","viz_type":"big_number_total","slice_id":252,"metric":{"aggregate":null,"column":null,"datasourceWarning":false,"expressionType":"SQL","hasCustomLabel":false,"label":"SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados)
+  / 60.0","optionName":"metric_4ccoyvgjm9t_nzbo7nw3eg","sqlExpression":"SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados)
+  / 60.0"},"adhoc_filters":[{"expressionType":"SIMPLE","subject":"EstadoOrdenTrabajo","operator":"IN","operatorId":"IN","comparator":["Resuelta","Cerrada"],"clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_dmuj735w62k_ochczijtk9"},{"expressionType":"SIMPLE","subject":"OrdenTrabajoFechaCreacion","operator":"TEMPORAL_RANGE","operatorId":"TEMPORAL_RANGE","comparator":"No
+  filter","clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_wqh4buapu2o_p85s33indot"}],"header_font_size":0.4,"subtitle_font_size":0.15,"show_metric_name":false,"metric_name_font_size":0.15,"y_axis_format":",.1f","currency_format":{"symbol":"HRS"},"time_format":"smart_date","force_timestamp_formatting":false,"conditional_formatting":[],"extra_form_data":{},"dashboards":[18],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 67734c63-c3bb-464b-86a0-f292ba7f3424
+version: 1.0.0
+dataset_uuid: 44284363-6cfb-4dd0-9986-f8cbb3a88802

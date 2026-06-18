@@ -96,7 +96,11 @@ BEGIN
             ot.ganttId                          AS OrdenTrabajoPlanId,
             CASE WHEN ot.ganttId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan,
             tipoAct.id                          AS TipoActividadId,
-            tipoAct.nombreReal                  AS TipoActividad
+            tipoAct.nombreReal                  AS TipoActividad,
+                (ISNULL((SELECT COUNT(DISTINCT oc.personaId)
+             FROM Ameco.albi.operacionColaboradores oc
+             WHERE oc.operacionId = ope.id), 0)
+     + CASE WHEN ope.resolutorId IS NULL THEN 0 ELSE 1 END) AS OperacionCantidadInvolucrados
         FROM        Ameco.albi.ordenTrabajo           AS ot
         INNER JOIN  Ameco.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
         LEFT JOIN   Ameco.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
@@ -224,7 +228,11 @@ SELECT
     ot.ganttId                          AS OrdenTrabajoPlanId,
     CASE WHEN ot.ganttId IS NULL THEN 'Correctivo' ELSE 'Preventivo' END AS OrdenTrabajoPlan,
     tipoAct.id                          AS TipoActividadId,
-    tipoAct.nombreReal                  AS TipoActividad
+    tipoAct.nombreReal                  AS TipoActividad,
+        (ISNULL((SELECT COUNT(DISTINCT oc.personaId)
+             FROM Ameco.albi.operacionColaboradores oc
+             WHERE oc.operacionId = ope.id), 0)
+     + CASE WHEN ope.resolutorId IS NULL THEN 0 ELSE 1 END) AS OperacionCantidadInvolucrados
 
 FROM        Ameco.albi.ordenTrabajo           AS ot
 INNER JOIN  Ameco.albi.empresa                AS emp              ON ot.empresaId                 = emp.id

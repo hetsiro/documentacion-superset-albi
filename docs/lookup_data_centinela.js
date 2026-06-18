@@ -1,115 +1,116 @@
 window.LOOKUP_DATA = {
   "_meta": {
-    "generado": "2026-04-07T10:27:24",
+    "generado": "2026-06-17T23:31:41",
     "tabla": "HubIntegracion.albi.CentinelaDashboards",
-    "total_valores": 1037,
+    "total_valores": 1217,
     "catalogos": 18,
-    "total_ots": 18482,
-    "total_operaciones": 19344,
-    "total_asistencias": 72017,
+    "total_ots": 21071,
+    "total_operaciones": 22008,
+    "total_asistencias": 5084,
     "usos": {
-      "OrdenTrabajoId": 19347,
-      "OrdenTrabajoFechaInicio": 19347,
-      "OrdenTrabajoEmpresa": 19347,
-      "EstadoOrdenTrabajoId": 19347,
-      "EstadoOrdenTrabajo": 19347,
-      "OperacionId": 19344,
-      "OperacionDescripcion": 19344,
-      "OperacionTiempoEstandar": 19344,
-      "OperacionTiempoDuracionReal": 17195,
-      "OperacionTiempoPerdido": 19347,
-      "OperacionFechaFin": 688,
-      "OperacionFechaResolucion": 17214,
-      "OperacionUbicacion": 19344,
-      "OperacionRecursos": 19344,
-      "OperacionDependencia": 19344,
-      "OperacionOrden": 19344,
+      "OrdenTrabajoId": 22030,
+      "OrdenTrabajoFechaInicio": 22030,
+      "OrdenTrabajoEmpresa": 22030,
+      "EstadoOrdenTrabajoId": 22030,
+      "EstadoOrdenTrabajo": 22030,
+      "OperacionId": 22030,
+      "OperacionDescripcion": 22030,
+      "OperacionTiempoEstandar": 22030,
+      "OperacionTiempoDuracionReal": 19410,
+      "OperacionTiempoPerdido": 22030,
+      "OperacionFechaFin": 551,
+      "OperacionFechaResolucion": 19425,
+      "OperacionUbicacion": 22030,
+      "OperacionRecursos": 22030,
+      "OperacionDependencia": 22030,
+      "OperacionOrden": 22030,
       "OperacionDireccion": 0,
-      "OperacionTiempoTraslado": 19344,
-      "OperacionProcesoId": 19344,
-      "OperacionPadreId": 865,
-      "OperacionFechaAsignacion": 17665,
-      "OperacionFechaDetenidoInicio": 97,
-      "OperacionFechaDetenidoFin": 65,
-      "OperacionFechaInicio": 19281,
-      "TipoTareaId": 19105,
-      "TipoTarea": 19105,
-      "SubTipoTareaId": 19347,
-      "SubTipoTarea": 19347,
-      "Nivel3Id": 19105,
-      "Nivel3": 19105,
-      "Nivel4Id": 19105,
-      "Nivel4": 19105,
-      "OrdenTrabajoNegocio": 19347,
-      "TipoOperacionId": 19344,
-      "TipoOperacion": 19344,
-      "EspecialidadId": 72017,
-      "Especialidad": 72017,
-      "EstadoOperacionId": 19344,
-      "EstadoOperacion": 19344,
-      "GrupoResolutorOperacionId": 19336,
-      "GrupoResolutorOperacion": 19336,
-      "ResolutorPersonaId": 17395,
-      "OperacionResolutor": 17395,
-      "OperacionResolutorTurno": 19347,
-      "OperacionResolutorCargo": 17395,
-      "ResolutorPerfilId": 17395,
-      "ResolutorPerfil": 17395,
-      "SitioOperacionId": 19297,
-      "SitioOperacion": 19297,
-      "ZonaOperacionId": 19297,
-      "ZonaOperacion": 19297,
-      "PrioridadOperacionId": 19344,
-      "PrioridadOperacion": 19344,
-      "OperacionResolucionTiempoEspera": 17015,
-      "OperacionResolucionTiempoEjecucion": 17195,
-      "OperacionResolucionTiempoBruto": 17214,
-      "OperacionResolucionTiempoTraslado": 17059,
-      "OperacionResolucionTiemposAdministrativos": 17016,
-      "OperacionResolucionEsPreparacionDoc": 17136,
-      "OperacionResolucionEsObtencionAutorizaciones": 17136,
-      "OperacionResolucionEsObtencionPermisos": 17136,
-      "OperacionResolucionLatitud": 17136,
-      "OperacionResolucionLongitud": 17136,
-      "OperacionResolucionFecha": 17214,
-      "ActivoId": 1773,
-      "Activo": 1773,
-      "ActivoCodigo": 1773,
-      "ProcesoId": 19347,
-      "Proceso": 19347,
-      "OrdenTrabajoSolicitante": 19300,
-      "OrdenTrabajoResponsable": 17317,
-      "RecintoId": 338,
-      "Recinto": 338,
-      "OrdenTrabajoDescripcion": 19347,
-      "OrdenTrabajoFechaFin": 17632,
+      "OperacionTiempoTraslado": 22030,
+      "OperacionProcesoId": 22030,
+      "OperacionPadreId": 940,
+      "OperacionFechaAsignacion": 19995,
+      "OperacionFechaDetenidoInicio": 80,
+      "OperacionFechaDetenidoFin": 50,
+      "OperacionFechaInicio": 21984,
+      "TipoTareaId": 21809,
+      "TipoTarea": 21809,
+      "SubTipoTareaId": 22030,
+      "SubTipoTarea": 22030,
+      "Nivel3Id": 21797,
+      "Nivel3": 21797,
+      "Nivel4Id": 21809,
+      "Nivel4": 21809,
+      "OrdenTrabajoNegocio": 22030,
+      "TipoOperacionId": 22030,
+      "TipoOperacion": 22030,
+      "EspecialidadId": 5084,
+      "Especialidad": 5084,
+      "EstadoOperacionId": 22030,
+      "EstadoOperacion": 22030,
+      "GrupoResolutorOperacionId": 22022,
+      "GrupoResolutorOperacion": 22022,
+      "ResolutorPersonaId": 19099,
+      "OperacionResolutor": 19099,
+      "OperacionResolutorTurno": 22030,
+      "OperacionResolutorCargo": 19099,
+      "ResolutorPerfilId": 19099,
+      "ResolutorPerfil": 19099,
+      "SitioOperacionId": 21985,
+      "SitioOperacion": 21985,
+      "ZonaOperacionId": 21985,
+      "ZonaOperacion": 21985,
+      "PrioridadOperacionId": 22030,
+      "PrioridadOperacion": 22030,
+      "OperacionResolucionTiempoEspera": 19248,
+      "OperacionResolucionTiempoEjecucion": 19410,
+      "OperacionResolucionTiempoBruto": 19425,
+      "OperacionResolucionTiempoTraslado": 19257,
+      "OperacionResolucionTiemposAdministrativos": 19269,
+      "OperacionResolucionEsPreparacionDoc": 19413,
+      "OperacionResolucionEsObtencionAutorizaciones": 19413,
+      "OperacionResolucionEsObtencionPermisos": 19413,
+      "OperacionResolucionLatitud": 19413,
+      "OperacionResolucionLongitud": 19413,
+      "OperacionResolucionFecha": 19425,
+      "ActivoId": 2239,
+      "Activo": 2239,
+      "ActivoCodigo": 2239,
+      "ProcesoId": 22030,
+      "Proceso": 22030,
+      "OrdenTrabajoSolicitante": 22026,
+      "OrdenTrabajoResponsable": 19539,
+      "RecintoId": 284,
+      "Recinto": 284,
+      "OrdenTrabajoDescripcion": 22030,
+      "OrdenTrabajoFechaFin": 19807,
       "OrdenTrabajoFechaInicioReal": 0,
-      "OrdenTrabajoFechaFinReal": 17835,
-      "OrdenTrabajoTiempoResolucionBruto": 17204,
-      "OrdenTrabajoDuracion": 18249,
-      "OrdenTrabajoFechaCreacion": 19347,
-      "OrdenTrabajoUbicacion": 19347,
-      "OrdenTrabajoNochero": 17585,
-      "OrdenTrabajoPlanId": 1729,
-      "OrdenTrabajoPlan": 19347,
-      "AsistenciaId": 72017,
-      "PersonaId": 72017,
-      "Persona": 72017,
-      "PerfilId": 72017,
-      "Perfil": 72017,
-      "TurnoId": 72017,
-      "Turno": 72017,
-      "TurnoHoraInicio": 72017,
-      "TurnoHoraFin": 72017,
-      "ZonaId": 72017,
-      "Zona": 72017,
-      "ResolutorActivo": 72017,
-      "AsistenciaTipo": 72017,
-      "AsistenciaFechaHora": 72017,
-      "AsistenciaFecha": 72017,
-      "AsistenciaLatitud": 72011,
-      "AsistenciaLongitud": 72011,
-      "AsistenciaEstado": 70716
+      "OrdenTrabajoFechaFinReal": 19951,
+      "OrdenTrabajoTiempoResolucionBruto": 19405,
+      "OrdenTrabajoDuracion": 20570,
+      "OrdenTrabajoFechaCreacion": 22030,
+      "OrdenTrabajoUbicacion": 22030,
+      "OrdenTrabajoNochero": 19778,
+      "OrdenTrabajoPlanId": 2235,
+      "OrdenTrabajoPlan": 22030,
+      "OperacionCantidadInvolucrados": 22030,
+      "AsistenciaId": 5084,
+      "PersonaId": 5084,
+      "Persona": 5084,
+      "PerfilId": 5084,
+      "Perfil": 5084,
+      "TurnoId": 5084,
+      "Turno": 5084,
+      "TurnoHoraInicio": 5084,
+      "TurnoHoraFin": 5084,
+      "ZonaId": 5084,
+      "Zona": 5084,
+      "ResolutorActivo": 5084,
+      "AsistenciaTipo": 5084,
+      "AsistenciaFechaHora": 5084,
+      "AsistenciaFecha": 5084,
+      "AsistenciaLatitud": 5084,
+      "AsistenciaLongitud": 5084,
+      "AsistenciaEstado": 4630
     }
   },
   "catalogos": {
@@ -120,22 +121,22 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "Abierta",
-          "usos": 1512
+          "usos": 1901
         },
         {
           "id": 6,
           "valor": "Agendada",
-          "usos": 0
+          "usos": 178
         },
         {
           "id": 5,
           "valor": "Cancelada",
-          "usos": 634
+          "usos": 549
         },
         {
           "id": 3,
           "valor": "Cerrada",
-          "usos": 16985
+          "usos": 19095
         },
         {
           "id": 4,
@@ -145,7 +146,7 @@ window.LOOKUP_DATA = {
         {
           "id": 2,
           "valor": "Resuelta",
-          "usos": 216
+          "usos": 307
         }
       ]
     },
@@ -156,7 +157,7 @@ window.LOOKUP_DATA = {
         {
           "id": 9,
           "valor": "Aseo Tecnico",
-          "usos": 860
+          "usos": 881
         },
         {
           "id": 8,
@@ -166,12 +167,12 @@ window.LOOKUP_DATA = {
         {
           "id": 3,
           "valor": "Mantención Planificada",
-          "usos": 628
+          "usos": 1135
         },
         {
           "id": 2,
           "valor": "Requerimiento",
-          "usos": 758
+          "usos": 799
         },
         {
           "id": 6,
@@ -181,17 +182,17 @@ window.LOOKUP_DATA = {
         {
           "id": 7,
           "valor": "Sugerencias y Reclamos",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 4,
           "valor": "Tarea correctiva",
-          "usos": 16686
+          "usos": 18747
         },
         {
           "id": 5,
           "valor": "Urgencia",
-          "usos": 171
+          "usos": 247
         }
       ]
     },
@@ -207,22 +208,22 @@ window.LOOKUP_DATA = {
         {
           "id": 1016,
           "valor": "Areas Comunes",
-          "usos": 5931
+          "usos": 5435
         },
         {
           "id": 1027,
           "valor": "Aseo Tecnico",
-          "usos": 910
+          "usos": 931
         },
         {
           "id": 1017,
           "valor": "Equipos",
-          "usos": 568
+          "usos": 602
         },
         {
           "id": 1026,
           "valor": "Equipos Casino",
-          "usos": 1061
+          "usos": 828
         },
         {
           "id": 1025,
@@ -232,17 +233,17 @@ window.LOOKUP_DATA = {
         {
           "id": 1018,
           "valor": "Habitaciones",
-          "usos": 8435
+          "usos": 10659
         },
         {
           "id": 1019,
           "valor": "Oficinas",
-          "usos": 187
+          "usos": 184
         },
         {
           "id": 1020,
           "valor": "Otra",
-          "usos": 2241
+          "usos": 2730
         },
         {
           "id": 1022,
@@ -252,17 +253,22 @@ window.LOOKUP_DATA = {
         {
           "id": 1023,
           "valor": "Servicios Aseo",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 1015,
           "valor": "Servicios Café",
-          "usos": 12
+          "usos": 6
         },
         {
           "id": 1021,
           "valor": "Servicios especiales",
           "usos": 0
+        },
+        {
+          "id": 1028,
+          "valor": "Tablero Electrico",
+          "usos": 655
         }
       ]
     },
@@ -273,7 +279,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "ABATIDOR",
-          "usos": 20
+          "usos": 23
         },
         {
           "id": 2,
@@ -283,42 +289,42 @@ window.LOOKUP_DATA = {
         {
           "id": 3,
           "valor": "Aire Acondicionado",
-          "usos": 30
+          "usos": 28
         },
         {
           "id": 4,
           "valor": "Ampolleta",
-          "usos": 718
+          "usos": 612
         },
         {
           "id": 5,
           "valor": "Ampolleta en altura",
-          "usos": 522
+          "usos": 680
         },
         {
           "id": 6,
           "valor": "Ante Camara",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 129,
           "valor": "ANTECAMARA",
-          "usos": 4
+          "usos": 7
         },
         {
           "id": 7,
           "valor": "Baño Maria",
-          "usos": 53
+          "usos": 40
         },
         {
           "id": 126,
           "valor": "BATIDORA",
-          "usos": 1
+          "usos": 4
         },
         {
           "id": 8,
           "valor": "Batidora Hobart",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 9,
@@ -331,24 +337,19 @@ window.LOOKUP_DATA = {
           "usos": 0
         },
         {
-          "id": 131,
-          "valor": "CALDERIN HORIZONTAL",
-          "usos": 0
-        },
-        {
           "id": 11,
           "valor": "Cama",
-          "usos": 276
+          "usos": 272
         },
         {
           "id": 12,
           "valor": "Cama o litera en mal estado",
-          "usos": 50
+          "usos": 100
         },
         {
           "id": 103,
           "valor": "CAMARA BAJA TEMPERATURA",
-          "usos": 62
+          "usos": 68
         },
         {
           "id": 13,
@@ -373,12 +374,12 @@ window.LOOKUP_DATA = {
         {
           "id": 102,
           "valor": "CAMARA MEDIA TEMPERATURA",
-          "usos": 34
+          "usos": 36
         },
         {
           "id": 17,
           "valor": "Camara Pan",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 18,
@@ -393,7 +394,7 @@ window.LOOKUP_DATA = {
         {
           "id": 20,
           "valor": "Camara Productos Terminados",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 21,
@@ -403,12 +404,12 @@ window.LOOKUP_DATA = {
         {
           "id": 22,
           "valor": "Camara Video",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 23,
           "valor": "Candado",
-          "usos": 68
+          "usos": 79
         },
         {
           "id": 24,
@@ -418,22 +419,22 @@ window.LOOKUP_DATA = {
         {
           "id": 120,
           "valor": "CARRUSEL BANDEJERO",
-          "usos": 14
+          "usos": 8
         },
         {
           "id": 25,
           "valor": "Casillero",
-          "usos": 17
+          "usos": 16
         },
         {
           "id": 26,
           "valor": "Chapa",
-          "usos": 182
+          "usos": 194
         },
         {
           "id": 27,
           "valor": "Cielo",
-          "usos": 41
+          "usos": 26
         },
         {
           "id": 121,
@@ -443,12 +444,12 @@ window.LOOKUP_DATA = {
         {
           "id": 28,
           "valor": "Closet",
-          "usos": 348
+          "usos": 537
         },
         {
           "id": 106,
           "valor": "COCINA",
-          "usos": 9
+          "usos": 10
         },
         {
           "id": 29,
@@ -458,7 +459,7 @@ window.LOOKUP_DATA = {
         {
           "id": 30,
           "valor": "Colchón",
-          "usos": 216
+          "usos": 324
         },
         {
           "id": 107,
@@ -478,12 +479,12 @@ window.LOOKUP_DATA = {
         {
           "id": 33,
           "valor": "Corte energia",
-          "usos": 22
+          "usos": 24
         },
         {
           "id": 34,
           "valor": "Cortina habiltación no cierra",
-          "usos": 22
+          "usos": 20
         },
         {
           "id": 35,
@@ -498,47 +499,42 @@ window.LOOKUP_DATA = {
         {
           "id": 36,
           "valor": "Ducha",
-          "usos": 985
+          "usos": 1112
         },
         {
           "id": 37,
           "valor": "Enchufe",
-          "usos": 358
+          "usos": 281
         },
         {
           "id": 38,
           "valor": "Energia",
-          "usos": 904
+          "usos": 974
         },
         {
           "id": 39,
           "valor": "Equipo Perol",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 40,
           "valor": "Extractor",
-          "usos": 104
+          "usos": 75
         },
         {
           "id": 41,
           "valor": "Filtracion",
-          "usos": 785
+          "usos": 902
         },
         {
           "id": 42,
           "valor": "filtración mayor / inundación",
-          "usos": 31
+          "usos": 22
         },
         {
           "id": 43,
           "valor": "Freidora",
-          "usos": 0
-        },
-        {
-          "id": 108,
-          "valor": "FREIDORA",
-          "usos": 0
+          "usos": 6
         },
         {
           "id": 101,
@@ -548,12 +544,12 @@ window.LOOKUP_DATA = {
         {
           "id": 109,
           "valor": "HORNO",
-          "usos": 44
+          "usos": 57
         },
         {
           "id": 44,
           "valor": "Horno Conveccion",
-          "usos": 2
+          "usos": 1
         },
         {
           "id": 45,
@@ -563,27 +559,27 @@ window.LOOKUP_DATA = {
         {
           "id": 46,
           "valor": "Interruptor",
-          "usos": 39
+          "usos": 29
         },
         {
           "id": 47,
           "valor": "Lavamanos",
-          "usos": 337
+          "usos": 392
         },
         {
           "id": 48,
           "valor": "Lavavajillas",
-          "usos": 42
+          "usos": 24
         },
         {
           "id": 49,
           "valor": "Litera",
-          "usos": 55
+          "usos": 101
         },
         {
           "id": 50,
           "valor": "Llave",
-          "usos": 1000
+          "usos": 1732
         },
         {
           "id": 51,
@@ -593,32 +589,32 @@ window.LOOKUP_DATA = {
         {
           "id": 52,
           "valor": "Llave de Paso",
-          "usos": 11
+          "usos": 8
         },
         {
           "id": 53,
           "valor": "Luminaria",
-          "usos": 138
+          "usos": 146
         },
         {
           "id": 54,
           "valor": "Luminaria en altura",
-          "usos": 76
+          "usos": 78
+        },
+        {
+          "id": 55,
+          "valor": "Mant",
+          "usos": 7
         },
         {
           "id": 130,
           "valor": "MANTENEDOR",
-          "usos": 20
+          "usos": 9
         },
         {
           "id": 116,
           "valor": "MANTENEDOR CALIENTE",
-          "usos": 0
-        },
-        {
-          "id": 55,
-          "valor": "Mantenedor Caliente",
-          "usos": 12
+          "usos": 35
         },
         {
           "id": 56,
@@ -628,7 +624,7 @@ window.LOOKUP_DATA = {
         {
           "id": 124,
           "valor": "MAQUINA DE JUGOS",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 57,
@@ -643,7 +639,7 @@ window.LOOKUP_DATA = {
         {
           "id": 134,
           "valor": "MAQUINA LAVADO DE WENCOS",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 127,
@@ -651,49 +647,39 @@ window.LOOKUP_DATA = {
           "usos": 0
         },
         {
-          "id": 110,
-          "valor": "MARMITA",
-          "usos": 0
-        },
-        {
           "id": 58,
           "valor": "Marmita",
-          "usos": 14
+          "usos": 6
         },
         {
           "id": 59,
           "valor": "Mesa",
-          "usos": 19
+          "usos": 10
         },
         {
           "id": 60,
           "valor": "Meson Refrigerado",
-          "usos": 4
-        },
-        {
-          "id": 111,
-          "valor": "MESON REFRIGERADO",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 61,
           "valor": "Muro",
-          "usos": 49
+          "usos": 45
         },
         {
           "id": 62,
           "valor": "Otro",
-          "usos": 8869
+          "usos": 8783
         },
         {
           "id": 63,
           "valor": "Pasarela",
-          "usos": 0
+          "usos": 6
         },
         {
           "id": 64,
           "valor": "Pasillo",
-          "usos": 29
+          "usos": 30
         },
         {
           "id": 65,
@@ -713,37 +699,37 @@ window.LOOKUP_DATA = {
         {
           "id": 67,
           "valor": "Patio",
-          "usos": 6
+          "usos": 4
         },
         {
           "id": 68,
           "valor": "Persiana",
-          "usos": 130
+          "usos": 283
         },
         {
           "id": 69,
           "valor": "Pestillo",
-          "usos": 10
+          "usos": 2
         },
         {
           "id": 70,
           "valor": "Piso",
-          "usos": 66
+          "usos": 101
         },
         {
           "id": 71,
           "valor": "Plafon",
-          "usos": 26
+          "usos": 24
         },
         {
           "id": 117,
           "valor": "PLANCHA CALIENTE GRILL",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 113,
           "valor": "PLANCHA CALIENTE LISA",
-          "usos": 4
+          "usos": 2
         },
         {
           "id": 72,
@@ -758,12 +744,12 @@ window.LOOKUP_DATA = {
         {
           "id": 73,
           "valor": "Porta Papel",
-          "usos": 28
+          "usos": 35
         },
         {
           "id": 74,
           "valor": "Puerta",
-          "usos": 231
+          "usos": 256
         },
         {
           "id": 123,
@@ -778,7 +764,7 @@ window.LOOKUP_DATA = {
         {
           "id": 104,
           "valor": "REEFER BAJA TEMPERATURA",
-          "usos": 53
+          "usos": 55
         },
         {
           "id": 76,
@@ -793,47 +779,37 @@ window.LOOKUP_DATA = {
         {
           "id": 105,
           "valor": "REEFER MEDIA TEMPERATURA",
-          "usos": 11
-        },
-        {
-          "id": 118,
-          "valor": "REFRIGERADOR ",
-          "usos": 0
-        },
-        {
-          "id": 133,
-          "valor": "REFRIGERADOR",
-          "usos": 0
+          "usos": 5
         },
         {
           "id": 78,
           "valor": "Refrigerador",
-          "usos": 8
+          "usos": 10
         },
         {
           "id": 79,
           "valor": "Repisa",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 80,
           "valor": "Salad Bar",
-          "usos": 4
+          "usos": 16
         },
         {
           "id": 81,
-          "valor": "Sarten Basculante",
-          "usos": 24
+          "valor": "Sarten",
+          "usos": 7
         },
         {
           "id": 114,
           "valor": "SARTEN BASCULANTE",
-          "usos": 0
+          "usos": 4
         },
         {
           "id": 82,
           "valor": "Silla",
-          "usos": 6
+          "usos": 2
         },
         {
           "id": 98,
@@ -848,22 +824,32 @@ window.LOOKUP_DATA = {
         {
           "id": 83,
           "valor": "sin agua caliente",
-          "usos": 46
+          "usos": 81
         },
         {
           "id": 84,
-          "valor": "Tablero electrico",
-          "usos": 31
+          "valor": "Tab",
+          "usos": 22
+        },
+        {
+          "id": 136,
+          "valor": "TABLERO ELECTRICO",
+          "usos": 655
+        },
+        {
+          "id": 137,
+          "valor": "TABLEROS ELECTRICOS",
+          "usos": 0
         },
         {
           "id": 85,
           "valor": "Techumbre",
-          "usos": 5
+          "usos": 9
         },
         {
           "id": 86,
           "valor": "Termo",
-          "usos": 390
+          "usos": 652
         },
         {
           "id": 87,
@@ -873,77 +859,62 @@ window.LOOKUP_DATA = {
         {
           "id": 135,
           "valor": "TERMO DE AUTOLLENADO",
-          "usos": 15
-        },
-        {
-          "id": 125,
-          "valor": "TOSTADORA DE PAN",
-          "usos": 0
+          "usos": 16
         },
         {
           "id": 88,
           "valor": "Tostadora de Pan",
-          "usos": 3
+          "usos": 2
         },
         {
           "id": 89,
           "valor": "TV",
-          "usos": 187
+          "usos": 189
         },
         {
           "id": 90,
           "valor": "Urinario",
-          "usos": 123
+          "usos": 138
         },
         {
           "id": 115,
           "valor": "VARIOCOOKING",
-          "usos": 3
+          "usos": 6
         },
         {
           "id": 91,
           "valor": "Velador",
-          "usos": 50
+          "usos": 56
         },
         {
           "id": 92,
           "valor": "Ventana",
-          "usos": 95
+          "usos": 124
         },
         {
           "id": 93,
           "valor": "Veredas",
-          "usos": 0
+          "usos": 4
         },
         {
           "id": 94,
           "valor": "Visicooler",
-          "usos": 3
-        },
-        {
-          "id": 132,
-          "valor": "VISICOOLER",
-          "usos": 0
-        },
-        {
-          "id": 119,
-          "valor": "VITRINA DE POSTRES",
-          "usos": 0
+          "usos": 6
         },
         {
           "id": 95,
           "valor": "Vitrina de Postres",
-          "usos": 8
+          "usos": 14
         },
         {
           "id": 96,
           "valor": "WC",
-          "usos": 852
+          "usos": 992
         },
         {
           "id": 97,
           "valor": "Zocalo",
-          "usos": 19
+          "usos": 17
         }
       ]
     },
@@ -954,7 +925,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "a la vista",
-          "usos": 305
+          "usos": 390
         },
         {
           "id": 2,
@@ -974,7 +945,7 @@ window.LOOKUP_DATA = {
         {
           "id": 130,
           "valor": "Acumulación de residuos",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 3,
@@ -984,22 +955,22 @@ window.LOOKUP_DATA = {
         {
           "id": 4,
           "valor": "agua caliente insuficiente",
-          "usos": 141
+          "usos": 149
         },
         {
           "id": 5,
           "valor": "ajustar soporte",
-          "usos": 14
+          "usos": 18
         },
         {
           "id": 6,
           "valor": "atascada",
-          "usos": 17
+          "usos": 22
         },
         {
           "id": 7,
           "valor": "bajo el piso",
-          "usos": 29
+          "usos": 17
         },
         {
           "id": 8,
@@ -1014,12 +985,12 @@ window.LOOKUP_DATA = {
         {
           "id": 10,
           "valor": "Cama o litera en mal estado",
-          "usos": 50
+          "usos": 100
         },
         {
           "id": 11,
           "valor": "cambiar",
-          "usos": 130
+          "usos": 150
         },
         {
           "id": 158,
@@ -1034,12 +1005,12 @@ window.LOOKUP_DATA = {
         {
           "id": 13,
           "valor": "cerradura mala",
-          "usos": 13
+          "usos": 18
         },
         {
           "id": 14,
           "valor": "challa mala",
-          "usos": 98
+          "usos": 196
         },
         {
           "id": 117,
@@ -1084,17 +1055,17 @@ window.LOOKUP_DATA = {
         {
           "id": 19,
           "valor": "cortar",
-          "usos": 61
+          "usos": 70
         },
         {
           "id": 20,
           "valor": "Corte energia",
-          "usos": 22
+          "usos": 24
         },
         {
           "id": 21,
           "valor": "Cortina habiltación no cierra",
-          "usos": 22
+          "usos": 20
         },
         {
           "id": 126,
@@ -1104,22 +1075,22 @@ window.LOOKUP_DATA = {
         {
           "id": 22,
           "valor": "dentro pared",
-          "usos": 36
+          "usos": 50
         },
         {
           "id": 145,
           "valor": "Depósito de minerales",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 23,
           "valor": "desalineada",
-          "usos": 32
+          "usos": 28
         },
         {
           "id": 24,
           "valor": "descentrada",
-          "usos": 7
+          "usos": 18
         },
         {
           "id": 131,
@@ -1129,7 +1100,7 @@ window.LOOKUP_DATA = {
         {
           "id": 25,
           "valor": "destape",
-          "usos": 468
+          "usos": 518
         },
         {
           "id": 128,
@@ -1144,12 +1115,12 @@ window.LOOKUP_DATA = {
         {
           "id": 26,
           "valor": "emite mucho ruido",
-          "usos": 10
+          "usos": 5
         },
         {
           "id": 27,
           "valor": "en el cielo",
-          "usos": 58
+          "usos": 56
         },
         {
           "id": 110,
@@ -1164,7 +1135,7 @@ window.LOOKUP_DATA = {
         {
           "id": 29,
           "valor": "falla electrica",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 30,
@@ -1204,12 +1175,12 @@ window.LOOKUP_DATA = {
         {
           "id": 37,
           "valor": "Falla general",
-          "usos": 67
+          "usos": 46
         },
         {
           "id": 38,
           "valor": "falla grifo",
-          "usos": 75
+          "usos": 89
         },
         {
           "id": 39,
@@ -1239,7 +1210,7 @@ window.LOOKUP_DATA = {
         {
           "id": 44,
           "valor": "falla termostato",
-          "usos": 3
+          "usos": 1
         },
         {
           "id": 137,
@@ -1249,7 +1220,7 @@ window.LOOKUP_DATA = {
         {
           "id": 123,
           "valor": "Fallas en los calentadores",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 150,
@@ -1269,22 +1240,22 @@ window.LOOKUP_DATA = {
         {
           "id": 45,
           "valor": "filtra",
-          "usos": 3
+          "usos": 13
         },
         {
           "id": 46,
           "valor": "filtracion",
-          "usos": 23
+          "usos": 17
         },
         {
           "id": 104,
           "valor": "filtracion a al vista",
-          "usos": 5
+          "usos": 8
         },
         {
           "id": 107,
           "valor": "filtracion a la vista",
-          "usos": 139
+          "usos": 198
         },
         {
           "id": 47,
@@ -1294,7 +1265,7 @@ window.LOOKUP_DATA = {
         {
           "id": 48,
           "valor": "filtración mayor / inundación",
-          "usos": 31
+          "usos": 22
         },
         {
           "id": 114,
@@ -1359,7 +1330,7 @@ window.LOOKUP_DATA = {
         {
           "id": 121,
           "valor": "Fugas de agua",
-          "usos": 5
+          "usos": 2
         },
         {
           "id": 56,
@@ -1369,7 +1340,7 @@ window.LOOKUP_DATA = {
         {
           "id": 116,
           "valor": "Fugas de gas refrigerante",
-          "usos": 7
+          "usos": 2
         },
         {
           "id": 132,
@@ -1389,12 +1360,12 @@ window.LOOKUP_DATA = {
         {
           "id": 58,
           "valor": "hacer copia",
-          "usos": 984
+          "usos": 1715
         },
         {
           "id": 59,
           "valor": "Instalar",
-          "usos": 680
+          "usos": 727
         },
         {
           "id": 60,
@@ -1424,12 +1395,12 @@ window.LOOKUP_DATA = {
         {
           "id": 65,
           "valor": "no calienta",
-          "usos": 21
+          "usos": 11
         },
         {
           "id": 66,
           "valor": "no corta agua",
-          "usos": 37
+          "usos": 30
         },
         {
           "id": 67,
@@ -1439,17 +1410,17 @@ window.LOOKUP_DATA = {
         {
           "id": 68,
           "valor": "no enciende",
-          "usos": 851
+          "usos": 952
         },
         {
           "id": 69,
           "valor": "no enciende o quemada",
-          "usos": 76
+          "usos": 78
         },
         {
           "id": 70,
           "valor": "no enfria",
-          "usos": 3
+          "usos": 2
         },
         {
           "id": 105,
@@ -1464,7 +1435,7 @@ window.LOOKUP_DATA = {
         {
           "id": 72,
           "valor": "no funciona",
-          "usos": 15
+          "usos": 13
         },
         {
           "id": 73,
@@ -1479,7 +1450,7 @@ window.LOOKUP_DATA = {
         {
           "id": 75,
           "valor": "no tiene energía",
-          "usos": 222
+          "usos": 189
         },
         {
           "id": 120,
@@ -1494,7 +1465,7 @@ window.LOOKUP_DATA = {
         {
           "id": 77,
           "valor": "Otro",
-          "usos": 13978
+          "usos": 15468
         },
         {
           "id": 78,
@@ -1504,7 +1475,7 @@ window.LOOKUP_DATA = {
         {
           "id": 79,
           "valor": "pintar",
-          "usos": 84
+          "usos": 68
         },
         {
           "id": 80,
@@ -1524,17 +1495,17 @@ window.LOOKUP_DATA = {
         {
           "id": 136,
           "valor": "Problemas de humedad",
-          "usos": 4
+          "usos": 3
         },
         {
           "id": 83,
           "valor": "problemas electricos",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 146,
           "valor": "Problemas eléctricos",
-          "usos": 5
+          "usos": 3
         },
         {
           "id": 133,
@@ -1594,7 +1565,7 @@ window.LOOKUP_DATA = {
         {
           "id": 85,
           "valor": "quemado o roto",
-          "usos": 39
+          "usos": 27
         },
         {
           "id": 86,
@@ -1609,17 +1580,17 @@ window.LOOKUP_DATA = {
         {
           "id": 87,
           "valor": "reparar",
-          "usos": 6
+          "usos": 7
         },
         {
           "id": 142,
           "valor": "Resistencia o elemento calefactor defectuoso",
-          "usos": 8
+          "usos": 2
         },
         {
           "id": 88,
           "valor": "rota",
-          "usos": 28
+          "usos": 31
         },
         {
           "id": 89,
@@ -1644,7 +1615,7 @@ window.LOOKUP_DATA = {
         {
           "id": 93,
           "valor": "se atasca",
-          "usos": 5
+          "usos": 7
         },
         {
           "id": 94,
@@ -1654,12 +1625,12 @@ window.LOOKUP_DATA = {
         {
           "id": 95,
           "valor": "sin agua",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 96,
           "valor": "sin agua caliente",
-          "usos": 46
+          "usos": 81
         },
         {
           "id": 124,
@@ -1674,32 +1645,32 @@ window.LOOKUP_DATA = {
         {
           "id": 97,
           "valor": "solo enchufes",
-          "usos": 63
+          "usos": 67
         },
         {
           "id": 98,
           "valor": "sonido defectuoso",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 99,
           "valor": "suelta",
-          "usos": 2
+          "usos": 4
         },
         {
           "id": 106,
           "valor": "suelto",
-          "usos": 32
+          "usos": 26
         },
         {
           "id": 100,
           "valor": "suelto o roto",
-          "usos": 3
+          "usos": 5
         },
         {
           "id": 101,
           "valor": "suelto o torcido",
-          "usos": 3
+          "usos": 6
         },
         {
           "id": 102,
@@ -1739,7 +1710,7 @@ window.LOOKUP_DATA = {
         {
           "id": 103,
           "valor": "vidrio roto",
-          "usos": 5
+          "usos": 7
         }
       ]
     },
@@ -1765,12 +1736,12 @@ window.LOOKUP_DATA = {
         {
           "id": 2,
           "valor": "Instalación",
-          "usos": 17620
+          "usos": 19793
         },
         {
           "id": 8,
           "valor": "Mantencion Planificada",
-          "usos": 1722
+          "usos": 2237
         },
         {
           "id": 1,
@@ -1790,7 +1761,7 @@ window.LOOKUP_DATA = {
         {
           "id": 9,
           "valor": "Servicio Aseo",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 6,
@@ -1811,7 +1782,7 @@ window.LOOKUP_DATA = {
         {
           "id": 39,
           "valor": "Apoyo",
-          "usos": 299
+          "usos": 379
         },
         {
           "id": 19,
@@ -1826,12 +1797,12 @@ window.LOOKUP_DATA = {
         {
           "id": 25,
           "valor": "Bodeguero",
-          "usos": 366
+          "usos": 382
         },
         {
           "id": 40,
           "valor": "Carpinteria",
-          "usos": 6612
+          "usos": 7058
         },
         {
           "id": 23,
@@ -1841,7 +1812,7 @@ window.LOOKUP_DATA = {
         {
           "id": 41,
           "valor": "Cerrajeria",
-          "usos": 1000
+          "usos": 1732
         },
         {
           "id": 42,
@@ -1861,17 +1832,17 @@ window.LOOKUP_DATA = {
         {
           "id": 43,
           "valor": "Electricidad",
-          "usos": 2388
+          "usos": 2254
         },
         {
           "id": 44,
           "valor": "Especialista Termo",
-          "usos": 338
+          "usos": 452
         },
         {
           "id": 26,
           "valor": "Filtraciones",
-          "usos": 483
+          "usos": 525
         },
         {
           "id": 27,
@@ -1881,7 +1852,7 @@ window.LOOKUP_DATA = {
         {
           "id": 45,
           "valor": "Gasfiteria",
-          "usos": 2609
+          "usos": 3062
         },
         {
           "id": 38,
@@ -1921,7 +1892,7 @@ window.LOOKUP_DATA = {
         {
           "id": 48,
           "valor": "Polifuncional",
-          "usos": 2897
+          "usos": 3474
         },
         {
           "id": 53,
@@ -1931,7 +1902,7 @@ window.LOOKUP_DATA = {
         {
           "id": 46,
           "valor": "Refrigeracion",
-          "usos": 7
+          "usos": 3
         },
         {
           "id": 22,
@@ -1956,12 +1927,12 @@ window.LOOKUP_DATA = {
         {
           "id": 20,
           "valor": "Tecnico Equipos",
-          "usos": 2210
+          "usos": 2569
         },
         {
           "id": 47,
           "valor": "Tecnico Termo",
-          "usos": 135
+          "usos": 140
         },
         {
           "id": 30,
@@ -1982,7 +1953,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "Abierta",
-          "usos": 1329
+          "usos": 1927
         },
         {
           "id": 8,
@@ -1992,17 +1963,17 @@ window.LOOKUP_DATA = {
         {
           "id": 3,
           "valor": "Asignada",
-          "usos": 62
+          "usos": 89
         },
         {
           "id": 5,
           "valor": "Cancelada",
-          "usos": 629
+          "usos": 536
         },
         {
           "id": 4,
           "valor": "Detenida",
-          "usos": 3
+          "usos": 2
         },
         {
           "id": 6,
@@ -2012,12 +1983,12 @@ window.LOOKUP_DATA = {
         {
           "id": 2,
           "valor": "Por abrir",
-          "usos": 107
+          "usos": 52
         },
         {
           "id": 7,
           "valor": "Resuelta",
-          "usos": 17214
+          "usos": 19424
         }
       ]
     },
@@ -2028,7 +1999,7 @@ window.LOOKUP_DATA = {
         {
           "id": 11,
           "valor": "Administracion",
-          "usos": 25
+          "usos": 0
         },
         {
           "id": 20,
@@ -2043,12 +2014,12 @@ window.LOOKUP_DATA = {
         {
           "id": 9,
           "valor": "Aseo Especifico Casino TA",
-          "usos": 9
+          "usos": 200
         },
         {
           "id": 10,
           "valor": "Aseo Especifico Casino TB",
-          "usos": 39
+          "usos": 77
         },
         {
           "id": 25,
@@ -2058,7 +2029,7 @@ window.LOOKUP_DATA = {
         {
           "id": 21,
           "valor": "Aseo Especifico Chañar",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 24,
@@ -2078,27 +2049,27 @@ window.LOOKUP_DATA = {
         {
           "id": 28,
           "valor": "Aseo Tecnico",
-          "usos": 99
+          "usos": 148
         },
         {
           "id": 1,
           "valor": "Mantención Algarrobo TA",
-          "usos": 526
+          "usos": 655
         },
         {
           "id": 4,
           "valor": "Mantención Algarrobo TB",
-          "usos": 0
+          "usos": 93
         },
         {
           "id": 2,
           "valor": "Mantención Chañar TA",
-          "usos": 10408
+          "usos": 12678
         },
         {
           "id": 3,
           "valor": "Mantención Chañar TB",
-          "usos": 5625
+          "usos": 5813
         },
         {
           "id": 7,
@@ -2113,7 +2084,7 @@ window.LOOKUP_DATA = {
         {
           "id": 19,
           "valor": "Mantención Muelle",
-          "usos": 882
+          "usos": 688
         },
         {
           "id": 5,
@@ -2128,12 +2099,12 @@ window.LOOKUP_DATA = {
         {
           "id": 31,
           "valor": "Marsol",
-          "usos": 171
+          "usos": 80
         },
         {
           "id": 27,
           "valor": "Obras Civiles",
-          "usos": 1550
+          "usos": 1590
         },
         {
           "id": 29,
@@ -2159,17 +2130,197 @@ window.LOOKUP_DATA = {
         {
           "id": 97,
           "valor": ".",
-          "usos": 4
+          "usos": 6
         },
         {
           "id": 239,
           "valor": ".",
+          "usos": 20
+        },
+        {
+          "id": 241,
+          "valor": "ACCESO CONTROL",
           "usos": 0
         },
         {
           "id": 2,
           "valor": "ACCESO PLANTA HIDROMETALURGIA",
-          "usos": 9
+          "usos": 7
+        },
+        {
+          "id": 268,
+          "valor": "ALA 01",
+          "usos": 61
+        },
+        {
+          "id": 269,
+          "valor": "ALA 02",
+          "usos": 37
+        },
+        {
+          "id": 270,
+          "valor": "ALA 03",
+          "usos": 48
+        },
+        {
+          "id": 271,
+          "valor": "ALA 1 1ER PISO",
+          "usos": 1
+        },
+        {
+          "id": 272,
+          "valor": "ALA 1 2DO PISO",
+          "usos": 1
+        },
+        {
+          "id": 273,
+          "valor": "ALA 2 1ER PISO",
+          "usos": 4
+        },
+        {
+          "id": 274,
+          "valor": "ALA 2 2DO PISO",
+          "usos": 2
+        },
+        {
+          "id": 275,
+          "valor": "ALA 3 1ER PISO",
+          "usos": 5
+        },
+        {
+          "id": 276,
+          "valor": "ALA 3 2DO PISO",
+          "usos": 2
+        },
+        {
+          "id": 277,
+          "valor": "ALA 4",
+          "usos": 63
+        },
+        {
+          "id": 278,
+          "valor": "ALA 4 1ER PISO",
+          "usos": 2
+        },
+        {
+          "id": 279,
+          "valor": "ALA 4 2DO PISO",
+          "usos": 8
+        },
+        {
+          "id": 280,
+          "valor": "ALA 5A",
+          "usos": 88
+        },
+        {
+          "id": 281,
+          "valor": "ALA 5A 1ER PISO",
+          "usos": 4
+        },
+        {
+          "id": 282,
+          "valor": "ALA 5A 2DO PISO",
+          "usos": 2
+        },
+        {
+          "id": 283,
+          "valor": "ALA 5A 3ER PISO",
+          "usos": 8
+        },
+        {
+          "id": 284,
+          "valor": "ALA 5A SALA DE TERMO",
+          "usos": 1
+        },
+        {
+          "id": 285,
+          "valor": "ALA 5B",
+          "usos": 71
+        },
+        {
+          "id": 286,
+          "valor": "ALA 5B 1ER PISO",
+          "usos": 2
+        },
+        {
+          "id": 287,
+          "valor": "ALA 5B 2DO PISO",
+          "usos": 2
+        },
+        {
+          "id": 288,
+          "valor": "ALA 5B 3ER PISO",
+          "usos": 5
+        },
+        {
+          "id": 289,
+          "valor": "ALA 5B SALA DE TERMO",
+          "usos": 2
+        },
+        {
+          "id": 290,
+          "valor": "ALA 6",
+          "usos": 74
+        },
+        {
+          "id": 291,
+          "valor": "ALA 6 1ER PISO",
+          "usos": 5
+        },
+        {
+          "id": 292,
+          "valor": "ALA 6 2DO PISO",
+          "usos": 4
+        },
+        {
+          "id": 293,
+          "valor": "ALA 7",
+          "usos": 55
+        },
+        {
+          "id": 294,
+          "valor": "ALA 7 1ER PISO",
+          "usos": 3
+        },
+        {
+          "id": 295,
+          "valor": "ALA 7 2DO PISO",
+          "usos": 4
+        },
+        {
+          "id": 296,
+          "valor": "ALA 8",
+          "usos": 51
+        },
+        {
+          "id": 297,
+          "valor": "ALA 8 1ER PISO",
+          "usos": 2
+        },
+        {
+          "id": 298,
+          "valor": "ALA 8 2DO PISO",
+          "usos": 7
+        },
+        {
+          "id": 299,
+          "valor": "ALA 9",
+          "usos": 59
+        },
+        {
+          "id": 300,
+          "valor": "ALA 9 1ER PISO",
+          "usos": 5
+        },
+        {
+          "id": 301,
+          "valor": "ALA 9 2DO PISO",
+          "usos": 3
+        },
+        {
+          "id": 302,
+          "valor": "ANTE CAMARA",
+          "usos": 1
         },
         {
           "id": 225,
@@ -2179,12 +2330,12 @@ window.LOOKUP_DATA = {
         {
           "id": 226,
           "valor": "AREA BODEGA",
-          "usos": 16
+          "usos": 10
         },
         {
           "id": 199,
           "valor": "AREA HUMEDA SX",
-          "usos": 5
+          "usos": 4
         },
         {
           "id": 4,
@@ -2194,252 +2345,337 @@ window.LOOKUP_DATA = {
         {
           "id": 227,
           "valor": "AREA NO OPERATIVA",
-          "usos": 1
+          "usos": 0
+        },
+        {
+          "id": 303,
+          "valor": "AREAS ANEXAS TALLER APOYO ENGIE",
+          "usos": 3
         },
         {
           "id": 139,
           "valor": "AREAS COMUNES",
-          "usos": 259
+          "usos": 277
         },
         {
           "id": 215,
           "valor": "AREAS COMUNES CHAÑAR",
-          "usos": 105
+          "usos": 81
         },
         {
           "id": 203,
           "valor": "AREAS EXTERNAS",
-          "usos": 59
+          "usos": 24
         },
         {
           "id": 210,
           "valor": "AREAS EXTERNAS",
-          "usos": 185
+          "usos": 158
         },
         {
           "id": 216,
           "valor": "AREAS EXTERNAS ALGARROBO (OXIDO)",
-          "usos": 50
+          "usos": 38
         },
         {
           "id": 217,
           "valor": "AREAS EXTERNAS SULFUROS",
-          "usos": 19
+          "usos": 14
+        },
+        {
+          "id": 304,
+          "valor": "BAÑO MANIPULADORES",
+          "usos": 3
         },
         {
           "id": 220,
           "valor": "BARRIO CIVICO",
-          "usos": 44
+          "usos": 20
         },
         {
           "id": 236,
           "valor": "BL1 ANTIGUO",
-          "usos": 6
+          "usos": 12
+        },
+        {
+          "id": 242,
+          "valor": "BODEGA",
+          "usos": 1
         },
         {
           "id": 84,
           "valor": "BODEGA ASEO",
-          "usos": 6
+          "usos": 10
         },
         {
           "id": 5,
           "valor": "BODEGA CEN MUELLE",
-          "usos": 6
+          "usos": 4
         },
         {
           "id": 228,
           "valor": "BODEGA CENTRAL SULFURO",
-          "usos": 4
+          "usos": 6
+        },
+        {
+          "id": 403,
+          "valor": "CAFETERIA ",
+          "usos": 5
+        },
+        {
+          "id": 254,
+          "valor": "CAFETERIA",
+          "usos": 0
+        },
+        {
+          "id": 307,
+          "valor": "CAMARA CARNE AL VACIO",
+          "usos": 1
+        },
+        {
+          "id": 308,
+          "valor": "CAMARA CARNES",
+          "usos": 1
+        },
+        {
+          "id": 309,
+          "valor": "CAMARA CECINA",
+          "usos": 1
+        },
+        {
+          "id": 310,
+          "valor": "CAMARA CONGELADOS",
+          "usos": 1
+        },
+        {
+          "id": 311,
+          "valor": "CAMARA FRIZADOS",
+          "usos": 1
+        },
+        {
+          "id": 312,
+          "valor": "CAMARA FRUTA",
+          "usos": 1
+        },
+        {
+          "id": 313,
+          "valor": "CAMARA VERDURA",
+          "usos": 1
+        },
+        {
+          "id": 314,
+          "valor": "CAMARAS",
+          "usos": 1
         },
         {
           "id": 110,
           "valor": "CAMPAMENTO PIONEROS NORTE CAP-01",
-          "usos": 65
+          "usos": 272
         },
         {
           "id": 111,
           "valor": "CAMPAMENTO PIONEROS NORTE CAP-02",
-          "usos": 28
+          "usos": 109
         },
         {
           "id": 112,
           "valor": "CAMPAMENTO PIONEROS NORTE CAP-03",
-          "usos": 53
+          "usos": 139
         },
         {
           "id": 113,
           "valor": "CAMPAMENTO PIONEROS NORTE CAP-04",
-          "usos": 62
+          "usos": 151
         },
         {
           "id": 98,
           "valor": "CAMPAMENTO PIONEROS NORTE EJE-01",
-          "usos": 164
+          "usos": 150
         },
         {
           "id": 106,
           "valor": "CAMPAMENTO PIONEROS NORTE OP-02",
-          "usos": 192
+          "usos": 296
         },
         {
           "id": 107,
           "valor": "CAMPAMENTO PIONEROS NORTE OP-03",
-          "usos": 84
+          "usos": 417
         },
         {
           "id": 108,
           "valor": "CAMPAMENTO PIONEROS NORTE OP-15",
-          "usos": 94
+          "usos": 193
         },
         {
           "id": 109,
           "valor": "CAMPAMENTO PIONEROS NORTE OP-16",
-          "usos": 136
+          "usos": 227
         },
         {
           "id": 104,
           "valor": "CAMPAMENTO PIONEROS NORTE PAB-07",
-          "usos": 277
+          "usos": 253
         },
         {
           "id": 105,
           "valor": "CAMPAMENTO PIONEROS NORTE PAB-08",
-          "usos": 243
+          "usos": 239
         },
         {
           "id": 99,
           "valor": "CAMPAMENTO PIONEROS NORTE SUPB-01",
-          "usos": 103
+          "usos": 113
         },
         {
           "id": 100,
           "valor": "CAMPAMENTO PIONEROS NORTE SUPB-02",
-          "usos": 81
+          "usos": 110
         },
         {
           "id": 101,
           "valor": "CAMPAMENTO PIONEROS NORTE SUPB-03",
-          "usos": 174
+          "usos": 138
         },
         {
           "id": 102,
           "valor": "CAMPAMENTO PIONEROS NORTE SUPB-04",
-          "usos": 73
+          "usos": 103
         },
         {
           "id": 103,
           "valor": "CAMPAMENTO PIONEROS NORTE SUPB-05",
-          "usos": 83
+          "usos": 119
         },
         {
           "id": 114,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-01",
-          "usos": 91
+          "usos": 111
         },
         {
           "id": 115,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-02",
-          "usos": 55
+          "usos": 65
         },
         {
           "id": 116,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-03",
-          "usos": 231
+          "usos": 110
         },
         {
           "id": 117,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-04",
-          "usos": 117
+          "usos": 167
         },
         {
           "id": 118,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-05",
-          "usos": 108
+          "usos": 126
         },
         {
           "id": 119,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-06",
-          "usos": 132
+          "usos": 142
         },
         {
           "id": 120,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-07",
-          "usos": 95
+          "usos": 115
         },
         {
           "id": 121,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-08",
-          "usos": 78
+          "usos": 91
         },
         {
           "id": 122,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-09",
-          "usos": 98
+          "usos": 112
         },
         {
           "id": 123,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-10",
-          "usos": 86
+          "usos": 108
         },
         {
           "id": 124,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-11",
-          "usos": 77
+          "usos": 112
         },
         {
           "id": 125,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-12",
-          "usos": 100
+          "usos": 129
         },
         {
           "id": 126,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-13",
-          "usos": 91
+          "usos": 87
+        },
+        {
+          "id": 433,
+          "valor": "CAMPAMENTO PIONEROS NORTE TFA-14",
+          "usos": 53
+        },
+        {
+          "id": 434,
+          "valor": "CAMPAMENTO PIONEROS NORTE TFA-15",
+          "usos": 48
+        },
+        {
+          "id": 435,
+          "valor": "CAMPAMENTO PIONEROS NORTE TFA-16",
+          "usos": 56
+        },
+        {
+          "id": 436,
+          "valor": "CAMPAMENTO PIONEROS NORTE TFA-17",
+          "usos": 59
         },
         {
           "id": 127,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-18",
-          "usos": 157
+          "usos": 211
         },
         {
           "id": 128,
           "valor": "CAMPAMENTO PIONEROS NORTE TFA-19",
-          "usos": 173
+          "usos": 191
         },
         {
           "id": 49,
           "valor": "CAMPAMENTO PIONEROS SUR EJE-02",
-          "usos": 88
+          "usos": 118
         },
         {
           "id": 50,
           "valor": "CAMPAMENTO PIONEROS SUR EJE-03",
-          "usos": 137
+          "usos": 152
         },
         {
           "id": 190,
           "valor": "CAMPAMENTO PIONEROS SUR EJE-04",
-          "usos": 58
+          "usos": 62
         },
         {
           "id": 66,
           "valor": "CAMPAMENTO PIONEROS SUR MOLLY AMARILLO",
-          "usos": 91
+          "usos": 170
         },
         {
           "id": 67,
           "valor": "CAMPAMENTO PIONEROS SUR MOLLY AZUL",
-          "usos": 134
+          "usos": 237
         },
         {
           "id": 60,
           "valor": "CAMPAMENTO PIONEROS SUR OP-04",
-          "usos": 60
+          "usos": 127
         },
         {
           "id": 61,
           "valor": "CAMPAMENTO PIONEROS SUR OP-05",
-          "usos": 78
+          "usos": 135
         },
         {
           "id": 68,
@@ -2449,67 +2685,67 @@ window.LOOKUP_DATA = {
         {
           "id": 51,
           "valor": "CAMPAMENTO PIONEROS SUR SUPA-01",
-          "usos": 84
+          "usos": 109
         },
         {
           "id": 52,
           "valor": "CAMPAMENTO PIONEROS SUR SUPA-02",
-          "usos": 77
+          "usos": 102
         },
         {
           "id": 53,
           "valor": "CAMPAMENTO PIONEROS SUR SUPA-03",
-          "usos": 58
+          "usos": 133
         },
         {
           "id": 54,
           "valor": "CAMPAMENTO PIONEROS SUR SUPA-04",
-          "usos": 79
+          "usos": 89
         },
         {
           "id": 55,
           "valor": "CAMPAMENTO PIONEROS SUR SUPA-05",
-          "usos": 73
+          "usos": 118
         },
         {
           "id": 56,
           "valor": "CAMPAMENTO PIONEROS SUR SUPA-06",
-          "usos": 46
+          "usos": 83
         },
         {
           "id": 57,
           "valor": "CAMPAMENTO PIONEROS SUR SUPA-13",
-          "usos": 85
+          "usos": 114
         },
         {
           "id": 58,
           "valor": "CAMPAMENTO PIONEROS SUR SUPA-14",
-          "usos": 46
+          "usos": 74
         },
         {
           "id": 59,
           "valor": "CAMPAMENTO PIONEROS SUR SUPA-15",
-          "usos": 76
+          "usos": 123
         },
         {
           "id": 62,
           "valor": "CAMPAMENTO PIONEROS SUR TFA-14",
-          "usos": 105
+          "usos": 120
         },
         {
           "id": 63,
           "valor": "CAMPAMENTO PIONEROS SUR TFA-15",
-          "usos": 77
+          "usos": 63
         },
         {
           "id": 64,
           "valor": "CAMPAMENTO PIONEROS SUR TFA-16",
-          "usos": 50
+          "usos": 43
         },
         {
           "id": 65,
           "valor": "CAMPAMENTO PIONEROS SUR TFA-17",
-          "usos": 126
+          "usos": 79
         },
         {
           "id": 88,
@@ -2524,12 +2760,12 @@ window.LOOKUP_DATA = {
         {
           "id": 80,
           "valor": "CANCHA FUTBOL TECHADA",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 82,
           "valor": "CANCHA TECHADA",
-          "usos": 1
+          "usos": 4
         },
         {
           "id": 83,
@@ -2537,54 +2773,89 @@ window.LOOKUP_DATA = {
           "usos": 0
         },
         {
+          "id": 315,
+          "valor": "CANCHA TENNIS",
+          "usos": 1
+        },
+        {
+          "id": 404,
+          "valor": "CANCHAS",
+          "usos": 4
+        },
+        {
+          "id": 255,
+          "valor": "CANCHAS",
+          "usos": 0
+        },
+        {
           "id": 204,
           "valor": "CAP 01 PISO 1",
-          "usos": 131
+          "usos": 86
         },
         {
           "id": 205,
           "valor": "CAP 02 PISO 1",
-          "usos": 104
+          "usos": 59
         },
         {
           "id": 206,
           "valor": "CAP 03 PISO 1",
-          "usos": 73
+          "usos": 38
         },
         {
           "id": 207,
           "valor": "CAP 04 PISO 1",
-          "usos": 71
+          "usos": 59
+        },
+        {
+          "id": 316,
+          "valor": "CAP1",
+          "usos": 18
+        },
+        {
+          "id": 317,
+          "valor": "CAP2",
+          "usos": 1
+        },
+        {
+          "id": 318,
+          "valor": "CAP3",
+          "usos": 39
+        },
+        {
+          "id": 319,
+          "valor": "CAP4",
+          "usos": 1
         },
         {
           "id": 79,
           "valor": "CAPILLA",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 47,
           "valor": "CASINO",
-          "usos": 413
+          "usos": 325
         },
         {
           "id": 147,
           "valor": "CASINO CENTRAL",
-          "usos": 1217
+          "usos": 1098
         },
         {
           "id": 35,
           "valor": "CASINO CHAÑAR (OPERACIONES)",
-          "usos": 1085
+          "usos": 1221
         },
         {
           "id": 200,
           "valor": "CASINO MINA",
-          "usos": 133
+          "usos": 140
         },
         {
           "id": 221,
           "valor": "CASINO MOVIL 1",
-          "usos": 67
+          "usos": 88
         },
         {
           "id": 222,
@@ -2594,112 +2865,202 @@ window.LOOKUP_DATA = {
         {
           "id": 223,
           "valor": "CASINO MOVIL 3",
-          "usos": 68
+          "usos": 102
         },
         {
           "id": 213,
           "valor": "CASINO OPERACIONES",
-          "usos": 571
+          "usos": 319
         },
         {
           "id": 218,
           "valor": "CASINO PIONERO",
-          "usos": 1444
+          "usos": 1471
         },
         {
           "id": 224,
           "valor": "CASINO TRUCK SHOP",
-          "usos": 136
+          "usos": 210
+        },
+        {
+          "id": 243,
+          "valor": "COCINA CALIENTE",
+          "usos": 1
         },
         {
           "id": 232,
           "valor": "COI",
-          "usos": 13
+          "usos": 22
         },
         {
           "id": 93,
           "valor": "COI SULFUROS",
-          "usos": 12
+          "usos": 10
         },
         {
-          "id": 131,
+          "id": 321,
           "valor": "COMEDOR",
-          "usos": 588
+          "usos": 3
         },
         {
           "id": 186,
           "valor": "COMEDOR BARRIO CIVICO",
-          "usos": 317
+          "usos": 346
+        },
+        {
+          "id": 438,
+          "valor": "COMEDOR C1",
+          "usos": 4
+        },
+        {
+          "id": 439,
+          "valor": "COMEDOR C3",
+          "usos": 2
         },
         {
           "id": 188,
           "valor": "COMEDOR ESPERANZA SUR",
-          "usos": 49
+          "usos": 39
         },
         {
           "id": 189,
           "valor": "COMEDOR ESPERANZA SUR",
-          "usos": 117
+          "usos": 107
         },
         {
           "id": 185,
           "valor": "COMEDOR MINA",
-          "usos": 91
+          "usos": 56
         },
         {
           "id": 182,
           "valor": "COMEDOR MOVIL 1",
-          "usos": 86
+          "usos": 83
         },
         {
           "id": 183,
           "valor": "COMEDOR MOVIL 2",
-          "usos": 45
+          "usos": 43
         },
         {
           "id": 184,
           "valor": "COMEDOR MOVIL 3",
-          "usos": 91
+          "usos": 97
+        },
+        {
+          "id": 131,
+          "valor": "COMEDOR MUELLE",
+          "usos": 460
         },
         {
           "id": 214,
           "valor": "COMEDOR TRUCK SHOP",
-          "usos": 98
+          "usos": 126
+        },
+        {
+          "id": 325,
+          "valor": "COMPLEJO DEPORTIVO",
+          "usos": 1
+        },
+        {
+          "id": 326,
+          "valor": "CONTROL VENTA",
+          "usos": 1
+        },
+        {
+          "id": 244,
+          "valor": "DESCONCHE",
+          "usos": 2
         },
         {
           "id": 70,
           "valor": "EDA",
-          "usos": 344
+          "usos": 369
+        },
+        {
+          "id": 328,
+          "valor": "EDIFICIO ADMINISTRACION EDA SECTOR CECOM",
+          "usos": 3
+        },
+        {
+          "id": 329,
+          "valor": "EDIFICIO ADMINISTRACION EDA SECTOR GERENCIA",
+          "usos": 1
+        },
+        {
+          "id": 245,
+          "valor": "EDIFICIO EPCM",
+          "usos": 0
+        },
+        {
+          "id": 246,
+          "valor": "EDIFICIO GP1",
+          "usos": 11
+        },
+        {
+          "id": 247,
+          "valor": "EDIFICIO GP2",
+          "usos": 0
+        },
+        {
+          "id": 248,
+          "valor": "EDIFICIO GP3",
+          "usos": 0
+        },
+        {
+          "id": 249,
+          "valor": "EDIFICIO GP4",
+          "usos": 0
         },
         {
           "id": 133,
           "valor": "EDIFICIO OPERACIONES",
-          "usos": 34
+          "usos": 35
         },
         {
           "id": 134,
           "valor": "EDIFICIO PROYECTO",
-          "usos": 16
+          "usos": 10
+        },
+        {
+          "id": 330,
+          "valor": "EJE-01",
+          "usos": 23
+        },
+        {
+          "id": 331,
+          "valor": "EJE-02",
+          "usos": 10
+        },
+        {
+          "id": 332,
+          "valor": "EJE-03",
+          "usos": 7
+        },
+        {
+          "id": 333,
+          "valor": "EJE-04",
+          "usos": 4
         },
         {
           "id": 191,
           "valor": "EJECUTIVO 01",
-          "usos": 96
+          "usos": 77
         },
         {
           "id": 162,
           "valor": "EJECUTIVO 02",
-          "usos": 89
+          "usos": 121
         },
         {
           "id": 163,
           "valor": "EJECUTIVO 03",
-          "usos": 7
+          "usos": 5
         },
         {
           "id": 142,
           "valor": "ESTACIONAMIENTO",
-          "usos": 3
+          "usos": 4
         },
         {
           "id": 81,
@@ -2709,37 +3070,52 @@ window.LOOKUP_DATA = {
         {
           "id": 76,
           "valor": "EX CASS",
-          "usos": 17
+          "usos": 22
         },
         {
           "id": 238,
           "valor": "EX DESPACHO MINA",
-          "usos": 4
+          "usos": 6
         },
         {
           "id": 69,
           "valor": "EX EDIFICIO FINANZAS",
-          "usos": 9
+          "usos": 7
+        },
+        {
+          "id": 335,
+          "valor": "EXTERIOR",
+          "usos": 4
+        },
+        {
+          "id": 405,
+          "valor": "GARITA",
+          "usos": 6
         },
         {
           "id": 138,
           "valor": "GARITA",
-          "usos": 10
+          "usos": 13
+        },
+        {
+          "id": 256,
+          "valor": "GARITA",
+          "usos": 6
         },
         {
           "id": 95,
           "valor": "GARITA MINERA CENTINELA",
-          "usos": 18
+          "usos": 16
         },
         {
           "id": 201,
           "valor": "GARITA NORTE",
-          "usos": 23
+          "usos": 33
         },
         {
           "id": 96,
           "valor": "GARITA SUR MINERA CENTINELA",
-          "usos": 6
+          "usos": 5
         },
         {
           "id": 230,
@@ -2747,64 +3123,109 @@ window.LOOKUP_DATA = {
           "usos": 1
         },
         {
+          "id": 406,
+          "valor": "GERENCIA",
+          "usos": 3
+        },
+        {
+          "id": 257,
+          "valor": "GERENCIA",
+          "usos": 1
+        },
+        {
+          "id": 336,
+          "valor": "GERENCIA ABASTECIMIENTO",
+          "usos": 1
+        },
+        {
           "id": 198,
           "valor": "GERENCIA CARACOLES",
-          "usos": 96
+          "usos": 71
         },
         {
           "id": 72,
           "valor": "GERENCIA OPERACIONES MINA",
-          "usos": 8
+          "usos": 20
+        },
+        {
+          "id": 258,
+          "valor": "GIMNACIO",
+          "usos": 3
+        },
+        {
+          "id": 407,
+          "valor": "GIMNASIO",
+          "usos": 19
+        },
+        {
+          "id": 260,
+          "valor": "GIMNASIO",
+          "usos": 3
         },
         {
           "id": 143,
           "valor": "GIMNASIO TECHADO",
-          "usos": 48
+          "usos": 32
         },
         {
           "id": 74,
           "valor": "GP 01",
-          "usos": 15
+          "usos": 20
         },
         {
           "id": 75,
           "valor": "GP 02",
-          "usos": 16
+          "usos": 12
+        },
+        {
+          "id": 338,
+          "valor": "GP1",
+          "usos": 4
+        },
+        {
+          "id": 339,
+          "valor": "GP2",
+          "usos": 2
+        },
+        {
+          "id": 340,
+          "valor": "HALL CASINO",
+          "usos": 1
         },
         {
           "id": 202,
           "valor": "HOTEL CHAÑAR",
-          "usos": 310
+          "usos": 282
         },
         {
           "id": 36,
           "valor": "HOTEL CHAÑAR ALA 1",
-          "usos": 199
+          "usos": 228
         },
         {
           "id": 38,
           "valor": "HOTEL CHAÑAR ALA 2",
-          "usos": 196
+          "usos": 190
         },
         {
           "id": 39,
           "valor": "HOTEL CHAÑAR ALA 3",
-          "usos": 345
+          "usos": 310
         },
         {
           "id": 40,
           "valor": "HOTEL CHAÑAR ALA 4",
-          "usos": 267
+          "usos": 302
         },
         {
           "id": 41,
           "valor": "HOTEL CHAÑAR ALA 5A",
-          "usos": 262
+          "usos": 341
         },
         {
           "id": 42,
           "valor": "HOTEL CHAÑAR ALA 5B",
-          "usos": 381
+          "usos": 364
         },
         {
           "id": 43,
@@ -2814,22 +3235,22 @@ window.LOOKUP_DATA = {
         {
           "id": 44,
           "valor": "HOTEL CHAÑAR ALA 7",
-          "usos": 164
+          "usos": 207
         },
         {
           "id": 45,
           "valor": "HOTEL CHAÑAR ALA 8",
-          "usos": 306
+          "usos": 258
         },
         {
           "id": 46,
           "valor": "HOTEL CHAÑAR ALA 9",
-          "usos": 339
+          "usos": 336
         },
         {
           "id": 141,
           "valor": "HOTELERIA",
-          "usos": 17
+          "usos": 29
         },
         {
           "id": 237,
@@ -2837,9 +3258,29 @@ window.LOOKUP_DATA = {
           "usos": 0
         },
         {
+          "id": 341,
+          "valor": "KIOSKO",
+          "usos": 1
+        },
+        {
           "id": 229,
           "valor": "LABORATORIO SULFURO",
-          "usos": 8
+          "usos": 14
+        },
+        {
+          "id": 342,
+          "valor": "LAVADO DE FONDOS",
+          "usos": 1
+        },
+        {
+          "id": 408,
+          "valor": "LAVADO DE LOZA",
+          "usos": 0
+        },
+        {
+          "id": 259,
+          "valor": "LAVADO DE LOZA",
+          "usos": 0
         },
         {
           "id": 145,
@@ -2849,7 +3290,17 @@ window.LOOKUP_DATA = {
         {
           "id": 78,
           "valor": "LAVANDERIA",
-          "usos": 3
+          "usos": 4
+        },
+        {
+          "id": 409,
+          "valor": "LINEA DE SERVICIO",
+          "usos": 0
+        },
+        {
+          "id": 261,
+          "valor": "LINEA DE SERVICIO",
+          "usos": 0
         },
         {
           "id": 234,
@@ -2859,7 +3310,7 @@ window.LOOKUP_DATA = {
         {
           "id": 212,
           "valor": "MUELLE",
-          "usos": 115
+          "usos": 105
         },
         {
           "id": 208,
@@ -2867,19 +3318,64 @@ window.LOOKUP_DATA = {
           "usos": 0
         },
         {
+          "id": 262,
+          "valor": "OF ADM COMPASS",
+          "usos": 1
+        },
+        {
+          "id": 410,
+          "valor": "OF ADM COMPASS",
+          "usos": 1
+        },
+        {
+          "id": 411,
+          "valor": "OF ADM TANDEM",
+          "usos": 0
+        },
+        {
+          "id": 251,
+          "valor": "OF CAMPAMENTO",
+          "usos": 0
+        },
+        {
+          "id": 252,
+          "valor": "OF PROYECTO",
+          "usos": 0
+        },
+        {
           "id": 85,
           "valor": "OFICINA ASEO",
-          "usos": 4
+          "usos": 2
         },
         {
           "id": 86,
           "valor": "OFICINA EMPRESAS COLABORADORAS",
+          "usos": 6
+        },
+        {
+          "id": 263,
+          "valor": "OFICINAS",
+          "usos": 6
+        },
+        {
+          "id": 412,
+          "valor": "OFICINAS",
           "usos": 4
+        },
+        {
+          "id": 343,
+          "valor": "OFICINAS ASEO",
+          "usos": 1
+        },
+        {
+          "id": 344,
+          "valor": "OFICINAS EMPRESAS COLABORADORAS",
+          "usos": 1
         },
         {
           "id": 6,
           "valor": "OFICINAS EPCM",
-          "usos": 65
+          "usos": 46
         },
         {
           "id": 92,
@@ -2887,14 +3383,54 @@ window.LOOKUP_DATA = {
           "usos": 2
         },
         {
+          "id": 345,
+          "valor": "OP 02",
+          "usos": 1
+        },
+        {
+          "id": 346,
+          "valor": "OP 03",
+          "usos": 4
+        },
+        {
+          "id": 347,
+          "valor": "OP 04",
+          "usos": 10
+        },
+        {
+          "id": 348,
+          "valor": "OP 05",
+          "usos": 1
+        },
+        {
+          "id": 349,
+          "valor": "OP 15",
+          "usos": 1
+        },
+        {
+          "id": 350,
+          "valor": "OP 16",
+          "usos": 1
+        },
+        {
           "id": 240,
           "valor": "OXE CIVICO",
-          "usos": 73
+          "usos": 86
+        },
+        {
+          "id": 440,
+          "valor": "PABELLON 07",
+          "usos": 21
+        },
+        {
+          "id": 441,
+          "valor": "PABELLON 08",
+          "usos": 16
         },
         {
           "id": 135,
           "valor": "PABELLON GP1",
-          "usos": 7
+          "usos": 2
         },
         {
           "id": 136,
@@ -2904,57 +3440,77 @@ window.LOOKUP_DATA = {
         {
           "id": 137,
           "valor": "PABELLON GP3",
-          "usos": 49
+          "usos": 70
+        },
+        {
+          "id": 351,
+          "valor": "PABELLON-07",
+          "usos": 5
+        },
+        {
+          "id": 352,
+          "valor": "PABELLON-08",
+          "usos": 4
         },
         {
           "id": 235,
           "valor": "PALA  & PERFORADURAS",
-          "usos": 31
+          "usos": 41
+        },
+        {
+          "id": 353,
+          "valor": "PANADERIA",
+          "usos": 1
         },
         {
           "id": 148,
           "valor": "PATIO 01",
-          "usos": 129
+          "usos": 123
         },
         {
           "id": 149,
           "valor": "PATIO 02",
-          "usos": 56
+          "usos": 60
         },
         {
           "id": 150,
           "valor": "PATIO 03",
-          "usos": 48
+          "usos": 51
         },
         {
           "id": 151,
           "valor": "PATIO 04",
-          "usos": 73
+          "usos": 93
         },
         {
           "id": 152,
           "valor": "PATIO 05",
-          "usos": 46
+          "usos": 54
         },
         {
           "id": 153,
           "valor": "PATIO 06",
-          "usos": 143
+          "usos": 148
         },
         {
           "id": 154,
           "valor": "PATIO 07",
-          "usos": 78
+          "usos": 101
         },
         {
           "id": 155,
           "valor": "PATIO 08",
-          "usos": 46
+          "usos": 51
         },
         {
           "id": 156,
           "valor": "PATIO 09",
           "usos": 59
+        },
+        {
+          "id": 264,
+          "valor": "PATIO 1",
+          "usos": 0
         },
         {
           "id": 157,
@@ -2969,22 +3525,32 @@ window.LOOKUP_DATA = {
         {
           "id": 159,
           "valor": "PATIO 12",
-          "usos": 63
+          "usos": 70
         },
         {
           "id": 160,
           "valor": "PATIO 13",
-          "usos": 166
+          "usos": 151
         },
         {
           "id": 161,
           "valor": "PATIO 14",
+          "usos": 1
+        },
+        {
+          "id": 265,
+          "valor": "PATIO 8",
+          "usos": 0
+        },
+        {
+          "id": 266,
+          "valor": "PATIO 9",
           "usos": 0
         },
         {
           "id": 48,
           "valor": "PATIO DE MATERIALES",
-          "usos": 17
+          "usos": 23
         },
         {
           "id": 3,
@@ -2994,7 +3560,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "PLANTA HYDRO",
-          "usos": 11
+          "usos": 12
         },
         {
           "id": 73,
@@ -3004,7 +3570,7 @@ window.LOOKUP_DATA = {
         {
           "id": 140,
           "valor": "POLICLINICO",
-          "usos": 9
+          "usos": 16
         },
         {
           "id": 132,
@@ -3012,19 +3578,84 @@ window.LOOKUP_DATA = {
           "usos": 21
         },
         {
+          "id": 267,
+          "valor": "PRODUCCION",
+          "usos": 0
+        },
+        {
+          "id": 413,
+          "valor": "PRODUCCION",
+          "usos": 0
+        },
+        {
+          "id": 355,
+          "valor": "PRODUCCION 01",
+          "usos": 1
+        },
+        {
+          "id": 356,
+          "valor": "PRODUCCION 02",
+          "usos": 0
+        },
+        {
+          "id": 423,
+          "valor": "PRODUCCION 02",
+          "usos": 1
+        },
+        {
+          "id": 424,
+          "valor": "PRODUCCION 03",
+          "usos": 1
+        },
+        {
+          "id": 357,
+          "valor": "PRODUCCION 03",
+          "usos": 0
+        },
+        {
+          "id": 358,
+          "valor": "PUB HOTEL",
+          "usos": 0
+        },
+        {
           "id": 187,
           "valor": "PUB HOTEL",
-          "usos": 85
+          "usos": 72
         },
         {
           "id": 144,
           "valor": "QUINCHOS",
+          "usos": 1
+        },
+        {
+          "id": 414,
+          "valor": "QUIOSKO",
+          "usos": 1
+        },
+        {
+          "id": 359,
+          "valor": "RECEPCION",
+          "usos": 0
+        },
+        {
+          "id": 426,
+          "valor": "RECEPCION",
+          "usos": 4
+        },
+        {
+          "id": 425,
+          "valor": "RECEPCION HOTEL",
+          "usos": 2
+        },
+        {
+          "id": 360,
+          "valor": "RECEPCION HOTEL",
           "usos": 0
         },
         {
           "id": 87,
           "valor": "RECEPCION PIONERO",
-          "usos": 47
+          "usos": 44
         },
         {
           "id": 211,
@@ -3032,24 +3663,104 @@ window.LOOKUP_DATA = {
           "usos": 1
         },
         {
+          "id": 253,
+          "valor": "REFFER",
+          "usos": 0
+        },
+        {
+          "id": 415,
+          "valor": "REFFERS",
+          "usos": 0
+        },
+        {
+          "id": 361,
+          "valor": "REFFERS",
+          "usos": 0
+        },
+        {
+          "id": 427,
+          "valor": "REFFERS",
+          "usos": 1
+        },
+        {
           "id": 71,
           "valor": "SALA AMPLIADA",
-          "usos": 44
+          "usos": 27
         },
         {
           "id": 130,
           "valor": "SALA DE CONTROL",
-          "usos": 14
+          "usos": 11
         },
         {
           "id": 146,
           "valor": "SALA DE RECREACION",
-          "usos": 9
+          "usos": 7
+        },
+        {
+          "id": 362,
+          "valor": "SALA DE TERMO",
+          "usos": 0
+        },
+        {
+          "id": 416,
+          "valor": "SALA DE TERMO",
+          "usos": 0
+        },
+        {
+          "id": 429,
+          "valor": "SALA DE TERMO",
+          "usos": 1
+        },
+        {
+          "id": 428,
+          "valor": "SALA DE TERMO 2",
+          "usos": 1
+        },
+        {
+          "id": 363,
+          "valor": "SALA DE TERMO 2",
+          "usos": 0
+        },
+        {
+          "id": 364,
+          "valor": "SALA DE WENCO",
+          "usos": 0
+        },
+        {
+          "id": 430,
+          "valor": "SALA DE WENCO",
+          "usos": 1
+        },
+        {
+          "id": 417,
+          "valor": "SALA ELECTRICA",
+          "usos": 0
         },
         {
           "id": 209,
           "valor": "SALA REUNION PIONERO",
           "usos": 1
+        },
+        {
+          "id": 365,
+          "valor": "SAUNA",
+          "usos": 0
+        },
+        {
+          "id": 431,
+          "valor": "SAUNA",
+          "usos": 1
+        },
+        {
+          "id": 432,
+          "valor": "SECTOR REFFERS",
+          "usos": 1
+        },
+        {
+          "id": 366,
+          "valor": "SECTOR REFFERS",
+          "usos": 0
         },
         {
           "id": 129,
@@ -3062,54 +3773,159 @@ window.LOOKUP_DATA = {
           "usos": 0
         },
         {
+          "id": 367,
+          "valor": "SUP A 1",
+          "usos": 0
+        },
+        {
+          "id": 368,
+          "valor": "SUP A 13",
+          "usos": 0
+        },
+        {
+          "id": 369,
+          "valor": "SUP A 14",
+          "usos": 0
+        },
+        {
+          "id": 370,
+          "valor": "SUP A 15",
+          "usos": 0
+        },
+        {
+          "id": 371,
+          "valor": "SUP A 2",
+          "usos": 0
+        },
+        {
+          "id": 372,
+          "valor": "SUP A 3",
+          "usos": 0
+        },
+        {
+          "id": 373,
+          "valor": "SUP A 4",
+          "usos": 0
+        },
+        {
+          "id": 374,
+          "valor": "SUP A 5",
+          "usos": 0
+        },
+        {
+          "id": 375,
+          "valor": "SUP A 6",
+          "usos": 0
+        },
+        {
+          "id": 376,
+          "valor": "SUP B 1",
+          "usos": 0
+        },
+        {
+          "id": 377,
+          "valor": "SUP B 2",
+          "usos": 0
+        },
+        {
+          "id": 378,
+          "valor": "SUP B 3",
+          "usos": 0
+        },
+        {
+          "id": 379,
+          "valor": "SUP B 4",
+          "usos": 0
+        },
+        {
+          "id": 380,
+          "valor": "SUP B 5",
+          "usos": 0
+        },
+        {
+          "id": 418,
+          "valor": "SUPERVISOR 01",
+          "usos": 6
+        },
+        {
+          "id": 419,
+          "valor": "SUPERVISOR 02",
+          "usos": 6
+        },
+        {
+          "id": 420,
+          "valor": "SUPERVISOR 03",
+          "usos": 3
+        },
+        {
           "id": 192,
           "valor": "SUPERVISOR 1 PISO 1",
-          "usos": 63
+          "usos": 84
         },
         {
           "id": 193,
           "valor": "SUPERVISOR 1 PISO 2 ",
-          "usos": 112
+          "usos": 106
         },
         {
           "id": 194,
           "valor": "SUPERVISOR 2 PISO 1 ",
-          "usos": 92
+          "usos": 76
         },
         {
           "id": 195,
           "valor": "SUPERVISOR 2 PISO 2",
-          "usos": 79
+          "usos": 71
         },
         {
           "id": 196,
           "valor": "SUPERVISOR 3",
-          "usos": 117
+          "usos": 74
         },
         {
           "id": 90,
           "valor": "TALLER CENTRAL",
-          "usos": 6
+          "usos": 8
         },
         {
           "id": 197,
           "valor": "TALLER DE CAMIONES",
-          "usos": 70
+          "usos": 33
         },
         {
           "id": 77,
           "valor": "TALLER MANTENCION COMPASS",
-          "usos": 63
+          "usos": 51
         },
         {
-          "id": 91,
-          "valor": "TALLER MANTENCION PLANTA",
+          "id": 381,
+          "valor": "TALLER MANTENCION ESS",
+          "usos": 0
+        },
+        {
+          "id": 437,
+          "valor": "TALLER MANTENCION ESS",
           "usos": 14
         },
         {
           "id": 233,
           "valor": "TALLER MANTENCION PLANTA",
-          "usos": 1
+          "usos": 3
+        },
+        {
+          "id": 91,
+          "valor": "TALLER MANTENCION PLANTA",
+          "usos": 13
+        },
+        {
+          "id": 421,
+          "valor": "TALLER MTTO COMPASS",
+          "usos": 0
+        },
+        {
+          "id": 422,
+          "valor": "TECHADO",
+          "usos": 0
         },
         {
           "id": 231,
@@ -3117,9 +3933,114 @@ window.LOOKUP_DATA = {
           "usos": 1
         },
         {
+          "id": 382,
+          "valor": "TFA 01",
+          "usos": 0
+        },
+        {
+          "id": 383,
+          "valor": "TFA 02",
+          "usos": 0
+        },
+        {
+          "id": 384,
+          "valor": "TFA 03",
+          "usos": 0
+        },
+        {
+          "id": 385,
+          "valor": "TFA 04",
+          "usos": 0
+        },
+        {
+          "id": 386,
+          "valor": "TFA 05",
+          "usos": 0
+        },
+        {
+          "id": 387,
+          "valor": "TFA 06",
+          "usos": 0
+        },
+        {
+          "id": 388,
+          "valor": "TFA 07",
+          "usos": 0
+        },
+        {
+          "id": 389,
+          "valor": "TFA 08",
+          "usos": 0
+        },
+        {
+          "id": 390,
+          "valor": "TFA 09",
+          "usos": 0
+        },
+        {
+          "id": 391,
+          "valor": "TFA 10",
+          "usos": 0
+        },
+        {
+          "id": 392,
+          "valor": "TFA 11",
+          "usos": 0
+        },
+        {
+          "id": 393,
+          "valor": "TFA 12",
+          "usos": 0
+        },
+        {
+          "id": 394,
+          "valor": "TFA 13",
+          "usos": 0
+        },
+        {
+          "id": 395,
+          "valor": "TFA 14",
+          "usos": 0
+        },
+        {
+          "id": 396,
+          "valor": "TFA 15",
+          "usos": 0
+        },
+        {
+          "id": 397,
+          "valor": "TFA 16",
+          "usos": 0
+        },
+        {
+          "id": 398,
+          "valor": "TFA 17",
+          "usos": 0
+        },
+        {
+          "id": 399,
+          "valor": "TFA 18",
+          "usos": 0
+        },
+        {
+          "id": 400,
+          "valor": "TFA 19",
+          "usos": 0
+        },
+        {
+          "id": 401,
+          "valor": "TFA 2",
+          "usos": 0
+        },
+        {
+          "id": 402,
+          "valor": "TFA1",
+          "usos": 0
+        },
+        {
           "id": 181,
           "valor": "TRUCK SHOP",
-          "usos": 84
+          "usos": 69
         }
       ]
     },
@@ -3130,27 +4051,27 @@ window.LOOKUP_DATA = {
         {
           "id": 6,
           "valor": "AREAS INDUSTRIALES (SULFUROS)",
-          "usos": 111
+          "usos": 99
         },
         {
           "id": 1,
           "valor": "CAMPAMENTO ALGARROBO (OXIDO)",
-          "usos": 3542
+          "usos": 3377
         },
         {
           "id": 2,
           "valor": "CAMPAMENTO MUELLE",
-          "usos": 1192
+          "usos": 1061
         },
         {
           "id": 9,
           "valor": "CAMPAMENTO SULFUROS",
-          "usos": 14091
+          "usos": 17082
         },
         {
           "id": 16,
           "valor": "OXE",
-          "usos": 361
+          "usos": 366
         }
       ]
     },
@@ -3161,22 +4082,22 @@ window.LOOKUP_DATA = {
         {
           "id": 2,
           "valor": "Alta",
-          "usos": 10611
+          "usos": 12679
         },
         {
           "id": 4,
           "valor": "Baja",
-          "usos": 4432
+          "usos": 5021
         },
         {
           "id": 3,
           "valor": "Media",
-          "usos": 1937
+          "usos": 1388
         },
         {
           "id": 1,
           "valor": "Urgente",
-          "usos": 2364
+          "usos": 2942
         }
       ]
     },
@@ -3962,7 +4883,7 @@ window.LOOKUP_DATA = {
         {
           "id": 334,
           "valor": "Basico",
-          "usos": 16006
+          "usos": 18020
         },
         {
           "id": 335,
@@ -3972,7 +4893,7 @@ window.LOOKUP_DATA = {
         {
           "id": 336,
           "valor": "Básico Aseo",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 16,
@@ -3992,17 +4913,17 @@ window.LOOKUP_DATA = {
         {
           "id": 15,
           "valor": "Instala Termo",
-          "usos": 52
+          "usos": 64
         },
         {
           "id": 12,
           "valor": "Instalacion",
-          "usos": 706
+          "usos": 735
         },
         {
           "id": 23,
           "valor": "Mantencion Preventiva Equipos",
-          "usos": 1709
+          "usos": 2065
         },
         {
           "id": 14,
@@ -4012,12 +4933,12 @@ window.LOOKUP_DATA = {
         {
           "id": 11,
           "valor": "OT con Apoyo",
-          "usos": 598
+          "usos": 758
         },
         {
           "id": 342,
           "valor": "Planes Preventivos",
-          "usos": 13
+          "usos": 172
         },
         {
           "id": 333,
@@ -4037,7 +4958,7 @@ window.LOOKUP_DATA = {
         {
           "id": 13,
           "valor": "Seguro Electrico",
-          "usos": 261
+          "usos": 216
         }
       ]
     },
@@ -4503,17 +5424,17 @@ window.LOOKUP_DATA = {
         {
           "id": 3,
           "valor": "Casino Chañar",
-          "usos": 132
+          "usos": 111
         },
         {
           "id": 2,
           "valor": "Casino Muelle",
-          "usos": 31
+          "usos": 17
         },
         {
           "id": 1,
           "valor": "Casino Oxido (Algarrobo)",
-          "usos": 95
+          "usos": 99
         },
         {
           "id": 223,
@@ -4523,7 +5444,7 @@ window.LOOKUP_DATA = {
         {
           "id": 220,
           "valor": "Comedor Esperanza Sur",
-          "usos": 70
+          "usos": 51
         },
         {
           "id": 173,
@@ -4838,7 +5759,7 @@ window.LOOKUP_DATA = {
         {
           "id": 222,
           "valor": "OXE CIVICO",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 146,
@@ -5158,7 +6079,7 @@ window.LOOKUP_DATA = {
         {
           "id": 221,
           "valor": "TRUCK SHOP",
-          "usos": 5
+          "usos": 3
         }
       ]
     },
@@ -5167,9 +6088,14 @@ window.LOOKUP_DATA = {
       "valorCol": "ResolutorPerfil",
       "valores": [
         {
+          "id": 17,
+          "valor": "Admin BOE",
+          "usos": 0
+        },
+        {
           "id": 2,
           "valor": "Administrador Cen",
-          "usos": 125
+          "usos": 0
         },
         {
           "id": 12,
@@ -5219,22 +6145,22 @@ window.LOOKUP_DATA = {
         {
           "id": 9,
           "valor": "Programador",
-          "usos": 3
+          "usos": 6
         },
         {
           "id": 7,
           "valor": "Resolutor",
-          "usos": 16773
+          "usos": 19066
         },
         {
           "id": 1,
           "valor": "Superadministrador",
-          "usos": 2
+          "usos": 7
         },
         {
           "id": 3,
           "valor": "Supervisor",
-          "usos": 492
+          "usos": 20
         },
         {
           "id": 13,
@@ -5253,24 +6179,19 @@ window.LOOKUP_DATA = {
       "valorCol": "OrdenTrabajoPlan",
       "valores": [
         {
-          "id": 33,
+          "id": 290,
           "valor": "Preventivo",
-          "usos": 4
+          "usos": 136
         },
         {
-          "id": 34,
+          "id": 76,
           "valor": "Preventivo",
-          "usos": 5
+          "usos": 556
         },
         {
-          "id": 37,
+          "id": 259,
           "valor": "Preventivo",
-          "usos": 3
-        },
-        {
-          "id": 70,
-          "valor": "Preventivo",
-          "usos": 75
+          "usos": 10
         },
         {
           "id": 74,
@@ -5278,94 +6199,74 @@ window.LOOKUP_DATA = {
           "usos": 75
         },
         {
-          "id": 75,
-          "valor": "Preventivo",
-          "usos": 223
-        },
-        {
-          "id": 76,
-          "valor": "Preventivo",
-          "usos": 537
-        },
-        {
-          "id": 239,
-          "valor": "Preventivo",
-          "usos": 144
-        },
-        {
-          "id": 240,
-          "valor": "Preventivo",
-          "usos": 40
-        },
-        {
-          "id": 242,
-          "valor": "Preventivo",
-          "usos": 6
-        },
-        {
-          "id": 243,
-          "valor": "Preventivo",
-          "usos": 14
-        },
-        {
-          "id": 249,
-          "valor": "Preventivo",
-          "usos": 13
-        },
-        {
-          "id": 250,
-          "valor": "Preventivo",
-          "usos": 48
-        },
-        {
-          "id": 251,
-          "valor": "Preventivo",
-          "usos": 12
-        },
-        {
           "id": 252,
           "valor": "Preventivo",
-          "usos": 183
+          "usos": 122
         },
         {
-          "id": 253,
-          "valor": "Preventivo",
-          "usos": 26
-        },
-        {
-          "id": 254,
-          "valor": "Preventivo",
-          "usos": 68
-        },
-        {
-          "id": 255,
+          "id": 33,
           "valor": "Preventivo",
           "usos": 4
         },
         {
-          "id": 256,
+          "id": 282,
           "valor": "Preventivo",
-          "usos": 8
+          "usos": 655
         },
         {
-          "id": 257,
+          "id": 251,
           "valor": "Preventivo",
-          "usos": 76
+          "usos": 6
+        },
+        {
+          "id": 280,
+          "valor": "Preventivo",
+          "usos": 125
+        },
+        {
+          "id": 284,
+          "valor": "Preventivo",
+          "usos": 12
+        },
+        {
+          "id": 70,
+          "valor": "Preventivo",
+          "usos": 70
+        },
+        {
+          "id": 37,
+          "valor": "Preventivo",
+          "usos": 3
+        },
+        {
+          "id": 75,
+          "valor": "Preventivo",
+          "usos": 230
         },
         {
           "id": 258,
           "valor": "Preventivo",
-          "usos": 30
+          "usos": 40
         },
         {
-          "id": 259,
+          "id": 250,
           "valor": "Preventivo",
-          "usos": 9
+          "usos": 25
         },
         {
-          "id": 260,
+          "id": 34,
           "valor": "Preventivo",
-          "usos": 126
+          "usos": 5
+        },
+        {
+          "id": 257,
+          "valor": "Preventivo",
+          "usos": 87
+        },
+        {
+          "id": 283,
+          "valor": "Preventivo",
+          "usos": 74
         }
       ]
     },
@@ -5376,12 +6277,12 @@ window.LOOKUP_DATA = {
         {
           "id": "E",
           "valor": "E",
-          "usos": 64618
+          "usos": 3810
         },
         {
           "id": "S",
           "valor": "S",
-          "usos": 7399
+          "usos": 1274
         }
       ]
     },
@@ -5392,17 +6293,17 @@ window.LOOKUP_DATA = {
         {
           "id": "1",
           "valor": "1",
-          "usos": 64108
+          "usos": 2542
         },
         {
           "id": "2",
           "valor": "2",
-          "usos": 6432
+          "usos": 2044
         },
         {
           "id": "3",
           "valor": "3",
-          "usos": 176
+          "usos": 44
         }
       ]
     }

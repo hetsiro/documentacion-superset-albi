@@ -322,6 +322,9 @@
   .gauge-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
   .gauge-desc strong { color: var(--text); display: block; font-size: 14px; margin-bottom: 4px; }
 
+  /* ── Chart cards colapsables (solo el título visible) ── */
+  .card-toggle { float: right; font-weight: 400; opacity: .65; }
+
   /* ── Responsive ── */
   @media (max-width: 768px) {
     nav { display: none; }
@@ -819,7 +822,7 @@
             <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Tasa Finalización OT</code></span></div>
             <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
             <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           </div>
           <div class="sub-label">Métrica — Custom SQL</div>
           <div class="code-block">
@@ -838,7 +841,7 @@
             <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Tasa Finalización Operaciones</code></span></div>
             <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">albi.CentinelaDashboards</span></div>
             <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           </div>
           <div class="sub-label">Métrica — Custom SQL</div>
           <div class="code-block">
@@ -864,7 +867,7 @@
           </div>
           <div class="formula-box" style="margin-bottom:10px">
             <div class="formula-row"><span class="formula-name">Títulos</span><span class="formula-eq"><code>[Centinela] | OTs por Sistemas</code> · <code>[Centinela] | OTs por Subsistemas</code> · <code>[Centinela] | OTs por Especialidad</code> · <code>[Centinela] | OTs por Zona</code></span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           </div>
           <div class="sub-label">Ingresadas — Custom SQL</div>
           <div class="code-block">
@@ -899,7 +902,7 @@
           </div>
           <div class="formula-box" style="margin-bottom:10px">
             <div class="formula-row"><span class="formula-name">Títulos</span><span class="formula-eq"><code>[Centinela] | Ops por Sistemas</code> · <code>[Centinela] | Ops por Subsistemas</code> · <code>[Centinela] | Ops por Especialidad</code> · <code>[Centinela] | Ops por Zona</code></span></div>
-            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           </div>
           <div class="sub-label">Ingresadas — Custom SQL</div>
           <div class="code-block">
@@ -1040,7 +1043,7 @@
           <div class="formula-box" style="margin-bottom:10px">
             <div class="formula-row"><span class="formula-name">Título</span><span class="formula-eq"><code>[Centinela] | Gauge Cumplimiento SLA</code></span></div>
             <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-            <div class="formula-row"><span class="formula-name">Filtro</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range) · EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
+            <div class="formula-row"><span class="formula-name">Filtro</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range) · EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
             <div class="formula-row"><span class="formula-name">Min / Max</span><span class="formula-eq">0 / 100</span></div>
           </div>
           <div class="sub-label">Tasa Cumplimiento % — Custom SQL</div>
@@ -1240,6 +1243,27 @@
       setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
     });
   }
+
+  // ── Chart cards colapsables: mostrar solo el título, expandir al clic ──
+  document.querySelectorAll('.module-body div[style*="border:1px solid var(--m"]').forEach(card => {
+    const head = card.firstElementChild;
+    if (!head || !/font-weight:\s*700/.test(head.getAttribute('style') || '')) return;
+    const rest = [...card.children].slice(1);
+    if (!rest.length) return;
+    let open = false;
+    const tog = document.createElement('span');
+    tog.className = 'card-toggle';
+    head.appendChild(document.createTextNode(' '));
+    head.appendChild(tog);
+    head.style.cursor = 'pointer';
+    const render = () => {
+      rest.forEach(el => { el.style.display = open ? '' : 'none'; });
+      head.style.marginBottom = open ? '' : '0';
+      tog.textContent = open ? '▾' : '▸';
+    };
+    head.addEventListener('click', () => { open = !open; render(); });
+    render();
+  });
 
   // Active nav on scroll
   const sections = document.querySelectorAll('.module, [id^="m"]');

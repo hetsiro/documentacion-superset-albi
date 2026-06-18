@@ -1,0 +1,61 @@
+slice_name: '[Ameco] | Total Declarado (hs)'
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 28__table
+  viz_type: big_number_total
+  slice_id: 257
+  metric:
+    expressionType: SQL
+    sqlExpression: "SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0) + ISNULL(OperacionResolucionTiempoTraslado, 0) + ISNULL(OperacionResolucionTiempoEspera, 0) + ISNULL(OperacionResolucionTiemposAdministrativos, 0)) * OperacionCantidadInvolucrados) / 60.0"
+    column: null
+    aggregate: null
+    datasourceWarning: false
+    hasCustomLabel: true
+    label: '[Ameco] | Total Declarado (hs)'
+    optionName: metric_bwkt46zj2ro_uuv245w6ab
+  adhoc_filters:
+  - clause: WHERE
+    comparator:
+    - Resuelta
+    - Cerrada
+    datasourceWarning: false
+    expressionType: SIMPLE
+    filterOptionName: filter_mmhnr4uuquc_1r0lmlayz84
+    isExtra: false
+    isNew: false
+    operator: IN
+    operatorId: IN
+    sqlExpression: null
+    subject: EstadoOrdenTrabajo
+  - clause: WHERE
+    comparator: No filter
+    datasourceWarning: false
+    expressionType: SIMPLE
+    filterOptionName: filter_bj2i9hf2xje_7ukp62bhb4d
+    isExtra: false
+    isNew: false
+    operator: TEMPORAL_RANGE
+    operatorId: TEMPORAL_RANGE
+    sqlExpression: null
+    subject: OrdenTrabajoFechaCreacion
+  header_font_size: 0.4
+  subtitle_font_size: 0.15
+  show_metric_name: false
+  metric_name_font_size: 0.15
+  y_axis_format: ',.1f'
+  currency_format:
+    symbol: HRS
+  time_format: smart_date
+  force_timestamp_formatting: false
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 18
+query_context: '{"datasource":{"id":28,"type":"table"},"force":false,"queries":[{"filters":[{"col":"EstadoOrdenTrabajo","op":"IN","val":["Resuelta","Cerrada"]},{"col":"OrdenTrabajoFechaCreacion","op":"TEMPORAL_RANGE","val":"No filter"}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[],"metrics":[{"expressionType":"SQL","sqlExpression":"SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0) + ISNULL(OperacionResolucionTiempoTraslado, 0) + ISNULL(OperacionResolucionTiempoEspera, 0) + ISNULL(OperacionResolucionTiemposAdministrativos, 0)) * OperacionCantidadInvolucrados) / 60.0","column":null,"aggregate":null,"datasourceWarning":false,"hasCustomLabel":true,"label":"[Ameco] | Total Declarado (hs)","optionName":"metric_bwkt46zj2ro_uuv245w6ab"}],"annotation_layers":[],"series_limit":0,"group_others_when_limit_reached":false,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"28__table","viz_type":"big_number_total","slice_id":257,"metric":{"expressionType":"SQL","sqlExpression":"SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0) + ISNULL(OperacionResolucionTiempoTraslado, 0) + ISNULL(OperacionResolucionTiempoEspera, 0) + ISNULL(OperacionResolucionTiemposAdministrativos, 0)) * OperacionCantidadInvolucrados) / 60.0","column":null,"aggregate":null,"datasourceWarning":false,"hasCustomLabel":true,"label":"[Ameco] | Total Declarado (hs)","optionName":"metric_bwkt46zj2ro_uuv245w6ab"},"adhoc_filters":[{"clause":"WHERE","comparator":["Resuelta","Cerrada"],"datasourceWarning":false,"expressionType":"SIMPLE","filterOptionName":"filter_mmhnr4uuquc_1r0lmlayz84","isExtra":false,"isNew":false,"operator":"IN","operatorId":"IN","sqlExpression":null,"subject":"EstadoOrdenTrabajo"},{"clause":"WHERE","comparator":"No filter","datasourceWarning":false,"expressionType":"SIMPLE","filterOptionName":"filter_bj2i9hf2xje_7ukp62bhb4d","isExtra":false,"isNew":false,"operator":"TEMPORAL_RANGE","operatorId":"TEMPORAL_RANGE","sqlExpression":null,"subject":"OrdenTrabajoFechaCreacion"}],"header_font_size":0.4,"subtitle_font_size":0.15,"show_metric_name":false,"metric_name_font_size":0.15,"y_axis_format":",.1f","currency_format":{"symbol":"HRS"},"time_format":"smart_date","force_timestamp_formatting":false,"conditional_formatting":[],"extra_form_data":{},"dashboards":[18],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: e88982fe-9bf5-4de6-8655-3f55d398fcfe
+version: 1.0.0
+dataset_uuid: 44284363-6cfb-4dd0-9986-f8cbb3a88802

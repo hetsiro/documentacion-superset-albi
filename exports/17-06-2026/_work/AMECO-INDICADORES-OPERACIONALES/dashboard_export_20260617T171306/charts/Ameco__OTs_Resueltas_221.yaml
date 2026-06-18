@@ -1,0 +1,108 @@
+slice_name: '[Ameco] | OTs Resueltas'
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 30__table
+  viz_type: big_number_total
+  slice_id: 51
+  metric:
+    aggregate: COUNT
+    column:
+      advanced_data_type: null
+      changed_on: '2026-04-02T03:02:27.078711'
+      column_name: OrdenTrabajoId
+      created_on: '2026-04-02T03:02:27.004973'
+      description: null
+      expression: ''
+      extra: '{}'
+      filterable: true
+      groupby: true
+      id: 168
+      is_active: true
+      is_dttm: false
+      python_date_format: null
+      type: INTEGER
+      type_generic: 0
+      uuid: 0e7f4d58-4c25-44ce-ae45-c042f6f7eb66
+      verbose_name: null
+    datasourceWarning: false
+    expressionType: SIMPLE
+    hasCustomLabel: false
+    label: COUNT(OrdenTrabajoId)
+    optionName: metric_lx05yqd47hk_w7cmcue67m
+    sqlExpression: null
+  adhoc_filters:
+  - clause: WHERE
+    comparator:
+    - Resuelta
+    - Cerrada
+    datasourceWarning: false
+    expressionType: SIMPLE
+    filterOptionName: filter_q49jghnza8_1b2e6cqee1o
+    isExtra: false
+    isNew: false
+    operator: IN
+    operatorId: IN
+    sqlExpression: null
+    subject: EstadoOrdenTrabajo
+  - clause: WHERE
+    comparator: No filter
+    datasourceWarning: false
+    expressionType: SIMPLE
+    filterOptionName: filter_lf8rbxkqnos_2xf4gww3ida
+    isExtra: false
+    isNew: false
+    operator: TEMPORAL_RANGE
+    sqlExpression: null
+    subject: OrdenTrabajoFechaCreacion
+  header_font_size: 0.4
+  subtitle_font_size: 0.15
+  show_metric_name: false
+  metric_name_font_size: 0.15
+  y_axis_format: ~g
+  time_format: smart_date
+  force_timestamp_formatting: false
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 4
+  annotation_layers: []
+query_context: '{"datasource": {"id": 30, "type": "table"}, "force": false, "queries":
+  [{"filters": [{"col": "EstadoOrdenTrabajo", "op": "IN", "val": ["Resuelta", "Cerrada"]},
+  {"col": "OrdenTrabajoFechaCreacion", "op": "TEMPORAL_RANGE", "val": "No filter"}],
+  "extras": {"having": "", "where": ""}, "applied_time_extras": {}, "columns": [],
+  "metrics": [{"aggregate": "COUNT", "column": {"advanced_data_type": null, "changed_on":
+  "2026-04-02T03:02:27.078711", "column_name": "OrdenTrabajoId", "created_on": "2026-04-02T03:02:27.004973",
+  "description": null, "expression": "", "extra": "{}", "filterable": true, "groupby":
+  true, "id": 168, "is_active": true, "is_dttm": false, "python_date_format": null,
+  "type": "INTEGER", "type_generic": 0, "uuid": "0e7f4d58-4c25-44ce-ae45-c042f6f7eb66",
+  "verbose_name": null}, "datasourceWarning": false, "expressionType": "SIMPLE", "hasCustomLabel":
+  false, "label": "COUNT(OrdenTrabajoId)", "optionName": "metric_lx05yqd47hk_w7cmcue67m",
+  "sqlExpression": null}], "annotation_layers": [], "series_limit": 0, "group_others_when_limit_reached":
+  false, "order_desc": true, "url_params": {}, "custom_params": {}, "custom_form_data":
+  {}}], "form_data": {"datasource": "30__table", "viz_type": "big_number_total", "slice_id":
+  51, "metric": {"aggregate": "COUNT", "column": {"advanced_data_type": null, "changed_on":
+  "2026-04-02T03:02:27.078711", "column_name": "OrdenTrabajoId", "created_on": "2026-04-02T03:02:27.004973",
+  "description": null, "expression": "", "extra": "{}", "filterable": true, "groupby":
+  true, "id": 168, "is_active": true, "is_dttm": false, "python_date_format": null,
+  "type": "INTEGER", "type_generic": 0, "uuid": "0e7f4d58-4c25-44ce-ae45-c042f6f7eb66",
+  "verbose_name": null}, "datasourceWarning": false, "expressionType": "SIMPLE", "hasCustomLabel":
+  false, "label": "COUNT(OrdenTrabajoId)", "optionName": "metric_lx05yqd47hk_w7cmcue67m",
+  "sqlExpression": null}, "adhoc_filters": [{"clause": "WHERE", "comparator": ["Resuelta",
+  "Cerrada"], "datasourceWarning": false, "expressionType": "SIMPLE", "filterOptionName":
+  "filter_q49jghnza8_1b2e6cqee1o", "isExtra": false, "isNew": false, "operator": "IN",
+  "operatorId": "IN", "sqlExpression": null, "subject": "EstadoOrdenTrabajo"}, {"clause":
+  "WHERE", "comparator": "No filter", "datasourceWarning": false, "expressionType":
+  "SIMPLE", "filterOptionName": "filter_lf8rbxkqnos_2xf4gww3ida", "isExtra": false,
+  "isNew": false, "operator": "TEMPORAL_RANGE", "sqlExpression": null, "subject":
+  "OrdenTrabajoFechaCreacion"}], "header_font_size": 0.4, "subtitle_font_size": 0.15,
+  "show_metric_name": false, "metric_name_font_size": 0.15, "y_axis_format": "~g",
+  "time_format": "smart_date", "force_timestamp_formatting": false, "conditional_formatting":
+  [], "extra_form_data": {}, "dashboards": [4], "force": false, "result_format": "json",
+  "result_type": "full"}, "result_format": "json", "result_type": "full"}'
+cache_timeout: null
+uuid: 6a57c95a-16a5-4966-9264-ff474b00d905
+version: 1.0.0
+dataset_uuid: 86635bfe-7974-4750-a70a-0309acfe0bb6

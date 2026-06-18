@@ -1,0 +1,83 @@
+slice_name: '[Centinela] | OTs Backlog'
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 25__table
+  viz_type: big_number_total
+  slice_id: 106
+  metric:
+    aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: '[Centinela] | Backlog'
+    optionName: metric_lx05yqd47hk_w7cmcue67m
+    sqlExpression: "COUNT(DISTINCT CASE \r\n    WHEN DATEDIFF(day, OrdenTrabajoFechaCreacion,\
+      \ GETDATE()) >= 3 \r\n    THEN OrdenTrabajoId \r\nEND)"
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: EstadoOrdenTrabajo
+    operator: ==
+    operatorId: EQUALS
+    comparator: Abierta
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_2esshjoxuxi_wp3fc7ipgw
+  - expressionType: SIMPLE
+    subject: OrdenTrabajoFechaCreacion
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_lf8rbxkqnos_2xf4gww3ida
+  header_font_size: 0.4
+  subtitle_font_size: 0.15
+  show_metric_name: false
+  metric_name_font_size: 0.15
+  y_axis_format: ~g
+  time_format: smart_date
+  force_timestamp_formatting: false
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 2
+  annotation_layers: []
+query_context: '{"datasource": {"id": 25, "type": "table"}, "force": false, "queries":
+  [{"filters": [{"col": "EstadoOrdenTrabajo", "op": "==", "val": "Abierta"}, {"col":
+  "OrdenTrabajoFechaCreacion", "op": "TEMPORAL_RANGE", "val": "No filter"}], "extras":
+  {"having": "", "where": ""}, "applied_time_extras": {}, "columns": [], "metrics":
+  [{"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "[Centinela] | Backlog", "optionName": "metric_lx05yqd47hk_w7cmcue67m",
+  "sqlExpression": "COUNT(DISTINCT CASE \r\n    WHEN DATEDIFF(day, OrdenTrabajoFechaCreacion,
+  GETDATE()) >= 3 \r\n    THEN OrdenTrabajoId \r\nEND)"}], "annotation_layers": [],
+  "series_limit": 0, "group_others_when_limit_reached": false, "order_desc": true,
+  "url_params": {}, "custom_params": {}, "custom_form_data": {}}], "form_data": {"datasource":
+  "25__table", "viz_type": "big_number_total", "slice_id": 106, "metric": {"aggregate":
+  null, "column": null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel":
+  true, "label": "[Centinela] | Backlog", "optionName": "metric_lx05yqd47hk_w7cmcue67m",
+  "sqlExpression": "COUNT(DISTINCT CASE \r\n    WHEN DATEDIFF(day, OrdenTrabajoFechaCreacion,
+  GETDATE()) >= 3 \r\n    THEN OrdenTrabajoId \r\nEND)"}, "adhoc_filters": [{"expressionType":
+  "SIMPLE", "subject": "EstadoOrdenTrabajo", "operator": "==", "operatorId": "EQUALS",
+  "comparator": "Abierta", "clause": "WHERE", "sqlExpression": null, "isExtra": false,
+  "isNew": false, "datasourceWarning": false, "filterOptionName": "filter_2esshjoxuxi_wp3fc7ipgw"},
+  {"expressionType": "SIMPLE", "subject": "OrdenTrabajoFechaCreacion", "operator": "TEMPORAL_RANGE",
+  "comparator": "No filter", "clause": "WHERE", "sqlExpression": null, "isExtra":
+  false, "isNew": false, "datasourceWarning": false, "filterOptionName": "filter_lf8rbxkqnos_2xf4gww3ida"}],
+  "header_font_size": 0.4, "subtitle_font_size": 0.15, "show_metric_name": false,
+  "metric_name_font_size": 0.15, "y_axis_format": "~g", "time_format": "smart_date",
+  "force_timestamp_formatting": false, "conditional_formatting": [], "extra_form_data":
+  {}, "dashboards": [2], "force": false, "result_format": "json", "result_type": "full"},
+  "result_format": "json", "result_type": "full"}'
+cache_timeout: null
+uuid: e570ef01-6d0f-4be0-a251-d2e24a7d7eab
+version: 1.0.0
+dataset_uuid: ea59d9dc-33ca-4e8f-adf4-475df5b2cdbb

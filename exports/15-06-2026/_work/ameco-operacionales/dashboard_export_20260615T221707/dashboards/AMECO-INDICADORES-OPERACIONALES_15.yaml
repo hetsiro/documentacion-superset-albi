@@ -1,0 +1,1067 @@
+dashboard_title: AMECO-INDICADORES-OPERACIONALES
+description: null
+css: "/* \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\r\n   SUPERSET DASHBOARD \u2014 CENTINELA LIGHT\
+  \ THEME\r\n   Solo selectores reales verificados via DOM\r\n   \u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550 */\r\n\r\n/* \u2500\u2500 Fuente global \u2500\u2500 */\r\n@import\
+  \ url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');\r\
+  \n\r\n/* \u2500\u2500 Todo el dashboard \u2500\u2500 */\r\n.dashboard, .dashboard-content,\
+  \ .grid-container,\r\n.ant-tabs, .ant-tabs-content, .ant-tabs-tabpane {\r\n  background:\
+  \ #f5f6fa !important;\r\n  font-family: 'Inter', sans-serif !important;\r\n}\r\n\
+  \r\n/* \u2500\u2500 Cards \u2014 borde izquierdo acento \u2500\u2500 */\r\n.dashboard-component-chart-holder\
+  \ {\r\n  background: #ffffff !important;\r\n  border: 1px solid rgba(0, 0, 0, 0.06)\
+  \ !important;\r\n  border-left: 3px solid rgba(0, 150, 200, 0.35) !important;\r\n\
+  \  border-radius: 14px !important;\r\n  box-shadow: 0 1px 8px rgba(0,0,0,0.06) !important;\r\
+  \n  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;\r\n  margin:\
+  \ 4px !important;\r\n}\r\n\r\n.dashboard-component-chart-holder:hover {\r\n  border-color:\
+  \ rgba(0, 150, 200, 0.2) !important;\r\n  border-left: 3px solid rgba(0, 150, 200,\
+  \ 0.7) !important;\r\n  box-shadow: 0 4px 20px rgba(0, 150, 200, 0.08), 0 2px 12px\
+  \ rgba(0,0,0,0.06) !important;\r\n  transform: translateY(-3px) scale(1.003) !important;\r\
+  \n}\r\n\r\n/* Card interna \u2014 transparente */\r\n.dashboard-chart {\r\n  background:\
+  \ transparent !important;\r\n  border: none !important;\r\n  box-shadow: none !important;\r\
+  \n}\r\n\r\n/* \u2500\u2500 Big Numbers \u2014 glow sutil \u2500\u2500 */\r\n.header-line\
+  \ {\r\n  font-family: 'Rajdhani', sans-serif !important;\r\n  font-weight: 700 !important;\r\
+  \n  color: #0088a8 !important;\r\n  text-align: center !important;\r\n  justify-content:\
+  \ center !important;\r\n  letter-spacing: 1.5px !important;\r\n  text-shadow: 0\
+  \ 0 12px rgba(0, 136, 168, 0.15) !important;\r\n}\r\n\r\n.superset-legacy-chart-big-number\
+  \ .header-line {\r\n  font-size: 2.8em !important;\r\n}\r\n\r\n/* Subtitulo */\r\
+  \n.header-line .subheader-line {\r\n  font-family: 'Rajdhani', sans-serif !important;\r\
+  \n  color: rgba(0, 136, 168, 0.5) !important;\r\n  font-weight: 600 !important;\r\
+  \n  font-size: 0.35em !important;\r\n  letter-spacing: 3px !important;\r\n  text-transform:\
+  \ uppercase !important;\r\n  text-shadow: none !important;\r\n}\r\n\r\n/* \u2500\
+  \u2500 Titulos de charts \u2500\u2500 */\r\n.editable-title, .editable-title a {\r\
+  \n  font-family: 'Inter', sans-serif !important;\r\n  color: #6b7280 !important;\r\
+  \n  font-weight: 600 !important;\r\n  font-size: 11px !important;\r\n  text-transform:\
+  \ uppercase !important;\r\n  letter-spacing: 1.5px !important;\r\n  text-decoration:\
+  \ none !important;\r\n  transition: color 0.3s ease !important;\r\n}\r\n\r\n.dashboard-component-chart-holder:hover\
+  \ .editable-title a {\r\n  color: #0088a8 !important;\r\n}\r\n\r\n/* \u2500\u2500\
+  \ Header del dashboard \u2500\u2500 */\r\n.dashboard-header {\r\n  background: #f5f6fa\
+  \ !important;\r\n  border-bottom: 1px solid rgba(0,0,0,0.06) !important;\r\n}\r\n\
+  \r\n/* \u2500\u2500 Tabs \u2500\u2500 */\r\n.ant-tabs-tab {\r\n  font-family: 'Rajdhani',\
+  \ sans-serif !important;\r\n  font-weight: 600 !important;\r\n  font-size: 13px\
+  \ !important;\r\n  letter-spacing: 1.5px !important;\r\n  text-transform: uppercase\
+  \ !important;\r\n  color: #6b7280 !important;\r\n}\r\n\r\n.ant-tabs-tab-active .ant-tabs-tab-btn\
+  \ {\r\n  color: #0088a8 !important;\r\n}\r\n\r\n.ant-tabs-ink-bar {\r\n  background:\
+  \ linear-gradient(90deg, #0088a8, #00b8d4) !important;\r\n  height: 2px !important;\r\
+  \n}\r\n\r\n/* \u2500\u2500 Filtros \u2500\u2500 */\r\n.filter-bar, .dashboard-filters-wrapper\
+  \ {\r\n  background: #eef0f4 !important;\r\n}\r\n\r\n/* \u2500\u2500 TABLAS \u2500\
+  \u2500 */\r\n.table.table-striped.table-condensed {\r\n  font-family: 'Inter', sans-serif\
+  \ !important;\r\n  border-collapse: separate !important;\r\n  border-spacing: 0\
+  \ !important;\r\n}\r\n\r\n/* Headers */\r\n.table.table-striped.table-condensed\
+  \ th {\r\n  background: linear-gradient(180deg, rgba(0, 150, 200, 0.06) 0%, rgba(0,\
+  \ 150, 200, 0.02) 100%) !important;\r\n  color: #0088a8 !important;\r\n  font-family:\
+  \ 'Rajdhani', sans-serif !important;\r\n  font-weight: 700 !important;\r\n  font-size:\
+  \ 11px !important;\r\n  letter-spacing: 1.5px !important;\r\n  text-transform: uppercase\
+  \ !important;\r\n  padding: 12px 14px !important;\r\n  border-bottom: 2px solid\
+  \ rgba(0, 150, 200, 0.15) !important;\r\n  border-color: rgba(0, 150, 200, 0.08)\
+  \ !important;\r\n}\r\n\r\n/* Celdas */\r\n.table.table-striped.table-condensed td\
+  \ {\r\n  color: #374151 !important;\r\n  font-size: 12.5px !important;\r\n  padding:\
+  \ 10px 14px !important;\r\n  border-color: rgba(0,0,0,0.04) !important;\r\n  transition:\
+  \ all 0.2s ease !important;\r\n}\r\n\r\n/* Filas alternas */\r\n.table-striped tbody\
+  \ tr:nth-child(odd) td {\r\n  background: rgba(0,0,0,0.015) !important;\r\n}\r\n\
+  \r\n.table-striped tbody tr:nth-child(even) td {\r\n  background: transparent !important;\r\
+  \n}\r\n\r\n/* Hover en filas */\r\n.table.table-striped.table-condensed tbody tr:hover\
+  \ td {\r\n  background: rgba(0, 150, 200, 0.05) !important;\r\n  color: #111827\
+  \ !important;\r\n}\r\n\r\n/* Borde izquierdo en hover */\r\n.table.table-striped.table-condensed\
+  \ tbody tr:hover td:first-child {\r\n  box-shadow: inset 3px 0 0 #0088a8 !important;\r\
+  \n}\r\n\r\n/* Cell bars */\r\n.cell-bar.positive {\r\n  opacity: 0.5 !important;\r\
+  \n  border-radius: 2px !important;\r\n}\r\n\r\n/* N/A cells */\r\n.dt-is-null {\r\
+  \n  color: #c0c4cc !important;\r\n  font-style: italic !important;\r\n}\r\n\r\n\
+  /* Filter column border */\r\n.right-border-only {\r\n  border-right: 1px solid\
+  \ rgba(0, 150, 200, 0.1) !important;\r\n}\r\n\r\n/* \u2500\u2500 Scrollbar \u2500\
+  \u2500 */\r\n::-webkit-scrollbar { width: 4px !important; height: 4px !important;\
+  \ }\r\n::-webkit-scrollbar-track { background: transparent !important; }\r\n::-webkit-scrollbar-thumb\
+  \ {\r\n  background: rgba(0, 150, 200, 0.2) !important;\r\n  border-radius: 4px\
+  \ !important;\r\n}\r\n::-webkit-scrollbar-thumb:hover {\r\n  background: rgba(0,\
+  \ 150, 200, 0.4) !important;\r\n}\r\n\r\n/* \u2500\u2500 Badge de filtros \u2500\
+  \u2500 */\r\n.ant-badge-count {\r\n  background: rgba(0, 150, 200, 0.12) !important;\r\
+  \n  border: 1px solid rgba(0, 150, 200, 0.3) !important;\r\n  color: #0088a8 !important;\r\
+  \n  font-family: 'Rajdhani', sans-serif !important;\r\n  font-weight: 700 !important;\r\
+  \n}\r\n"
+slug: ameco-indicadores-operacionales
+certified_by: ''
+certification_details: ''
+published: true
+uuid: 291027b8-244b-4176-9cb5-5f3d6b144cce
+position:
+  CHART-4ObUsLGIX6UxIA8dL564D:
+    children: []
+    id: CHART-4ObUsLGIX6UxIA8dL564D
+    meta:
+      chartId: 228
+      height: 19
+      sliceName: '[Ameco] | Tasa de Finalizacion'
+      uuid: d75baa1c-c7ac-4854-928d-a73514c2cd7f
+      width: 2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-gtg7O7sMtSecA1o-x-O9E
+    type: CHART
+  CHART-4eSHOYDTj40RrZ1BJEQSu:
+    children: []
+    id: CHART-4eSHOYDTj40RrZ1BJEQSu
+    meta:
+      chartId: 221
+      height: 19
+      sliceName: '[Ameco] | OTs Resueltas'
+      uuid: 6a57c95a-16a5-4966-9264-ff474b00d905
+      width: 2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-gtg7O7sMtSecA1o-x-O9E
+    type: CHART
+  CHART-8yaF3IGNRDUmLjV6xRhR-:
+    children: []
+    id: CHART-8yaF3IGNRDUmLjV6xRhR-
+    meta:
+      chartId: 232
+      height: 28
+      sliceName: '[Ameco] | Ops resueltas por especialidad'
+      uuid: e36fa3b8-43f5-400d-a84c-19fdc9dcee1a
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-rQKn3rvmMAXS0rBY5w3Hh
+    type: CHART
+  CHART-A3my6UfjSqAOcb4rHRSeB:
+    children: []
+    id: CHART-A3my6UfjSqAOcb4rHRSeB
+    meta:
+      chartId: 236
+      height: 50
+      sliceName: '[Ameco] | Ranking carga de trabajo'
+      uuid: cd1596ec-4dce-4188-ab97-a4a26dbdcf00
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    - ROW-GLOEkthcrJWOvOWRrBy9j
+    type: CHART
+  CHART-EgnKWbw0GKYPecdPJ1I1Y:
+    children: []
+    id: CHART-EgnKWbw0GKYPecdPJ1I1Y
+    meta:
+      chartId: 234
+      height: 50
+      sliceName: '[Ameco] | Estado de OTs'
+      uuid: 17fa823d-7bbf-4f3a-92fe-e2c15505e03c
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-9xYhSQczN2mbzLg55KR5u
+    type: CHART
+  CHART-F8TcO1VQ66OYPhFcDLSSN:
+    children: []
+    id: CHART-F8TcO1VQ66OYPhFcDLSSN
+    meta:
+      chartId: 226
+      height: 19
+      sliceName: '[Ameco] | OTs Backlog'
+      uuid: 57e105cb-fa14-423e-8bf3-f39ffe0e6b67
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-gtg7O7sMtSecA1o-x-O9E
+    type: CHART
+  CHART-FaDZktYeMe7imKzGTM6_8:
+    children: []
+    id: CHART-FaDZktYeMe7imKzGTM6_8
+    meta:
+      chartId: 224
+      height: 50
+      sliceName: '[Ameco] | Tendencia de OTs'
+      uuid: 54d673ec-cb95-4672-8428-acb86a0aa98f
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-9xYhSQczN2mbzLg55KR5u
+    type: CHART
+  CHART-JgSAY9ylB1_-4SBTEJNu_:
+    children: []
+    id: CHART-JgSAY9ylB1_-4SBTEJNu_
+    meta:
+      chartId: 233
+      height: 24
+      sliceName: '[Ameco] | Personal Presente Hoy'
+      uuid: 927beccb-778a-475c-9a9f-63bae8a4f4ec
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    - ROW-GLOEkthcrJWOvOWRrBy9j
+    - COLUMN--af_4gWIsh1HGnQwNwgOa
+    type: CHART
+  CHART-OwM-IQ3y01s5udj24aSjf:
+    children: []
+    id: CHART-OwM-IQ3y01s5udj24aSjf
+    meta:
+      chartId: 225
+      height: 50
+      sliceName: '[Ameco] | Ops Backlog por especialidad'
+      uuid: 91cd4418-6f18-4aec-b338-a1ae4cb19b27
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-y_b7gygAnnzumEyzHdvIz
+    type: CHART
+  CHART-PHeLlKmFtHs-Wd23eCsAs:
+    children: []
+    id: CHART-PHeLlKmFtHs-Wd23eCsAs
+    meta:
+      chartId: 238
+      height: 16
+      sliceName: '[Ameco] | Tasa de Cumplimiento'
+      uuid: 54e1a1cd-5036-469c-a48c-42b786cebf06
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    - ROW-mzJ8j68e1vh5YkmfNTCYd
+    type: CHART
+  CHART-PvXxUgs_1sD1KB3m5k-wH:
+    children: []
+    id: CHART-PvXxUgs_1sD1KB3m5k-wH
+    meta:
+      chartId: 237
+      height: 50
+      sliceName: '[Ameco] | Operaciones por Zona'
+      uuid: 4fd9306c-bf15-4077-ba6f-0da7a442b8c2
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-y_b7gygAnnzumEyzHdvIz
+    type: CHART
+  CHART-WiX50qZoOPpaYBonjNsem:
+    children: []
+    id: CHART-WiX50qZoOPpaYBonjNsem
+    meta:
+      chartId: 223
+      height: 16
+      sliceName: '[Ameco] | Tiempos OT en HH'
+      uuid: 33fc15a8-e66f-48a9-8962-a7b440e29388
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    - ROW-mzJ8j68e1vh5YkmfNTCYd
+    type: CHART
+  CHART-YXSIBlIKxM-dmPLiJS4Y0:
+    children: []
+    id: CHART-YXSIBlIKxM-dmPLiJS4Y0
+    meta:
+      chartId: 235
+      height: 24
+      sliceName: '[Ameco] | Supervisores Presente Hoy'
+      uuid: 9fb1f8de-42fc-4e2c-9469-d29eee9775b1
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    - ROW-GLOEkthcrJWOvOWRrBy9j
+    - COLUMN--af_4gWIsh1HGnQwNwgOa
+    type: CHART
+  CHART-a-4FW1LrezpQtecNwJAT0:
+    children: []
+    id: CHART-a-4FW1LrezpQtecNwJAT0
+    meta:
+      chartId: 222
+      height: 50
+      sliceName: '[Ameco] | Tiempos reportados por persona'
+      uuid: 34f6973c-648a-4219-85ef-ca9915a6a992
+      width: 12
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    - ROW-j4evo_wh-MqxSoEFr4ADr
+    type: CHART
+  CHART-b3gEOYsJlsDrHFaLZBgJA:
+    children: []
+    id: CHART-b3gEOYsJlsDrHFaLZBgJA
+    meta:
+      chartId: 227
+      height: 19
+      sliceName: '[Ameco] | OTs Creadas'
+      uuid: 915d2104-9eff-477f-93eb-92d64182fe78
+      width: 2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-gtg7O7sMtSecA1o-x-O9E
+    type: CHART
+  CHART-dYGMel_e0q2CPjVcqJLcm:
+    children: []
+    id: CHART-dYGMel_e0q2CPjVcqJLcm
+    meta:
+      chartId: 229
+      height: 16
+      sliceName: '[Ameco] | Tiempo Prom. Resolucion'
+      uuid: 5f564270-0afa-453d-ba33-5cab3dcfff74
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    - ROW-mzJ8j68e1vh5YkmfNTCYd
+    type: CHART
+  CHART-explore-57-1:
+    children: []
+    id: CHART-explore-57-1
+    meta:
+      chartId: 231
+      height: 19
+      sliceName: '[Ameco] | Operaciones Resueltas'
+      uuid: 75f81c5c-a520-488f-81e0-ced501628221
+      width: 2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-gtg7O7sMtSecA1o-x-O9E
+    type: CHART
+  CHART-v28YfxcmIUtSU9iekyoIC:
+    children: []
+    id: CHART-v28YfxcmIUtSU9iekyoIC
+    meta:
+      chartId: 230
+      height: 28
+      sliceName: '[Ameco] | Ops pendientes por especialidad'
+      uuid: 1069eae0-01d4-4357-8c2a-fc77d5402a3d
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    - ROW-rQKn3rvmMAXS0rBY5w3Hh
+    type: CHART
+  COLUMN--af_4gWIsh1HGnQwNwgOa:
+    children:
+    - CHART-JgSAY9ylB1_-4SBTEJNu_
+    - CHART-YXSIBlIKxM-dmPLiJS4Y0
+    id: COLUMN--af_4gWIsh1HGnQwNwgOa
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    - ROW-GLOEkthcrJWOvOWRrBy9j
+    type: COLUMN
+  COLUMN-Aqpj2arcpMfML19wqtBzV:
+    children:
+    - ROW-gtg7O7sMtSecA1o-x-O9E
+    - ROW-9xYhSQczN2mbzLg55KR5u
+    - ROW-rQKn3rvmMAXS0rBY5w3Hh
+    - ROW-y_b7gygAnnzumEyzHdvIz
+    id: COLUMN-Aqpj2arcpMfML19wqtBzV
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      width: 12
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    type: COLUMN
+  COLUMN-JsPue_2mkI-npNDihrHOh:
+    children:
+    - ROW-mzJ8j68e1vh5YkmfNTCYd
+    - ROW-GLOEkthcrJWOvOWRrBy9j
+    - ROW-j4evo_wh-MqxSoEFr4ADr
+    id: COLUMN-JsPue_2mkI-npNDihrHOh
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      width: 12
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    type: COLUMN
+  DASHBOARD_VERSION_KEY: v2
+  GRID_ID:
+    children:
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    id: GRID_ID
+    parents:
+    - ROOT_ID
+    type: GRID
+  HEADER_ID:
+    id: HEADER_ID
+    meta:
+      text: AMECO-INDICADORES-OPERACIONALES
+    type: HEADER
+  ROOT_ID:
+    children:
+    - GRID_ID
+    id: ROOT_ID
+    type: ROOT
+  ROW--NMTYJRKFo5yRmrENtkBs:
+    children:
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    id: ROW--NMTYJRKFo5yRmrENtkBs
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    type: ROW
+  ROW-5Gz9-3aCsMGXQYgDXhDwT:
+    children:
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    id: ROW-5Gz9-3aCsMGXQYgDXhDwT
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    type: ROW
+  ROW-9xYhSQczN2mbzLg55KR5u:
+    children:
+    - CHART-FaDZktYeMe7imKzGTM6_8
+    - CHART-EgnKWbw0GKYPecdPJ1I1Y
+    id: ROW-9xYhSQczN2mbzLg55KR5u
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    type: ROW
+  ROW-GLOEkthcrJWOvOWRrBy9j:
+    children:
+    - COLUMN--af_4gWIsh1HGnQwNwgOa
+    - CHART-A3my6UfjSqAOcb4rHRSeB
+    id: ROW-GLOEkthcrJWOvOWRrBy9j
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    type: ROW
+  ROW-gtg7O7sMtSecA1o-x-O9E:
+    children:
+    - CHART-b3gEOYsJlsDrHFaLZBgJA
+    - CHART-4eSHOYDTj40RrZ1BJEQSu
+    - CHART-4ObUsLGIX6UxIA8dL564D
+    - CHART-explore-57-1
+    - CHART-F8TcO1VQ66OYPhFcDLSSN
+    id: ROW-gtg7O7sMtSecA1o-x-O9E
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    type: ROW
+  ROW-j4evo_wh-MqxSoEFr4ADr:
+    children:
+    - CHART-a-4FW1LrezpQtecNwJAT0
+    id: ROW-j4evo_wh-MqxSoEFr4ADr
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    type: ROW
+  ROW-mzJ8j68e1vh5YkmfNTCYd:
+    children:
+    - CHART-WiX50qZoOPpaYBonjNsem
+    - CHART-dYGMel_e0q2CPjVcqJLcm
+    - CHART-PHeLlKmFtHs-Wd23eCsAs
+    id: ROW-mzJ8j68e1vh5YkmfNTCYd
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    - COLUMN-JsPue_2mkI-npNDihrHOh
+    type: ROW
+  ROW-rQKn3rvmMAXS0rBY5w3Hh:
+    children:
+    - CHART-8yaF3IGNRDUmLjV6xRhR-
+    - CHART-v28YfxcmIUtSU9iekyoIC
+    id: ROW-rQKn3rvmMAXS0rBY5w3Hh
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    type: ROW
+  ROW-y_b7gygAnnzumEyzHdvIz:
+    children:
+    - CHART-PvXxUgs_1sD1KB3m5k-wH
+    - CHART-OwM-IQ3y01s5udj24aSjf
+    id: ROW-y_b7gygAnnzumEyzHdvIz
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    - COLUMN-Aqpj2arcpMfML19wqtBzV
+    type: ROW
+  TAB-JobFGW3MZJA2PMYvEM3Nl:
+    children:
+    - ROW--NMTYJRKFo5yRmrENtkBs
+    id: TAB-JobFGW3MZJA2PMYvEM3Nl
+    meta:
+      defaultText: Tab title
+      placeholder: Tab title
+      text: Indicadores de Actividad
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    type: TAB
+  TAB-Jv4XNyqjHqh0Gn6qLZiXM:
+    children:
+    - ROW-5Gz9-3aCsMGXQYgDXhDwT
+    id: TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    meta:
+      defaultText: Tab title
+      placeholder: Tab title
+      text: Indicadores de Personas
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-4MYPFpmbFfL4d9x-eqJ9N
+    type: TAB
+  TABS-4MYPFpmbFfL4d9x-eqJ9N:
+    children:
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+    id: TABS-4MYPFpmbFfL4d9x-eqJ9N
+    meta: {}
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: TABS
+metadata:
+  label_colors: {}
+  timed_refresh_immune_slices: []
+  expanded_slices: {}
+  refresh_frequency: 0
+  color_scheme: blueToGreen
+  cross_filters_enabled: true
+  chart_configuration:
+    '222':
+      id: 222
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 223
+        - 224
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 232
+        - 233
+        - 234
+        - 235
+        - 236
+        - 237
+        - 238
+    '224':
+      id: 224
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 222
+        - 223
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 232
+        - 233
+        - 234
+        - 235
+        - 236
+        - 237
+        - 238
+    '225':
+      id: 225
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 222
+        - 223
+        - 224
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 232
+        - 233
+        - 234
+        - 235
+        - 236
+        - 237
+        - 238
+    '230':
+      id: 230
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 222
+        - 223
+        - 224
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 231
+        - 232
+        - 233
+        - 234
+        - 235
+        - 236
+        - 237
+        - 238
+    '232':
+      id: 232
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 222
+        - 223
+        - 224
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 233
+        - 234
+        - 235
+        - 236
+        - 237
+        - 238
+    '233':
+      id: 233
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 222
+        - 223
+        - 224
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 232
+        - 234
+        - 235
+        - 236
+        - 237
+        - 238
+    '234':
+      id: 234
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 222
+        - 223
+        - 224
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 232
+        - 233
+        - 235
+        - 236
+        - 237
+        - 238
+    '235':
+      id: 235
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 222
+        - 223
+        - 224
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 232
+        - 233
+        - 234
+        - 236
+        - 237
+        - 238
+    '236':
+      id: 236
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 222
+        - 223
+        - 224
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 232
+        - 233
+        - 234
+        - 235
+        - 237
+        - 238
+    '237':
+      id: 237
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 221
+        - 222
+        - 223
+        - 224
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 232
+        - 233
+        - 234
+        - 235
+        - 236
+        - 238
+  global_chart_configuration:
+    scope:
+      rootPath:
+      - TAB-JobFGW3MZJA2PMYvEM3Nl
+      - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+      excluded: []
+    chartsInScope:
+    - 221
+    - 222
+    - 223
+    - 224
+    - 225
+    - 226
+    - 227
+    - 228
+    - 229
+    - 230
+    - 231
+    - 232
+    - 233
+    - 234
+    - 235
+    - 236
+    - 237
+    - 238
+  native_filter_configuration:
+  - id: NATIVE_FILTER-z3Kn89z8dJVpsjq8Z0__x
+    controlValues:
+      enableEmptyFilter: true
+    name: Fecha Inicio
+    filterType: filter_time
+    targets:
+    - {}
+    defaultDataMask:
+      extraFormData:
+        time_range: Last month
+      filterState:
+        value: Last month
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - TAB-JobFGW3MZJA2PMYvEM3Nl
+      - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+      excluded:
+      - 226
+    type: NATIVE_FILTER
+    description: ''
+    chartsInScope:
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 57
+    tabsInScope:
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+  - id: NATIVE_FILTER-TkJEzmt0qCbYJ5bisEqcx
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      creatable: true
+      multiSelect: true
+      searchAllOptions: false
+      inverseSelection: false
+    name: Tipo Plan
+    filterType: filter_select
+    targets:
+    - column:
+        name: OrdenTrabajoPlan
+      datasetUuid: 86635bfe-7974-4750-a70a-0309acfe0bb6
+    defaultDataMask:
+      extraFormData:
+        filters:
+        - col: OrdenTrabajoPlan
+          op: IN
+          val:
+          - Correctivo
+      filterState:
+        validateMessage: false
+        validateStatus: false
+        label: Correctivo
+        value:
+        - Correctivo
+        excludeFilterValues: true
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+      - TAB-JobFGW3MZJA2PMYvEM3Nl
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+    chartsInScope:
+    - 221
+    - 223
+    - 231
+    - 232
+    - 224
+    - 227
+    - 237
+    - 238
+    - 236
+    - 222
+    - 235
+    - 234
+    - 226
+    - 233
+    - 230
+    - 228
+    - 229
+    - 225
+    tabsInScope:
+    - TAB-JobFGW3MZJA2PMYvEM3Nl
+    - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+  - id: NATIVE_FILTER-8BggoSCJELJU4eI9bx3qY
+    controlValues:
+      enableEmptyFilter: true
+      defaultToFirstItem: false
+      creatable: false
+      multiSelect: false
+      searchAllOptions: false
+      inverseSelection: false
+    name: Negocio
+    filterType: filter_select
+    targets:
+    - column:
+        name: OrdenTrabajoNegocio
+      datasetUuid: 86635bfe-7974-4750-a70a-0309acfe0bb6
+    defaultDataMask:
+      extraFormData:
+        filters:
+        - col: OrdenTrabajoNegocio
+          op: IN
+          val:
+          - Mantenimiento equipos
+      filterState:
+        validateMessage: false
+        validateStatus: false
+        label: Mantenimiento equipos
+        value:
+        - Mantenimiento equipos
+        excludeFilterValues: true
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - TAB-JobFGW3MZJA2PMYvEM3Nl
+      - TAB-Jv4XNyqjHqh0Gn6qLZiXM
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  filter_bar_orientation: HORIZONTAL
+  shared_label_colors:
+  - '5'
+  - <NULL>
+  map_label_colors:
+    '1': '#0074F1'
+    '2': '#004CDA'
+    '3': '#3200A7'
+    OTs Totales: '#3200A7'
+    OTs Resueltas: '#004CDA'
+    '4.0': '#3200A7'
+    '7.0': '#004CDA'
+    '5.0': '#0074F1'
+    <NULL>: '#0096EF'
+  color_scheme_domain:
+  - '#3200A7'
+  - '#004CDA'
+  - '#0074F1'
+  - '#0096EF'
+  - '#53BFFF'
+  - '#41C8E6'
+  - '#30DEDE'
+  - '#04D9C7'
+  - '#00EAA2'
+  - '#A6FF93'
+  default_filters: '{}'
+theme_uuid: null
+version: 1.0.0

@@ -1,0 +1,207 @@
+slice_name: '[Ameco] | SLA por Subsistemas'
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  datasource: 28__table
+  viz_type: table
+  slice_id: 46
+  query_mode: aggregate
+  groupby:
+  - SubTipoTarea
+  temporal_columns_lookup:
+    OrdenTrabajoFechaInicio: true
+    OperacionFechaFin: true
+    OperacionFechaResolucion: true
+    OperacionFechaAgendada: true
+    OperacionFechaProgramada: true
+    OperacionFechaAsignacion: true
+    OperacionFechaLiberacion: true
+    OperacionFechaDesasignacion: true
+    OperacionFechaDetenidoInicio: true
+    OperacionFechaDetenidoFin: true
+    OperacionFechaInicio: true
+    OperacionResolucionFecha: true
+    OrdenTrabajoFechaFin: true
+    OrdenTrabajoFechaInicioReal: true
+    OrdenTrabajoFechaFinReal: true
+    OrdenTrabajoFechaCreacion: true
+  metrics:
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: En Plazo
+    optionName: metric_5vvoomac3zh_4xqh3tvfozb
+    sqlExpression: "COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin\
+      \ THEN OrdenTrabajoId END)\r\n"
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: Fuera de Plazo
+    optionName: metric_dh77hopqhrv_iqaj5jbffeh
+    sqlExpression: COUNT(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin
+      THEN OrdenTrabajoId END)
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: Sin Cerrar
+    optionName: metric_obl38rajh4_41mjsm3tgp6
+    sqlExpression: COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId
+      END)
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: Tasa Cumplimiento %
+    optionName: metric_cyfv5dfiwbb_xbizb6zlgpj
+    sqlExpression: "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <=\
+      \ OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId),\
+      \ 0) * 100, 1\r\n)"
+  - aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: true
+    label: "D\xEDas Prom. Atraso"
+    optionName: metric_8rhyr2vmvom_ch2hjb0789a
+    sqlExpression: "AVG(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin\r\
+      \n    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal)\
+      \ AS FLOAT)\r\nEND)"
+  all_columns: []
+  percent_metrics: []
+  adhoc_filters:
+  - clause: WHERE
+    comparator: No filter
+    expressionType: SIMPLE
+    isExtra: false
+    operator: TEMPORAL_RANGE
+    subject: OrdenTrabajoFechaCreacion
+  order_by_cols: []
+  server_pagination: false
+  row_limit: 10000
+  percent_metric_calculation: row_limit
+  show_totals: true
+  table_timestamp_format: smart_date
+  include_search: false
+  allow_rearrange_columns: false
+  allow_render_html: true
+  column_config:
+    En Plazo:
+      d3NumberFormat: ~g
+    Fuera de Plazo:
+      d3NumberFormat: ~g
+    Sin Cerrar:
+      d3NumberFormat: ~g
+      d3SmallNumberFormat: ~g
+  show_cell_bars: true
+  align_pn: false
+  color_pn: true
+  comparison_color_enabled: false
+  comparison_color_scheme: Green
+  conditional_formatting: []
+  comparison_type: values
+  extra_form_data: {}
+  dashboards:
+  - 3
+  annotation_layers: []
+query_context: '{"datasource": {"id": 28, "type": "table"}, "force": false, "queries":
+  [{"filters": [{"col": "OrdenTrabajoFechaCreacion", "op": "TEMPORAL_RANGE", "val":
+  "No filter"}], "extras": {"having": "", "where": ""}, "applied_time_extras": {},
+  "columns": ["SubTipoTarea"], "metrics": [{"aggregate": null, "column": null, "datasourceWarning":
+  false, "expressionType": "SQL", "hasCustomLabel": true, "label": "En Plazo", "optionName":
+  "metric_5vvoomac3zh_4xqh3tvfozb", "sqlExpression": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal
+  <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)\r\n"}, {"aggregate": null, "column":
+  null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel": true,
+  "label": "Fuera de Plazo", "optionName": "metric_dh77hopqhrv_iqaj5jbffeh", "sqlExpression":
+  "COUNT(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin THEN OrdenTrabajoId
+  END)"}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Sin Cerrar", "optionName": "metric_obl38rajh4_41mjsm3tgp6",
+  "sqlExpression": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId
+  END)"}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Tasa Cumplimiento %", "optionName": "metric_cyfv5dfiwbb_xbizb6zlgpj",
+  "sqlExpression": "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <=
+  OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId),
+  0) * 100, 1\r\n)"}, {"aggregate": null, "column": null, "datasourceWarning": false,
+  "expressionType": "SQL", "hasCustomLabel": true, "label": "D\u00edas Prom. Atraso",
+  "optionName": "metric_8rhyr2vmvom_ch2hjb0789a", "sqlExpression": "AVG(CASE WHEN
+  OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin\r\n    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin,
+  OrdenTrabajoFechaFinReal) AS FLOAT)\r\nEND)"}], "orderby": [[{"aggregate": null,
+  "column": null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel":
+  true, "label": "En Plazo", "optionName": "metric_5vvoomac3zh_4xqh3tvfozb", "sqlExpression":
+  "COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId
+  END)\r\n"}, false]], "annotation_layers": [], "row_limit": 10000, "series_limit":
+  0, "group_others_when_limit_reached": false, "order_desc": true, "url_params": {},
+  "custom_params": {}, "custom_form_data": {}, "post_processing": [], "time_offsets":
+  []}, {"filters": [{"col": "OrdenTrabajoFechaCreacion", "op": "TEMPORAL_RANGE", "val":
+  "No filter"}], "extras": {"having": "", "where": ""}, "applied_time_extras": {},
+  "columns": [], "metrics": [{"aggregate": null, "column": null, "datasourceWarning":
+  false, "expressionType": "SQL", "hasCustomLabel": true, "label": "En Plazo", "optionName":
+  "metric_5vvoomac3zh_4xqh3tvfozb", "sqlExpression": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal
+  <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)\r\n"}, {"aggregate": null, "column":
+  null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel": true,
+  "label": "Fuera de Plazo", "optionName": "metric_dh77hopqhrv_iqaj5jbffeh", "sqlExpression":
+  "COUNT(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin THEN OrdenTrabajoId
+  END)"}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Sin Cerrar", "optionName": "metric_obl38rajh4_41mjsm3tgp6",
+  "sqlExpression": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId
+  END)"}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Tasa Cumplimiento %", "optionName": "metric_cyfv5dfiwbb_xbizb6zlgpj",
+  "sqlExpression": "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <=
+  OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId),
+  0) * 100, 1\r\n)"}, {"aggregate": null, "column": null, "datasourceWarning": false,
+  "expressionType": "SQL", "hasCustomLabel": true, "label": "D\u00edas Prom. Atraso",
+  "optionName": "metric_8rhyr2vmvom_ch2hjb0789a", "sqlExpression": "AVG(CASE WHEN
+  OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin\r\n    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin,
+  OrdenTrabajoFechaFinReal) AS FLOAT)\r\nEND)"}], "annotation_layers": [], "row_limit":
+  0, "row_offset": 0, "series_limit": 0, "group_others_when_limit_reached": false,
+  "url_params": {}, "custom_params": {}, "custom_form_data": {}, "post_processing":
+  [], "time_offsets": []}], "form_data": {"datasource": "28__table", "viz_type": "table",
+  "slice_id": 46, "query_mode": "aggregate", "groupby": ["SubTipoTarea"], "temporal_columns_lookup":
+  {"OrdenTrabajoFechaInicio": true, "OperacionFechaFin": true, "OperacionFechaResolucion":
+  true, "OperacionFechaAgendada": true, "OperacionFechaProgramada": true, "OperacionFechaAsignacion":
+  true, "OperacionFechaLiberacion": true, "OperacionFechaDesasignacion": true, "OperacionFechaDetenidoInicio":
+  true, "OperacionFechaDetenidoFin": true, "OperacionFechaInicio": true, "OperacionResolucionFecha":
+  true, "OrdenTrabajoFechaFin": true, "OrdenTrabajoFechaInicioReal": true, "OrdenTrabajoFechaFinReal":
+  true, "OrdenTrabajoFechaCreacion": true}, "metrics": [{"aggregate": null, "column":
+  null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel": true,
+  "label": "En Plazo", "optionName": "metric_5vvoomac3zh_4xqh3tvfozb", "sqlExpression":
+  "COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId
+  END)\r\n"}, {"aggregate": null, "column": null, "datasourceWarning": false, "expressionType":
+  "SQL", "hasCustomLabel": true, "label": "Fuera de Plazo", "optionName": "metric_dh77hopqhrv_iqaj5jbffeh",
+  "sqlExpression": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin
+  THEN OrdenTrabajoId END)"}, {"aggregate": null, "column": null, "datasourceWarning":
+  false, "expressionType": "SQL", "hasCustomLabel": true, "label": "Sin Cerrar", "optionName":
+  "metric_obl38rajh4_41mjsm3tgp6", "sqlExpression": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal
+  IS NULL THEN OrdenTrabajoId END)"}, {"aggregate": null, "column": null, "datasourceWarning":
+  false, "expressionType": "SQL", "hasCustomLabel": true, "label": "Tasa Cumplimiento
+  %", "optionName": "metric_cyfv5dfiwbb_xbizb6zlgpj", "sqlExpression": "ROUND(\r\n    CAST(COUNT(CASE
+  WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS
+  FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"}, {"aggregate": null,
+  "column": null, "datasourceWarning": false, "expressionType": "SQL", "hasCustomLabel":
+  true, "label": "D\u00edas Prom. Atraso", "optionName": "metric_8rhyr2vmvom_ch2hjb0789a",
+  "sqlExpression": "AVG(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin\r\n    THEN
+  CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal) AS FLOAT)\r\nEND)"}],
+  "all_columns": [], "percent_metrics": [], "adhoc_filters": [{"clause": "WHERE",
+  "comparator": "No filter", "expressionType": "SIMPLE", "isExtra": false, "operator":
+  "TEMPORAL_RANGE", "subject": "OrdenTrabajoFechaCreacion"}], "order_by_cols": [], "server_pagination":
+  false, "row_limit": 10000, "percent_metric_calculation": "row_limit", "show_totals":
+  true, "table_timestamp_format": "smart_date", "include_search": false, "allow_rearrange_columns":
+  false, "allow_render_html": true, "column_config": {"En Plazo": {"d3NumberFormat":
+  "~g"}, "Fuera de Plazo": {"d3NumberFormat": "~g"}, "Sin Cerrar": {"d3NumberFormat":
+  "~g", "d3SmallNumberFormat": "~g"}}, "show_cell_bars": true, "align_pn": false,
+  "color_pn": true, "comparison_color_enabled": false, "comparison_color_scheme":
+  "Green", "conditional_formatting": [], "comparison_type": "values", "extra_form_data":
+  {}, "dashboards": [3], "force": false, "result_format": "json", "result_type": "full"},
+  "result_format": "json", "result_type": "full"}'
+cache_timeout: null
+uuid: 666cd1a7-720b-431c-b87e-28d00ba85c64
+version: 1.0.0
+dataset_uuid: 44284363-6cfb-4dd0-9986-f8cbb3a88802

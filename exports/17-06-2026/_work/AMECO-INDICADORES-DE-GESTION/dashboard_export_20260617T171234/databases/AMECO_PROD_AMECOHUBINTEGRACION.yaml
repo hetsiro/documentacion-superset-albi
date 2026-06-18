@@ -1,0 +1,15 @@
+database_name: AMECO PROD AMECOHUBINTEGRACION
+sqlalchemy_uri: mssql+pymssql://sa:XXXXXXXXXX@35.182.48.231:1433/AmecoHubIntegracion
+cache_timeout: null
+expose_in_sqllab: true
+allow_run_async: false
+allow_ctas: false
+allow_cvas: false
+allow_dml: false
+allow_file_upload: false
+extra:
+  allows_virtual_table_explore: true
+impersonate_user: false
+configuration_method: sqlalchemy_form
+uuid: 43a10825-350d-4574-b018-f3d6543cb9dc
+version: 1.0.0

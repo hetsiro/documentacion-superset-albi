@@ -1,95 +1,118 @@
 window.LOOKUP_DATA = {
   "_meta": {
-    "generado": "2026-04-02T14:03:51",
+    "generado": "2026-06-17T23:31:15",
     "tabla": "AmecoHubIntegracion.dbo.AmecoDashboards",
-    "total_valores": 1030,
-    "catalogos": 16,
-    "total_ots": 1837,
-    "total_operaciones": 1896,
+    "total_valores": 1032,
+    "catalogos": 18,
+    "total_ots": 2346,
+    "total_operaciones": 2547,
+    "total_asistencias": 2,
     "usos": {
-      "OrdenTrabajoId": 1896,
-      "OrdenTrabajoFechaInicio": 1896,
-      "OrdenTrabajoEmpresa": 1896,
-      "EstadoOrdenTrabajoId": 1896,
-      "EstadoOrdenTrabajo": 1896,
-      "OperacionId": 1896,
-      "OperacionDescripcion": 1896,
-      "OperacionTiempoEstandar": 1896,
-      "OperacionTiempoDuracionReal": 1803,
-      "OperacionTiempoPerdido": 1896,
-      "OperacionFechaFin": 348,
-      "OperacionFechaResolucion": 1788,
-      "OperacionUbicacion": 1894,
-      "OperacionRecursos": 1557,
-      "OperacionDependencia": 1557,
-      "OperacionOrden": 1896,
-      "OperacionDireccion": 339,
-      "OperacionTiempoTraslado": 1845,
-      "OperacionProcesoId": 1557,
-      "OperacionPadreId": 59,
-      "OperacionFechaAsignacion": 1750,
+      "OrdenTrabajoId": 2547,
+      "OrdenTrabajoFechaInicio": 2547,
+      "OrdenTrabajoEmpresa": 2547,
+      "EstadoOrdenTrabajoId": 2547,
+      "EstadoOrdenTrabajo": 2547,
+      "OperacionId": 2547,
+      "OperacionDescripcion": 2547,
+      "OperacionTiempoEstandar": 2545,
+      "OperacionTiempoDuracionReal": 2410,
+      "OperacionTiempoPerdido": 2547,
+      "OperacionFechaFin": 515,
+      "OperacionFechaResolucion": 2395,
+      "OperacionUbicacion": 2544,
+      "OperacionRecursos": 2054,
+      "OperacionDependencia": 2054,
+      "OperacionOrden": 2547,
+      "OperacionDireccion": 493,
+      "OperacionTiempoTraslado": 2472,
+      "OperacionProcesoId": 2054,
+      "OperacionPadreId": 201,
+      "OperacionFechaAsignacion": 2230,
       "OperacionFechaDetenidoInicio": 2,
       "OperacionFechaDetenidoFin": 1,
-      "OperacionFechaInicio": 1896,
-      "TipoTareaId": 1893,
-      "TipoTarea": 1893,
-      "SubTipoTareaId": 1893,
-      "SubTipoTarea": 1893,
-      "Nivel3Id": 1893,
-      "Nivel3": 1893,
-      "Nivel4Id": 1893,
-      "Nivel4": 1893,
-      "OrdenTrabajoNegocio": 1896,
-      "TipoOperacionId": 1557,
-      "TipoOperacion": 1557,
-      "EspecialidadId": 1557,
-      "Especialidad": 1557,
-      "EstadoOperacionId": 1896,
-      "EstadoOperacion": 1896,
-      "GrupoResolutorOperacionId": 1839,
-      "GrupoResolutorOperacion": 1839,
-      "OperacionResolutor": 1840,
-      "OperacionResolutorTurno": 1896,
-      "OperacionResolutorCargo": 1840,
-      "ResolutorPerfilId": 1840,
-      "ResolutorPerfil": 1840,
-      "SitioOperacionId": 1585,
-      "SitioOperacion": 1585,
-      "ZonaOperacionId": 1585,
-      "ZonaOperacion": 1585,
-      "PrioridadOperacionId": 1557,
-      "PrioridadOperacion": 1557,
-      "OperacionResolucionTiempoEspera": 1783,
-      "OperacionResolucionTiempoEjecucion": 1804,
-      "OperacionResolucionTiempoBruto": 1804,
-      "OperacionResolucionTiempoTraslado": 1800,
-      "OperacionResolucionTiemposAdministrativos": 1804,
-      "OperacionResolucionEsPreparacionDoc": 1804,
-      "OperacionResolucionEsObtencionAutorizaciones": 1804,
-      "OperacionResolucionEsObtencionPermisos": 1804,
-      "OperacionResolucionLatitud": 1804,
-      "OperacionResolucionLongitud": 1804,
-      "OperacionResolucionFecha": 1789,
-      "ActivoId": 1886,
-      "Activo": 1886,
-      "ActivoCodigo": 1886,
-      "ProcesoId": 1557,
-      "Proceso": 1557,
-      "OrdenTrabajoSolicitante": 433,
-      "OrdenTrabajoResponsable": 1738,
-      "RecintoId": 134,
-      "Recinto": 134,
-      "OrdenTrabajoDescripcion": 1896,
-      "OrdenTrabajoFechaFin": 1896,
-      "OrdenTrabajoFechaInicioReal": 1064,
-      "OrdenTrabajoFechaFinReal": 1817,
-      "OrdenTrabajoTiempoResolucionBruto": 1794,
-      "OrdenTrabajoDuracion": 1896,
-      "OrdenTrabajoFechaCreacion": 1896,
-      "OrdenTrabajoUbicacion": 1895,
-      "OrdenTrabajoNochero": 1463,
-      "TipoActividadId": 1893,
-      "TipoActividad": 1893
+      "OperacionFechaInicio": 2547,
+      "TipoTareaId": 2547,
+      "TipoTarea": 2547,
+      "SubTipoTareaId": 2547,
+      "SubTipoTarea": 2547,
+      "Nivel3Id": 2547,
+      "Nivel3": 2547,
+      "Nivel4Id": 2547,
+      "Nivel4": 2547,
+      "OrdenTrabajoNegocio": 2547,
+      "TipoOperacionId": 2054,
+      "TipoOperacion": 2054,
+      "EspecialidadId": 2,
+      "Especialidad": 2,
+      "EstadoOperacionId": 2547,
+      "EstadoOperacion": 2547,
+      "GrupoResolutorOperacionId": 2461,
+      "GrupoResolutorOperacion": 2461,
+      "ResolutorPersonaId": 2460,
+      "OperacionResolutor": 2460,
+      "OperacionResolutorTurno": 2547,
+      "OperacionResolutorCargo": 2460,
+      "ResolutorPerfilId": 2460,
+      "ResolutorPerfil": 2460,
+      "SitioOperacionId": 2235,
+      "SitioOperacion": 2235,
+      "ZonaOperacionId": 2235,
+      "ZonaOperacion": 2235,
+      "PrioridadOperacionId": 2054,
+      "PrioridadOperacion": 2054,
+      "OperacionResolucionTiempoEspera": 2393,
+      "OperacionResolucionTiempoEjecucion": 2410,
+      "OperacionResolucionTiempoBruto": 2410,
+      "OperacionResolucionTiempoTraslado": 2404,
+      "OperacionResolucionTiemposAdministrativos": 2410,
+      "OperacionResolucionEsPreparacionDoc": 2410,
+      "OperacionResolucionEsObtencionAutorizaciones": 2410,
+      "OperacionResolucionEsObtencionPermisos": 2410,
+      "OperacionResolucionLatitud": 2410,
+      "OperacionResolucionLongitud": 2410,
+      "OperacionResolucionFecha": 2395,
+      "ActivoId": 2538,
+      "Activo": 2538,
+      "ActivoCodigo": 2538,
+      "ProcesoId": 2054,
+      "Proceso": 2054,
+      "OrdenTrabajoSolicitante": 776,
+      "OrdenTrabajoResponsable": 2457,
+      "RecintoId": 210,
+      "Recinto": 210,
+      "OrdenTrabajoDescripcion": 2547,
+      "OrdenTrabajoFechaFin": 2545,
+      "OrdenTrabajoFechaInicioReal": 2427,
+      "OrdenTrabajoFechaFinReal": 2423,
+      "OrdenTrabajoTiempoResolucionBruto": 2416,
+      "OrdenTrabajoDuracion": 2545,
+      "OrdenTrabajoFechaCreacion": 2547,
+      "OrdenTrabajoUbicacion": 2544,
+      "OrdenTrabajoNochero": 1771,
+      "OrdenTrabajoPlanId": 493,
+      "OrdenTrabajoPlan": 2547,
+      "TipoActividadId": 2547,
+      "TipoActividad": 2547,
+      "OperacionCantidadInvolucrados": 2547,
+      "AsistenciaId": 2,
+      "PersonaId": 2,
+      "Persona": 2,
+      "PerfilId": 2,
+      "Perfil": 2,
+      "TurnoId": 2,
+      "Turno": 2,
+      "TurnoHoraInicio": 2,
+      "TurnoHoraFin": 2,
+      "ZonaId": 2,
+      "Zona": 2,
+      "ResolutorActivo": 2,
+      "AsistenciaTipo": 2,
+      "AsistenciaFechaHora": 2,
+      "AsistenciaFecha": 2,
+      "AsistenciaLatitud": 2,
+      "AsistenciaLongitud": 2,
+      "AsistenciaEstado": 0
     }
   },
   "catalogos": {
@@ -100,7 +123,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "Abierta",
-          "usos": 96
+          "usos": 104
         },
         {
           "id": 6,
@@ -110,12 +133,12 @@ window.LOOKUP_DATA = {
         {
           "id": 5,
           "valor": "Cancelada",
-          "usos": 8
+          "usos": 27
         },
         {
           "id": 3,
           "valor": "Cerrada",
-          "usos": 1783
+          "usos": 2259
         },
         {
           "id": 4,
@@ -125,7 +148,7 @@ window.LOOKUP_DATA = {
         {
           "id": 2,
           "valor": "Resuelta",
-          "usos": 8
+          "usos": 156
         }
       ]
     },
@@ -136,52 +159,52 @@ window.LOOKUP_DATA = {
         {
           "id": 28,
           "valor": "Aceites / Lubricantes / Aditivos - Limpieza",
-          "usos": 782
+          "usos": 896
         },
         {
           "id": 20,
           "valor": "Cubos y ruedas",
-          "usos": 35
+          "usos": 53
         },
         {
           "id": 22,
           "valor": "Eléctrico",
-          "usos": 133
+          "usos": 208
         },
         {
           "id": 27,
           "valor": "Elementos de Desgaste (GET)",
-          "usos": 129
+          "usos": 203
         },
         {
           "id": 23,
           "valor": "Estructura",
-          "usos": 167
+          "usos": 281
         },
         {
           "id": 19,
           "valor": "Giro Potencia Rodaje/Transmisión",
-          "usos": 33
+          "usos": 56
         },
         {
           "id": 25,
           "valor": "Hidráulicos",
-          "usos": 78
+          "usos": 109
         },
         {
           "id": 30,
           "valor": "Inspeccion",
-          "usos": 10
+          "usos": 6
         },
         {
           "id": 24,
           "valor": "Llantas - Neumáticos",
-          "usos": 45
+          "usos": 48
         },
         {
           "id": 18,
           "valor": "Motor",
-          "usos": 95
+          "usos": 132
         },
         {
           "id": 32,
@@ -191,17 +214,17 @@ window.LOOKUP_DATA = {
         {
           "id": 26,
           "valor": "Otros sistemas",
-          "usos": 6
+          "usos": 20
         },
         {
           "id": 33,
           "valor": "Planificado",
-          "usos": 341
+          "usos": 501
         },
         {
           "id": 29,
           "valor": "Preventivo",
-          "usos": 22
+          "usos": 23
         },
         {
           "id": 31,
@@ -211,7 +234,7 @@ window.LOOKUP_DATA = {
         {
           "id": 21,
           "valor": "Undercarriage Tren de rodamiento",
-          "usos": 17
+          "usos": 11
         }
       ]
     },
@@ -222,17 +245,17 @@ window.LOOKUP_DATA = {
         {
           "id": 33,
           "valor": "Aceites",
-          "usos": 671
+          "usos": 753
         },
         {
           "id": 34,
           "valor": "Aditivos",
-          "usos": 18
+          "usos": 24
         },
         {
           "id": 17,
           "valor": "Alto voltaje",
-          "usos": 7
+          "usos": 3
         },
         {
           "id": 50,
@@ -242,12 +265,12 @@ window.LOOKUP_DATA = {
         {
           "id": 43,
           "valor": "BL",
-          "usos": 70
+          "usos": 121
         },
         {
           "id": 18,
           "valor": "Cabina",
-          "usos": 54
+          "usos": 110
         },
         {
           "id": 51,
@@ -257,12 +280,12 @@ window.LOOKUP_DATA = {
         {
           "id": 19,
           "valor": "Cuerpo",
-          "usos": 43
+          "usos": 84
         },
         {
           "id": 32,
           "valor": "Elementos de Desgaste (GET)",
-          "usos": 129
+          "usos": 203
         },
         {
           "id": 40,
@@ -272,12 +295,12 @@ window.LOOKUP_DATA = {
         {
           "id": 35,
           "valor": "Grasa",
-          "usos": 58
+          "usos": 67
         },
         {
           "id": 20,
           "valor": "Implementos",
-          "usos": 70
+          "usos": 87
         },
         {
           "id": 46,
@@ -287,7 +310,7 @@ window.LOOKUP_DATA = {
         {
           "id": 39,
           "valor": "Inspeccion",
-          "usos": 10
+          "usos": 6
         },
         {
           "id": 45,
@@ -302,7 +325,7 @@ window.LOOKUP_DATA = {
         {
           "id": 21,
           "valor": "Llantas - Neumáticos",
-          "usos": 45
+          "usos": 48
         },
         {
           "id": 48,
@@ -322,7 +345,7 @@ window.LOOKUP_DATA = {
         {
           "id": 2,
           "valor": "Motor básico",
-          "usos": 15
+          "usos": 27
         },
         {
           "id": 23,
@@ -337,32 +360,32 @@ window.LOOKUP_DATA = {
         {
           "id": 42,
           "valor": "PM",
-          "usos": 242
+          "usos": 327
         },
         {
           "id": 44,
           "valor": "PRED",
-          "usos": 29
+          "usos": 53
         },
         {
           "id": 38,
           "valor": "Preventivo",
-          "usos": 22
+          "usos": 23
         },
         {
           "id": 37,
           "valor": "Refrigerante",
-          "usos": 35
+          "usos": 52
         },
         {
           "id": 12,
           "valor": "Ruedas",
-          "usos": 5
+          "usos": 21
         },
         {
           "id": 27,
           "valor": "Sistema contra incendios",
-          "usos": 3
+          "usos": 12
         },
         {
           "id": 3,
@@ -377,37 +400,37 @@ window.LOOKUP_DATA = {
         {
           "id": 24,
           "valor": "Sistema de cilindros",
-          "usos": 7
+          "usos": 22
         },
         {
           "id": 4,
           "valor": "Sistema de Combustible",
-          "usos": 25
+          "usos": 16
         },
         {
           "id": 13,
           "valor": "Sistema de Direccion",
-          "usos": 7
+          "usos": 1
         },
         {
           "id": 5,
           "valor": "Sistema de Escape",
-          "usos": 7
+          "usos": 16
         },
         {
           "id": 14,
           "valor": "Sistema de Frenos",
-          "usos": 23
+          "usos": 30
         },
         {
           "id": 9,
           "valor": "Sistema de Giro",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 6,
           "valor": "Sistema de Lubricacion",
-          "usos": 3
+          "usos": 8
         },
         {
           "id": 29,
@@ -417,37 +440,37 @@ window.LOOKUP_DATA = {
         {
           "id": 30,
           "valor": "Sistema de perforación",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 7,
           "valor": "Sistema de Refrigeracion",
-          "usos": 23
+          "usos": 35
         },
         {
           "id": 15,
           "valor": "Sistema de suspensión",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 22,
           "valor": "Sistema eléctrico",
-          "usos": 126
+          "usos": 205
         },
         {
           "id": 8,
           "valor": "Sistema Electrico del Motor",
-          "usos": 7
+          "usos": 15
         },
         {
           "id": 25,
           "valor": "Sistema hidráulico",
-          "usos": 46
+          "usos": 62
         },
         {
           "id": 31,
           "valor": "Sistema neumático",
-          "usos": 1
+          "usos": 5
         },
         {
           "id": 47,
@@ -457,17 +480,17 @@ window.LOOKUP_DATA = {
         {
           "id": 10,
           "valor": "Tren de Potencia/Transmisión",
-          "usos": 23
+          "usos": 30
         },
         {
           "id": 11,
           "valor": "Tren de Rodaje",
-          "usos": 8
+          "usos": 26
         },
         {
           "id": 16,
           "valor": "Tren de Rodamiento",
-          "usos": 17
+          "usos": 11
         }
       ]
     },
@@ -513,12 +536,12 @@ window.LOOKUP_DATA = {
         {
           "id": 794,
           "valor": "Aceite de Diferencial (HD50)",
-          "usos": 2
+          "usos": 1
         },
         {
           "id": 798,
           "valor": "Aceite de Direccion (HD10)",
-          "usos": 4
+          "usos": 6
         },
         {
           "id": 808,
@@ -528,22 +551,22 @@ window.LOOKUP_DATA = {
         {
           "id": 805,
           "valor": "Aceite de Mando Final (600 XP 220)",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 810,
           "valor": "Aceite de Motor (10W40)",
-          "usos": 4
+          "usos": 1
         },
         {
           "id": 793,
           "valor": "Aceite de Motor (15W40)",
-          "usos": 116
+          "usos": 113
         },
         {
           "id": 809,
           "valor": "Aceite de Motor (5W30)",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 797,
@@ -568,7 +591,7 @@ window.LOOKUP_DATA = {
         {
           "id": 796,
           "valor": "Aceite de Transmision (HD30)",
-          "usos": 37
+          "usos": 68
         },
         {
           "id": 811,
@@ -578,12 +601,12 @@ window.LOOKUP_DATA = {
         {
           "id": 795,
           "valor": "Aceite Hidraulico",
-          "usos": 78
+          "usos": 72
         },
         {
           "id": 792,
           "valor": "Aceites y Grasas",
-          "usos": 429
+          "usos": 491
         },
         {
           "id": 562,
@@ -593,17 +616,17 @@ window.LOOKUP_DATA = {
         {
           "id": 516,
           "valor": "Acople Hidraulico / Coupling",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 188,
           "valor": "Acumulador de Direccion",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 204,
           "valor": "Acumulador de Freno",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 420,
@@ -618,22 +641,22 @@ window.LOOKUP_DATA = {
         {
           "id": 606,
           "valor": "Acumulador Sistema Hidraulico",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 812,
           "valor": "Ad Blue",
-          "usos": 18
+          "usos": 24
         },
         {
           "id": 789,
           "valor": "Adapter / Adaptador de Labio (GET)",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 773,
           "valor": "Adapter / Adaptador de Puntas (GET)",
-          "usos": 3
+          "usos": 4
         },
         {
           "id": 33,
@@ -663,7 +686,7 @@ window.LOOKUP_DATA = {
         {
           "id": 442,
           "valor": "ALTERNATOR HIGH VOLTAJE",
-          "usos": 2
+          "usos": 3
         },
         {
           "id": 235,
@@ -693,27 +716,27 @@ window.LOOKUP_DATA = {
         {
           "id": 432,
           "valor": "Aro de Llanta",
-          "usos": 8
+          "usos": 9
         },
         {
           "id": 300,
           "valor": "Articulacion Central",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 721,
           "valor": "Asiento del Operador",
-          "usos": 13
+          "usos": 15
         },
         {
           "id": 379,
           "valor": "Aspersor de Agua de Cisterna",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 425,
           "valor": "Aspersores de Agua",
-          "usos": 2
+          "usos": 6
         },
         {
           "id": 444,
@@ -733,7 +756,7 @@ window.LOOKUP_DATA = {
         {
           "id": 905,
           "valor": "Backlog",
-          "usos": 70
+          "usos": 121
         },
         {
           "id": 912,
@@ -758,12 +781,12 @@ window.LOOKUP_DATA = {
         {
           "id": 304,
           "valor": "Ballstud",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 359,
           "valor": "Bancada",
-          "usos": 1
+          "usos": 4
         },
         {
           "id": 239,
@@ -798,7 +821,7 @@ window.LOOKUP_DATA = {
         {
           "id": 778,
           "valor": "Barra de Desgaste",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 192,
@@ -838,27 +861,27 @@ window.LOOKUP_DATA = {
         {
           "id": 357,
           "valor": "Base Portaconos y Tacos",
-          "usos": 3
+          "usos": 0
         },
         {
           "id": 323,
           "valor": "Bastidor / Chasis / TRACK FRAME",
-          "usos": 1
+          "usos": 5
         },
         {
           "id": 322,
           "valor": "Bastidor lateral / SIDE FRAME",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 462,
           "valor": "Baterias",
-          "usos": 15
+          "usos": 34
         },
         {
           "id": 779,
           "valor": "Bit Sub",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 629,
@@ -898,7 +921,7 @@ window.LOOKUP_DATA = {
         {
           "id": 72,
           "valor": "Bomba de Aceite de Motor",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 818,
@@ -908,22 +931,22 @@ window.LOOKUP_DATA = {
         {
           "id": 93,
           "valor": "Bomba de Agua (Bomba Principal)",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 80,
           "valor": "Bomba de Agua de Aftercooler (Bomba Auxiliar)",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 389,
           "valor": "Bomba de agua de cisterna / Motobomba",
-          "usos": 4
+          "usos": 5
         },
         {
           "id": 410,
           "valor": "Bomba de Agua de Sistema de Barrido",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 519,
@@ -938,7 +961,7 @@ window.LOOKUP_DATA = {
         {
           "id": 499,
           "valor": "Bomba de Carga / Alimentacion",
-          "usos": 0
+          "usos": 4
         },
         {
           "id": 644,
@@ -948,7 +971,7 @@ window.LOOKUP_DATA = {
         {
           "id": 53,
           "valor": "Bomba de combustible / Inyeccion",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 505,
@@ -968,12 +991,12 @@ window.LOOKUP_DATA = {
         {
           "id": 502,
           "valor": "Bomba de Freno",
-          "usos": 6
+          "usos": 5
         },
         {
           "id": 496,
           "valor": "Bomba de Giro",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 497,
@@ -1013,12 +1036,12 @@ window.LOOKUP_DATA = {
         {
           "id": 594,
           "valor": "Bomba de Posicionamiento de brazo (Jumbo)",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 531,
           "valor": "Bomba de Rotacion",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 532,
@@ -1048,7 +1071,7 @@ window.LOOKUP_DATA = {
         {
           "id": 498,
           "valor": "Bomba del Ventilador / FAN",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 836,
@@ -1058,12 +1081,12 @@ window.LOOKUP_DATA = {
         {
           "id": 495,
           "valor": "Bomba Hidraulica",
-          "usos": 4
+          "usos": 3
         },
         {
           "id": 219,
           "valor": "Bomba Hidraulica Manual de Freno",
-          "usos": 6
+          "usos": 0
         },
         {
           "id": 506,
@@ -1078,7 +1101,7 @@ window.LOOKUP_DATA = {
         {
           "id": 385,
           "valor": "Boom / Frame",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 397,
@@ -1088,7 +1111,7 @@ window.LOOKUP_DATA = {
         {
           "id": 471,
           "valor": "Bornes de Baterias",
-          "usos": 3
+          "usos": 2
         },
         {
           "id": 302,
@@ -1103,7 +1126,7 @@ window.LOOKUP_DATA = {
         {
           "id": 218,
           "valor": "BRAKE AIR TANK",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 205,
@@ -1138,7 +1161,7 @@ window.LOOKUP_DATA = {
         {
           "id": 351,
           "valor": "Brazos de Empuje de Bulldozer",
-          "usos": 2
+          "usos": 4
         },
         {
           "id": 790,
@@ -1148,7 +1171,7 @@ window.LOOKUP_DATA = {
         {
           "id": 781,
           "valor": "Bronces de Vertedera",
-          "usos": 13
+          "usos": 19
         },
         {
           "id": 572,
@@ -1158,7 +1181,7 @@ window.LOOKUP_DATA = {
         {
           "id": 396,
           "valor": "Bujes Cucharon / SHOVEL BACK SHELL",
-          "usos": 1
+          "usos": 3
         },
         {
           "id": 427,
@@ -1188,12 +1211,12 @@ window.LOOKUP_DATA = {
         {
           "id": 716,
           "valor": "Cabina",
-          "usos": 8
+          "usos": 13
         },
         {
           "id": 443,
           "valor": "Cable de Alto Voltaje",
-          "usos": 5
+          "usos": 0
         },
         {
           "id": 360,
@@ -1223,22 +1246,22 @@ window.LOOKUP_DATA = {
         {
           "id": 161,
           "valor": "Cadena de Tandem",
-          "usos": 2
+          "usos": 18
         },
         {
           "id": 250,
           "valor": "Cadena de Traslado",
-          "usos": 9
+          "usos": 5
         },
         {
           "id": 431,
           "valor": "Cadena Protectora de Llantas",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 419,
           "valor": "Cadena Transportadora",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 414,
@@ -1248,12 +1271,12 @@ window.LOOKUP_DATA = {
         {
           "id": 387,
           "valor": "Caja de engranajes Tornamesa",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 487,
           "valor": "Caja de fusibles",
-          "usos": 12
+          "usos": 9
         },
         {
           "id": 207,
@@ -1268,17 +1291,17 @@ window.LOOKUP_DATA = {
         {
           "id": 81,
           "valor": "Cañeria / Manguera de refrigerante",
-          "usos": 9
+          "usos": 15
         },
         {
           "id": 49,
           "valor": "Cañerias de Combustible",
-          "usos": 2
+          "usos": 3
         },
         {
           "id": 46,
           "valor": "Cañerias de Combustible / Motor",
-          "usos": 7
+          "usos": 2
         },
         {
           "id": 191,
@@ -1288,12 +1311,12 @@ window.LOOKUP_DATA = {
         {
           "id": 208,
           "valor": "Cañerias de Freno",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 603,
           "valor": "Cañerias Hidraulicas",
-          "usos": 11
+          "usos": 18
         },
         {
           "id": 356,
@@ -1308,7 +1331,7 @@ window.LOOKUP_DATA = {
         {
           "id": 782,
           "valor": "Cantoneras (GET)",
-          "usos": 8
+          "usos": 15
         },
         {
           "id": 352,
@@ -1348,12 +1371,12 @@ window.LOOKUP_DATA = {
         {
           "id": 173,
           "valor": "Catalina de Eje (Spur gear)",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 65,
           "valor": "Catalizador de Gases",
-          "usos": 3
+          "usos": 10
         },
         {
           "id": 693,
@@ -1368,7 +1391,7 @@ window.LOOKUP_DATA = {
         {
           "id": 365,
           "valor": "Chasis de Ripper",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 153,
@@ -1383,7 +1406,7 @@ window.LOOKUP_DATA = {
         {
           "id": 541,
           "valor": "Cilidro de Inclinacion ó Giro de Tornamesa",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 555,
@@ -1398,7 +1421,7 @@ window.LOOKUP_DATA = {
         {
           "id": 536,
           "valor": "Cilindro de Articulacion / Direccion",
-          "usos": 2
+          "usos": 8
         },
         {
           "id": 549,
@@ -1443,7 +1466,7 @@ window.LOOKUP_DATA = {
         {
           "id": 553,
           "valor": "Cilindro de Desplazamiento de Vertedera",
-          "usos": 4
+          "usos": 6
         },
         {
           "id": 184,
@@ -1478,7 +1501,7 @@ window.LOOKUP_DATA = {
         {
           "id": 534,
           "valor": "CILINDRO DE IMPLEMENTO",
-          "usos": 1
+          "usos": 3
         },
         {
           "id": 821,
@@ -1488,7 +1511,7 @@ window.LOOKUP_DATA = {
         {
           "id": 559,
           "valor": "Cilindro de Inclinacion de Rueda",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 571,
@@ -1513,7 +1536,7 @@ window.LOOKUP_DATA = {
         {
           "id": 548,
           "valor": "Cilindro de Levante Hoja Topadora / Bulldozer",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 558,
@@ -1563,7 +1586,7 @@ window.LOOKUP_DATA = {
         {
           "id": 234,
           "valor": "Cilindro de Suspension",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 568,
@@ -1613,7 +1636,7 @@ window.LOOKUP_DATA = {
         {
           "id": 566,
           "valor": "Cilindro Telescopico",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 578,
@@ -1633,12 +1656,12 @@ window.LOOKUP_DATA = {
         {
           "id": 736,
           "valor": "Cinturon de Seguridad",
-          "usos": 2
+          "usos": 3
         },
         {
           "id": 739,
           "valor": "Circulina / Baliza",
-          "usos": 1
+          "usos": 4
         },
         {
           "id": 473,
@@ -1658,12 +1681,12 @@ window.LOOKUP_DATA = {
         {
           "id": 187,
           "valor": "Columna de Direccion",
-          "usos": 3
+          "usos": 0
         },
         {
           "id": 3,
           "valor": "Compresor de Aire Acondicionado / AAC",
-          "usos": 4
+          "usos": 3
         },
         {
           "id": 698,
@@ -1683,17 +1706,17 @@ window.LOOKUP_DATA = {
         {
           "id": 412,
           "valor": "Compuerta de Tolva",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 729,
           "valor": "Condensador de Aire Acondicionado / AAC",
-          "usos": 2
+          "usos": 13
         },
         {
           "id": 719,
           "valor": "Consola",
-          "usos": 5
+          "usos": 2
         },
         {
           "id": 421,
@@ -1713,7 +1736,7 @@ window.LOOKUP_DATA = {
         {
           "id": 223,
           "valor": "Control de Retardador Automatico/ ARC",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 149,
@@ -1728,7 +1751,7 @@ window.LOOKUP_DATA = {
         {
           "id": 457,
           "valor": "Control de Traslacion / Controller Propel",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 822,
@@ -1743,17 +1766,17 @@ window.LOOKUP_DATA = {
         {
           "id": 484,
           "valor": "Control Logico Programable (PLC)",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 620,
           "valor": "Control Principal de Valvulas / block de Valvulas",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 7,
           "valor": "Controlador de Motor",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 460,
@@ -1788,7 +1811,7 @@ window.LOOKUP_DATA = {
         {
           "id": 140,
           "valor": "Convertidor de Torque",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 909,
@@ -1828,12 +1851,12 @@ window.LOOKUP_DATA = {
         {
           "id": 392,
           "valor": "Cucharon / Bucket / SHOVEL BACK SHELL (TAPA)",
-          "usos": 1
+          "usos": 3
         },
         {
           "id": 783,
           "valor": "Cuchillas (GET)",
-          "usos": 52
+          "usos": 73
         },
         {
           "id": 13,
@@ -1868,12 +1891,12 @@ window.LOOKUP_DATA = {
         {
           "id": 428,
           "valor": "Desplazamiento del Circulo / Centrer Shift",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 155,
           "valor": "Diferencial",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 165,
@@ -1883,7 +1906,7 @@ window.LOOKUP_DATA = {
         {
           "id": 171,
           "valor": "DIFFERENTIAL STEERING",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 290,
@@ -1893,7 +1916,7 @@ window.LOOKUP_DATA = {
         {
           "id": 200,
           "valor": "Disco de Freno",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 289,
@@ -1968,7 +1991,7 @@ window.LOOKUP_DATA = {
         {
           "id": 367,
           "valor": "Eje Pivot de Mastil",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 306,
@@ -1983,7 +2006,7 @@ window.LOOKUP_DATA = {
         {
           "id": 593,
           "valor": "Electrovalvula de Control de Caudal de Agua",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 143,
@@ -2018,12 +2041,12 @@ window.LOOKUP_DATA = {
         {
           "id": 148,
           "valor": "Enfriador de Aceite de Transmision",
-          "usos": 2
+          "usos": 3
         },
         {
           "id": 83,
           "valor": "Enfriador de Aceite del Motor",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 596,
@@ -2033,7 +2056,7 @@ window.LOOKUP_DATA = {
         {
           "id": 45,
           "valor": "Enfriador de Combustible",
-          "usos": 6
+          "usos": 0
         },
         {
           "id": 69,
@@ -2063,12 +2086,12 @@ window.LOOKUP_DATA = {
         {
           "id": 321,
           "valor": "Escaleras",
-          "usos": 1
+          "usos": 4
         },
         {
           "id": 177,
           "valor": "Esparragos / Tuercas",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 732,
@@ -2078,12 +2101,12 @@ window.LOOKUP_DATA = {
         {
           "id": 731,
           "valor": "Espejos Retrovisores",
-          "usos": 2
+          "usos": 3
         },
         {
           "id": 296,
           "valor": "Estructura / Cuerpo",
-          "usos": 8
+          "usos": 26
         },
         {
           "id": 727,
@@ -2108,22 +2131,22 @@ window.LOOKUP_DATA = {
         {
           "id": 672,
           "valor": "Extintor",
-          "usos": 2
+          "usos": 7
         },
         {
           "id": 26,
           "valor": "Faja de Aire Acondicionado / AAC",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 16,
           "valor": "Faja de Alternador",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 31,
           "valor": "Faja de Bomba de Aceite Motor",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 10,
@@ -2168,12 +2191,12 @@ window.LOOKUP_DATA = {
         {
           "id": 485,
           "valor": "Faro de Ruta",
-          "usos": 4
+          "usos": 5
         },
         {
           "id": 476,
           "valor": "Faro Pirata",
-          "usos": 0
+          "usos": 4
         },
         {
           "id": 469,
@@ -2188,17 +2211,17 @@ window.LOOKUP_DATA = {
         {
           "id": 470,
           "valor": "Faros Posteriores",
-          "usos": 5
+          "usos": 12
         },
         {
           "id": 18,
           "valor": "Filtro de Aceite de Motor",
-          "usos": 2
+          "usos": 8
         },
         {
           "id": 604,
           "valor": "Filtro de Aceite Hidraulico",
-          "usos": 3
+          "usos": 4
         },
         {
           "id": 699,
@@ -2208,12 +2231,12 @@ window.LOOKUP_DATA = {
         {
           "id": 34,
           "valor": "Filtro de Aire de Motor",
-          "usos": 10
+          "usos": 6
         },
         {
           "id": 725,
           "valor": "Filtro de Cabina",
-          "usos": 0
+          "usos": 6
         },
         {
           "id": 713,
@@ -2223,7 +2246,7 @@ window.LOOKUP_DATA = {
         {
           "id": 44,
           "valor": "Filtro de Combustible",
-          "usos": 3
+          "usos": 5
         },
         {
           "id": 156,
@@ -2233,7 +2256,7 @@ window.LOOKUP_DATA = {
         {
           "id": 186,
           "valor": "Filtro de Direccion",
-          "usos": 3
+          "usos": 0
         },
         {
           "id": 138,
@@ -2258,7 +2281,7 @@ window.LOOKUP_DATA = {
         {
           "id": 169,
           "valor": "FINAL DRIVE BEARING",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 170,
@@ -2273,7 +2296,7 @@ window.LOOKUP_DATA = {
         {
           "id": 493,
           "valor": "Foco H3",
-          "usos": 1
+          "usos": 3
         },
         {
           "id": 158,
@@ -2303,7 +2326,7 @@ window.LOOKUP_DATA = {
         {
           "id": 345,
           "valor": "Gata /Pata / Soporte",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 489,
@@ -2318,12 +2341,12 @@ window.LOOKUP_DATA = {
         {
           "id": 717,
           "valor": "Gomas de Soporte de Cabina",
-          "usos": 0
+          "usos": 4
         },
         {
           "id": 813,
           "valor": "Grasa",
-          "usos": 58
+          "usos": 67
         },
         {
           "id": 449,
@@ -2343,7 +2366,7 @@ window.LOOKUP_DATA = {
         {
           "id": 318,
           "valor": "Guardas / Covertores / Protectores",
-          "usos": 7
+          "usos": 14
         },
         {
           "id": 88,
@@ -2363,12 +2386,12 @@ window.LOOKUP_DATA = {
         {
           "id": 465,
           "valor": "Harness Electrico - Chasis",
-          "usos": 12
+          "usos": 22
         },
         {
           "id": 117,
           "valor": "Harness Electrico - Motor Diesel",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 137,
@@ -2428,12 +2451,12 @@ window.LOOKUP_DATA = {
         {
           "id": 375,
           "valor": "Implementos",
-          "usos": 17
+          "usos": 32
         },
         {
           "id": 771,
           "valor": "Implementos de Corte (GET)",
-          "usos": 11
+          "usos": 14
         },
         {
           "id": 283,
@@ -2448,7 +2471,7 @@ window.LOOKUP_DATA = {
         {
           "id": 48,
           "valor": "Indicador de Nivel de Combustible (Tanque)",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 284,
@@ -2488,17 +2511,17 @@ window.LOOKUP_DATA = {
         {
           "id": 894,
           "valor": "Inspeccion",
-          "usos": 6
+          "usos": 5
         },
         {
           "id": 897,
           "valor": "Inspeccion Anual",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 898,
           "valor": "Inspeccion de Frenos",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 899,
@@ -2538,7 +2561,7 @@ window.LOOKUP_DATA = {
         {
           "id": 54,
           "valor": "Inyectores de Combustible",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 722,
@@ -2568,7 +2591,7 @@ window.LOOKUP_DATA = {
         {
           "id": 413,
           "valor": "Lampon / Hoja Topadora / Dozer",
-          "usos": 8
+          "usos": 5
         },
         {
           "id": 363,
@@ -2598,12 +2621,12 @@ window.LOOKUP_DATA = {
         {
           "id": 430,
           "valor": "LLantas",
-          "usos": 37
+          "usos": 38
         },
         {
           "id": 486,
           "valor": "LLave Master / Master Switch",
-          "usos": 2
+          "usos": 3
         },
         {
           "id": 315,
@@ -2623,7 +2646,7 @@ window.LOOKUP_DATA = {
         {
           "id": 474,
           "valor": "Luces de Cabina",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 448,
@@ -2638,17 +2661,17 @@ window.LOOKUP_DATA = {
         {
           "id": 124,
           "valor": "Mando de bombas",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 87,
           "valor": "Mando de Ventilador",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 157,
           "valor": "Mando Final",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 95,
@@ -2668,12 +2691,12 @@ window.LOOKUP_DATA = {
         {
           "id": 625,
           "valor": "Manguera de Alta Presion Bomba de Implementos",
-          "usos": 2
+          "usos": 3
         },
         {
           "id": 624,
           "valor": "Manguera de Alta Presion Boom",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 623,
@@ -2708,7 +2731,7 @@ window.LOOKUP_DATA = {
         {
           "id": 580,
           "valor": "Manguera de Bomba Principal",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 653,
@@ -2718,7 +2741,7 @@ window.LOOKUP_DATA = {
         {
           "id": 637,
           "valor": "MANGUERA DE CILINDRO DE STICK / BRAZO",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 648,
@@ -2733,37 +2756,37 @@ window.LOOKUP_DATA = {
         {
           "id": 66,
           "valor": "Manguera de Lubricacion",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 650,
           "valor": "Manguera de Motor de Giro",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 656,
           "valor": "Manguera de Motor de Propulsion",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 583,
           "valor": "MANGUERA DE PILOTAJE",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 78,
           "valor": "MANGUERA DE REFRIGERACION (SMCS)",
-          "usos": 5
+          "usos": 4
         },
         {
           "id": 636,
           "valor": "MANGUERA DE RETORNO CENTRAL",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 634,
           "valor": "MANGUERA DE RETORNO DE ACEITE A TANQUE HIDRAULICO",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 825,
@@ -2788,7 +2811,7 @@ window.LOOKUP_DATA = {
         {
           "id": 582,
           "valor": "Manguera de Union Boom / Stick",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 374,
@@ -2813,7 +2836,7 @@ window.LOOKUP_DATA = {
         {
           "id": 601,
           "valor": "Mangueras Hidraulicas de Alta Presion",
-          "usos": 9
+          "usos": 7
         },
         {
           "id": 602,
@@ -2828,7 +2851,7 @@ window.LOOKUP_DATA = {
         {
           "id": 706,
           "valor": "Mangueras Neumaticas",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 616,
@@ -2893,7 +2916,7 @@ window.LOOKUP_DATA = {
         {
           "id": 102,
           "valor": "Modulo de Control Electronico ECM Motor",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 817,
@@ -2958,7 +2981,7 @@ window.LOOKUP_DATA = {
         {
           "id": 509,
           "valor": "Motor de Circulo de Giro",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 522,
@@ -2978,7 +3001,7 @@ window.LOOKUP_DATA = {
         {
           "id": 507,
           "valor": "Motor de Giro",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 735,
@@ -3003,7 +3026,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "Motor Diesel",
-          "usos": 6
+          "usos": 13
         },
         {
           "id": 490,
@@ -3013,7 +3036,7 @@ window.LOOKUP_DATA = {
         {
           "id": 724,
           "valor": "Motor Electrico de Aire Acondicionado / AAC",
-          "usos": 1
+          "usos": 3
         },
         {
           "id": 488,
@@ -3023,7 +3046,7 @@ window.LOOKUP_DATA = {
         {
           "id": 500,
           "valor": "Motor Hidraulico",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 358,
@@ -3068,12 +3091,12 @@ window.LOOKUP_DATA = {
         {
           "id": 483,
           "valor": "Panel de Control Electrico",
-          "usos": 1
+          "usos": 4
         },
         {
           "id": 202,
           "valor": "Paquete de Freno",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 243,
@@ -3088,7 +3111,7 @@ window.LOOKUP_DATA = {
         {
           "id": 324,
           "valor": "Parachoque",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 160,
@@ -3098,12 +3121,12 @@ window.LOOKUP_DATA = {
         {
           "id": 309,
           "valor": "Pasarelas",
-          "usos": 2
+          "usos": 3
         },
         {
           "id": 201,
           "valor": "Pastillas de Freno",
-          "usos": 3
+          "usos": 4
         },
         {
           "id": 679,
@@ -3118,7 +3141,7 @@ window.LOOKUP_DATA = {
         {
           "id": 718,
           "valor": "Pedal de Control",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 287,
@@ -3153,7 +3176,7 @@ window.LOOKUP_DATA = {
         {
           "id": 774,
           "valor": "Pin / Seguro de Puntas (GET)",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 295,
@@ -3173,7 +3196,7 @@ window.LOOKUP_DATA = {
         {
           "id": 343,
           "valor": "Pines de Bucket / Cucharon",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 334,
@@ -3223,12 +3246,12 @@ window.LOOKUP_DATA = {
         {
           "id": 829,
           "valor": "Pines de Union de Tapa y Mandibula / Chapaleta (PIN I)",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 827,
           "valor": "Pines Inferior de Cilindro de Vuelco / Bucket (PIN B)",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 834,
@@ -3278,7 +3301,7 @@ window.LOOKUP_DATA = {
         {
           "id": 4,
           "valor": "Piñon Motriz (Motor)",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 382,
@@ -3298,7 +3321,7 @@ window.LOOKUP_DATA = {
         {
           "id": 326,
           "valor": "Plataforma / Tanque",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 136,
@@ -3313,7 +3336,7 @@ window.LOOKUP_DATA = {
         {
           "id": 864,
           "valor": "PM 10,000 KM",
-          "usos": 4
+          "usos": 3
         },
         {
           "id": 850,
@@ -3328,7 +3351,7 @@ window.LOOKUP_DATA = {
         {
           "id": 854,
           "valor": "PM 1000 Hr",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 861,
@@ -3388,7 +3411,7 @@ window.LOOKUP_DATA = {
         {
           "id": 856,
           "valor": "PM 2000 Hr",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 884,
@@ -3403,7 +3426,7 @@ window.LOOKUP_DATA = {
         {
           "id": 852,
           "valor": "PM 250 Hr",
-          "usos": 15
+          "usos": 10
         },
         {
           "id": 879,
@@ -3508,7 +3531,7 @@ window.LOOKUP_DATA = {
         {
           "id": 853,
           "valor": "PM 500 Hr",
-          "usos": 0
+          "usos": 7
         },
         {
           "id": 870,
@@ -3628,7 +3651,7 @@ window.LOOKUP_DATA = {
         {
           "id": 911,
           "valor": "Preventivo",
-          "usos": 271
+          "usos": 380
         },
         {
           "id": 378,
@@ -3648,7 +3671,7 @@ window.LOOKUP_DATA = {
         {
           "id": 788,
           "valor": "Protector de Ripper (GET)",
-          "usos": 3
+          "usos": 1
         },
         {
           "id": 245,
@@ -3668,7 +3691,7 @@ window.LOOKUP_DATA = {
         {
           "id": 728,
           "valor": "Puerta de Cabina",
-          "usos": 3
+          "usos": 6
         },
         {
           "id": 303,
@@ -3683,12 +3706,12 @@ window.LOOKUP_DATA = {
         {
           "id": 772,
           "valor": "Puntas / Uñas (GET)",
-          "usos": 24
+          "usos": 60
         },
         {
           "id": 89,
           "valor": "Radiador",
-          "usos": 3
+          "usos": 2
         },
         {
           "id": 91,
@@ -3708,7 +3731,7 @@ window.LOOKUP_DATA = {
         {
           "id": 740,
           "valor": "Radio de Comunicacion",
-          "usos": 0
+          "usos": 4
         },
         {
           "id": 307,
@@ -3728,17 +3751,17 @@ window.LOOKUP_DATA = {
         {
           "id": 815,
           "valor": "Refrigerante",
-          "usos": 35
+          "usos": 52
         },
         {
           "id": 480,
           "valor": "Regulador de Voltaje",
-          "usos": 1
+          "usos": 3
         },
         {
           "id": 113,
           "valor": "Relay de Arranque",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 466,
@@ -3763,7 +3786,7 @@ window.LOOKUP_DATA = {
         {
           "id": 68,
           "valor": "Respirador de aceite del motor",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 131,
@@ -3813,12 +3836,12 @@ window.LOOKUP_DATA = {
         {
           "id": 179,
           "valor": "Rodaje de Rueda",
-          "usos": 2
+          "usos": 3
         },
         {
           "id": 120,
           "valor": "Rodaje y Engranaje de Tornamesa (Pala)",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 255,
@@ -3853,7 +3876,7 @@ window.LOOKUP_DATA = {
         {
           "id": 349,
           "valor": "Rotula de Cilindro de Bucket / Cucharon",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 185,
@@ -3863,7 +3886,7 @@ window.LOOKUP_DATA = {
         {
           "id": 180,
           "valor": "Rueda / Cubo",
-          "usos": 2
+          "usos": 15
         },
         {
           "id": 261,
@@ -3903,7 +3926,7 @@ window.LOOKUP_DATA = {
         {
           "id": 211,
           "valor": "Sensor BS (Brake System)",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 111,
@@ -3918,7 +3941,7 @@ window.LOOKUP_DATA = {
         {
           "id": 450,
           "valor": "Sensor de Contaminacion",
-          "usos": 0
+          "usos": 3
         },
         {
           "id": 96,
@@ -3958,7 +3981,7 @@ window.LOOKUP_DATA = {
         {
           "id": 57,
           "valor": "Sensor de Presion de Combustible",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 108,
@@ -3983,7 +4006,7 @@ window.LOOKUP_DATA = {
         {
           "id": 112,
           "valor": "Sensor de Velocidad",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 908,
@@ -4008,7 +4031,7 @@ window.LOOKUP_DATA = {
         {
           "id": 401,
           "valor": "Shank de Ripper",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 402,
@@ -4043,32 +4066,32 @@ window.LOOKUP_DATA = {
         {
           "id": 669,
           "valor": "Sistema Contra Incendio",
-          "usos": 1
+          "usos": 5
         },
         {
           "id": 32,
           "valor": "Sistema de Admision",
-          "usos": 1
+          "usos": 3
         },
         {
           "id": 97,
           "valor": "Sistema de Arranque",
-          "usos": 2
+          "usos": 6
         },
         {
           "id": 723,
           "valor": "Sistema de Calefaccion / Aire Acondicionado / AAC",
-          "usos": 15
+          "usos": 23
         },
         {
           "id": 41,
           "valor": "Sistema de Combustible",
-          "usos": 2
+          "usos": 4
         },
         {
           "id": 183,
           "valor": "Sistema de Direccion",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 680,
@@ -4078,17 +4101,17 @@ window.LOOKUP_DATA = {
         {
           "id": 60,
           "valor": "Sistema de Escape",
-          "usos": 2
+          "usos": 5
         },
         {
           "id": 196,
           "valor": "Sistema de frenos",
-          "usos": 3
+          "usos": 8
         },
         {
           "id": 119,
           "valor": "Sistema de Giro",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 618,
@@ -4103,22 +4126,22 @@ window.LOOKUP_DATA = {
         {
           "id": 681,
           "valor": "Sistema de Lubricacion Automatico LINCOLN",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 686,
           "valor": "Sistema de lubricacion de barras",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 73,
           "valor": "Sistema de Lubricacion del Motor",
-          "usos": 0
+          "usos": 4
         },
         {
           "id": 468,
           "valor": "Sistema de Luces",
-          "usos": 26
+          "usos": 29
         },
         {
           "id": 491,
@@ -4128,7 +4151,7 @@ window.LOOKUP_DATA = {
         {
           "id": 687,
           "valor": "Sistema de Perforacion",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 676,
@@ -4138,7 +4161,7 @@ window.LOOKUP_DATA = {
         {
           "id": 94,
           "valor": "Sistema de Refrigeracion - Motor",
-          "usos": 3
+          "usos": 1
         },
         {
           "id": 246,
@@ -4153,7 +4176,7 @@ window.LOOKUP_DATA = {
         {
           "id": 451,
           "valor": "Sistema Electrico",
-          "usos": 26
+          "usos": 45
         },
         {
           "id": 613,
@@ -4163,12 +4186,12 @@ window.LOOKUP_DATA = {
         {
           "id": 586,
           "valor": "Sistema Hidraulico",
-          "usos": 5
+          "usos": 8
         },
         {
           "id": 697,
           "valor": "Sistema Neumatico",
-          "usos": 0
+          "usos": 3
         },
         {
           "id": 612,
@@ -4188,7 +4211,7 @@ window.LOOKUP_DATA = {
         {
           "id": 305,
           "valor": "Soporte de mangueras",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 14,
@@ -4218,7 +4241,7 @@ window.LOOKUP_DATA = {
         {
           "id": 403,
           "valor": "Stick",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 121,
@@ -4238,7 +4261,7 @@ window.LOOKUP_DATA = {
         {
           "id": 467,
           "valor": "Switch",
-          "usos": 1
+          "usos": 5
         },
         {
           "id": 663,
@@ -4248,7 +4271,7 @@ window.LOOKUP_DATA = {
         {
           "id": 475,
           "valor": "Switch Master",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 659,
@@ -4258,7 +4281,7 @@ window.LOOKUP_DATA = {
         {
           "id": 285,
           "valor": "Tablero de Instrumentos / Control",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 445,
@@ -4273,7 +4296,7 @@ window.LOOKUP_DATA = {
         {
           "id": 787,
           "valor": "Talonera de Refuerzo (GET)",
-          "usos": 0
+          "usos": 5
         },
         {
           "id": 199,
@@ -4298,7 +4321,7 @@ window.LOOKUP_DATA = {
         {
           "id": 368,
           "valor": "Tanque de Agua",
-          "usos": 5
+          "usos": 7
         },
         {
           "id": 710,
@@ -4308,12 +4331,12 @@ window.LOOKUP_DATA = {
         {
           "id": 51,
           "valor": "Tanque de Combustible",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 84,
           "valor": "Tanque de expansion / Radiador",
-          "usos": 0
+          "usos": 4
         },
         {
           "id": 682,
@@ -4323,7 +4346,7 @@ window.LOOKUP_DATA = {
         {
           "id": 598,
           "valor": "Tanque Hidraulico",
-          "usos": 4
+          "usos": 8
         },
         {
           "id": 90,
@@ -4338,7 +4361,7 @@ window.LOOKUP_DATA = {
         {
           "id": 733,
           "valor": "Tapiz piso",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 181,
@@ -4438,7 +4461,7 @@ window.LOOKUP_DATA = {
         {
           "id": 258,
           "valor": "TRACK ROLLER BEARING",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 436,
@@ -4463,7 +4486,7 @@ window.LOOKUP_DATA = {
         {
           "id": 125,
           "valor": "Transmision (TX)",
-          "usos": 8
+          "usos": 10
         },
         {
           "id": 134,
@@ -4493,7 +4516,7 @@ window.LOOKUP_DATA = {
         {
           "id": 247,
           "valor": "Tren de Rodamiento",
-          "usos": 4
+          "usos": 3
         },
         {
           "id": 366,
@@ -4503,12 +4526,12 @@ window.LOOKUP_DATA = {
         {
           "id": 415,
           "valor": "Trunnion",
-          "usos": 5
+          "usos": 8
         },
         {
           "id": 62,
           "valor": "Tubo de Escape",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 146,
@@ -4518,7 +4541,7 @@ window.LOOKUP_DATA = {
         {
           "id": 40,
           "valor": "Turbocompresor",
-          "usos": 2
+          "usos": 4
         },
         {
           "id": 820,
@@ -4533,7 +4556,7 @@ window.LOOKUP_DATA = {
         {
           "id": 826,
           "valor": "Valvula Check de bomba de agua del sistema de barrido",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 528,
@@ -4553,7 +4576,7 @@ window.LOOKUP_DATA = {
         {
           "id": 79,
           "valor": "Valvula de Agua",
-          "usos": 0
+          "usos": 2
         },
         {
           "id": 714,
@@ -4588,7 +4611,7 @@ window.LOOKUP_DATA = {
         {
           "id": 704,
           "valor": "Valvula de control Princial de aire",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 614,
@@ -4598,7 +4621,7 @@ window.LOOKUP_DATA = {
         {
           "id": 141,
           "valor": "Valvula de Convertidor de Torque",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 529,
@@ -4668,7 +4691,7 @@ window.LOOKUP_DATA = {
         {
           "id": 162,
           "valor": "Valvula de Transmision",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 627,
@@ -4688,7 +4711,7 @@ window.LOOKUP_DATA = {
         {
           "id": 608,
           "valor": "Valvula Hidraulica",
-          "usos": 1
+          "usos": 0
         },
         {
           "id": 584,
@@ -4718,7 +4741,7 @@ window.LOOKUP_DATA = {
         {
           "id": 70,
           "valor": "Varilla de nivel de aceite",
-          "usos": 1
+          "usos": 2
         },
         {
           "id": 280,
@@ -4733,7 +4756,7 @@ window.LOOKUP_DATA = {
         {
           "id": 715,
           "valor": "Ventilador de Aire Acondicionado / AAC",
-          "usos": 1
+          "usos": 6
         },
         {
           "id": 631,
@@ -4743,12 +4766,12 @@ window.LOOKUP_DATA = {
         {
           "id": 85,
           "valor": "Ventilador de radiador",
-          "usos": 0
+          "usos": 1
         },
         {
           "id": 394,
           "valor": "Vertedera",
-          "usos": 20
+          "usos": 12
         },
         {
           "id": 418,
@@ -4803,7 +4826,7 @@ window.LOOKUP_DATA = {
         {
           "id": 206,
           "valor": "Zapata de Freno",
-          "usos": 0
+          "usos": 1
         }
       ]
     },
@@ -4814,12 +4837,12 @@ window.LOOKUP_DATA = {
         {
           "id": 3,
           "valor": "Aplicar Checklist",
-          "usos": 32
+          "usos": 29
         },
         {
           "id": 5,
           "valor": "Backlog",
-          "usos": 70
+          "usos": 121
         },
         {
           "id": 10,
@@ -4834,7 +4857,7 @@ window.LOOKUP_DATA = {
         {
           "id": 12,
           "valor": "Evaluar",
-          "usos": 224
+          "usos": 526
         },
         {
           "id": 8,
@@ -4849,22 +4872,22 @@ window.LOOKUP_DATA = {
         {
           "id": 6,
           "valor": "Mantenimiento Predictivo",
-          "usos": 31
+          "usos": 53
         },
         {
           "id": 4,
           "valor": "Mantenimiento Preventivo",
-          "usos": 240
+          "usos": 327
         },
         {
           "id": 2,
           "valor": "Reemplazar",
-          "usos": 1005
+          "usos": 1017
         },
         {
           "id": 1,
           "valor": "Reparar",
-          "usos": 291
+          "usos": 474
         },
         {
           "id": 9,
@@ -4880,7 +4903,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "Básico",
-          "usos": 1557
+          "usos": 2054
         },
         {
           "id": 4,
@@ -4911,7 +4934,7 @@ window.LOOKUP_DATA = {
         {
           "id": 12,
           "valor": "Confiabilidad",
-          "usos": 0
+          "usos": 59
         },
         {
           "id": 1,
@@ -4926,12 +4949,12 @@ window.LOOKUP_DATA = {
         {
           "id": 5,
           "valor": "Electromecánica",
-          "usos": 0
+          "usos": 282
         },
         {
           "id": 7,
           "valor": "Especialista",
-          "usos": 0
+          "usos": 12
         },
         {
           "id": 11,
@@ -4946,22 +4969,22 @@ window.LOOKUP_DATA = {
         {
           "id": 6,
           "valor": "Lubricación",
-          "usos": 0
+          "usos": 957
         },
         {
           "id": 3,
           "valor": "Mecánica",
-          "usos": 0
+          "usos": 1116
         },
         {
           "id": 9,
           "valor": "Planificador",
-          "usos": 0
+          "usos": 121
         },
         {
           "id": 13,
           "valor": "Sin especificar",
-          "usos": 1557
+          "usos": 0
         },
         {
           "id": 4,
@@ -4982,7 +5005,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "Abierta",
-          "usos": 45
+          "usos": 73
         },
         {
           "id": 8,
@@ -4992,12 +5015,12 @@ window.LOOKUP_DATA = {
         {
           "id": 3,
           "valor": "Asignada",
-          "usos": 38
+          "usos": 30
         },
         {
           "id": 5,
           "valor": "Cancelada",
-          "usos": 13
+          "usos": 35
         },
         {
           "id": 4,
@@ -5017,7 +5040,7 @@ window.LOOKUP_DATA = {
         {
           "id": 7,
           "valor": "Resuelta",
-          "usos": 1800
+          "usos": 2409
         }
       ]
     },
@@ -5028,7 +5051,7 @@ window.LOOKUP_DATA = {
         {
           "id": 11,
           "valor": "Confiabilidad",
-          "usos": 123
+          "usos": 49
         },
         {
           "id": 12,
@@ -5058,7 +5081,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "Mantenedores",
-          "usos": 89
+          "usos": 308
         },
         {
           "id": 2,
@@ -5068,37 +5091,37 @@ window.LOOKUP_DATA = {
         {
           "id": 4,
           "valor": "Mantenimiento Turno A",
-          "usos": 9
+          "usos": 6
         },
         {
           "id": 5,
           "valor": "Mantenimiento Turno B",
-          "usos": 1
+          "usos": 22
         },
         {
           "id": 8,
           "valor": "Planner Turno A",
-          "usos": 376
+          "usos": 387
         },
         {
           "id": 10,
           "valor": "Planner Turno B",
-          "usos": 125
+          "usos": 212
         },
         {
           "id": 7,
           "valor": "Supervisor",
-          "usos": 31
+          "usos": 46
         },
         {
           "id": 14,
           "valor": "Supervisor A",
-          "usos": 423
+          "usos": 602
         },
         {
           "id": 15,
           "valor": "Supervisor B",
-          "usos": 662
+          "usos": 829
         }
       ]
     },
@@ -5114,32 +5137,32 @@ window.LOOKUP_DATA = {
         {
           "id": 10,
           "valor": "Copiapó",
-          "usos": 11
+          "usos": 5
         },
         {
           "id": 12,
           "valor": "Faena",
-          "usos": 15
+          "usos": 9
         },
         {
           "id": 7,
           "valor": "Faena",
-          "usos": 320
+          "usos": 566
         },
         {
           "id": 8,
           "valor": "Faena",
-          "usos": 471
+          "usos": 641
         },
         {
           "id": 9,
           "valor": "Faena",
-          "usos": 766
+          "usos": 1014
         },
         {
           "id": 11,
           "valor": "Sin especificar",
-          "usos": 2
+          "usos": 0
         }
       ]
     },
@@ -5150,7 +5173,7 @@ window.LOOKUP_DATA = {
         {
           "id": 3,
           "valor": "Sin especificar",
-          "usos": 2
+          "usos": 0
         },
         {
           "id": 2,
@@ -5160,27 +5183,27 @@ window.LOOKUP_DATA = {
         {
           "id": 6,
           "valor": "Taller Copiapó",
-          "usos": 11
+          "usos": 5
         },
         {
           "id": 4,
           "valor": "Taller Domo",
-          "usos": 320
+          "usos": 566
         },
         {
           "id": 1,
           "valor": "Taller Izaje",
-          "usos": 15
+          "usos": 9
         },
         {
           "id": 5,
           "valor": "Taller Mina",
-          "usos": 471
+          "usos": 641
         },
         {
           "id": 7,
           "valor": "Terreno",
-          "usos": 766
+          "usos": 1014
         }
       ]
     },
@@ -5191,17 +5214,17 @@ window.LOOKUP_DATA = {
         {
           "id": 3,
           "valor": "Machine down",
-          "usos": 225
+          "usos": 216
         },
         {
           "id": 1,
           "valor": "Normal",
-          "usos": 790
+          "usos": 1265
         },
         {
           "id": 2,
           "valor": "Riesgo de machine down",
-          "usos": 542
+          "usos": 573
         }
       ]
     },
@@ -5212,7 +5235,7 @@ window.LOOKUP_DATA = {
         {
           "id": 16,
           "valor": "básico",
-          "usos": 1557
+          "usos": 2054
         }
       ]
     },
@@ -5223,7 +5246,7 @@ window.LOOKUP_DATA = {
         {
           "id": 1,
           "valor": "Recinto 1",
-          "usos": 134
+          "usos": 210
         },
         {
           "id": 2,
@@ -5239,12 +5262,12 @@ window.LOOKUP_DATA = {
         {
           "id": 2,
           "valor": "Administrador",
-          "usos": 48
+          "usos": 1
         },
         {
           "id": 9,
           "valor": "Confiabilidad",
-          "usos": 124
+          "usos": 52
         },
         {
           "id": 11,
@@ -5254,7 +5277,7 @@ window.LOOKUP_DATA = {
         {
           "id": 7,
           "valor": "Jefe Mantención",
-          "usos": 13
+          "usos": 30
         },
         {
           "id": 5,
@@ -5264,7 +5287,7 @@ window.LOOKUP_DATA = {
         {
           "id": 8,
           "valor": "Jefe Planificación",
-          "usos": 3
+          "usos": 5
         },
         {
           "id": 10,
@@ -5272,14 +5295,19 @@ window.LOOKUP_DATA = {
           "usos": 0
         },
         {
+          "id": 12,
+          "valor": "Líder cuadrilla",
+          "usos": 170
+        },
+        {
           "id": 6,
           "valor": "Planificador",
-          "usos": 505
+          "usos": 592
         },
         {
           "id": 4,
           "valor": "Resolutor",
-          "usos": 53
+          "usos": 196
         },
         {
           "id": 1,
@@ -5289,7 +5317,7 @@ window.LOOKUP_DATA = {
         {
           "id": 3,
           "valor": "Supervisor",
-          "usos": 1094
+          "usos": 1414
         }
       ]
     },
@@ -5300,44 +5328,60 @@ window.LOOKUP_DATA = {
         {
           "id": 2,
           "valor": "Backlog",
-          "usos": 81
+          "usos": 129
         },
         {
           "id": 4,
           "valor": "Correctivo mayor",
-          "usos": 139
+          "usos": 122
         },
         {
           "id": 3,
           "valor": "Correctivo menor",
-          "usos": 797
+          "usos": 1121
         },
         {
           "id": 7,
           "valor": "Inspección preventiva",
-          "usos": 66
+          "usos": 78
         },
         {
           "id": 6,
           "valor": "Lubricación / engrase",
-          "usos": 286
+          "usos": 374
         },
         {
           "id": 8,
           "valor": "Mantenimiento predictivo",
-          "usos": 41
+          "usos": 66
         },
         {
           "id": 5,
           "valor": "Mantenimiento preventivo",
-          "usos": 367
+          "usos": 414
         },
         {
           "id": 1,
           "valor": "Servicios taller",
-          "usos": 116
+          "usos": 243
         }
       ]
+    },
+    "Asistencia Tipo": {
+      "idCol": "AsistenciaTipo",
+      "valorCol": "AsistenciaTipo",
+      "valores": [
+        {
+          "id": "E",
+          "valor": "E",
+          "usos": 2
+        }
+      ]
+    },
+    "Asistencia Estado": {
+      "idCol": "AsistenciaEstado",
+      "valorCol": "AsistenciaEstado",
+      "valores": []
     }
   }
 };

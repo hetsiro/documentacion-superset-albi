@@ -19,10 +19,10 @@ import sys
 from datetime import datetime
 
 # ── Conexión directa a PROD ───────────────────────────────────────────────────
-HOST     = "52.41.60.163"
-PORT     = 1433
-USER     = "cfuentealba"
-PASSWORD = ""  # Se pide por consola si está vacío
+HOST     = os.environ.get("DB_HOST", "3.146.83.49")
+PORT     = int(os.environ.get("DB_PORT", "1433"))
+USER     = os.environ.get("DB_USER", "sa")
+PASSWORD = os.environ.get("DB_PASSWORD", "")  # Se pide por consola si está vacío
 
 # BD de datasets (HubIntegracion) — para contar usos
 DB_DATASETS = "HubIntegracion"

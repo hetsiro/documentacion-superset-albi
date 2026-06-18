@@ -18,26 +18,23 @@ import os
 import sys
 from datetime import datetime
 
-# ── Conexión — se adapta automáticamente a Docker o a Windows host ────────────
-IN_DOCKER = os.path.exists("/.dockerenv")
-
-HOST     = "sqlserver" if IN_DOCKER else "localhost"
-PORT     = 1433         if IN_DOCKER else 1434
-USER     = "sa"
-PASSWORD = "AmecoSQL2024!"
+# ── Conexión a la BD de Ameco (AWS) ───────────────────────────────────────────
+HOST     = os.environ.get("AMECO_DB_HOST", "35.182.48.231")
+PORT     = int(os.environ.get("AMECO_DB_PORT", "1433"))
+USER     = os.environ.get("AMECO_DB_USER", "sa")
+PASSWORD = os.environ.get("AMECO_DB_PASSWORD", "")  # si queda vacío, se pide por consola
 DATABASE = "AmecoHubIntegracion"
 
 # Ruta de salida: genera un .js (no .json) para que funcione con file:// sin servidor
-# Dentro de Docker escribe en /tmp, el .bat lo copia al host
-OUT_PATH = "/tmp/lookup_data.js" if IN_DOCKER else os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "documentacion", "lookup_data.js"
+OUT_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "docs", "lookup_data.js"
 )
 
 # ── Catálogos a extraer ───────────────────────────────────────────────────────
 # (etiqueta, col_id en AmecoDashboards, col_valor en AmecoDashboards, tabla_catalogo, col_id_cat, col_valor_cat)
 # tabla_catalogo = tabla real en AMECO_DEV para traer TODOS los valores (incluso sin datos)
 # Si tabla_catalogo es None, se usa el método anterior (DISTINCT desde AmecoDashboards)
-LINKED = "AMECO_DEV.Ameco.albi"  # Prefijo del linked server
+LINKED = "Ameco.albi"  # catálogos en la BD Ameco (mismo server, cross-database)
 
 LOOKUPS = [
     ("Estado OT",             "EstadoOrdenTrabajoId",       "EstadoOrdenTrabajo",         "estadoOt",              "id", "nombre"),
@@ -72,18 +69,20 @@ def main():
         print("❌  pymssql no instalado. Ejecutá: pip install pymssql")
         sys.exit(1)
 
-    modo = "Docker (sqlserver:1433)" if IN_DOCKER else f"Windows host ({HOST},{PORT})"
-    print(f"Modo: {modo}")
+    pwd = PASSWORD
+    if not pwd:
+        import getpass
+        pwd = getpass.getpass(f"Contraseña para {USER}@{HOST}: ")
     print(f"Conectando a {HOST},{PORT} / {DATABASE}...")
     try:
         conn = pymssql.connect(
             server=HOST, port=PORT,
-            user=USER, password=PASSWORD,
+            user=USER, password=pwd,
             database=DATABASE, charset="UTF-8"
         )
     except Exception as e:
         print(f"❌  No se pudo conectar: {e}")
-        print("    Verificá que los contenedores Docker estén corriendo (docker compose up -d)")
+        print("    Verificá host, credenciales y acceso de red a la BD.")
         sys.exit(1)
 
     cursor = conn.cursor()

@@ -235,6 +235,8 @@
   #field-tooltip .tt-usos   { color: #7ec8a0; margin-top: 6px; font-size: 11px; border-top: 1px solid #2e3250; padding-top: 5px; }
   span.col { cursor: help; }
 
+  .card-toggle { float: right; font-weight: 400; opacity: .65; }
+
   @media (max-width: 768px) {
     nav { display: none; }
     main { margin-left: 0; margin-right: 0; padding: 20px 16px; max-width: 100%; }
@@ -392,7 +394,7 @@
         <div class="formula-box" style="margin-bottom:10px">
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | OTs Creadas</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
         <div class="code-block">
@@ -407,7 +409,7 @@
         <div class="formula-box" style="margin-bottom:10px">
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | OTs Terminadas</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
         <div class="code-block">
@@ -422,7 +424,7 @@
         <div class="formula-box" style="margin-bottom:10px">
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Tasa de Finalizacion</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Sufijo</span><span class="formula-eq">%</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
@@ -441,7 +443,7 @@
         <div class="formula-box" style="margin-bottom:10px">
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Operaciones Resueltas</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
         <div class="code-block">
@@ -456,7 +458,7 @@
         <div class="formula-box" style="margin-bottom:10px">
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | OTs Backlog</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">TipoActividad = 'Backlog'</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
@@ -473,7 +475,7 @@
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Tendencia de OTs</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
           <div class="formula-row"><span class="formula-name">X-axis</span><span class="formula-eq">OrdenTrabajoFechaInicio</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
         </div>
         <div class="sub-label">Metrics (2 metricas, cada una genera una linea)</div>
         <div class="sub-label" style="margin-top:8px">OTs nuevas — Custom SQL</div>
@@ -496,7 +498,7 @@
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
           <div class="formula-row"><span class="formula-name">X-axis</span><span class="formula-eq">EstadoOrdenTrabajo</span></div>
           <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">EstadoOrdenTrabajoId (para cross-filter)</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Orientacion</span><span class="formula-eq">Horizontal (en Customize)</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
@@ -513,7 +515,7 @@
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Ops resueltas por especialidad</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards</span></div>
           <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">Especialidad</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOperacion = 'Resuelta'</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
@@ -530,7 +532,7 @@
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Ops pendientes por especialidad</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards</span></div>
           <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">Especialidad</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOperacion IN ('Abierta','Por abrir','Asignada','Detenida','Agendada')</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
@@ -548,7 +550,7 @@
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Ops Backlog por especialidad</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards</span></div>
           <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">Especialidad</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">TipoActividad = 'Backlog'</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
@@ -565,7 +567,7 @@
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Operaciones por Zona</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards</span></div>
           <div class="formula-row"><span class="formula-name">X-axis</span><span class="formula-eq">ZonaOperacion</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Orientacion</span><span class="formula-eq">Horizontal (en Customize)</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
@@ -674,7 +676,7 @@
         <div class="formula-box" style="margin-bottom:10px">
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Tiempos OT en HH</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
           <div class="formula-row"><span class="formula-name">Sufijo</span><span class="formula-eq">hrs</span></div>
         </div>
@@ -682,7 +684,7 @@
         <div class="code-block">
           <div class="code-header"><span>sql</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
           <pre><span class="fn">ROUND</span>(
-    (<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionTiempoDuracionReal</span>, <span class="nb">0</span>))
+    (<span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEjecucion</span>, <span class="nb">0</span>))
    + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoTraslado</span>, <span class="nb">0</span>))
    + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiempoEspera</span>, <span class="nb">0</span>))
    + <span class="fn">SUM</span>(<span class="fn">ISNULL</span>(<span class="col">OperacionResolucionTiemposAdministrativos</span>, <span class="nb">0</span>)))
@@ -697,7 +699,7 @@
         <div class="formula-box" style="margin-bottom:10px">
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Tiempo Prom. Resolucion</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
           <div class="formula-row"><span class="formula-name">Sufijo</span><span class="formula-eq">hrs</span></div>
         </div>
@@ -719,7 +721,7 @@
         <div class="formula-box" style="margin-bottom:10px">
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Tasa de Cumplimiento</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.v_OrdenesTrabajo</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOrdenTrabajo IN ('Resuelta','Cerrada')</span></div>
           <div class="formula-row"><span class="formula-name">Sufijo</span><span class="formula-eq">%</span></div>
         </div>
@@ -788,7 +790,7 @@
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Tiempos reportados por persona</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards</span></div>
           <div class="formula-row"><span class="formula-name">Dimensions</span><span class="formula-eq">OperacionResolutor · ZonaOperacion · Especialidad</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Filtro chart</span><span class="formula-eq">EstadoOperacion = 'Resuelta'</span></div>
         </div>
         <div class="sub-label">Tiempo Espera (hrs) — Custom SQL</div>
@@ -825,7 +827,7 @@
           <div class="formula-row"><span class="formula-name">Titulo</span><span class="formula-eq"><code>[Ameco] | Ranking carga de trabajo</code></span></div>
           <div class="formula-row"><span class="formula-name">Dataset</span><span class="formula-eq">dbo.AmecoDashboards</span></div>
           <div class="formula-row"><span class="formula-name">X-axis</span><span class="formula-eq">OperacionResolutor</span></div>
-          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OperacionFechaInicio (Time Range)</span></div>
+          <div class="formula-row"><span class="formula-name">Filtro fecha</span><span class="formula-eq">OrdenTrabajoFechaCreacion (Time Range)</span></div>
           <div class="formula-row"><span class="formula-name">Sort query by</span><span class="formula-eq">Metrica DESC</span></div>
         </div>
         <div class="sub-label">Metrica — Custom SQL</div>
@@ -940,6 +942,27 @@
       setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
     });
   }
+
+  // ── Chart cards colapsables: mostrar solo el título, expandir al clic ──
+  document.querySelectorAll('.module-body div[style*="border:1px solid var(--m"]').forEach(card => {
+    const head = card.firstElementChild;
+    if (!head || !/font-weight:\s*700/.test(head.getAttribute('style') || '')) return;
+    const rest = [...card.children].slice(1);
+    if (!rest.length) return;
+    let open = false;
+    const tog = document.createElement('span');
+    tog.className = 'card-toggle';
+    head.appendChild(document.createTextNode(' '));
+    head.appendChild(tog);
+    head.style.cursor = 'pointer';
+    const render = () => {
+      rest.forEach(el => { el.style.display = open ? '' : 'none'; });
+      head.style.marginBottom = open ? '' : '0';
+      tog.textContent = open ? '▾' : '▸';
+    };
+    head.addEventListener('click', () => { open = !open; render(); });
+    render();
+  });
 
   const sections = document.querySelectorAll('.module, [id^="m"]');
   const navLinks  = document.querySelectorAll('nav a[href^="#"]');
