@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Limitaciones técnicas de Superset</title>
+<style>
+  :root { --verde:#05B4AA; --verdeOsc:#04958d; --tinta:#222; --tinta2:#3c4650; }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; padding:0;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--tinta); background:#f4f6f8; line-height:1.6;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  @media print {
+    body { background:#fff; }
+    .wrap { max-width:100%; padding:0; }
+    .card, header.top { box-shadow:none; }
+    .card { break-inside: avoid; }
+  }
+  .wrap { max-width: 840px; margin: 0 auto; padding: 34px 22px 52px; }
+  header.top { border-bottom:3px solid var(--verde); padding: 0 0 18px; margin-bottom: 26px; }
+  header.top h1 { margin:0 0 6px; font-size: 23px; color:var(--tinta); letter-spacing:-.2px; }
+  header.top p { margin:0; color:#6b7680; font-size:14px; }
+  .card {
+    background:#fff; border-radius:10px; padding:20px 26px; margin-bottom:16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05); border:1px solid #eceff1;
+  }
+  .card h2 { margin:0 0 12px; font-size:18px; color:var(--tinta); display:flex; align-items:baseline; gap:10px; }
+  .num { color:var(--verdeOsc); font-weight:700; font-size:18px; flex:none; }
+  .field { margin:10px 0; }
+  .lbl { font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:#8a96a0; margin-bottom:4px; }
+  .req { font-size:15px; color:var(--tinta2); }
+  .motivo { font-size:14.5px; color:var(--tinta2); }
+  code { background:#eef1f3; padding:1px 5px; border-radius:4px; font-size:13px; }
+  .cierre { border-top:1px solid #e3e8eb; margin-top:24px; padding-top:18px; font-size:14.5px; color:var(--tinta2); }
+  .cierre strong { color:var(--tinta); }
+  footer { color:#9aa7ad; font-size:12px; margin-top:26px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>Limitaciones técnicas de Apache Superset</h1>
+    <p>Justificación de tres requerimientos no implementables en el producto — 18 de junio de 2026</p>
+  </header>
+
+  <div class="card">
+    <h2><span class="num">1.</span> Interfaz completamente en español</h2>
+    <div class="field">
+      <div class="lbl">Requerimiento</div>
+      <div class="req">Mostrar toda la interfaz del sistema en español.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Limitación técnica</div>
+      <div class="motivo">
+        Superset traduce su interfaz mediante catálogos de idioma (i18n). El catálogo en español está
+        parcialmente completo, por lo que las cadenas sin traducir se muestran en inglés. El idioma ya
+        está configurado en español (<code>BABEL_DEFAULT_LOCALE = "es"</code>), pero la cobertura del
+        español es la que provee el propio Superset y no puede completarse desde la configuración.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2.</span> Color del medidor (gauge) según el valor</h2>
+    <div class="field">
+      <div class="lbl">Requerimiento</div>
+      <div class="req">Que el medidor cambie de color según el rango en que cae el valor (tipo semáforo).</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Limitación técnica</div>
+      <div class="motivo">
+        El medidor (basado en la librería ECharts) usa un color fijo para el indicador del valor y no
+        ofrece formato condicional según el rango. Por eso se muestra siempre del mismo color (azul por
+        defecto), sin importar el valor.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3.</span> Filtro de fecha simplificado</h2>
+    <div class="field">
+      <div class="lbl">Requerimiento</div>
+      <div class="req">Sustituir el filtro de fecha actual por un selector más simple.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Limitación técnica</div>
+      <div class="motivo">
+        Superset ofrece un conjunto cerrado de filtros predefinidos. El filtro de rango temporal es un
+        componente fijo y no puede sustituirse por otro más simple desde la configuración.
+      </div>
+    </div>
+  </div>
+
+  <div class="cierre">
+    <strong>Conclusión.</strong> Los tres puntos son limitaciones propias de Apache Superset (el
+    producto base), no de la configuración de los tableros.
+  </div>
+
+  <footer>Documento técnico — Tableros Albi (Apache Superset)</footer>
+
+</div>
+</body>
+</html>

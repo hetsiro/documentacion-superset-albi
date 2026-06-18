@@ -44,6 +44,21 @@ AUTH_ROLE_PUBLIC = "Public"
 # Tema claro global
 THEME_OVERRIDE = {"algorithm": "light"}
 
+# Formato numérico con coma decimal (estilo español/latinoamérica)
+D3_FORMAT = {
+    "decimal":   ",",
+    "thousands": ".",
+    "grouping":  [3],
+    "currency":  ["$", ""],
+}
+
+# Idioma de la UI en español
+BABEL_DEFAULT_LOCALE = "es"
+LANGUAGES = {
+    "es": {"flag": "es", "name": "Español"},
+    "en": {"flag": "us", "name": "English"},
+}
+
 GUEST_ROLE_NAME = "Admin"
 GUEST_TOKEN_JWT_SECRET = "D4_ukNX9kBgso0cyGycd0PcpPXtTg4wZH3Evx3mPw8H-6oXcFS64pqVJ"
 GUEST_TOKEN_JWT_EXP_SECONDS = 3600

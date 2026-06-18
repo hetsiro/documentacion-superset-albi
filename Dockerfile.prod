@@ -1,5 +1,5 @@
-# Basado en la imagen que YA funciona en Azure
-FROM acrsuper1284.azurecr.io/superset-mssql:latest
+# Imagen base: Superset 6.1.0 + drivers mssql (en el ACR)
+FROM acrsuper1284.azurecr.io/superset-mssql:6.1.0
 
 USER root
 
