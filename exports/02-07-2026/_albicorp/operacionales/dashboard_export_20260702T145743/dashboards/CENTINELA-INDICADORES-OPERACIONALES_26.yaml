@@ -1,0 +1,1080 @@
+dashboard_title: '[ALBI CORP] - Operacionales'
+description: null
+css: "/* \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\r\n   SUPERSET DASHBOARD \u2014 CENTINELA LIGHT\
+  \ THEME\r\n   Solo selectores reales verificados via DOM\r\n   \u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\
+  \u2550\u2550 */\r\n\r\n/* \u2500\u2500 Fuente global \u2500\u2500 */\r\n@import\
+  \ url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');\r\
+  \n\r\n/* \u2500\u2500 Todo el dashboard \u2500\u2500 */\r\n.dashboard, .dashboard-content,\
+  \ .grid-container,\r\n.ant-tabs, .ant-tabs-content, .ant-tabs-tabpane {\r\n  background:\
+  \ #f5f6fa !important;\r\n  font-family: 'Inter', sans-serif !important;\r\n}\r\n\
+  \r\n/* \u2500\u2500 Cards \u2014 borde izquierdo acento \u2500\u2500 */\r\n.dashboard-component-chart-holder\
+  \ {\r\n  background: #ffffff !important;\r\n  border: 1px solid rgba(0, 0, 0, 0.06)\
+  \ !important;\r\n  border-left: 3px solid rgba(0, 150, 200, 0.35) !important;\r\n\
+  \  border-radius: 14px !important;\r\n  box-shadow: 0 1px 8px rgba(0,0,0,0.06) !important;\r\
+  \n  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;\r\n  margin:\
+  \ 4px !important;\r\n}\r\n\r\n.dashboard-component-chart-holder:hover {\r\n  border-color:\
+  \ rgba(0, 150, 200, 0.2) !important;\r\n  border-left: 3px solid rgba(0, 150, 200,\
+  \ 0.7) !important;\r\n  box-shadow: 0 4px 20px rgba(0, 150, 200, 0.08), 0 2px 12px\
+  \ rgba(0,0,0,0.06) !important;\r\n  transform: translateY(-3px) scale(1.003) !important;\r\
+  \n}\r\n\r\n/* Card interna \u2014 transparente */\r\n.dashboard-chart {\r\n  background:\
+  \ transparent !important;\r\n  border: none !important;\r\n  box-shadow: none !important;\r\
+  \n}\r\n\r\n/* \u2500\u2500 Big Numbers \u2014 glow sutil \u2500\u2500 */\r\n.header-line\
+  \ {\r\n  font-family: 'Rajdhani', sans-serif !important;\r\n  font-weight: 700 !important;\r\
+  \n  color: #0088a8 !important;\r\n  text-align: center !important;\r\n  justify-content:\
+  \ center !important;\r\n  letter-spacing: 1.5px !important;\r\n  text-shadow: 0\
+  \ 0 12px rgba(0, 136, 168, 0.15) !important;\r\n}\r\n\r\n.superset-legacy-chart-big-number\
+  \ .header-line {\r\n  font-size: 2.8em !important;\r\n}\r\n\r\n/* Subtitulo */\r\
+  \n.header-line .subheader-line {\r\n  font-family: 'Rajdhani', sans-serif !important;\r\
+  \n  color: rgba(0, 136, 168, 0.5) !important;\r\n  font-weight: 600 !important;\r\
+  \n  font-size: 0.35em !important;\r\n  letter-spacing: 3px !important;\r\n  text-transform:\
+  \ uppercase !important;\r\n  text-shadow: none !important;\r\n}\r\n\r\n/* \u2500\
+  \u2500 Titulos de charts \u2500\u2500 */\r\n.editable-title, .editable-title a {\r\
+  \n  font-family: 'Inter', sans-serif !important;\r\n  color: #6b7280 !important;\r\
+  \n  font-weight: 600 !important;\r\n  font-size: 11px !important;\r\n  text-transform:\
+  \ uppercase !important;\r\n  letter-spacing: 1.5px !important;\r\n  text-decoration:\
+  \ none !important;\r\n  transition: color 0.3s ease !important;\r\n}\r\n\r\n.dashboard-component-chart-holder:hover\
+  \ .editable-title a {\r\n  color: #0088a8 !important;\r\n}\r\n\r\n/* \u2500\u2500\
+  \ Header del dashboard \u2500\u2500 */\r\n.dashboard-header {\r\n  background: #f5f6fa\
+  \ !important;\r\n  border-bottom: 1px solid rgba(0,0,0,0.06) !important;\r\n}\r\n\
+  \r\n/* \u2500\u2500 Tabs \u2500\u2500 */\r\n.ant-tabs-tab {\r\n  font-family: 'Rajdhani',\
+  \ sans-serif !important;\r\n  font-weight: 600 !important;\r\n  font-size: 13px\
+  \ !important;\r\n  letter-spacing: 1.5px !important;\r\n  text-transform: uppercase\
+  \ !important;\r\n  color: #6b7280 !important;\r\n}\r\n\r\n.ant-tabs-tab-active .ant-tabs-tab-btn\
+  \ {\r\n  color: #0088a8 !important;\r\n}\r\n\r\n.ant-tabs-ink-bar {\r\n  background:\
+  \ linear-gradient(90deg, #0088a8, #00b8d4) !important;\r\n  height: 2px !important;\r\
+  \n}\r\n\r\n/* \u2500\u2500 Filtros \u2500\u2500 */\r\n.filter-bar, .dashboard-filters-wrapper\
+  \ {\r\n  background: #eef0f4 !important;\r\n}\r\n\r\n/* \u2500\u2500 TABLAS \u2500\
+  \u2500 */\r\n.table.table-striped.table-condensed {\r\n  font-family: 'Inter', sans-serif\
+  \ !important;\r\n  border-collapse: separate !important;\r\n  border-spacing: 0\
+  \ !important;\r\n}\r\n\r\n/* Headers */\r\n.table.table-striped.table-condensed\
+  \ th {\r\n  background: linear-gradient(180deg, rgba(0, 150, 200, 0.06) 0%, rgba(0,\
+  \ 150, 200, 0.02) 100%) !important;\r\n  color: #0088a8 !important;\r\n  font-family:\
+  \ 'Rajdhani', sans-serif !important;\r\n  font-weight: 700 !important;\r\n  font-size:\
+  \ 11px !important;\r\n  letter-spacing: 1.5px !important;\r\n  text-transform: uppercase\
+  \ !important;\r\n  padding: 12px 14px !important;\r\n  border-bottom: 2px solid\
+  \ rgba(0, 150, 200, 0.15) !important;\r\n  border-color: rgba(0, 150, 200, 0.08)\
+  \ !important;\r\n}\r\n\r\n/* Celdas */\r\n.table.table-striped.table-condensed td\
+  \ {\r\n  color: #374151 !important;\r\n  font-size: 12.5px !important;\r\n  padding:\
+  \ 10px 14px !important;\r\n  border-color: rgba(0,0,0,0.04) !important;\r\n  transition:\
+  \ all 0.2s ease !important;\r\n}\r\n\r\n/* Filas alternas */\r\n.table-striped tbody\
+  \ tr:nth-child(odd) td {\r\n  background: rgba(0,0,0,0.015) !important;\r\n}\r\n\
+  \r\n.table-striped tbody tr:nth-child(even) td {\r\n  background: transparent !important;\r\
+  \n}\r\n\r\n/* Hover en filas */\r\n.table.table-striped.table-condensed tbody tr:hover\
+  \ td {\r\n  background: rgba(0, 150, 200, 0.05) !important;\r\n  color: #111827\
+  \ !important;\r\n}\r\n\r\n/* Borde izquierdo en hover */\r\n.table.table-striped.table-condensed\
+  \ tbody tr:hover td:first-child {\r\n  box-shadow: inset 3px 0 0 #0088a8 !important;\r\
+  \n}\r\n\r\n/* Cell bars */\r\n.cell-bar.positive {\r\n  opacity: 0.5 !important;\r\
+  \n  border-radius: 2px !important;\r\n}\r\n\r\n/* N/A cells */\r\n.dt-is-null {\r\
+  \n  color: #c0c4cc !important;\r\n  font-style: italic !important;\r\n}\r\n\r\n\
+  /* Filter column border */\r\n.right-border-only {\r\n  border-right: 1px solid\
+  \ rgba(0, 150, 200, 0.1) !important;\r\n}\r\n\r\n/* \u2500\u2500 Scrollbar \u2500\
+  \u2500 */\r\n::-webkit-scrollbar { width: 4px !important; height: 4px !important;\
+  \ }\r\n::-webkit-scrollbar-track { background: transparent !important; }\r\n::-webkit-scrollbar-thumb\
+  \ {\r\n  background: rgba(0, 150, 200, 0.2) !important;\r\n  border-radius: 4px\
+  \ !important;\r\n}\r\n::-webkit-scrollbar-thumb:hover {\r\n  background: rgba(0,\
+  \ 150, 200, 0.4) !important;\r\n}\r\n\r\n/* \u2500\u2500 Badge de filtros \u2500\
+  \u2500 */\r\n.ant-badge-count {\r\n  background: rgba(0, 150, 200, 0.12) !important;\r\
+  \n  border: 1px solid rgba(0, 150, 200, 0.3) !important;\r\n  color: #0088a8 !important;\r\
+  \n  font-family: 'Rajdhani', sans-serif !important;\r\n  font-weight: 700 !important;\r\
+  \n}\r\n"
+slug: albi-corp-operacionales
+certified_by: ''
+certification_details: ''
+published: true
+uuid: 08a238a0-04b5-4b45-b68c-a14e98614c32
+position:
+  CHART-explore-61-1:
+    children: []
+    id: CHART-explore-61-1
+    meta:
+      chartId: 387
+      height: 20
+      sliceName: '[ALBI CORP] | OTs Creadas'
+      uuid: 95447564-c984-413e-be40-fd8f878647f2
+      width: 2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-lqs-eUGml-IuwXPcxXytA
+    type: CHART
+  CHART-explore-62-1:
+    children: []
+    id: CHART-explore-62-1
+    meta:
+      chartId: 388
+      height: 20
+      sliceName: '[ALBI CORP] | OTs Resueltas'
+      uuid: 412b7a9e-8d60-42f3-a2b3-6185bc110693
+      width: 2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-lqs-eUGml-IuwXPcxXytA
+    type: CHART
+  CHART-explore-63-1:
+    children: []
+    id: CHART-explore-63-1
+    meta:
+      chartId: 393
+      height: 20
+      sliceName: '[ALBI CORP] | Tasa de Finalizacion'
+      uuid: a6c3b5d3-4f2e-4a0b-bcc3-08a8cc6226b7
+      width: 2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-lqs-eUGml-IuwXPcxXytA
+    type: CHART
+  CHART-explore-64-1:
+    children: []
+    id: CHART-explore-64-1
+    meta:
+      chartId: 382
+      height: 20
+      sliceName: '[ALBI CORP] | Operaciones Resueltas'
+      uuid: 0d1c6b83-8981-455e-bc43-ceac4a84e99a
+      width: 2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-lqs-eUGml-IuwXPcxXytA
+    type: CHART
+  CHART-explore-66-1:
+    children: []
+    id: CHART-explore-66-1
+    meta:
+      chartId: 394
+      height: 50
+      sliceName: '[ALBI CORP] | Tendencia de OTs'
+      uuid: 29c5fad4-8aa9-439c-b3a7-a37400312dc9
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-GZ9Ht807N3n1o4uvM-qfW
+    type: CHART
+  CHART-explore-67-1:
+    children: []
+    id: CHART-explore-67-1
+    meta:
+      chartId: 380
+      height: 50
+      sliceName: '[ALBI CORP] | Estado de OTs'
+      uuid: 93aceef8-63da-417e-ad44-6914473c7c62
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-GZ9Ht807N3n1o4uvM-qfW
+    type: CHART
+  CHART-explore-68-1:
+    children: []
+    id: CHART-explore-68-1
+    meta:
+      chartId: 385
+      height: 50
+      sliceName: '[ALBI CORP] | Ops resueltas por especialidad'
+      uuid: ef1d9300-8b67-457f-a188-773cf1711c87
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-IbrXWbwz0mZd0WdrAg8jO
+    type: CHART
+  CHART-explore-70-1:
+    children: []
+    id: CHART-explore-70-1
+    meta:
+      chartId: 384
+      height: 50
+      sliceName: '[ALBI CORP] | Ops pendientes por especialidad'
+      uuid: 23699cce-efbf-4e66-a474-b6e317e324dc
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-IbrXWbwz0mZd0WdrAg8jO
+    type: CHART
+  CHART-explore-71-1:
+    children: []
+    id: CHART-explore-71-1
+    meta:
+      chartId: 381
+      height: 50
+      sliceName: '[ALBI CORP] | Operaciones por Zona'
+      uuid: 633d4f89-9a07-46bd-bd8c-4bd31a4a35e3
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-mzQ0d-f6-5yx0sTSG5uCM
+    type: CHART
+  CHART-explore-72-1:
+    children: []
+    id: CHART-explore-72-1
+    meta:
+      chartId: 383
+      height: 50
+      sliceName: '[ALBI CORP] | Ops Backlog por especialidad'
+      uuid: 5d6e970c-f213-4ecf-9d8f-f1b62c89ae9f
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-mzQ0d-f6-5yx0sTSG5uCM
+    type: CHART
+  CHART-explore-73-1:
+    children: []
+    id: CHART-explore-73-1
+    meta:
+      chartId: 395
+      height: 15
+      sliceName: '[ALBI CORP] | Tiempos OT en HH'
+      uuid: 5edf2846-d027-43bd-8f41-c4b8858c8ebc
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    - ROW-vm5mjFPXMl6OrcnIJ1KIt
+    type: CHART
+  CHART-explore-74-1:
+    children: []
+    id: CHART-explore-74-1
+    meta:
+      chartId: 397
+      height: 15
+      sliceName: '[ALBI CORP] | Tiempo Prom. Resolucion'
+      uuid: 66da5679-0afd-4a8b-a28d-f3aefc3c15f7
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    - ROW-vm5mjFPXMl6OrcnIJ1KIt
+    type: CHART
+  CHART-explore-75-1:
+    children: []
+    id: CHART-explore-75-1
+    meta:
+      chartId: 392
+      height: 15
+      sliceName: '[ALBI CORP] | Tasa de Cumplimiento'
+      uuid: 1948ae55-55ba-4f7e-85a0-9d3598d3f817
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    - ROW-vm5mjFPXMl6OrcnIJ1KIt
+    type: CHART
+  CHART-explore-76-1:
+    children: []
+    id: CHART-explore-76-1
+    meta:
+      chartId: 391
+      height: 52
+      sliceName: '[ALBI CORP] | Supervisores Presente Hoy'
+      uuid: 95831bd8-d95d-4210-b52f-d250849c7fbb
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    - ROW-dGG2azsAt6fVwvXhbvkqM
+    type: CHART
+  CHART-explore-77-1:
+    children: []
+    id: CHART-explore-77-1
+    meta:
+      chartId: 389
+      height: 53
+      sliceName: '[ALBI CORP] | Personal Presente Hoy'
+      uuid: 4f4dcf47-bac4-4a70-83da-d09741e4bf41
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    - ROW-dGG2azsAt6fVwvXhbvkqM
+    type: CHART
+  CHART-explore-78-1:
+    children: []
+    id: CHART-explore-78-1
+    meta:
+      chartId: 390
+      height: 53
+      sliceName: '[ALBI CORP] | Ranking carga de trabajo'
+      uuid: d3d24650-6718-4510-83c0-8cdb1bf9aaf3
+      width: 12
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    - ROW-yu2s3OQVv3ffSDmCwy5NQ
+    type: CHART
+  CHART-explore-79-1:
+    children: []
+    id: CHART-explore-79-1
+    meta:
+      chartId: 396
+      height: 52
+      sliceName: '[ALBI CORP] | Tiempos reportados por persona'
+      uuid: 3f2558d0-2b47-43ee-b941-16c103a150ba
+      width: 12
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    - ROW-zrbjphMFV1_VZ7zoyADHX
+    type: CHART
+  CHART-nwiYEs5RVn6zLWiylI9Fl:
+    children: []
+    id: CHART-nwiYEs5RVn6zLWiylI9Fl
+    meta:
+      chartId: 386
+      height: 20
+      sliceName: '[ALBI CORP] | OTs Backlog'
+      uuid: 00578620-249f-46a7-9368-a11960392bbf
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    - ROW-lqs-eUGml-IuwXPcxXytA
+    type: CHART
+  COLUMN-J-9zzWWb_LsVCJhieNnkD:
+    children:
+    - ROW-vm5mjFPXMl6OrcnIJ1KIt
+    - ROW-yu2s3OQVv3ffSDmCwy5NQ
+    - ROW-dGG2azsAt6fVwvXhbvkqM
+    - ROW-zrbjphMFV1_VZ7zoyADHX
+    id: COLUMN-J-9zzWWb_LsVCJhieNnkD
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      width: 12
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    type: COLUMN
+  COLUMN-SlF_0qX3AvmIc9E7EdGcY:
+    children:
+    - ROW-lqs-eUGml-IuwXPcxXytA
+    - ROW-GZ9Ht807N3n1o4uvM-qfW
+    - ROW-IbrXWbwz0mZd0WdrAg8jO
+    - ROW-mzQ0d-f6-5yx0sTSG5uCM
+    id: COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      width: 12
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    type: COLUMN
+  DASHBOARD_VERSION_KEY: v2
+  GRID_ID:
+    children:
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    id: GRID_ID
+    parents:
+    - ROOT_ID
+    type: GRID
+  HEADER_ID:
+    id: HEADER_ID
+    meta:
+      text: '[ALBI CORP] - Operacionales'
+    type: HEADER
+  ROOT_ID:
+    children:
+    - GRID_ID
+    id: ROOT_ID
+    type: ROOT
+  ROW-GZ9Ht807N3n1o4uvM-qfW:
+    children:
+    - CHART-explore-66-1
+    - CHART-explore-67-1
+    id: ROW-GZ9Ht807N3n1o4uvM-qfW
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    type: ROW
+  ROW-IbrXWbwz0mZd0WdrAg8jO:
+    children:
+    - CHART-explore-68-1
+    - CHART-explore-70-1
+    id: ROW-IbrXWbwz0mZd0WdrAg8jO
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    type: ROW
+  ROW-W0_RdSIFLUkITZ3Jajdfe:
+    children:
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    id: ROW-W0_RdSIFLUkITZ3Jajdfe
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    type: ROW
+  ROW-dGG2azsAt6fVwvXhbvkqM:
+    children:
+    - CHART-explore-77-1
+    - CHART-explore-76-1
+    id: ROW-dGG2azsAt6fVwvXhbvkqM
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    type: ROW
+  ROW-lqs-eUGml-IuwXPcxXytA:
+    children:
+    - CHART-explore-61-1
+    - CHART-explore-62-1
+    - CHART-explore-63-1
+    - CHART-explore-64-1
+    - CHART-nwiYEs5RVn6zLWiylI9Fl
+    id: ROW-lqs-eUGml-IuwXPcxXytA
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    type: ROW
+  ROW-mzQ0d-f6-5yx0sTSG5uCM:
+    children:
+    - CHART-explore-71-1
+    - CHART-explore-72-1
+    id: ROW-mzQ0d-f6-5yx0sTSG5uCM
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    - COLUMN-SlF_0qX3AvmIc9E7EdGcY
+    type: ROW
+  ROW-vm5mjFPXMl6OrcnIJ1KIt:
+    children:
+    - CHART-explore-73-1
+    - CHART-explore-74-1
+    - CHART-explore-75-1
+    id: ROW-vm5mjFPXMl6OrcnIJ1KIt
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    type: ROW
+  ROW-yqdqNkj-QNjS1QG_nXtyk:
+    children:
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    id: ROW-yqdqNkj-QNjS1QG_nXtyk
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    type: ROW
+  ROW-yu2s3OQVv3ffSDmCwy5NQ:
+    children:
+    - CHART-explore-78-1
+    id: ROW-yu2s3OQVv3ffSDmCwy5NQ
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    type: ROW
+  ROW-zrbjphMFV1_VZ7zoyADHX:
+    children:
+    - CHART-explore-79-1
+    id: ROW-zrbjphMFV1_VZ7zoyADHX
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    - COLUMN-J-9zzWWb_LsVCJhieNnkD
+    type: ROW
+  TAB-GcJiYqh26SIUA83yPHnUZ:
+    children:
+    - ROW-W0_RdSIFLUkITZ3Jajdfe
+    id: TAB-GcJiYqh26SIUA83yPHnUZ
+    meta:
+      defaultText: Tab title
+      placeholder: Tab title
+      text: Indicadores de Actividad
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    type: TAB
+  TAB-cEEyOtCOx5L17GR93JAOj:
+    children:
+    - ROW-yqdqNkj-QNjS1QG_nXtyk
+    id: TAB-cEEyOtCOx5L17GR93JAOj
+    meta:
+      defaultText: Tab title
+      placeholder: Tab title
+      text: Indicadores de Personas
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - TABS-Noo996dCxwaDyG-tUO7DF
+    type: TAB
+  TABS-Noo996dCxwaDyG-tUO7DF:
+    children:
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - TAB-cEEyOtCOx5L17GR93JAOj
+    id: TABS-Noo996dCxwaDyG-tUO7DF
+    meta: {}
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: TABS
+metadata:
+  label_colors: {}
+  chart_configuration:
+    '383':
+      id: 383
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 178
+        - 179
+        - 180
+        - 181
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 188
+        - 189
+        - 190
+        - 191
+        - 192
+        - 193
+    '381':
+      id: 381
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 177
+        - 179
+        - 180
+        - 181
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 188
+        - 189
+        - 190
+        - 191
+        - 192
+        - 193
+    '390':
+      id: 390
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 177
+        - 178
+        - 180
+        - 181
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 188
+        - 189
+        - 190
+        - 191
+        - 192
+        - 193
+    '396':
+      id: 396
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 177
+        - 178
+        - 179
+        - 181
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 188
+        - 189
+        - 190
+        - 191
+        - 192
+        - 193
+    '380':
+      id: 380
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 177
+        - 178
+        - 179
+        - 180
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 188
+        - 189
+        - 190
+        - 191
+        - 192
+        - 193
+    '391':
+      id: 391
+      crossFilters:
+        scope:
+          rootPath:
+          - TAB-GcJiYqh26SIUA83yPHnUZ
+          - TAB-cEEyOtCOx5L17GR93JAOj
+          excluded:
+          - 391
+          - 389
+        chartsInScope:
+        - 177
+        - 178
+        - 179
+        - 180
+        - 181
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 188
+        - 189
+        - 190
+        - 191
+        - 192
+        - 193
+    '385':
+      id: 385
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 177
+        - 178
+        - 179
+        - 180
+        - 181
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 189
+        - 190
+        - 191
+        - 192
+        - 193
+    '384':
+      id: 384
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 177
+        - 178
+        - 179
+        - 180
+        - 181
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 188
+        - 190
+        - 191
+        - 192
+        - 193
+    '394':
+      id: 394
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 177
+        - 178
+        - 179
+        - 180
+        - 181
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 188
+        - 189
+        - 190
+        - 191
+        - 193
+    '389':
+      id: 389
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 177
+        - 178
+        - 179
+        - 180
+        - 181
+        - 182
+        - 183
+        - 185
+        - 186
+        - 187
+        - 188
+        - 189
+        - 190
+        - 191
+        - 192
+        - 193
+  global_chart_configuration:
+    scope:
+      rootPath:
+      - TAB-GcJiYqh26SIUA83yPHnUZ
+      - TAB-cEEyOtCOx5L17GR93JAOj
+      excluded:
+      - 391
+      - 389
+    chartsInScope:
+    - 177
+    - 178
+    - 179
+    - 180
+    - 181
+    - 182
+    - 183
+    - 185
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    - 191
+    - 192
+    - 193
+  color_scheme: blueToGreen
+  refresh_frequency: 0
+  expanded_slices: {}
+  timed_refresh_immune_slices: []
+  cross_filters_enabled: true
+  native_filter_configuration:
+  - id: NATIVE_FILTER-ILPM6QQ4sXtx3x4Uc1O3a
+    controlValues:
+      enableEmptyFilter: true
+    name: Fecha Ingresada
+    filterType: filter_time
+    targets:
+    - {}
+    defaultDataMask:
+      extraFormData:
+        time_range: Last month
+      filterState:
+        value: Last month
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - TAB-GcJiYqh26SIUA83yPHnUZ
+      - TAB-cEEyOtCOx5L17GR93JAOj
+      excluded:
+      - 391
+      - 389
+      - 386
+    type: NATIVE_FILTER
+    description: ''
+    chartsInScope:
+    - 177
+    - 178
+    - 179
+    - 180
+    - 181
+    - 182
+    - 183
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    - 191
+    - 192
+    - 193
+    tabsInScope:
+    - TAB-GcJiYqh26SIUA83yPHnUZ
+    - TAB-cEEyOtCOx5L17GR93JAOj
+  - id: NATIVE_FILTER-nc8WMab7Ugck9cmv6mjXb
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      creatable: true
+      multiSelect: false
+      searchAllOptions: false
+      inverseSelection: false
+    name: Tipo Plan
+    filterType: filter_select
+    targets:
+    - column:
+        name: OrdenTrabajoPlan
+      datasetUuid: b7a604c4-ec1d-4a29-b45c-eba7d537bdcb
+    defaultDataMask:
+      extraFormData:
+        filters:
+        - col: OrdenTrabajoPlan
+          op: IN
+          val:
+          - Correctivo
+      filterState:
+        validateMessage: false
+        validateStatus: false
+        label: Correctivo
+        value:
+        - Correctivo
+        excludeFilterValues: true
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - TAB-GcJiYqh26SIUA83yPHnUZ
+      - TAB-cEEyOtCOx5L17GR93JAOj
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-588KNCop3LcvPR_DOi9Tc
+    controlValues:
+      enableEmptyFilter: true
+      defaultToFirstItem: false
+      creatable: false
+      multiSelect: false
+      searchAllOptions: false
+      inverseSelection: false
+    name: Negocio
+    filterType: filter_select
+    targets:
+    - column:
+        name: OrdenTrabajoNegocio
+      datasetUuid: b7a604c4-ec1d-4a29-b45c-eba7d537bdcb
+    defaultDataMask:
+      extraFormData:
+        filters:
+        - col: OrdenTrabajoNegocio
+          op: IN
+          val:
+          - Mantenimiento
+      filterState:
+        validateMessage: false
+        validateStatus: false
+        label: Mantenimiento
+        value:
+        - Mantenimiento
+        excludeFilterValues: true
+    cascadeParentIds: []
+    scope:
+      excluded: []
+      rootPath:
+      - TAB-GcJiYqh26SIUA83yPHnUZ
+      - TAB-cEEyOtCOx5L17GR93JAOj
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-syX3bnvDnriqj2DoLVNYA
+    type: NATIVE_FILTER
+    name: Estado
+    filterType: filter_select
+    description: ''
+    targets:
+    - column:
+        name: EstadoOrdenTrabajo
+      datasetUuid: b7a604c4-ec1d-4a29-b45c-eba7d537bdcb
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded:
+      - 381
+      - 383
+      - 384
+      - 385
+      - 389
+      - 390
+      - 391
+      - 396
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      creatable: true
+      multiSelect: true
+      searchAllOptions: false
+      inverseSelection: false
+    defaultDataMask:
+      extraFormData:
+        filters:
+        - col: EstadoOrdenTrabajo
+          op: IN
+          val:
+          - Resuelta
+          - Cerrada
+      filterState:
+        validateMessage: false
+        validateStatus: false
+        label: Resuelta, Cerrada
+        value:
+        - Resuelta
+        - Cerrada
+        excludeFilterValues: true
+    cascadeParentIds: []
+    sortMetric: null
+  filter_bar_orientation: HORIZONTAL
+  shared_label_colors:
+  - <NULL>
+  map_label_colors:
+    '1': '#004CDA'
+    '2': '#0074F1'
+    '3': '#3200A7'
+    '5': '#0096EF'
+    OTs Totales: '#3200A7'
+    OTs Resueltas: '#004CDA'
+    '9.0': '#3200A7'
+    '1.0': '#004CDA'
+    '2.0': '#0074F1'
+    '16.0': '#0096EF'
+    '6.0': '#53BFFF'
+    <NULL>: '#41C8E6'
+  color_scheme_domain:
+  - '#3200A7'
+  - '#004CDA'
+  - '#0074F1'
+  - '#0096EF'
+  - '#53BFFF'
+  - '#41C8E6'
+  - '#30DEDE'
+  - '#04D9C7'
+  - '#00EAA2'
+  - '#A6FF93'
+theme_uuid: null
+version: 1.0.0
