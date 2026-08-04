@@ -10,7 +10,7 @@ Usá el archivo generar_lookup.bat que hace todo automáticamente:
     generar_lookup.bat     ← doble click o ejecutar en CMD desde C:\superset
 
 El script detecta automáticamente si corre dentro o fuera de Docker.
-El archivo JSON es cargado por diccionario.html al abrir la página.
+El archivo JS es cargado por docs/diccionario/ameco.html al abrir la pagina.
 """
 
 import json
@@ -27,7 +27,7 @@ DATABASE = "AmecoHubIntegracion"
 
 # Ruta de salida: genera un .js (no .json) para que funcione con file:// sin servidor
 OUT_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "..", "docs", "lookup_data.js"
+    os.path.dirname(os.path.abspath(__file__)), "..", "docs", "data", "lookup_data.js"
 )
 
 # ── Catálogos a extraer ───────────────────────────────────────────────────────
@@ -280,7 +280,7 @@ def main():
     if IN_DOCKER:
         print(f"   El .bat copiará el archivo a documentacion\\lookup_data.js automáticamente.")
     else:
-        print(f"   Abrí diccionario.html y recargá la página para ver los datos.")
+        print(f"   Abri docs/diccionario/ameco.html y recarga la pagina para ver los datos.")
 
 if __name__ == "__main__":
     main()

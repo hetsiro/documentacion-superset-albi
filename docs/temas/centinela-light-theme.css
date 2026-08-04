@@ -1,0 +1,173 @@
+/* ═══════════════════════════════════════════════
+   SUPERSET DASHBOARD — CENTINELA LIGHT THEME
+   Solo selectores reales verificados via DOM
+   ═══════════════════════════════════════════════ */
+
+/* ── Fuente global ── */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Todo el dashboard ── */
+.dashboard, .dashboard-content, .grid-container,
+.ant-tabs, .ant-tabs-content, .ant-tabs-tabpane {
+  background: #f5f6fa !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* ── Cards — borde izquierdo acento ── */
+.dashboard-component-chart-holder {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-left: 3px solid rgba(0, 150, 200, 0.35) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06) !important;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  margin: 4px !important;
+}
+
+.dashboard-component-chart-holder:hover {
+  border-color: rgba(0, 150, 200, 0.2) !important;
+  border-left: 3px solid rgba(0, 150, 200, 0.7) !important;
+  box-shadow: 0 4px 20px rgba(0, 150, 200, 0.08), 0 2px 12px rgba(0,0,0,0.06) !important;
+  transform: translateY(-3px) scale(1.003) !important;
+}
+
+.dashboard-chart {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Big Numbers ── */
+.header-line {
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+  color: #0088a8 !important;
+  text-align: center !important;
+  justify-content: center !important;
+  letter-spacing: 1.5px !important;
+  text-shadow: 0 0 12px rgba(0, 136, 168, 0.15) !important;
+}
+
+.superset-legacy-chart-big-number .header-line {
+  font-size: 2.8em !important;
+}
+
+.header-line .subheader-line {
+  font-family: 'Rajdhani', sans-serif !important;
+  color: rgba(0, 136, 168, 0.5) !important;
+  font-weight: 600 !important;
+  font-size: 0.35em !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  text-shadow: none !important;
+}
+
+/* ── Titulos de charts ── */
+.editable-title, .editable-title a {
+  font-family: 'Inter', sans-serif !important;
+  color: #6b7280 !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+}
+
+.dashboard-component-chart-holder:hover .editable-title a {
+  color: #0088a8 !important;
+}
+
+/* ── Header ── */
+.dashboard-header {
+  background: #f5f6fa !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+
+/* ── Tabs ── */
+.ant-tabs-tab {
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  color: #6b7280 !important;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #0088a8 !important;
+}
+
+.ant-tabs-ink-bar {
+  background: linear-gradient(90deg, #0088a8, #00b8d4) !important;
+  height: 2px !important;
+}
+
+/* ── Filtros ── */
+.filter-bar, .dashboard-filters-wrapper {
+  background: #eef0f4 !important;
+}
+
+/* ── Tablas ── */
+.table.table-striped.table-condensed {
+  font-family: 'Inter', sans-serif !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.table.table-striped.table-condensed th {
+  background: linear-gradient(180deg, rgba(0, 150, 200, 0.06) 0%, rgba(0, 150, 200, 0.02) 100%) !important;
+  color: #0088a8 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  padding: 12px 14px !important;
+  border-bottom: 2px solid rgba(0, 150, 200, 0.15) !important;
+  border-color: rgba(0, 150, 200, 0.08) !important;
+}
+
+.table.table-striped.table-condensed td {
+  color: #374151 !important;
+  font-size: 12.5px !important;
+  padding: 10px 14px !important;
+  border-color: rgba(0,0,0,0.04) !important;
+  transition: all 0.2s ease !important;
+}
+
+.table-striped tbody tr:nth-child(odd) td {
+  background: rgba(0,0,0,0.015) !important;
+}
+
+.table-striped tbody tr:nth-child(even) td {
+  background: transparent !important;
+}
+
+.table.table-striped.table-condensed tbody tr:hover td {
+  background: rgba(0, 150, 200, 0.05) !important;
+  color: #111827 !important;
+}
+
+.table.table-striped.table-condensed tbody tr:hover td:first-child {
+  box-shadow: inset 3px 0 0 #0088a8 !important;
+}
+
+.cell-bar.positive { opacity: 0.5 !important; border-radius: 2px !important; }
+.dt-is-null { color: #c0c4cc !important; font-style: italic !important; }
+.right-border-only { border-right: 1px solid rgba(0, 150, 200, 0.1) !important; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px !important; height: 4px !important; }
+::-webkit-scrollbar-track { background: transparent !important; }
+::-webkit-scrollbar-thumb { background: rgba(0, 150, 200, 0.2) !important; border-radius: 4px !important; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 150, 200, 0.4) !important; }
+
+/* ── Badge filtros ── */
+.ant-badge-count {
+  background: rgba(0, 150, 200, 0.12) !important;
+  border: 1px solid rgba(0, 150, 200, 0.3) !important;
+  color: #0088a8 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+}

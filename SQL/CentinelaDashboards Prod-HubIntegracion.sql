@@ -97,11 +97,18 @@ BEGIN
             (ISNULL((SELECT COUNT(DISTINCT oc.personaId)
                      FROM Albi.albi.operacionColaboradores oc
                      WHERE oc.operacionId = ope.id), 0)
-             + CASE WHEN ope.resolutorId IS NULL THEN 0 ELSE 1 END) AS OperacionCantidadInvolucrados
+             + CASE WHEN ope.resolutorId IS NULL THEN 0 ELSE 1 END) AS OperacionCantidadInvolucrados,
+            -- Duracion del catalogo de la OT: es la que usa la web (SP dashboard01v3) para el
+            -- esfuerzo estandar. OJO: distinta de ot.duracion -> las OT sin catalogo valen 0.
+            ISNULL(cat.duracion, 0)             AS OrdenTrabajoCatalogoDuracion,
+            -- Fecha de inicio PROGRAMADA de la operacion (la que filtra el SP dashboard01v3).
+            -- Distinta de OperacionFechaInicio, que es la fecha de inicio REAL.
+            ope.fechaInicio                     AS OperacionFechaInicioProgramada
         FROM        Albi.albi.ordenTrabajo           AS ot
         INNER JOIN  Albi.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
         LEFT JOIN   Albi.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
         LEFT JOIN   Albi.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
+        LEFT JOIN   Albi.albi.catalogo               AS cat              ON cat.id                       = ot.catalogoId
         LEFT JOIN   Albi.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
         LEFT JOIN   Albi.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
         LEFT JOIN   Albi.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId
@@ -224,12 +231,19 @@ SELECT
     (ISNULL((SELECT COUNT(DISTINCT oc.personaId)
              FROM Albi.albi.operacionColaboradores oc
              WHERE oc.operacionId = ope.id), 0)
-     + CASE WHEN ope.resolutorId IS NULL THEN 0 ELSE 1 END) AS OperacionCantidadInvolucrados
+     + CASE WHEN ope.resolutorId IS NULL THEN 0 ELSE 1 END) AS OperacionCantidadInvolucrados,
+    -- Duracion del catalogo de la OT: es la que usa la web (SP dashboard01v3) para el
+    -- esfuerzo estandar. OJO: distinta de ot.duracion -> las OT sin catalogo valen 0.
+    ISNULL(cat.duracion, 0)             AS OrdenTrabajoCatalogoDuracion,
+    -- Fecha de inicio PROGRAMADA de la operacion (la que filtra el SP dashboard01v3).
+    -- Distinta de OperacionFechaInicio, que es la fecha de inicio REAL.
+    ope.fechaInicio                     AS OperacionFechaInicioProgramada
 
 FROM        Albi.albi.ordenTrabajo           AS ot
 INNER JOIN  Albi.albi.empresa                AS emp              ON ot.empresaId                 = emp.id
 LEFT JOIN   Albi.albi.operacion              AS ope              ON ot.id                        = ope.ordenTrabajoId
 LEFT JOIN   Albi.albi.operacionResolucion    AS operesol         ON ope.id                       = operesol.operacionId
+LEFT JOIN   Albi.albi.catalogo               AS cat              ON cat.id                       = ot.catalogoId
 LEFT JOIN   Albi.albi.especialidad           AS espec            ON ope.especialidadId           = espec.id
 LEFT JOIN   Albi.albi.negocio                AS neg              ON ot.negocioId                 = neg.id
 LEFT JOIN   Albi.albi.tipoOperacion          AS tipoOperacion    ON tipoOperacion.id             = ope.tipoOperacionId

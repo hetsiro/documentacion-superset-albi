@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limitaciones técnicas de Apache Superset</title>
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<script src="../assets/nav.js" data-base=".."></script>
+<nav class="docs-nav">
+<div class="nav-section">Esta página</div>
+<a class="sub" href="#l1">1. Interfaz en español</a>
+<a class="sub" href="#l2">2. Color del gauge según valor</a>
+<a class="sub" href="#l3">3. Filtro de fecha simplificado</a>
+<a class="sub" href="#conclusion">Conclusión</a>
+</nav>
+
+<main>
+<div class="hero">
+  <h1>Limitaciones técnicas de Apache Superset</h1>
+  <p>Justificación de tres requerimientos no implementables en el producto · 18 de junio de 2026</p>
+</div>
+
+<section id="l1">
+<h2><span class="num">1</span>Interfaz completamente en español</h2>
+<h4>Requerimiento</h4>
+<p>Mostrar toda la interfaz del sistema en español.</p>
+<h4>Limitación técnica</h4>
+<p>Superset traduce su interfaz mediante catálogos de idioma (i18n). El catálogo en español está
+parcialmente completo, por lo que las cadenas sin traducir se muestran en inglés. El idioma ya está
+configurado en español (<code>BABEL_DEFAULT_LOCALE = "es"</code>), pero la cobertura del español es
+la que provee el propio Superset y no puede completarse desde la configuración.</p>
+</section>
+
+<section id="l2">
+<h2><span class="num">2</span>Color del medidor (gauge) según el valor</h2>
+<h4>Requerimiento</h4>
+<p>Que el medidor cambie de color según el rango en que cae el valor (tipo semáforo).</p>
+<h4>Limitación técnica</h4>
+<p>El medidor (basado en la librería ECharts) usa un color fijo para el indicador del valor y no
+ofrece formato condicional según el rango. Por eso se muestra siempre del mismo color (azul por
+defecto), sin importar el valor.</p>
+</section>
+
+<section id="l3">
+<h2><span class="num">3</span>Filtro de fecha simplificado</h2>
+<h4>Requerimiento</h4>
+<p>Sustituir el filtro de fecha actual por un selector más simple.</p>
+<h4>Limitación técnica</h4>
+<p>Superset ofrece un conjunto cerrado de filtros predefinidos. El filtro de rango temporal es un
+componente fijo y no puede sustituirse por otro más simple desde la configuración.</p>
+</section>
+
+<section id="conclusion">
+<h2>Conclusión</h2>
+<div class="nota"><strong>Conclusión.</strong> Los tres puntos son limitaciones propias de Apache
+Superset (el producto base), no de la configuración de los tableros.</div>
+</section>
+</main>
+</body>
+</html>

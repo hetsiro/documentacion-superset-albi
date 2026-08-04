@@ -47,8 +47,8 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo.
 echo  ================================================
-echo   Listo!  docs\lookup_data_centinela.js creado.
-echo   Recarga diccionario_centinela.html para ver los catalogos.
+echo   Listo!  docs\data\lookup_data_centinela.js creado.
+echo   Recarga docs\diccionario\centinela.html para ver los catalogos.
 echo  ================================================
 echo.
 pause

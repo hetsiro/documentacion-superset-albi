@@ -1,0 +1,2175 @@
+{
+  "ameco_gestion": [
+    {
+      "id": 310,
+      "name": "[Ameco] | Administrativo Declarado",
+      "viz": "big_number_total",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 311,
+      "name": "[Ameco] | Capacidad Instalada (hs)",
+      "viz": "big_number_total",
+      "dataset": "ConfiguracionDashboard (Ameco)",
+      "metrics": [
+        {
+          "label": "[Ameco] | Capacidad Instalada (hs)",
+          "sql": "MAX(CASE WHEN Clave = 'ResolutoresActivos' THEN TRY_CAST(Valor AS FLOAT) END)\n  * MAX(CASE WHEN Clave = 'JornadaLaboralHoras'    THEN TRY_CAST(Valor AS FLOAT) END)\n  * DATEDIFF(day,\n             '{{ from_dttm }}',\n             '{{ to_dttm }}')"
+        }
+      ],
+      "filters": [],
+      "temporal": null,
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 312,
+      "name": "[Ameco] | Esfuerzo Declarado",
+      "viz": "big_number_total",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 313,
+      "name": "[Ameco] | Esfuerzo Estándar",
+      "viz": "big_number_total",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 532,
+      "name": "[Ameco] | Esfuerzo Industria",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(OrdenTrabajoDuracionIndustria * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 315,
+      "name": "[Ameco] | Gauge Cumplimiento SLA",
+      "viz": "gauge_chart",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "Tasa Finalización Operaciones",
+          "sql": "ROUND(\n    CAST(\n        COUNT(\n            CASE\n                WHEN OrdenTrabajoFechaFinReal <= DATEADD(DAY, 8, OrdenTrabajoFechaCreacion)\n                THEN OrdenTrabajoId\n            END\n        ) AS FLOAT\n    ) / NULLIF(COUNT(OrdenTrabajoId), 0) * 100,\n    1\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 316,
+      "name": "[Ameco] | Gauge Tasa Finalización Operaciones",
+      "viz": "gauge_chart",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Tasa Finalización Operaciones",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 317,
+      "name": "[Ameco] | Gauge Tasa Finalización OT",
+      "viz": "gauge_chart",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "Tasa Finalización OT",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 318,
+      "name": "[Ameco] | Gauge Uso de Jornada",
+      "viz": "gauge_chart",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "[Ameco] | Gauge Uso de Jornada",
+          "sql": "ROUND(\r\n    CAST(\r\n        SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))\r\n      + SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))\r\n      + SUM(ISNULL(OperacionResolucionTiempoEspera, 0))\r\n      + SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))\r\n    AS FLOAT) / 60.0\r\n  / NULLIF(37 * DATEDIFF(day, '{{ from_dttm }}', '{{ to_dttm }}') * 11, 0)\r\n  * 100\r\n, 1)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 487,
+      "name": "[Ameco] | Motivos de tiempo perdido",
+      "viz": "table",
+      "dataset": "v_TiempoPerdidoPorResolutor",
+      "metrics": [
+        {
+          "label": "Tiempo Perdido HRS",
+          "sql": "SUM(MinutosPerdidos) / 60.0"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "Resolutor",
+        "Motivo"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 319,
+      "name": "[Ameco] | Operaciones por Especialidad",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 320,
+      "name": "[Ameco] | Operaciones por Subsistemas",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "SubTipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 321,
+      "name": "[Ameco] | Operaciones por Subsistemas",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "TipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 322,
+      "name": "[Ameco] | Operaciones por Zona",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "ZonaOperacion"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 323,
+      "name": "[Ameco] | OTs por Especialidad",
+      "viz": "table",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 324,
+      "name": "[Ameco] | OTs por Sistemas",
+      "viz": "table",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "TipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 325,
+      "name": "[Ameco] | OTs por Subsistemas",
+      "viz": "table",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "SubTipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 326,
+      "name": "[Ameco] | OTs por Zona",
+      "viz": "table",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "ZonaOperacion"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 314,
+      "name": "[Ameco] | Perdido Declarado",
+      "viz": "big_number_total",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(OperacionResolucionTiempoEspera) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 327,
+      "name": "[Ameco] | Resolutores Activos",
+      "viz": "big_number_total",
+      "dataset": "ConfiguracionDashboard (Ameco)",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(Valor)"
+        }
+      ],
+      "filters": [
+        "Clave IN (ResolutoresActivos)"
+      ],
+      "temporal": null,
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 328,
+      "name": "[Ameco] | Selector Especialidad",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hs)",
+          "sql": "SUM(OperacionTiempoEstandar) / 60.0"
+        },
+        {
+          "label": "Esfuerzo Declarado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEjecucion) / 60.0"
+        },
+        {
+          "label": "Total Declarado (hs)",
+          "sql": "(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))\r\n+ SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))\r\n+ SUM(ISNULL(OperacionResolucionTiempoEspera, 0))\r\n+ SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 329,
+      "name": "[Ameco] | Selector Zona",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEjecucion) / 60.0"
+        },
+        {
+          "label": "Esfuerzo Declarado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEjecucion) / 60.0"
+        },
+        {
+          "label": "Total Declarado (hs)",
+          "sql": "(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))\r\n+ SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))\r\n+ SUM(ISNULL(OperacionResolucionTiempoEspera, 0))\r\n+ SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))) / 60.0"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "ZonaOperacion"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 330,
+      "name": "[Ameco] | SLA por Sistemas",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "En Plazo",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Fuera de Plazo",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Sin Cerrar",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Cumplimiento %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        },
+        {
+          "label": "Días Prom. Atraso",
+          "sql": "AVG(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin\r\n    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal) AS FLOAT)\r\nEND)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "TipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 331,
+      "name": "[Ameco] | SLA por Subsistemas",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "En Plazo",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Fuera de Plazo",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Sin Cerrar",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Cumplimiento %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        },
+        {
+          "label": "Días Prom. Atraso",
+          "sql": "AVG(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin\r\n    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal) AS FLOAT)\r\nEND)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "SubTipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 332,
+      "name": "[Ameco] | Tiempos por Especialidad",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hs)",
+          "sql": "SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Esfuerzo Declarado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Traslado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Perdido (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEspera  * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Administrativo (hs)",
+          "sql": "SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Total Declarado",
+          "sql": "SUM(\r\n  ( ISNULL(OperacionResolucionTiempoEjecucion, 0)\r\n  + ISNULL(OperacionResolucionTiempoTraslado, 0)\r\n  + ISNULL(OperacionResolucionTiempoEspera, 0)\r\n  + ISNULL(OperacionResolucionTiemposAdministrativos, 0)\r\n  ) * OperacionCantidadInvolucrados\r\n) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "OperacionResolutor"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 333,
+      "name": "[Ameco] | Tiempos por Zona",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hs)",
+          "sql": "SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Esfuerzo Declarado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Traslado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Espera (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEspera * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Administrativo (hs)",
+          "sql": "SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "OperacionResolutor"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 334,
+      "name": "[Ameco] | Total Declarado (hs)",
+      "viz": "big_number_total",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "[Ameco] | Total Declarado (hs)",
+          "sql": "SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0) + ISNULL(OperacionResolucionTiempoTraslado, 0) + ISNULL(OperacionResolucionTiempoEspera, 0) + ISNULL(OperacionResolucionTiemposAdministrativos, 0)) * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 335,
+      "name": "[Ameco] | Traslado Declarado",
+      "viz": "big_number_total",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    }
+  ],
+  "ameco_operacionales": [
+    {
+      "id": 336,
+      "name": "[Ameco] | Estado de OTs",
+      "viz": "echarts_timeseries_bar",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OrdenTrabajoId)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "EstadoOrdenTrabajoId",
+        "x: EstadoOrdenTrabajo"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 337,
+      "name": "[Ameco] | Operaciones por Zona",
+      "viz": "echarts_timeseries_bar",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "ZonaOperacion IS NOT NULL"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "ZonaOperacionId",
+        "x: ZonaOperacion"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 338,
+      "name": "[Ameco] | Operaciones Resueltas",
+      "viz": "big_number_total",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "EstadoOperacion IN (Resuelta)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 339,
+      "name": "[Ameco] | Ops Backlog por especialidad",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "TipoActividad == Backlog"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 340,
+      "name": "[Ameco] | Ops pendientes por especialidad",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "EstadoOperacion IN (Abierta, Por Abrir, Asignada, Detenida, Agendada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 341,
+      "name": "[Ameco] | Ops resueltas por especialidad",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "EstadoOperacion == Resuelta"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 342,
+      "name": "[Ameco] | OTs Backlog",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OrdenTrabajoId)"
+        }
+      ],
+      "filters": [
+        "TipoActividad == Backlog"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 343,
+      "name": "[Ameco] | OTs Creadas",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OrdenTrabajoId)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 344,
+      "name": "[Ameco] | OTs Resueltas",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OrdenTrabajoId)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 345,
+      "name": "[Ameco] | Personal Presente Hoy",
+      "viz": "table",
+      "dataset": "AmecoAsistencia",
+      "metrics": [
+        {
+          "label": "Presentes",
+          "sql": "COUNT(DISTINCT CASE WHEN AsistenciaTipo = 'E'\r\n    AND CAST(AsistenciaFechaHora AS DATE) = CAST(GETDATE() AS DATE)\r\n    THEN PersonaId END)"
+        },
+        {
+          "label": "Total",
+          "sql": "COUNT(DISTINCT PersonaId)"
+        }
+      ],
+      "filters": [
+        "Turno IN (Diurno, Nocturno)",
+        "ResolutorActivo == true",
+        "Perfil IN (Resolutor)"
+      ],
+      "temporal": "TurnoHoraInicio",
+      "dims": [
+        "Turno"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 346,
+      "name": "[Ameco] | Ranking carga de trabajo",
+      "viz": "echarts_timeseries_bar",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "OperacionResolutor IS NOT NULL"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "ResolutorPersonaId",
+        "x: OperacionResolutor"
+      ],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 347,
+      "name": "[Ameco] | Supervisores Presente Hoy",
+      "viz": "table",
+      "dataset": "AmecoAsistencia",
+      "metrics": [
+        {
+          "label": "Presentes",
+          "sql": "COUNT(DISTINCT CASE WHEN AsistenciaTipo = 'E'\r\n    AND CAST(AsistenciaFechaHora AS DATE) = CAST(GETDATE() AS DATE)\r\n    THEN PersonaId END)"
+        },
+        {
+          "label": "Total",
+          "sql": "COUNT(DISTINCT PersonaId)"
+        }
+      ],
+      "filters": [
+        "Turno IN (Diurno, Nocturno)",
+        "ResolutorActivo == true",
+        "Perfil IN (Supervisor)"
+      ],
+      "temporal": "TurnoHoraInicio",
+      "dims": [
+        "Turno"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 348,
+      "name": "[Ameco] | Tasa de Cumplimiento",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "[Ameco] | Tasa de Cumplimiento",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 349,
+      "name": "[Ameco] | Tasa de Finalizacion",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "Tasa de Finalizacion",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 350,
+      "name": "[Ameco] | Tendencia de OTs",
+      "viz": "echarts_timeseries_line",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "OTs Totales",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "OTs Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "x: OrdenTrabajoFechaCreacion"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 353,
+      "name": "[Ameco] | Tiempo Prom. Resolucion",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": "[Ameco] | Tiempo Prom. Resolucion",
+          "sql": "ROUND(\r\n    CAST(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0)) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OrdenTrabajoId), 0)\r\n  / 60.0, 2\r\n)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 351,
+      "name": "[Ameco] | Tiempos OT en HH",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoAmeco",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "ROUND(\r\n    (SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))\r\n   + SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))\r\n   + SUM(ISNULL(OperacionResolucionTiempoEspera, 0))\r\n   + SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0)))\r\n  / 60.0, 1\r\n)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 352,
+      "name": "[Ameco] | Tiempos reportados por persona",
+      "viz": "table",
+      "dataset": "AmecoDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hrs)",
+          "sql": "ROUND(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        },
+        {
+          "label": "Esfuerzo Declarado (hrs)",
+          "sql": "ROUND(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        },
+        {
+          "label": "Tiempo Traslado (hrs)",
+          "sql": "ROUND(SUM(ISNULL(OperacionResolucionTiempoTraslado, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        },
+        {
+          "label": "Tiempo Espera (hrs)",
+          "sql": "ROUND(SUM(ISNULL(OperacionResolucionTiempoEspera, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        },
+        {
+          "label": "Tiempo Administrativo",
+          "sql": "ROUND(SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaCreacion",
+      "dims": [
+        "OperacionResolutor",
+        "ZonaOperacion",
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    }
+  ],
+  "centinela_gestion": [
+    {
+      "id": 533,
+      "name": "[Centinela] | Administrativo",
+      "viz": "big_number_total",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0) * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 534,
+      "name": "[Centinela] | Capacidad Instalada (hs)",
+      "viz": "big_number_total",
+      "dataset": "ConfiguracionDashboard (Albi)",
+      "metrics": [
+        {
+          "label": "[Centinela] | Capacidad Instalada (hs)",
+          "sql": "MAX(CASE WHEN Clave = 'ResolutoresActivos' THEN TRY_CAST(Valor AS FLOAT) END)\n  * MAX(CASE WHEN Clave = 'JornadaLaboralHoras'    THEN TRY_CAST(Valor AS FLOAT) END)\n  * DATEDIFF(day,\n             '{{ from_dttm }}',\n             '{{ to_dttm }}')"
+        }
+      ],
+      "filters": [],
+      "temporal": null,
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 535,
+      "name": "[Centinela] | Esfuerzo Declarado",
+      "viz": "big_number_total",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 536,
+      "name": "[Centinela] | Esfuerzo Estándar",
+      "viz": "big_number_total",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estandar (hs)",
+          "sql": "SUM(CASE WHEN EstadoOperacion = 'Resuelta' THEN ISNULL(OrdenTrabajoCatalogoDuracion, 0) ELSE 0 END) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo != Cancelada"
+      ],
+      "temporal": "OperacionFechaInicioProgramada",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 537,
+      "name": "[Centinela] | Espera Declarado",
+      "viz": "big_number_total",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(ISNULL(OperacionResolucionTiempoEspera, 0) * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 538,
+      "name": "[Centinela] | Gauge Cumplimiento SLA",
+      "viz": "gauge_chart",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "Tasa Finalización Operaciones",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 539,
+      "name": "[Centinela] | Gauge Tasa Finalización Operaciones",
+      "viz": "gauge_chart",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Tasa Finalización Operaciones",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 540,
+      "name": "[Centinela] | Gauge Tasa Finalización OT",
+      "viz": "gauge_chart",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "Tasa Finalización OT",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 541,
+      "name": "[Centinela] | Gauge Uso de Jornada",
+      "viz": "gauge_chart",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "[Centinela] | Gauge Uso de Jornada",
+          "sql": "ROUND(\r\n    CAST(\r\n        SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))\r\n      + SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))\r\n      + SUM(ISNULL(OperacionResolucionTiempoEspera, 0))\r\n      + SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))\r\n    AS FLOAT)\r\n  / NULLIF(\r\n        COUNT(DISTINCT CONCAT(OperacionResolutor, '|', CAST(OperacionFechaInicio AS DATE)))\r\n      * 720, 0)\r\n  * 100, 1\r\n)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 542,
+      "name": "[Centinela] | Operaciones por Especialidad",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 543,
+      "name": "[Centinela] | Operaciones por Subsistemas",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "SubTipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 544,
+      "name": "[Centinela] | Operaciones por Subsistemas",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "TipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 545,
+      "name": "[Centinela] | Operaciones por Zona",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)\r\n  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "ZonaOperacion"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 546,
+      "name": "[Centinela] | OTs por Especialidad",
+      "viz": "table",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 547,
+      "name": "[Centinela] | OTs por Sistemas",
+      "viz": "table",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "TipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 548,
+      "name": "[Centinela] | OTs por Subsistemas",
+      "viz": "table",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "SubTipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 549,
+      "name": "[Centinela] | OTs por Zona",
+      "viz": "table",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "Ingresadas",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Finalización %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "ZonaOperacion"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 550,
+      "name": "[Centinela] | Resolutores Activos",
+      "viz": "big_number_total",
+      "dataset": "ConfiguracionDashboard (Albi)",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(Valor)"
+        }
+      ],
+      "filters": [
+        "Clave == ResolutoresActivos"
+      ],
+      "temporal": null,
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 551,
+      "name": "[Centinela] | Selector Zona",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hs)",
+          "sql": "SUM(OperacionTiempoEstandar) / 60.0"
+        },
+        {
+          "label": "Esfuerzo Declarado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEjecucion) / 60.0"
+        },
+        {
+          "label": "Total Declarado (hs)",
+          "sql": "(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))\r\n+ SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))\r\n+ SUM(ISNULL(OperacionResolucionTiempoEspera, 0))\r\n+ SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))) / 60.0"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "ZonaOperacion"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 552,
+      "name": "[Centinela] | SLA por Sistemas",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "En Plazo",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Fuera de Plazo",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Sin Cerrar",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Cumplimiento %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        },
+        {
+          "label": "Días Prom. Atraso",
+          "sql": "AVG(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin\r\n    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal) AS FLOAT)\r\nEND)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "TipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 553,
+      "name": "[Centinela] | SLA por Subsistemas",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "En Plazo",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Fuera de Plazo",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Sin Cerrar",
+          "sql": "COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId END)"
+        },
+        {
+          "label": "Tasa Cumplimiento %",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        },
+        {
+          "label": "Días Prom. Atraso",
+          "sql": "AVG(CASE WHEN OrdenTrabajoFechaFinReal > OrdenTrabajoFechaFin\r\n    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal) AS FLOAT)\r\nEND)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "SubTipoTarea"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 554,
+      "name": "[Centinela] | Tiempos por Especialidad",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hs)",
+          "sql": "SUM(ISNULL(OperacionTiempoEstandar, 0) * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Esfuerzo Declarado (hs)",
+          "sql": "SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Total Declarado (hs)",
+          "sql": "SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0)\r\n+ ISNULL(OperacionResolucionTiempoTraslado, 0)\r\n+ ISNULL(OperacionResolucionTiempoEspera, 0)\r\n+ ISNULL(OperacionResolucionTiemposAdministrativos, 0)) * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo != Cancelada"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 555,
+      "name": "[Centinela] | Tiempos por Resolutor",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hs)",
+          "sql": "SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Esfuerzo Declarado (hs)",
+          "sql": "SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Traslado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Espera (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEspera * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Administrativo (hs)",
+          "sql": "SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo != Cancelada"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [
+        "Resolutor"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 556,
+      "name": "[Centinela] | Tiempos por Zona",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hs)",
+          "sql": "SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Esfuerzo Declarado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Traslado (hs)",
+          "sql": "SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Espera (hs)",
+          "sql": "SUM(OperacionResolucionTiempoEspera * OperacionCantidadInvolucrados) / 60.0"
+        },
+        {
+          "label": "Administrativo (hs)",
+          "sql": "SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo != Cancelada"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [
+        "OperacionResolutor"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 557,
+      "name": "[Centinela] | Total Declarado (hs)",
+      "viz": "big_number_total",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "[Centinela] | Total Declarado (hs)",
+          "sql": "SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0)\r\n   + ISNULL(OperacionResolucionTiempoEspera, 0)\r\n   + ISNULL(OperacionResolucionTiempoTraslado, 0)\r\n   + ISNULL(OperacionResolucionTiemposAdministrativos, 0))\r\n   * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 558,
+      "name": "Traslado Declarado",
+      "viz": "big_number_total",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "SUM(ISNULL(OperacionResolucionTiempoTraslado, 0) * OperacionCantidadInvolucrados) / 60.0"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    }
+  ],
+  "centinela_operacionales": [
+    {
+      "id": 559,
+      "name": "[Centinela] | Estado de OTs",
+      "viz": "echarts_timeseries_bar",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OrdenTrabajoId)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "EstadoOrdenTrabajoId",
+        "x: EstadoOrdenTrabajo"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 560,
+      "name": "[Centinela] | Operaciones por Zona",
+      "viz": "echarts_timeseries_bar",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "ZonaOperacionId",
+        "x: ZonaOperacion"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 561,
+      "name": "[Centinela] | Operaciones Resueltas",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "EstadoOperacion IN (Resuelta)"
+      ],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 562,
+      "name": "[Centinela] | Ops Backlog por especialidad",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 563,
+      "name": "[Centinela] | Ops pendientes por especialidad",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "EstadoOperacion IN (Abierta, Por Abrir, Asignada, Detenida, Agendada)"
+      ],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 564,
+      "name": "[Centinela] | Ops resueltas por especialidad",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "EstadoOperacion == Resuelta"
+      ],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 565,
+      "name": "[Centinela] | OTs Backlog",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "[Centinela] | Backlog",
+          "sql": "COUNT(DISTINCT CASE \r\n    WHEN DATEDIFF(day, OrdenTrabajoFechaCreacion, GETDATE()) >= 3 \r\n    THEN OrdenTrabajoId \r\nEND)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo == Abierta"
+      ],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 566,
+      "name": "[Centinela] | OTs Creadas",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OrdenTrabajoId)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 567,
+      "name": "[Centinela] | OTs Resueltas",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OrdenTrabajoId)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 568,
+      "name": "[Centinela] | Personal Presente Hoy",
+      "viz": "table",
+      "dataset": "CentinelaAsistencia",
+      "metrics": [],
+      "filters": [
+        "Turno IN (Turno Diurno, Turno Nocturno)",
+        "ResolutorActivo == true",
+        "Perfil IN (Resolutor)"
+      ],
+      "temporal": "AsistenciaFechaHora",
+      "dims": [
+        "Persona",
+        "Turno",
+        "Especialidad",
+        "Zona"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 569,
+      "name": "[Centinela] | Ranking carga de trabajo",
+      "viz": "echarts_timeseries_bar",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": null,
+          "sql": "COUNT(OperacionId)"
+        }
+      ],
+      "filters": [
+        "OperacionResolutor IS NOT NULL"
+      ],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "ResolutorPersonaId",
+        "x: OperacionResolutor"
+      ],
+      "subheader": null,
+      "rowLimit": 10,
+      "sortBy": null
+    },
+    {
+      "id": 570,
+      "name": "[Centinela] | Supervisores Presente Hoy",
+      "viz": "table",
+      "dataset": "CentinelaAsistencia",
+      "metrics": [],
+      "filters": [
+        "Turno IN (Turno Diurno, Turno Nocturno)",
+        "AsistenciaTipo IN (E)",
+        "Perfil IN (Supervisor)"
+      ],
+      "temporal": "AsistenciaFechaHora",
+      "dims": [
+        "Persona",
+        "Turno",
+        "Especialidad",
+        "Zona"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 571,
+      "name": "[Centinela] | Tasa de Cumplimiento",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "[Ameco] | Tasa de Cumplimiento",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal <= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 572,
+      "name": "[Centinela] | Tasa de Finalizacion",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "Tasa de Finalizacion",
+          "sql": "ROUND(\r\n    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)\r\n  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1\r\n)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 573,
+      "name": "[Centinela] | Tendencia de OTs",
+      "viz": "echarts_timeseries_line",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "OTs Totales",
+          "sql": "COUNT(OrdenTrabajoId)"
+        },
+        {
+          "label": "OTs Resueltas",
+          "sql": "COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)"
+        }
+      ],
+      "filters": [],
+      "temporal": "OrdenTrabajoFechaInicio",
+      "dims": [
+        "x: OrdenTrabajoFechaInicio"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    },
+    {
+      "id": 576,
+      "name": "[Centinela] | Tiempo Prom. Resolucion",
+      "viz": "big_number_total",
+      "dataset": "v_OrdenesTrabajoCentinela",
+      "metrics": [
+        {
+          "label": "Tiempo Prom. Resolucion (hs)",
+          "sql": "ROUND(\r\n    AVG(CASE WHEN ISNULL(OrdenTrabajoTiempoResolucionBruto, 0) <> 0\r\n        THEN CAST(OrdenTrabajoTiempoResolucionBruto AS FLOAT) END)\r\n  / 60.0, 2\r\n)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo != Cancelada"
+      ],
+      "temporal": "OperacionFechaInicio",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 574,
+      "name": "[Centinela] | Tiempos OT en HH",
+      "viz": "big_number_total",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Tiempo Total HH (hs)",
+          "sql": "ROUND(\r\n    SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0)\r\n   + ISNULL(OperacionResolucionTiempoTraslado, 0)\r\n   + ISNULL(OperacionResolucionTiempoEspera, 0)\r\n   + ISNULL(OperacionResolucionTiemposAdministrativos, 0))\r\n   * OperacionCantidadInvolucrados)\r\n  / 60.0, 1\r\n)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo IN (Resuelta, Cerrada)"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [],
+      "subheader": null,
+      "rowLimit": null,
+      "sortBy": null
+    },
+    {
+      "id": 575,
+      "name": "[Centinela] | Tiempos reportados por persona",
+      "viz": "table",
+      "dataset": "CentinelaDashboards",
+      "metrics": [
+        {
+          "label": "Esfuerzo Estándar (hrs)",
+          "sql": "ROUND(SUM(ISNULL(OperacionTiempoEstandar, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        },
+        {
+          "label": "Esfuerzo Declarado (hrs)",
+          "sql": "ROUND(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        },
+        {
+          "label": "Tiempo Traslado (hrs)",
+          "sql": "ROUND(SUM(ISNULL(OperacionResolucionTiempoTraslado, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        },
+        {
+          "label": "Tiempo Espera (hrs)",
+          "sql": "ROUND(SUM(ISNULL(OperacionResolucionTiempoEspera, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        },
+        {
+          "label": "Tiempo Administrativo",
+          "sql": "ROUND(SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0) * OperacionCantidadInvolucrados) / 60.0, 1)"
+        }
+      ],
+      "filters": [
+        "EstadoOrdenTrabajo != Cancelada"
+      ],
+      "temporal": "OrdenTrabajoFechaFinReal",
+      "dims": [
+        "OperacionResolutor",
+        "ZonaOperacion",
+        "Especialidad"
+      ],
+      "subheader": null,
+      "rowLimit": 10000,
+      "sortBy": null
+    }
+  ]
+}

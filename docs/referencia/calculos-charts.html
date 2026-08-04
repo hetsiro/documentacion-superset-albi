@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cálculos de los charts — Superset Centinela y Ameco</title>
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<script src="../assets/nav.js" data-base=".."></script>
+<nav class="docs-nav">
+<div class="nav-section">Charts por dashboard</div>
+<a href="#s1">Cómo leer este documento</a>
+<details class="nav-group" data-client="centinela" open><summary>Centinela</summary>
+<details class="nav-sub" open><summary>Indicadores de Gestión <span class="cnt">26</span></summary>
+<a class="dash" href="#s-3-centinela-indicadores-de-gestion">Ver la sección completa</a>
+<a class="sub" href="#cg-administrativo">Administrativo</a>
+<a class="sub" href="#cg-capacidad-instalada-hs">Capacidad Instalada (hs)</a>
+<a class="sub" href="#cg-esfuerzo-declarado">Esfuerzo Declarado</a>
+<a class="sub" href="#cg-esfuerzo-estandar">Esfuerzo Estándar</a>
+<a class="sub" href="#cg-espera-declarado">Espera Declarado</a>
+<a class="sub" href="#cg-gauge-cumplimiento-sla">Gauge Cumplimiento SLA</a>
+<a class="sub" href="#cg-gauge-tasa-finalizacion-operaciones">Gauge Tasa Finalización Operaciones</a>
+<a class="sub" href="#cg-gauge-tasa-finalizacion-ot">Gauge Tasa Finalización OT</a>
+<a class="sub" href="#cg-gauge-uso-de-jornada">Gauge Uso de Jornada</a>
+<a class="sub" href="#cg-operaciones-por-especialidad">Operaciones por Especialidad</a>
+<a class="sub" href="#cg-operaciones-por-subsistemas">Operaciones por Subsistemas</a>
+<a class="sub" href="#cg-operaciones-por-subsistemas-2">Operaciones por Subsistemas</a>
+<a class="sub" href="#cg-operaciones-por-zona">Operaciones por Zona</a>
+<a class="sub" href="#cg-ots-por-especialidad">OTs por Especialidad</a>
+<a class="sub" href="#cg-ots-por-sistemas">OTs por Sistemas</a>
+<a class="sub" href="#cg-ots-por-subsistemas">OTs por Subsistemas</a>
+<a class="sub" href="#cg-ots-por-zona">OTs por Zona</a>
+<a class="sub" href="#cg-resolutores-activos">Resolutores Activos</a>
+<a class="sub" href="#cg-selector-zona">Selector Zona</a>
+<a class="sub" href="#cg-sla-por-sistemas">SLA por Sistemas</a>
+<a class="sub" href="#cg-sla-por-subsistemas">SLA por Subsistemas</a>
+<a class="sub" href="#cg-tiempos-por-especialidad">Tiempos por Especialidad</a>
+<a class="sub" href="#cg-tiempos-por-resolutor">Tiempos por Resolutor</a>
+<a class="sub" href="#cg-tiempos-por-zona">Tiempos por Zona</a>
+<a class="sub" href="#cg-total-declarado-hs">Total Declarado (hs)</a>
+<a class="sub" href="#cg-traslado-declarado">Traslado Declarado</a>
+</details>
+<details class="nav-sub"><summary>Indicadores Operacionales <span class="cnt">18</span></summary>
+<a class="dash" href="#s-4-centinela-indicadores-operacionales">Ver la sección completa</a>
+<a class="sub" href="#co-estado-de-ots">Estado de OTs</a>
+<a class="sub" href="#co-operaciones-por-zona">Operaciones por Zona</a>
+<a class="sub" href="#co-operaciones-resueltas">Operaciones Resueltas</a>
+<a class="sub" href="#co-ops-backlog-por-especialidad">Ops Backlog por especialidad</a>
+<a class="sub" href="#co-ops-pendientes-por-especialidad">Ops pendientes por especialidad</a>
+<a class="sub" href="#co-ops-resueltas-por-especialidad">Ops resueltas por especialidad</a>
+<a class="sub" href="#co-ots-backlog">OTs Backlog</a>
+<a class="sub" href="#co-ots-creadas">OTs Creadas</a>
+<a class="sub" href="#co-ots-resueltas">OTs Resueltas</a>
+<a class="sub" href="#co-personal-presente-hoy">Personal Presente Hoy</a>
+<a class="sub" href="#co-ranking-carga-de-trabajo">Ranking carga de trabajo</a>
+<a class="sub" href="#co-supervisores-presente-hoy">Supervisores Presente Hoy</a>
+<a class="sub" href="#co-tasa-de-cumplimiento">Tasa de Cumplimiento</a>
+<a class="sub" href="#co-tasa-de-finalizacion">Tasa de Finalizacion</a>
+<a class="sub" href="#co-tendencia-de-ots">Tendencia de OTs</a>
+<a class="sub" href="#co-tiempo-prom-resolucion">Tiempo Prom. Resolucion</a>
+<a class="sub" href="#co-tiempos-ot-en-hh">Tiempos OT en HH</a>
+<a class="sub" href="#co-tiempos-reportados-por-persona">Tiempos reportados por persona</a>
+</details>
+</details>
+<details class="nav-group" data-client="ameco" open><summary>Ameco</summary>
+<details class="nav-sub" open><summary>Indicadores de Gestión <span class="cnt">28</span></summary>
+<a class="dash" href="#s-5-ameco-indicadores-de-gestion">Ver la sección completa</a>
+<a class="sub" href="#ag-administrativo-declarado">Administrativo Declarado</a>
+<a class="sub" href="#ag-capacidad-instalada-hs">Capacidad Instalada (hs)</a>
+<a class="sub" href="#ag-esfuerzo-declarado">Esfuerzo Declarado</a>
+<a class="sub" href="#ag-esfuerzo-estandar">Esfuerzo Estándar</a>
+<a class="sub" href="#ag-esfuerzo-industria">Esfuerzo Industria</a>
+<a class="sub" href="#ag-gauge-cumplimiento-sla">Gauge Cumplimiento SLA</a>
+<a class="sub" href="#ag-gauge-tasa-finalizacion-operaciones">Gauge Tasa Finalización Operaciones</a>
+<a class="sub" href="#ag-gauge-tasa-finalizacion-ot">Gauge Tasa Finalización OT</a>
+<a class="sub" href="#ag-gauge-uso-de-jornada">Gauge Uso de Jornada</a>
+<a class="sub" href="#ag-motivos-de-tiempo-perdido">Motivos de tiempo perdido</a>
+<a class="sub" href="#ag-operaciones-por-especialidad">Operaciones por Especialidad</a>
+<a class="sub" href="#ag-operaciones-por-subsistemas">Operaciones por Subsistemas</a>
+<a class="sub" href="#ag-operaciones-por-subsistemas-2">Operaciones por Subsistemas</a>
+<a class="sub" href="#ag-operaciones-por-zona">Operaciones por Zona</a>
+<a class="sub" href="#ag-ots-por-especialidad">OTs por Especialidad</a>
+<a class="sub" href="#ag-ots-por-sistemas">OTs por Sistemas</a>
+<a class="sub" href="#ag-ots-por-subsistemas">OTs por Subsistemas</a>
+<a class="sub" href="#ag-ots-por-zona">OTs por Zona</a>
+<a class="sub" href="#ag-perdido-declarado">Perdido Declarado</a>
+<a class="sub" href="#ag-resolutores-activos">Resolutores Activos</a>
+<a class="sub" href="#ag-selector-especialidad">Selector Especialidad</a>
+<a class="sub" href="#ag-selector-zona">Selector Zona</a>
+<a class="sub" href="#ag-sla-por-sistemas">SLA por Sistemas</a>
+<a class="sub" href="#ag-sla-por-subsistemas">SLA por Subsistemas</a>
+<a class="sub" href="#ag-tiempos-por-especialidad">Tiempos por Especialidad</a>
+<a class="sub" href="#ag-tiempos-por-zona">Tiempos por Zona</a>
+<a class="sub" href="#ag-total-declarado-hs">Total Declarado (hs)</a>
+<a class="sub" href="#ag-traslado-declarado">Traslado Declarado</a>
+</details>
+<details class="nav-sub"><summary>Indicadores Operacionales <span class="cnt">18</span></summary>
+<a class="dash" href="#s-6-ameco-indicadores-operacionales">Ver la sección completa</a>
+<a class="sub" href="#ao-estado-de-ots">Estado de OTs</a>
+<a class="sub" href="#ao-operaciones-por-zona">Operaciones por Zona</a>
+<a class="sub" href="#ao-operaciones-resueltas">Operaciones Resueltas</a>
+<a class="sub" href="#ao-ops-backlog-por-especialidad">Ops Backlog por especialidad</a>
+<a class="sub" href="#ao-ops-pendientes-por-especialidad">Ops pendientes por especialidad</a>
+<a class="sub" href="#ao-ops-resueltas-por-especialidad">Ops resueltas por especialidad</a>
+<a class="sub" href="#ao-ots-backlog">OTs Backlog</a>
+<a class="sub" href="#ao-ots-creadas">OTs Creadas</a>
+<a class="sub" href="#ao-ots-resueltas">OTs Resueltas</a>
+<a class="sub" href="#ao-personal-presente-hoy">Personal Presente Hoy</a>
+<a class="sub" href="#ao-ranking-carga-de-trabajo">Ranking carga de trabajo</a>
+<a class="sub" href="#ao-supervisores-presente-hoy">Supervisores Presente Hoy</a>
+<a class="sub" href="#ao-tasa-de-cumplimiento">Tasa de Cumplimiento</a>
+<a class="sub" href="#ao-tasa-de-finalizacion">Tasa de Finalizacion</a>
+<a class="sub" href="#ao-tendencia-de-ots">Tendencia de OTs</a>
+<a class="sub" href="#ao-tiempo-prom-resolucion">Tiempo Prom. Resolucion</a>
+<a class="sub" href="#ao-tiempos-ot-en-hh">Tiempos OT en HH</a>
+<a class="sub" href="#ao-tiempos-reportados-por-persona">Tiempos reportados por persona</a>
+</details>
+</details>
+</nav>
+
+<main>
+<div class="hero">
+  <h1>Cálculos de los charts</h1>
+  <p>Qué calcula cada chart de los dashboards de <strong>Centinela</strong> y <strong>Ameco</strong>: métrica SQL, filtros propios, columna de fecha y agrupación. Extraído de las definiciones reales en Superset · agosto 2026.</p>
+</div>
+
+<section id="s1"><h2><span class="num">1</span>Cómo leer este documento</h2>
+<ul>
+<li><strong>Grano de los datasets</strong>: <code>CentinelaDashboards</code> / <code>AmecoDashboards</code> tienen <strong>una fila por operación</strong> (con los datos de su OT repetidos); las vistas <code>v_OrdenesTrabajo*</code> dejan <strong>una fila por OT</strong>; <code>*Asistencia</code> una fila por marca; <code>ConfiguracionDashboard</code> es clave/valor.</li>
+<li><strong>Involucrados</strong>: <code>OperacionCantidadInvolucrados</code> = resolutor (si tiene) + colaboradores de la operación. Multiplicar un tiempo por involucrados lo convierte en <strong>horas-hombre</strong>.</li>
+<li><strong>Fecha del rango</strong>: la columna donde cae el filtro de fecha del dashboard. Cada ficha indica cuál usa.</li>
+<li><strong>Filtros del dashboard</strong>: sobre los filtros propios de cada chart se aplican además los nativos del dashboard (Fecha, Tipo Plan, Negocio, Estado); se intersectan.</li>
+<li><strong>Centinela vs Ameco</strong>: Centinela está alineado a los SP de AlbiWeb (fecha programada para conteos, <code>FechaFinReal</code> para tiempos declarados); Ameco filtra casi todo por fecha de creación, igual que AmecoWeb.</li>
+</ul>
+<div class="nota">
+<strong>Esta página se genera automáticamente</strong> — no la edites a mano, se sobrescribe.
+Para actualizarla después de cambiar un chart en Superset: <strong>doble clic en
+<code>scripts\Actualizar-calculos-charts.bat</code></strong> (equivale a
+<code>node scripts/calculos_fetch.js</code>). Lee los charts en vivo desde la API de
+Superset, así que <strong>no necesita dashboards exportados</strong>.
+Los textos descriptivos de cada chart están en las constantes <code>DESC</code> /
+<code>DESC_OVR</code> / <code>NOTA</code> de <code>scripts/calculos_render.js</code>:
+si creas un chart nuevo, agrega ahí su descripción y vuelve a ejecutar.
+</div>
+</section>
+
+<section id="s-elegir">
+<h2><span class="num">2</span>Elige el cliente</h2>
+<p>Cada cliente tiene sus propios dashboards y sus cálculos difieren. Elige uno para ver sus fichas;
+puedes cambiar de cliente en cualquier momento volviendo a estas tarjetas.</p>
+<div class="client-cards">
+<a class="client-card" href="#" data-pick="centinela"><h3>Centinela</h3><p>Indicadores de Gestión · Indicadores Operacionales</p><div class="meta">44 charts en 2 dashboards</div></a>
+<a class="client-card" href="#" data-pick="ameco"><h3>Ameco</h3><p>Indicadores de Gestión · Indicadores Operacionales</p><div class="meta">46 charts en 2 dashboards</div></a>
+</div>
+</section>
+
+<section id="s-3-centinela-indicadores-de-gestion" data-client="centinela"><h2><span class="num">3</span>Centinela — Indicadores de Gestión</h2><p>Los tiempos replican los SP de AlbiWeb: declarados por <code>OrdenTrabajoFechaFinReal</code> con OT Resuelta/Cerrada (= <code>dashboard01KPI01v2</code>); esfuerzo estándar por fecha programada (= <code>dashboard01v3.kpi00</code>).</p></section>
+<section id="cg-administrativo" data-client="centinela"><h3>[Centinela] | Administrativo</h3><p>Horas-hombre administrativas declaradas de OTs terminadas: minutos × involucrados ÷ 60.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0) * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul></section>
+<section id="cg-capacidad-instalada-hs" data-client="centinela"><h3>[Centinela] | Capacidad Instalada (hs)</h3><p>Horas disponibles del período: ResolutoresActivos × JornadaLaboralHoras × días del rango. Los dos valores viven en ConfiguracionDashboard (editables desde la web).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>ConfiguracionDashboard (Albi)</code></td></tr><tr><th>Fecha del rango</th><td>— (no le afecta el filtro de fecha)</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>MAX(CASE WHEN Clave = 'ResolutoresActivos' THEN TRY_CAST(Valor AS FLOAT) END)
+  * MAX(CASE WHEN Clave = 'JornadaLaboralHoras' THEN TRY_CAST(Valor AS FLOAT) END)
+  * DATEDIFF(day,
+             '{{ from_dttm }}',
+             '{{ to_dttm }}')</code></pre></li></ul></section>
+<section id="cg-esfuerzo-declarado" data-client="centinela"><h3>[Centinela] | Esfuerzo Declarado</h3><p>Horas-hombre de ejecución declaradas por los técnicos en OTs terminadas: minutos × involucrados ÷ 60.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul></section>
+<section id="cg-esfuerzo-estandar" data-client="centinela"><h3>[Centinela] | Esfuerzo Estándar</h3><p>Horas “de catálogo” de lo resuelto: duración del catálogo de la OT × nº de operaciones resueltas ÷ 60. Replica kpi00.esfuerzoEstandar de AlbiWeb: universo por fecha programada de la operación, sin multiplicar por involucrados.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OperacionFechaInicioProgramada</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo != Cancelada</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estandar (hs)</strong><pre class="sql"><code>SUM(CASE WHEN EstadoOperacion = 'Resuelta' THEN ISNULL(OrdenTrabajoCatalogoDuracion, 0) ELSE 0 END) / 60.0</code></pre></li></ul><div class="nota"><strong>Nota:</strong> Las OT sin catálogo aportan 0 (igual que la web). Requiere las columnas <code>OrdenTrabajoCatalogoDuracion</code> y <code>OperacionFechaInicioProgramada</code> del ETL.</div></section>
+<section id="cg-espera-declarado" data-client="centinela"><h3>[Centinela] | Espera Declarado</h3><p>Horas-hombre de espera declaradas en OTs terminadas: minutos × involucrados ÷ 60.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>SUM(ISNULL(OperacionResolucionTiempoEspera, 0) * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul></section>
+<section id="cg-gauge-cumplimiento-sla" data-client="centinela"><h3>[Centinela] | Gauge Cumplimiento SLA</h3><p>% de OTs que terminaron dentro de su fecha comprometida (FechaFinReal ≤ FechaFin).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Gauge</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tasa Finalización Operaciones</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-gauge-tasa-finalizacion-operaciones" data-client="centinela"><h3>[Centinela] | Gauge Tasa Finalización Operaciones</h3><p>% de operaciones del período en estado Resuelta.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Gauge</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tasa Finalización Operaciones</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-gauge-tasa-finalizacion-ot" data-client="centinela"><h3>[Centinela] | Gauge Tasa Finalización OT</h3><p>% de OTs del período que quedaron Resueltas o Cerradas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Gauge</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tasa Finalización OT</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-gauge-uso-de-jornada" data-client="centinela"><h3>[Centinela] | Gauge Uso de Jornada</h3><p>Tiempo declarado total ÷ (resolutores-día con actividad × 720 min) × 100. Indicador heurístico: asume jornadas de 12 h y no usa la Capacidad Instalada.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Gauge</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>ROUND(
+    CAST(
+        SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))
+      + SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))
+      + SUM(ISNULL(OperacionResolucionTiempoEspera, 0))
+      + SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))
+    AS FLOAT)
+  / NULLIF(
+        COUNT(DISTINCT CONCAT(OperacionResolutor, '|', CAST(OperacionFechaInicio AS DATE)))
+      * 720, 0)
+  * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-operaciones-por-especialidad" data-client="centinela"><h3>[Centinela] | Operaciones por Especialidad</h3><p>Por especialidad: operaciones ingresadas, resueltas y su % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong> = <code>COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</code></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-operaciones-por-subsistemas" data-client="centinela"><h3>[Centinela] | Operaciones por Subsistemas</h3><p>Por tipo/subtipo de tarea: operaciones ingresadas, resueltas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>SubTipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong> = <code>COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</code></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-operaciones-por-subsistemas-2" data-client="centinela"><h3>[Centinela] | Operaciones por Subsistemas</h3><p>Por tipo/subtipo de tarea: operaciones ingresadas, resueltas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>TipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong> = <code>COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</code></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-operaciones-por-zona" data-client="centinela"><h3>[Centinela] | Operaciones por Zona</h3><p>Por zona: operaciones ingresadas, resueltas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>ZonaOperacion</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong> = <code>COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</code></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-ots-por-especialidad" data-client="centinela"><h3>[Centinela] | OTs por Especialidad</h3><p>Por especialidad: OTs ingresadas, terminadas (Resuelta/Cerrada) y % de finalización. Una fila por OT (vista de OTs).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-ots-por-sistemas" data-client="centinela"><h3>[Centinela] | OTs por Sistemas</h3><p>Por tipo de tarea (sistema): OTs ingresadas, terminadas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>TipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-ots-por-subsistemas" data-client="centinela"><h3>[Centinela] | OTs por Subsistemas</h3><p>Por subtipo de tarea (subsistema): OTs ingresadas, terminadas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>SubTipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-ots-por-zona" data-client="centinela"><h3>[Centinela] | OTs por Zona</h3><p>Por zona: OTs ingresadas, terminadas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>ZonaOperacion</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="cg-resolutores-activos" data-client="centinela"><h3>[Centinela] | Resolutores Activos</h3><p>Valor configurado de resolutores activos (ConfiguracionDashboard, editable desde la web).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>ConfiguracionDashboard (Albi)</code></td></tr><tr><th>Fecha del rango</th><td>— (no le afecta el filtro de fecha)</td></tr><tr><th>Filtros propios</th><td><code>Clave == ResolutoresActivos</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>SUM(Valor)</code></li></ul></section>
+<section id="cg-selector-zona" data-client="centinela"><h3>[Centinela] | Selector Zona</h3><p>Tabla-selector para filtrar el dashboard por zona; muestra esfuerzos de referencia (sin multiplicar por involucrados).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>ZonaOperacion</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hs)</strong> = <code>SUM(OperacionTiempoEstandar) / 60.0</code></li><li><strong>Esfuerzo Declarado (hs)</strong> = <code>SUM(OperacionResolucionTiempoEjecucion) / 60.0</code></li><li><strong>Total Declarado (hs)</strong><pre class="sql"><code>(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))
++ SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))
++ SUM(ISNULL(OperacionResolucionTiempoEspera, 0))
++ SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))) / 60.0</code></pre></li></ul></section>
+<section id="cg-sla-por-sistemas" data-client="centinela"><h3>[Centinela] | SLA por Sistemas</h3><p>Por tipo de tarea: OTs en plazo (terminó antes de su fecha comprometida), fuera de plazo, sin cerrar, % de cumplimiento y días promedio de atraso.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>TipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>En Plazo</strong><pre class="sql"><code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)</code></pre></li><li><strong>Fuera de Plazo</strong><pre class="sql"><code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal &gt; OrdenTrabajoFechaFin THEN OrdenTrabajoId END)</code></pre></li><li><strong>Sin Cerrar</strong> = <code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId END)</code></li><li><strong>Tasa Cumplimiento %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li><li><strong>Días Prom. Atraso</strong><pre class="sql"><code>AVG(CASE WHEN OrdenTrabajoFechaFinReal &gt; OrdenTrabajoFechaFin
+    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal) AS FLOAT)
+END)</code></pre></li></ul></section>
+<section id="cg-sla-por-subsistemas" data-client="centinela"><h3>[Centinela] | SLA por Subsistemas</h3><p>Por subtipo de tarea: OTs en plazo, fuera de plazo, sin cerrar, % de cumplimiento y días promedio de atraso.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>SubTipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>En Plazo</strong><pre class="sql"><code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)</code></pre></li><li><strong>Fuera de Plazo</strong><pre class="sql"><code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal &gt; OrdenTrabajoFechaFin THEN OrdenTrabajoId END)</code></pre></li><li><strong>Sin Cerrar</strong> = <code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId END)</code></li><li><strong>Tasa Cumplimiento %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li><li><strong>Días Prom. Atraso</strong><pre class="sql"><code>AVG(CASE WHEN OrdenTrabajoFechaFinReal &gt; OrdenTrabajoFechaFin
+    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal) AS FLOAT)
+END)</code></pre></li></ul></section>
+<section id="cg-tiempos-por-especialidad" data-client="centinela"><h3>[Centinela] | Tiempos por Especialidad</h3><p>Tiempos declarados en horas-hombre (× involucrados) desglosados por columna.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo != Cancelada</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hs)</strong> = <code>SUM(ISNULL(OperacionTiempoEstandar, 0) * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Esfuerzo Declarado (hs)</strong><pre class="sql"><code>SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0</code></pre></li><li><strong>Total Declarado (hs)</strong><pre class="sql"><code>SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0)
++ ISNULL(OperacionResolucionTiempoTraslado, 0)
++ ISNULL(OperacionResolucionTiempoEspera, 0)
++ ISNULL(OperacionResolucionTiemposAdministrativos, 0)) * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul></section>
+<section id="cg-tiempos-por-resolutor" data-client="centinela"><h3>[Centinela] | Tiempos por Resolutor</h3><p>Tiempos declarados en horas-hombre (× involucrados) por resolutor.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo != Cancelada</code></td></tr><tr><th>Agrupado por</th><td>Resolutor</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hs)</strong> = <code>SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Esfuerzo Declarado (hs)</strong><pre class="sql"><code>SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0</code></pre></li><li><strong>Traslado (hs)</strong> = <code>SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Espera (hs)</strong> = <code>SUM(OperacionResolucionTiempoEspera * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Administrativo (hs)</strong><pre class="sql"><code>SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul></section>
+<section id="cg-tiempos-por-zona" data-client="centinela"><h3>[Centinela] | Tiempos por Zona</h3><p>Tiempos declarados en horas-hombre (× involucrados).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo != Cancelada</code></td></tr><tr><th>Agrupado por</th><td>OperacionResolutor</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hs)</strong> = <code>SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Esfuerzo Declarado (hs)</strong> = <code>SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Traslado (hs)</strong> = <code>SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Espera (hs)</strong> = <code>SUM(OperacionResolucionTiempoEspera * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Administrativo (hs)</strong><pre class="sql"><code>SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul><div class="nota"><strong>Nota:</strong> La dimensión configurada es <code>OperacionResolutor</code>, no la zona — la tabla agrupa por resolutor pese al nombre.</div></section>
+<section id="cg-total-declarado-hs" data-client="centinela"><h3>[Centinela] | Total Declarado (hs)</h3><p>Suma de los 4 tiempos declarados (ejecución + espera + traslado + administrativo) × involucrados ÷ 60, en OTs terminadas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0)
+   + ISNULL(OperacionResolucionTiempoEspera, 0)
+   + ISNULL(OperacionResolucionTiempoTraslado, 0)
+   + ISNULL(OperacionResolucionTiemposAdministrativos, 0))
+   * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul></section>
+<section id="cg-traslado-declarado" data-client="centinela"><h3>Traslado Declarado</h3><p>Horas-hombre de traslado declaradas en OTs terminadas: minutos × involucrados ÷ 60.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>SUM(ISNULL(OperacionResolucionTiempoTraslado, 0) * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul></section>
+<section id="s-4-centinela-indicadores-operacionales" data-client="centinela"><h2><span class="num">4</span>Centinela — Indicadores Operacionales</h2><p>Conteos de OTs/operaciones por fecha programada (<code>OrdenTrabajoFechaInicio</code>) y asistencia del día.</p></section>
+<section id="co-estado-de-ots" data-client="centinela"><h3>[Centinela] | Estado de OTs</h3><p>Cantidad de OTs por estado (barras).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Barras</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>EstadoOrdenTrabajoId, x: EstadoOrdenTrabajo</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OrdenTrabajoId)</code></li></ul></section>
+<section id="co-operaciones-por-zona" data-client="centinela"><h3>[Centinela] | Operaciones por Zona</h3><p>Cantidad de operaciones por zona (barras).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Barras</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>ZonaOperacionId, x: ZonaOperacion</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="co-operaciones-resueltas" data-client="centinela"><h3>[Centinela] | Operaciones Resueltas</h3><p>Total de operaciones en estado Resuelta en el período.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOperacion IN (Resuelta)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="co-ops-backlog-por-especialidad" data-client="centinela"><h3>[Centinela] | Ops Backlog por especialidad</h3><p>Operaciones por especialidad. OJO: no tiene filtro propio de backlog (depende de los filtros del dashboard).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="co-ops-pendientes-por-especialidad" data-client="centinela"><h3>[Centinela] | Ops pendientes por especialidad</h3><p>Operaciones aún no resueltas (Abierta, Por Abrir, Asignada, Detenida, Agendada) por especialidad.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOperacion IN (Abierta, Por Abrir, Asignada, Detenida, Agendada)</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="co-ops-resueltas-por-especialidad" data-client="centinela"><h3>[Centinela] | Ops resueltas por especialidad</h3><p>Operaciones resueltas por especialidad.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOperacion == Resuelta</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="co-ots-backlog" data-client="centinela"><h3>[Centinela] | OTs Backlog</h3><p>OTs Abiertas con 3 o más días desde su creación.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo == Abierta</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>[Centinela] | Backlog</strong><pre class="sql"><code>COUNT(DISTINCT CASE
+    WHEN DATEDIFF(day, OrdenTrabajoFechaCreacion, GETDATE()) &gt;= 3
+    THEN OrdenTrabajoId
+END)</code></pre></li></ul></section>
+<section id="co-ots-creadas" data-client="centinela"><h3>[Centinela] | OTs Creadas</h3><p>Total de OTs del período (según la fecha del filtro).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OrdenTrabajoId)</code></li></ul></section>
+<section id="co-ots-resueltas" data-client="centinela"><h3>[Centinela] | OTs Resueltas</h3><p>Total de OTs Resueltas o Cerradas en el período.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OrdenTrabajoId)</code></li></ul></section>
+<section id="co-personal-presente-hoy" data-client="centinela"><h3>[Centinela] | Personal Presente Hoy</h3><p>Resolutores activos con marca de ENTRADA hoy, por turno (dataset de asistencia).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaAsistencia</code></td></tr><tr><th>Fecha del rango</th><td><code>AsistenciaFechaHora</code></td></tr><tr><th>Filtros propios</th><td><code>Turno IN (Turno Diurno, Turno Nocturno)</code><br><code>ResolutorActivo == true</code><br><code>Perfil IN (Resolutor)</code></td></tr><tr><th>Agrupado por</th><td>Persona, Turno, Especialidad, Zona</td></tr></tbody></table><h4>Cálculo</h4><ul><li>Sin métricas: lista registros crudos de las columnas indicadas.</li></ul></section>
+<section id="co-ranking-carga-de-trabajo" data-client="centinela"><h3>[Centinela] | Ranking carga de trabajo</h3><p>Operaciones asignadas por resolutor (mayor a menor).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Barras</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Filtros propios</th><td><code>OperacionResolutor IS NOT NULL</code></td></tr><tr><th>Agrupado por</th><td>ResolutorPersonaId, x: OperacionResolutor</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="co-supervisores-presente-hoy" data-client="centinela"><h3>[Centinela] | Supervisores Presente Hoy</h3><p>Supervisores activos con marca de ENTRADA hoy, por turno.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaAsistencia</code></td></tr><tr><th>Fecha del rango</th><td><code>AsistenciaFechaHora</code></td></tr><tr><th>Filtros propios</th><td><code>Turno IN (Turno Diurno, Turno Nocturno)</code><br><code>AsistenciaTipo IN (E)</code><br><code>Perfil IN (Supervisor)</code></td></tr><tr><th>Agrupado por</th><td>Persona, Turno, Especialidad, Zona</td></tr></tbody></table><h4>Cálculo</h4><ul><li>Sin métricas: lista registros crudos de las columnas indicadas.</li></ul></section>
+<section id="co-tasa-de-cumplimiento" data-client="centinela"><h3>[Centinela] | Tasa de Cumplimiento</h3><p>% de OTs terminadas dentro de su fecha comprometida (FechaFinReal ≤ FechaFin), sobre OTs Resueltas/Cerradas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>[Ameco] | Tasa de Cumplimiento</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul><div class="nota"><strong>Nota:</strong> El label interno de la métrica quedó “[Ameco] | Tasa de Cumplimiento” (solo cosmético).</div></section>
+<section id="co-tasa-de-finalizacion" data-client="centinela"><h3>[Centinela] | Tasa de Finalizacion</h3><p>% de OTs del período que quedaron Resueltas o Cerradas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tasa de Finalizacion</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="co-tendencia-de-ots" data-client="centinela"><h3>[Centinela] | Tendencia de OTs</h3><p>Serie diaria: OTs totales vs OTs terminadas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Línea</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaInicio</code></td></tr><tr><th>Agrupado por</th><td>x: OrdenTrabajoFechaInicio</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>OTs Totales</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>OTs Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li></ul></section>
+<section id="co-tiempo-prom-resolucion" data-client="centinela"><h3>[Centinela] | Tiempo Prom. Resolucion</h3><p>Promedio del tiempo de resolución bruto por OT (campo OrdenTrabajoTiempoResolucionBruto) en horas. Replica el promedioResolucion de AlbiWeb.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoCentinela</code></td></tr><tr><th>Fecha del rango</th><td><code>OperacionFechaInicio</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo != Cancelada</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tiempo Prom. Resolucion (hs)</strong><pre class="sql"><code>ROUND(
+    AVG(CASE WHEN ISNULL(OrdenTrabajoTiempoResolucionBruto, 0) &lt;&gt; 0
+        THEN CAST(OrdenTrabajoTiempoResolucionBruto AS FLOAT) END)
+  / 60.0, 2
+)</code></pre></li></ul><div class="nota"><strong>Nota:</strong> La fecha del rango es <code>OperacionFechaInicio</code> (inicio real); para calzar 100% con la web correspondería <code>OperacionFechaInicioProgramada</code>.</div></section>
+<section id="co-tiempos-ot-en-hh" data-client="centinela"><h3>[Centinela] | Tiempos OT en HH</h3><p>Total de los 4 tiempos declarados en horas-hombre (× involucrados) de OTs terminadas. Equivale al “Tiempo total” del modal de AlbiWeb.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tiempo Total HH (hs)</strong><pre class="sql"><code>ROUND(
+    SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0)
+   + ISNULL(OperacionResolucionTiempoTraslado, 0)
+   + ISNULL(OperacionResolucionTiempoEspera, 0)
+   + ISNULL(OperacionResolucionTiemposAdministrativos, 0))
+   * OperacionCantidadInvolucrados)
+  / 60.0, 1
+)</code></pre></li></ul></section>
+<section id="co-tiempos-reportados-por-persona" data-client="centinela"><h3>[Centinela] | Tiempos reportados por persona</h3><p>Tiempos declarados por persona (estándar, ejecución, traslado, espera, administrativo) en horas-hombre.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>CentinelaDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaFinReal</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo != Cancelada</code></td></tr><tr><th>Agrupado por</th><td>OperacionResolutor, ZonaOperacion, Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hrs)</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionTiempoEstandar, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li><li><strong>Esfuerzo Declarado (hrs)</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li><li><strong>Tiempo Traslado (hrs)</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionResolucionTiempoTraslado, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li><li><strong>Tiempo Espera (hrs)</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionResolucionTiempoEspera, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li><li><strong>Tiempo Administrativo</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li></ul></section>
+<section id="s-5-ameco-indicadores-de-gestion" data-client="ameco"><h2><span class="num">5</span>Ameco — Indicadores de Gestión</h2><p>A diferencia de Centinela, Ameco filtra por <code>OrdenTrabajoFechaCreacion</code> (alineado a AmecoWeb, que trabaja por fecha de creación).</p></section>
+<section id="ag-administrativo-declarado" data-client="ameco"><h3>[Ameco] | Administrativo Declarado</h3><p>Horas-hombre administrativas declaradas de OTs terminadas: minutos × involucrados ÷ 60.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul></section>
+<section id="ag-capacidad-instalada-hs" data-client="ameco"><h3>[Ameco] | Capacidad Instalada (hs)</h3><p>Horas disponibles del período: ResolutoresActivos × JornadaLaboralHoras × días del rango. Los dos valores viven en ConfiguracionDashboard (editables desde la web).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>ConfiguracionDashboard (Ameco)</code></td></tr><tr><th>Fecha del rango</th><td>— (no le afecta el filtro de fecha)</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>MAX(CASE WHEN Clave = 'ResolutoresActivos' THEN TRY_CAST(Valor AS FLOAT) END)
+  * MAX(CASE WHEN Clave = 'JornadaLaboralHoras' THEN TRY_CAST(Valor AS FLOAT) END)
+  * DATEDIFF(day,
+             '{{ from_dttm }}',
+             '{{ to_dttm }}')</code></pre></li></ul></section>
+<section id="ag-esfuerzo-declarado" data-client="ameco"><h3>[Ameco] | Esfuerzo Declarado</h3><p>Horas-hombre de ejecución declaradas por los técnicos en OTs terminadas: minutos × involucrados ÷ 60.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0</code></li></ul></section>
+<section id="ag-esfuerzo-estandar" data-client="ameco"><h3>[Ameco] | Esfuerzo Estándar</h3><p>Horas-hombre estándar: duracionMinSTD de la operación × involucrados ÷ 60, en OTs terminadas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0</code></li></ul></section>
+<section id="ag-esfuerzo-industria" data-client="ameco"><h3>[Ameco] | Esfuerzo Industria</h3><p>Horas-hombre según la duración “de industria” del catálogo de la OT (catalogo.duracionIndustria × involucrados).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>SUM(OrdenTrabajoDuracionIndustria * OperacionCantidadInvolucrados) / 60.0</code></li></ul></section>
+<section id="ag-gauge-cumplimiento-sla" data-client="ameco"><h3>[Ameco] | Gauge Cumplimiento SLA</h3><p>% de OTs que terminaron dentro de 8 días desde su creación (SLA de 8 días).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Gauge</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tasa Finalización Operaciones</strong><pre class="sql"><code>ROUND(
+    CAST(
+        COUNT(
+            CASE
+                WHEN OrdenTrabajoFechaFinReal &lt;= DATEADD(DAY, 8, OrdenTrabajoFechaCreacion)
+                THEN OrdenTrabajoId
+            END
+        ) AS FLOAT
+    ) / NULLIF(COUNT(OrdenTrabajoId), 0) * 100,
+    1
+)</code></pre></li></ul></section>
+<section id="ag-gauge-tasa-finalizacion-operaciones" data-client="ameco"><h3>[Ameco] | Gauge Tasa Finalización Operaciones</h3><p>% de operaciones del período en estado Resuelta.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Gauge</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tasa Finalización Operaciones</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-gauge-tasa-finalizacion-ot" data-client="ameco"><h3>[Ameco] | Gauge Tasa Finalización OT</h3><p>% de OTs del período que quedaron Resueltas o Cerradas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Gauge</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tasa Finalización OT</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-gauge-uso-de-jornada" data-client="ameco"><h3>[Ameco] | Gauge Uso de Jornada</h3><p>Tiempo declarado total ÷ (resolutores-día con actividad × 720 min) × 100. Indicador heurístico: asume jornadas de 12 h y no usa la Capacidad Instalada.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Gauge</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>ROUND(
+    CAST(
+        SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))
+      + SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))
+      + SUM(ISNULL(OperacionResolucionTiempoEspera, 0))
+      + SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))
+    AS FLOAT) / 60.0
+  / NULLIF(37 * DATEDIFF(day, '{{ from_dttm }}', '{{ to_dttm }}') * 11, 0)
+  * 100
+, 1)</code></pre></li></ul></section>
+<section id="ag-motivos-de-tiempo-perdido" data-client="ameco"><h3>[Ameco] | Motivos de tiempo perdido</h3><p>Horas perdidas por resolutor y motivo, desde la vista v_TiempoPerdidoPorResolutor (unifica modelo nuevo por técnico y modelo antiguo replicado a los involucrados; cuadra con albi.retornaTiempo(ot, 2)).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>v_TiempoPerdidoPorResolutor</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>Resolutor, Motivo</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tiempo Perdido HRS</strong> = <code>SUM(MinutosPerdidos) / 60.0</code></li></ul></section>
+<section id="ag-operaciones-por-especialidad" data-client="ameco"><h3>[Ameco] | Operaciones por Especialidad</h3><p>Por especialidad: operaciones ingresadas, resueltas y su % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong> = <code>COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</code></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-operaciones-por-subsistemas" data-client="ameco"><h3>[Ameco] | Operaciones por Subsistemas</h3><p>Por tipo/subtipo de tarea: operaciones ingresadas, resueltas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>SubTipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong> = <code>COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</code></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-operaciones-por-subsistemas-2" data-client="ameco"><h3>[Ameco] | Operaciones por Subsistemas</h3><p>Por tipo/subtipo de tarea: operaciones ingresadas, resueltas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>TipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong> = <code>COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</code></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-operaciones-por-zona" data-client="ameco"><h3>[Ameco] | Operaciones por Zona</h3><p>Por zona: operaciones ingresadas, resueltas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>ZonaOperacion</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong> = <code>COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END)</code></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(DISTINCT CASE WHEN EstadoOperacion = 'Resuelta' THEN OperacionId END) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OperacionId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-ots-por-especialidad" data-client="ameco"><h3>[Ameco] | OTs por Especialidad</h3><p>Por especialidad: OTs ingresadas, terminadas (Resuelta/Cerrada) y % de finalización. Una fila por OT (vista de OTs).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-ots-por-sistemas" data-client="ameco"><h3>[Ameco] | OTs por Sistemas</h3><p>Por tipo de tarea (sistema): OTs ingresadas, terminadas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>TipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-ots-por-subsistemas" data-client="ameco"><h3>[Ameco] | OTs por Subsistemas</h3><p>Por subtipo de tarea (subsistema): OTs ingresadas, terminadas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>SubTipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-ots-por-zona" data-client="ameco"><h3>[Ameco] | OTs por Zona</h3><p>Por zona: OTs ingresadas, terminadas y % de finalización.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>ZonaOperacion</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Ingresadas</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li><li><strong>Tasa Finalización %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ag-perdido-declarado" data-client="ameco"><h3>[Ameco] | Perdido Declarado</h3><p>Horas de tiempo perdido declarado en OTs terminadas. Modelo nuevo: el valor ya viene sumado por todo el equipo, por eso NO se multiplica por involucrados.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>SUM(OperacionResolucionTiempoEspera) / 60.0</code></li></ul></section>
+<section id="ag-resolutores-activos" data-client="ameco"><h3>[Ameco] | Resolutores Activos</h3><p>Valor configurado de resolutores activos (ConfiguracionDashboard, editable desde la web).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>ConfiguracionDashboard (Ameco)</code></td></tr><tr><th>Fecha del rango</th><td>— (no le afecta el filtro de fecha)</td></tr><tr><th>Filtros propios</th><td><code>Clave IN (ResolutoresActivos)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>SUM(Valor)</code></li></ul></section>
+<section id="ag-selector-especialidad" data-client="ameco"><h3>[Ameco] | Selector Especialidad</h3><p>Tabla-selector para filtrar el dashboard por especialidad; muestra esfuerzos de referencia.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hs)</strong> = <code>SUM(OperacionTiempoEstandar) / 60.0</code></li><li><strong>Esfuerzo Declarado (hs)</strong> = <code>SUM(OperacionResolucionTiempoEjecucion) / 60.0</code></li><li><strong>Total Declarado (hs)</strong><pre class="sql"><code>(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))
++ SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))
++ SUM(ISNULL(OperacionResolucionTiempoEspera, 0))
++ SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))) / 60.0</code></pre></li></ul></section>
+<section id="ag-selector-zona" data-client="ameco"><h3>[Ameco] | Selector Zona</h3><p>Tabla-selector para filtrar el dashboard por zona; muestra esfuerzos de referencia (sin multiplicar por involucrados).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>ZonaOperacion</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hs)</strong> = <code>SUM(OperacionResolucionTiempoEjecucion) / 60.0</code></li><li><strong>Esfuerzo Declarado (hs)</strong> = <code>SUM(OperacionResolucionTiempoEjecucion) / 60.0</code></li><li><strong>Total Declarado (hs)</strong><pre class="sql"><code>(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))
++ SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))
++ SUM(ISNULL(OperacionResolucionTiempoEspera, 0))
++ SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0))) / 60.0</code></pre></li></ul><div class="nota"><strong>Nota:</strong> Bug: la métrica “Esfuerzo Estándar (hs)” usa <code>OperacionResolucionTiempoEjecucion</code> (quedó igual al Declarado). Debería usar <code>OperacionTiempoEstandar</code>.</div></section>
+<section id="ag-sla-por-sistemas" data-client="ameco"><h3>[Ameco] | SLA por Sistemas</h3><p>Por tipo de tarea: OTs en plazo (terminó antes de su fecha comprometida), fuera de plazo, sin cerrar, % de cumplimiento y días promedio de atraso.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>TipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>En Plazo</strong><pre class="sql"><code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)</code></pre></li><li><strong>Fuera de Plazo</strong><pre class="sql"><code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal &gt; OrdenTrabajoFechaFin THEN OrdenTrabajoId END)</code></pre></li><li><strong>Sin Cerrar</strong> = <code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId END)</code></li><li><strong>Tasa Cumplimiento %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li><li><strong>Días Prom. Atraso</strong><pre class="sql"><code>AVG(CASE WHEN OrdenTrabajoFechaFinReal &gt; OrdenTrabajoFechaFin
+    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal) AS FLOAT)
+END)</code></pre></li></ul></section>
+<section id="ag-sla-por-subsistemas" data-client="ameco"><h3>[Ameco] | SLA por Subsistemas</h3><p>Por subtipo de tarea: OTs en plazo, fuera de plazo, sin cerrar, % de cumplimiento y días promedio de atraso.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>SubTipoTarea</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>En Plazo</strong><pre class="sql"><code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END)</code></pre></li><li><strong>Fuera de Plazo</strong><pre class="sql"><code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal &gt; OrdenTrabajoFechaFin THEN OrdenTrabajoId END)</code></pre></li><li><strong>Sin Cerrar</strong> = <code>COUNT(CASE WHEN OrdenTrabajoFechaFinReal IS NULL THEN OrdenTrabajoId END)</code></li><li><strong>Tasa Cumplimiento %</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li><li><strong>Días Prom. Atraso</strong><pre class="sql"><code>AVG(CASE WHEN OrdenTrabajoFechaFinReal &gt; OrdenTrabajoFechaFin
+    THEN CAST(DATEDIFF(day, OrdenTrabajoFechaFin, OrdenTrabajoFechaFinReal) AS FLOAT)
+END)</code></pre></li></ul></section>
+<section id="ag-tiempos-por-especialidad" data-client="ameco"><h3>[Ameco] | Tiempos por Especialidad</h3><p>Tiempos declarados en horas-hombre (× involucrados) desglosados por columna.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr><tr><th>Agrupado por</th><td>OperacionResolutor</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hs)</strong> = <code>SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Esfuerzo Declarado (hs)</strong> = <code>SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Traslado (hs)</strong> = <code>SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Perdido (hs)</strong> = <code>SUM(OperacionResolucionTiempoEspera * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Administrativo (hs)</strong><pre class="sql"><code>SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0</code></pre></li><li><strong>Total Declarado</strong><pre class="sql"><code>SUM(
+  ( ISNULL(OperacionResolucionTiempoEjecucion, 0)
+  + ISNULL(OperacionResolucionTiempoTraslado, 0)
+  + ISNULL(OperacionResolucionTiempoEspera, 0)
+  + ISNULL(OperacionResolucionTiemposAdministrativos, 0)
+  ) * OperacionCantidadInvolucrados
+) / 60.0</code></pre></li></ul><div class="nota"><strong>Nota:</strong> La dimensión configurada es <code>OperacionResolutor</code>, no la especialidad — la tabla agrupa por resolutor pese al nombre.</div></section>
+<section id="ag-tiempos-por-zona" data-client="ameco"><h3>[Ameco] | Tiempos por Zona</h3><p>Tiempos declarados en horas-hombre (× involucrados).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>OperacionResolutor</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hs)</strong> = <code>SUM(OperacionTiempoEstandar * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Esfuerzo Declarado (hs)</strong> = <code>SUM(OperacionResolucionTiempoEjecucion * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Traslado (hs)</strong> = <code>SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Espera (hs)</strong> = <code>SUM(OperacionResolucionTiempoEspera * OperacionCantidadInvolucrados) / 60.0</code></li><li><strong>Administrativo (hs)</strong><pre class="sql"><code>SUM(OperacionResolucionTiemposAdministrativos * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul><div class="nota"><strong>Nota:</strong> La dimensión configurada es <code>OperacionResolutor</code>, no la zona — la tabla agrupa por resolutor pese al nombre.</div></section>
+<section id="ag-total-declarado-hs" data-client="ameco"><h3>[Ameco] | Total Declarado (hs)</h3><p>Suma de los 4 tiempos declarados (ejecución + espera + traslado + administrativo) × involucrados ÷ 60, en OTs terminadas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>SUM((ISNULL(OperacionResolucionTiempoEjecucion, 0) + ISNULL(OperacionResolucionTiempoTraslado, 0) + ISNULL(OperacionResolucionTiempoEspera, 0) + ISNULL(OperacionResolucionTiemposAdministrativos, 0)) * OperacionCantidadInvolucrados) / 60.0</code></pre></li></ul></section>
+<section id="ag-traslado-declarado" data-client="ameco"><h3>[Ameco] | Traslado Declarado</h3><p>Horas-hombre de traslado declaradas en OTs terminadas: minutos × involucrados ÷ 60.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>SUM(OperacionResolucionTiempoTraslado * OperacionCantidadInvolucrados) / 60.0</code></li></ul></section>
+<section id="s-6-ameco-indicadores-operacionales" data-client="ameco"><h2><span class="num">6</span>Ameco — Indicadores Operacionales</h2><p>Conteos por <code>OrdenTrabajoFechaCreacion</code> y asistencia del día.</p></section>
+<section id="ao-estado-de-ots" data-client="ameco"><h3>[Ameco] | Estado de OTs</h3><p>Cantidad de OTs por estado (barras).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Barras</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>EstadoOrdenTrabajoId, x: EstadoOrdenTrabajo</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OrdenTrabajoId)</code></li></ul></section>
+<section id="ao-operaciones-por-zona" data-client="ameco"><h3>[Ameco] | Operaciones por Zona</h3><p>Cantidad de operaciones por zona (barras).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Barras</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>ZonaOperacion IS NOT NULL</code></td></tr><tr><th>Agrupado por</th><td>ZonaOperacionId, x: ZonaOperacion</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="ao-operaciones-resueltas" data-client="ameco"><h3>[Ameco] | Operaciones Resueltas</h3><p>Total de operaciones en estado Resuelta en el período.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOperacion IN (Resuelta)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="ao-ops-backlog-por-especialidad" data-client="ameco"><h3>[Ameco] | Ops Backlog por especialidad</h3><p>Operaciones de OTs con TipoActividad “Backlog”, por especialidad.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>TipoActividad == Backlog</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="ao-ops-pendientes-por-especialidad" data-client="ameco"><h3>[Ameco] | Ops pendientes por especialidad</h3><p>Operaciones aún no resueltas (Abierta, Por Abrir, Asignada, Detenida, Agendada) por especialidad.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOperacion IN (Abierta, Por Abrir, Asignada, Detenida, Agendada)</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="ao-ops-resueltas-por-especialidad" data-client="ameco"><h3>[Ameco] | Ops resueltas por especialidad</h3><p>Operaciones resueltas por especialidad.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOperacion == Resuelta</code></td></tr><tr><th>Agrupado por</th><td>Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="ao-ots-backlog" data-client="ameco"><h3>[Ameco] | OTs Backlog</h3><p>OTs cuyo TipoActividad es “Backlog”.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>TipoActividad == Backlog</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OrdenTrabajoId)</code></li></ul></section>
+<section id="ao-ots-creadas" data-client="ameco"><h3>[Ameco] | OTs Creadas</h3><p>Total de OTs del período (según la fecha del filtro).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OrdenTrabajoId)</code></li></ul></section>
+<section id="ao-ots-resueltas" data-client="ameco"><h3>[Ameco] | OTs Resueltas</h3><p>Total de OTs Resueltas o Cerradas en el período.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OrdenTrabajoId)</code></li></ul></section>
+<section id="ao-personal-presente-hoy" data-client="ameco"><h3>[Ameco] | Personal Presente Hoy</h3><p>Resolutores activos con marca de ENTRADA hoy, por turno (dataset de asistencia).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoAsistencia</code></td></tr><tr><th>Fecha del rango</th><td><code>TurnoHoraInicio</code></td></tr><tr><th>Filtros propios</th><td><code>Turno IN (Diurno, Nocturno)</code><br><code>ResolutorActivo == true</code><br><code>Perfil IN (Resolutor)</code></td></tr><tr><th>Agrupado por</th><td>Turno</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Presentes</strong><pre class="sql"><code>COUNT(DISTINCT CASE WHEN AsistenciaTipo = 'E'
+    AND CAST(AsistenciaFechaHora AS DATE) = CAST(GETDATE() AS DATE)
+    THEN PersonaId END)</code></pre></li><li><strong>Total</strong> = <code>COUNT(DISTINCT PersonaId)</code></li></ul></section>
+<section id="ao-ranking-carga-de-trabajo" data-client="ameco"><h3>[Ameco] | Ranking carga de trabajo</h3><p>Operaciones asignadas por resolutor (mayor a menor).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Barras</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>OperacionResolutor IS NOT NULL</code></td></tr><tr><th>Agrupado por</th><td>ResolutorPersonaId, x: OperacionResolutor</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><code>COUNT(OperacionId)</code></li></ul></section>
+<section id="ao-supervisores-presente-hoy" data-client="ameco"><h3>[Ameco] | Supervisores Presente Hoy</h3><p>Supervisores activos con marca de ENTRADA hoy, por turno.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoAsistencia</code></td></tr><tr><th>Fecha del rango</th><td><code>TurnoHoraInicio</code></td></tr><tr><th>Filtros propios</th><td><code>Turno IN (Diurno, Nocturno)</code><br><code>ResolutorActivo == true</code><br><code>Perfil IN (Supervisor)</code></td></tr><tr><th>Agrupado por</th><td>Turno</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Presentes</strong><pre class="sql"><code>COUNT(DISTINCT CASE WHEN AsistenciaTipo = 'E'
+    AND CAST(AsistenciaFechaHora AS DATE) = CAST(GETDATE() AS DATE)
+    THEN PersonaId END)</code></pre></li><li><strong>Total</strong> = <code>COUNT(DISTINCT PersonaId)</code></li></ul></section>
+<section id="ao-tasa-de-cumplimiento" data-client="ameco"><h3>[Ameco] | Tasa de Cumplimiento</h3><p>% de OTs terminadas dentro de su fecha comprometida (FechaFinReal ≤ FechaFin), sobre OTs Resueltas/Cerradas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN OrdenTrabajoFechaFinReal &lt;= OrdenTrabajoFechaFin THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ao-tasa-de-finalizacion" data-client="ameco"><h3>[Ameco] | Tasa de Finalizacion</h3><p>% de OTs del período que quedaron Resueltas o Cerradas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Tasa de Finalizacion</strong><pre class="sql"><code>ROUND(
+    CAST(COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END) AS FLOAT)
+  / NULLIF(COUNT(OrdenTrabajoId), 0) * 100, 1
+)</code></pre></li></ul></section>
+<section id="ao-tendencia-de-ots" data-client="ameco"><h3>[Ameco] | Tendencia de OTs</h3><p>Serie diaria: OTs totales vs OTs terminadas.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Línea</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>x: OrdenTrabajoFechaCreacion</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>OTs Totales</strong> = <code>COUNT(OrdenTrabajoId)</code></li><li><strong>OTs Resueltas</strong><pre class="sql"><code>COUNT(CASE WHEN EstadoOrdenTrabajo IN ('Resuelta', 'Cerrada') THEN OrdenTrabajoId END)</code></pre></li></ul></section>
+<section id="ao-tiempo-prom-resolucion" data-client="ameco"><h3>[Ameco] | Tiempo Prom. Resolucion</h3><p>Horas de ejecución declaradas ÷ nº de OTs distintas (promedio por OT).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>ROUND(
+    CAST(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0)) AS FLOAT)
+  / NULLIF(COUNT(DISTINCT OrdenTrabajoId), 0)
+  / 60.0, 2
+)</code></pre></li></ul></section>
+<section id="ao-tiempos-ot-en-hh" data-client="ameco"><h3>[Ameco] | Tiempos OT en HH</h3><p>Total de los 4 tiempos declarados ÷ 60 (sin involucrados), sobre la vista de OTs (solo primera operación de cada OT).</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Big number</td></tr><tr><th>Dataset</th><td><code>v_OrdenesTrabajoAmeco</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Filtros propios</th><td><code>EstadoOrdenTrabajo IN (Resuelta, Cerrada)</code></td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><pre class="sql"><code>ROUND(
+    (SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0))
+   + SUM(ISNULL(OperacionResolucionTiempoTraslado, 0))
+   + SUM(ISNULL(OperacionResolucionTiempoEspera, 0))
+   + SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0)))
+  / 60.0, 1
+)</code></pre></li></ul></section>
+<section id="ao-tiempos-reportados-por-persona" data-client="ameco"><h3>[Ameco] | Tiempos reportados por persona</h3><p>Tiempos declarados por persona (estándar, ejecución, traslado, espera, administrativo) en horas-hombre.</p><table class="ficha"><tbody><tr><th>Tipo</th><td>Tabla</td></tr><tr><th>Dataset</th><td><code>AmecoDashboards</code></td></tr><tr><th>Fecha del rango</th><td><code>OrdenTrabajoFechaCreacion</code></td></tr><tr><th>Agrupado por</th><td>OperacionResolutor, ZonaOperacion, Especialidad</td></tr></tbody></table><h4>Cálculo</h4><ul class="calc"><li><strong>Esfuerzo Estándar (hrs)</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li><li><strong>Esfuerzo Declarado (hrs)</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionResolucionTiempoEjecucion, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li><li><strong>Tiempo Traslado (hrs)</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionResolucionTiempoTraslado, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li><li><strong>Tiempo Espera (hrs)</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionResolucionTiempoEspera, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li><li><strong>Tiempo Administrativo</strong><pre class="sql"><code>ROUND(SUM(ISNULL(OperacionResolucionTiemposAdministrativos, 0) * OperacionCantidadInvolucrados) / 60.0, 1)</code></pre></li></ul><div class="nota"><strong>Nota:</strong> Bug: la métrica “Esfuerzo Estándar (hrs)” usa <code>OperacionResolucionTiempoEjecucion</code> (igual al Declarado). En Centinela ya está corregido con <code>OperacionTiempoEstandar</code>.</div></section>
+
+</main>
+
+<script>
+/* Selector de cliente: muestra solo las secciones (y el menú) del cliente
+   elegido. El filtrado real lo hace el CSS con body[data-client]. */
+(function () {
+  var cards = document.querySelectorAll('.client-card');
+
+  function pick(c, scroll) {
+    document.body.dataset.client = c;
+    cards.forEach(function (a) {
+      a.classList.toggle('active', a.dataset.pick === c);
+    });
+    if (scroll) {
+      var first = document.querySelector('section[data-client="' + c + '"]');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  cards.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      pick(a.dataset.pick, true);
+    });
+  });
+
+  /* Si se entra con un enlace directo a una ficha (#cg-...), se activa
+     el cliente al que pertenece para que no quede oculta. */
+  function fromHash() {
+    if (!location.hash || location.hash === '#s1' || location.hash === '#s-elegir') return;
+    var el = null;
+    try { el = document.querySelector(location.hash); } catch (err) { return; }
+    if (!el) return;
+    var host = el.closest('[data-client]');
+    if (host) {
+      pick(host.dataset.client, false);
+      el.scrollIntoView({ block: 'start' });
+    }
+  }
+
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+})();
+</script>
+</body>
+</html>

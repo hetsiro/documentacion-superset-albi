@@ -10,7 +10,7 @@ Usá el archivo generar_lookup.bat que hace todo automáticamente:
     generar_lookup_centinela.bat
 
 El script detecta automáticamente si corre dentro o fuera de Docker.
-El archivo JSON es cargado por diccionario.html al abrir la página.
+El archivo JS es cargado por docs/diccionario/centinela.html al abrir la pagina.
 """
 
 import json
@@ -35,7 +35,7 @@ CAT_SCHEMA  = "albi"
 
 # Ruta de salida
 OUT_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "..", "docs", "lookup_data_centinela.js"
+    os.path.dirname(os.path.abspath(__file__)), "..", "docs", "data", "lookup_data_centinela.js"
 )
 
 LOOKUPS = [
@@ -295,7 +295,7 @@ def main():
 
     print(f"\n  Generado: {OUT_PATH}")
     print(f"   {len(result)} catalogos  ·  {total_valores} valores en total")
-    print(f"   Abri diccionario_centinela.html y recarga la pagina para ver los datos.")
+    print(f"   Abri docs/diccionario/centinela.html y recarga la pagina para ver los datos.")
 
 if __name__ == "__main__":
     main()
